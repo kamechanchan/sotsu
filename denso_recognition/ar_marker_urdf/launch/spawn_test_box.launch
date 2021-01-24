@@ -1,0 +1,10 @@
+<launch>
+<!-- Spawn the table -->
+  <include file="$(find ar_marker_urdf)/launch/model_spawner.launch">
+    <arg name="model_name" value="test_box"/>
+    <arg name="model" value="$(find ar_marker_urdf)/urdf/test_box.urdf"/>
+    <arg name="x" value="0.25"/>
+    <arg name="y" value="0.25"/>
+    <arg name="z" value="0.565"/>
+  </include>
+</launch>

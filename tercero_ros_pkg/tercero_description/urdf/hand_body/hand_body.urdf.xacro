@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="hand_body_v0" params="parent use_gripper_cover *joint_origin">
+    <joint name="hand_link_joint" type="fixed">
+      <xacro:insert_block name="joint_origin"/>
+      <parent link="${parent}"/>
+      <child link="hand_body_link"/>
+    </joint>
+
+    <link name="hand_body_link">
+      <visual>
+        <geometry>
+          <xacro:if value="${use_gripper_cover}">
+            <mesh filename="package://tercero_description/meshes/DAE/hand_body/hand_body.dae"/>
+          </xacro:if>
+          <xacro:unless value="${use_gripper_cover}">
+            <mesh filename="package://tercero_description/meshes/DAE/hand_body_no_cover/hand_body_no_cover.dae"/>
+          </xacro:unless>
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://tercero_description/meshes/STL/hand_body.stl"/>
+        </geometry>
+      </collision>
+      <inertial>
+        <origin xyz="0 0 0"/>
+        <mass value="1.173"/>
+        <inertia ixx="0.008" ixy="0.0" ixz="0.0"
+                 iyy="0.008" iyz="0.0"
+                 izz="0.003" />
+      </inertial>
+    </link>
+  </xacro:macro>
+
+</robot>

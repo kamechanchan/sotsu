@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find tercero_description)/urdf/third_finger/third_finger.transmission.xacro"/>
+
+  <xacro:macro name="third_finger_v0" params="suffix parent *joint_origin *joint_axis">
+  <joint name="finger_${suffix}_joint" type="prismatic">
+    <xacro:insert_block name="joint_origin"/>
+    <parent link="${parent}"/>
+    <child link="finger_${suffix}"/>
+    <xacro:insert_block name="joint_axis"/>
+    <limit lower="0" upper="0.035" effort="0.5293" velocity="6.159937255" />
+  </joint>
+
+  <link name="finger_${suffix}">
+    <visual>
+      <geometry>
+        <mesh filename="package://tercero_description/meshes/DAE/finger/finger_third.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://tercero_description/meshes/STL/finger_third.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.028"/>
+      <inertia ixx="0.0" ixy="0.0" ixz="0.0"
+               iyy="0.0" iyz="0.0"
+               izz="0.0" />
+    </inertial>
+  </link>
+
+  <xacro:finger_transmission suffix="${suffix}"/>
+
+  </xacro:macro>
+
+</robot>

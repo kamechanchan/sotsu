@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="default_chack_torque" default="10" />
+  <arg name="default_pusher_torque" default="10" />
+
+  <include file="$(find tercero_driver)/launch/listener.launch" />
+  <include file="$(find eip_pkg)/launch/eip_start.launch" />
+  <node pkg="timed_roslaunch" type="timed_roslaunch.sh" name="timed_roslaunch" args="1 tercero_driver set_default_torque.launch default_chack_torque:=$(arg default_chack_torque) default_pusher_torque:=$(arg default_pusher_torque)" output="screen"/>
+  <node pkg="tercero_driver" type="show_hand_state_info.py" name="show_hand_state_info_node" output="screen" />
+</launch>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find tercero_gazebo)/urdf/hand_body.gazebo.macro.xacro"/>
+  <xacro:include filename="$(find tercero_gazebo)/urdf/finger.gazebo.macro.xacro"/>
+  <xacro:include filename="$(find tercero_gazebo)/urdf/third_finger.gazebo.macro.xacro"/>
+
+  <xacro:hand_body_gazebo_v0/>
+  <xacro:finger_gazebo_v0 suffix="R"/>
+  <xacro:finger_gazebo_v0 suffix="L"/>
+  <xacro:third_finger_gazebo_v0 suffix="3rd"/>
+
+</robot>

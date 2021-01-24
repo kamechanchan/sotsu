@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+
+  <!-- rate : if publish at 10 Hz, set 0.1 -->
+  <arg name="rate" default="0.5"/>
+  <arg name="upper_color_filter_mode" default="false"/>
+  <arg name="image_topic"             default="/template_matching/outputIm"/>
+  <arg name="camera_info_topic"       default="/photoneo_center/camera_info"/>
+  <arg name="input_pointcloud_topic"  default="/photoneo_center/pointcloud"/>
+  <arg name="output_pointcloud_topic" default="/photoneo_center/colored_base_cloud"/>
+
+  <include file="$(find template_matching)/launch/template_matching_test.launch"/>
+
+  <include file="$(find colored_pointcloud)/launch/colored_pc_pub.launch">
+    <arg name="upper_color_filter_mode" value="$(arg upper_color_filter_mode)"/>
+    <arg name="image_topic"             value="$(arg image_topic)"/>
+    <arg name="camera_info_topic"       value="$(arg camera_info_topic)"/>
+      <!-- <arg name="input_pointcloud_topic"  value="$(arg input_pointcloud_topic)"/> -->
+    <arg name="output_pointcloud_topic" value="$(arg output_pointcloud_topic)"/>
+  </include>
+
+  <node pkg="target_extractor" type="top_part_extractor" name="top_part_extractor">
+    <remap from="/input_cloud" to="/photoneo_center/colored_base_cloud"/>
+    <remap from="/output_cloud" to="/photoneo_center/extracted_part_cloud"/>
+  </node>
+
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find target_extractor)/config/test.rviz" required="true" /> -->
+
+</launch>

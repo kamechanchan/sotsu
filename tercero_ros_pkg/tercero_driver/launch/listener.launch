@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="tercero_driver" type="listener.py" name="tercero_listener" output="screen" />
+</launch>

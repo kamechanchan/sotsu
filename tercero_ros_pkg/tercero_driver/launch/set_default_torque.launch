@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="default_chack_torque" default="10" />
+  <arg name="default_pusher_torque" default="10" />
+
+  <node pkg="tercero_driver" type="set_default_torque.py" name="set_default_torque_node" output="screen" >
+    <param name="default_chack_torque" value="$(arg default_chack_torque)" />
+    <param name="default_pusher_torque" value="$(arg default_pusher_torque)" />
+  </node>
+</launch>
+

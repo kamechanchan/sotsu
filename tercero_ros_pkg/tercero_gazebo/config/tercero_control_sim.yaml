@@ -1,0 +1,11 @@
+tercero:
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 125
+
+  gripper_controller:
+    type: position_controllers/JointTrajectoryController
+    joints:
+      - finger_L_joint
+      - finger_R_joint
+      - finger_3rd_joint

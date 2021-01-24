@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>tercero_ros_pkg</name>
+  <version>0.0.0</version>
+  <description>The tercero_ros_pkg package</description>
+
+  <maintainer email="hondasora@todo.todo">hondasora</maintainer>
+  <license>TODO</license>
+  <url type="repository">http://github.com/Nishida-Lab/tercero_ros_pkg</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>tercero_description</exec_depend>
+  <exec_depend>tercero_gazebo</exec_depend>
+
+  <export>
+    <metapackage />
+  </export>
+</package>

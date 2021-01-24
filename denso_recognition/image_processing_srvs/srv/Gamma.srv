@@ -1,0 +1,6 @@
+std_msgs/UInt16MultiArray roi_point
+std_msgs/UInt16MultiArray roi_size
+std_msgs/Float32 gamma
+sensor_msgs/Image input
+---
+sensor_msgs/Image output

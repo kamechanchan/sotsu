@@ -1,0 +1,19 @@
+<launch>
+  <!-- Override robot_name argument -->
+  <arg name="robot_name" default="vs087" />
+  <arg name="robot_options" default="vs087_with_mhand" />
+
+  <!-- Robot description argument -->
+  <arg name="robot_description" value="$(arg robot_name)_description" />
+
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <!--arg name="model" value="$(find denso_descriptions)/$(arg robot_description)/$(arg robot_name)/$(arg robot_options).urdf.xacro"/-->
+  <arg name="robot_path" default="$(find denso_descriptions)/$(arg robot_description)/$(arg robot_options)"/>
+  
+  <include file="$(arg robot_path)/launch/load_$(arg robot_options).launch" />
+
+  <param name="use_gui" value="true" />
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find denso_descriptions)/config/robot_state_visualize.rviz" required="true" />
+</launch>
