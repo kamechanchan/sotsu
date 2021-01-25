@@ -23,16 +23,22 @@ MeshCloudPublisher::MeshCloudPublisher(ros::NodeHandle& nh)
   const std::string link_name_prefix = "ARmarker_";
   const std::string link_name_extention = ".stl";
 
-  for (auto it = std::begin(ar_marker_indice); it != std::end(ar_marker_indice); ++it)
+  /*for (auto it = std::begin(ar_marker_indice); it != std::end(ar_marker_indice); ++it)
   {
     std::stringstream ss;
     ss << std::setfill('0') << std::right << std::setw(2) << *it;
     link_names_.push_back("ARmarker_" + ss.str() + ".stl");
     frame_names_.push_back("/true_ar_marker_" + std::to_string(*it) + "_center");
 
-    const std::string relative_path = "/meshes/ar_marker_cube_id" + ss.str() + "/" + link_names_.back();
-    this->getMesh(ros::package::getPath("ar_marker_urdf") + relative_path);
-  }
+   // const std::string relative_path = "/meshes/ar_marker_cube_id" + ss.str() + "/" + link_names_.back();
+   // this->getMesh(ros::package::getPath("ar_marker_urdf") + relative_path);
+    const std::string relative_path = "/object_description/meshes/STL/HV8.stl";
+    this->getMesh(ros::package::getPath("denso_descriptions") + relative_path);
+  }*/
+  const std::string relative_path = "/object_description/meshes/STL/HV8.stl";
+  //this->getMesh(ros::package::getPath("denso_descriptions") + relative_path);
+  this->getMesh("/home/tsuchida/HV8.stl");
+  frame_names_.push_back("HV8");
 
   this->transformMesh();
 

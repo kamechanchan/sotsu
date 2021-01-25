@@ -4,7 +4,7 @@
 #include <string.h>
 #include <XmlRpcValue.h>
 #include <angles/angles.h>
-
+#include <moveit/move_group_interface/move_group_interface.h>
 #include <urdf/model.h>
 
 #include <pluginlib/class_list_macros.h>
@@ -126,6 +126,7 @@ bool DensoRobotHWSim::initSim(const std::string& robot_namespace, ros::NodeHandl
     hardware_interface::JointHandle cmd_handle = position_joint_interface_.getHandle(name);
 
     boost::shared_ptr<const urdf::Joint> urdf_joint = urdf_model->getJoint(name);
+  
     joint_limits_interface::JointLimits limits;
     joint_limits_interface::SoftJointLimits soft_limits;
     if (!getJointLimits(urdf_joint, limits) || !getSoftJointLimits(urdf_joint, soft_limits))
@@ -161,6 +162,8 @@ void DensoRobotHWSim::readSim(ros::Time time, ros::Duration period)
     if (joint_types_[i] == 0)
     {
       joint_pos_[i] = sim_joints_[i]->GetAngle(0).Radian();
+
+      
     }
     else
     {

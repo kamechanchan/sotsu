@@ -28,7 +28,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${OpenCV_LIBRARIES}
 )
-
+#[[
 # test nodes
 add_executable(contrast_test
   src/test_node/contrast_test.cpp)
@@ -128,3 +128,4 @@ foreach(dirs ${DIRECTORIES})
   roslaunch_add_file_check(${dirs})
   endforeach()
 endif()
+]]

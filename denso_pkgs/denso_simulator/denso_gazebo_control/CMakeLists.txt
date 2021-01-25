@@ -45,6 +45,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
   ${GAZEBO_INCLUDE_DIRS}
   ${Boost_INCLUDE_DIRS}
+  /usr/include/eigen3/
 )
 
 add_executable(gazebo_grasp_contacts_bridge_node
