@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="assemble_posture_file" default="assemble_result.yaml" />
+  <arg name="grasp_object" default="HV8_0" />
+  <arg name="assembled_src_object" default="jig_HV6_0" />
+
+  <node pkg="teaching_processing" type="get_assemble_relative_posture.py" name="record_relative_assemble_point_node" output="screen">
+    <param name="assemble_posture_file" value="$(arg assemble_posture_file)" />
+    <param name="grasp_object" value="$(arg grasp_object)" />
+    <param name="assembled_src_object" value="$(arg assembled_src_object)" />
+  </node>
+</launch>

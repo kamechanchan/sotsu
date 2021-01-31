@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="false"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="false"/>
+
+  <!-- Spawn the robot -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find teaching_booth)/urdf/teaching_booth_with_photoneo.urdf.xacro'" />
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher" />
+
+  <include file="$(find phoxi_bringup)/launch/phoxi_bringup.launch" />
+
+  <!-- RViz -->
+  <arg name="rviz" default="true"/>
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find teaching_booth)/rviz/teaching_booth.rviz" />
+
+</launch>

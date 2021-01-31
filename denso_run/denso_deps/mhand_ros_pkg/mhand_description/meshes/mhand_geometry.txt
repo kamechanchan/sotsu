@@ -1,0 +1,22 @@
+#mhand_body
+link name mhand_body
+
+joint hand_link,finger_A,finger_B,finger_C
+
+origin 	hand_link (0 0 0)
+	fingerA	  (0.0215 0 -0.135)
+	fingerB	  (-0.01075 -0.01862 -0.135)
+	fingerC	  (-0.01075 0.01862 -0.135)
+
+axis 	hand_link (0 0 1)
+	fingerA	  (0 1 0)
+	fingerB	  (0 1 0)
+	fingerC	  (0 1 0)
+
+#mhand_finger
+link_name mhand_finger_A/B/C
+
+joint テキトー?
+
+axis 	(0 0 0)
+roll	(0 0 1)

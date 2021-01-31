@@ -1,0 +1,19 @@
+<launch>
+
+  <!-- arguments -->
+  <arg name="model" default="$(find iai_gripper_description)/robots/iai_gripper.urdf.xacro"/>
+  <!-- <arg name="gui" default="true" /> -->
+  <arg name="gui" default="false" />
+
+  <!-- prameters -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(arg model)'"/>
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <!-- nodes -->
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+  <!-- rviz -->
+  <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find iai_gripper_description)/launch/config/iai_gripper_description.rviz"/>
+
+</launch>

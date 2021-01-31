@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="iai_gripper_driver" type="listener.py" name="iai_gripper_listener" output="screen" />
+  <node pkg="iai_gripper_driver" type="activate.py" name="iai_gripper_activate" output="screen" />
+  <node pkg="iai_gripper_driver" type="monitoring_alarm.py" name="iai_gripper_alarm_monitor" output="screen" />
+
+</launch>

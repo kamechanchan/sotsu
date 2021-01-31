@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="iai_gripper" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find iai_gripper_description)/robots/iai_gripper.urdf.xacro"/>
+  <xacro:include filename="$(find iai_gripper_gazebo)/robots/iai_gripper.gazebo.xacro"/>
+  <xacro:include filename="$(find iai_gripper_gazebo)/robots/iai_gripper.gazebo.macro.xacro"/>
+
+  <link name="world" />
+  <joint name="joint_w" type="fixed">
+    <parent link="world"/>
+    <child link="hand_link"/>
+  </joint>
+</robot>

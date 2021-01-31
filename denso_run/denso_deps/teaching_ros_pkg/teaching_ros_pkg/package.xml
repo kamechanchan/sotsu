@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>teaching_ros_pkg</name>
+  <version>0.0.0</version>
+  <description>The teaching_ros_pkg package</description>
+  <maintainer email="yamafukukei@todo.todo">yamafukukei</maintainer>
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>teaching_booth</exec_depend>
+
+  <export>
+    <metapackage />
+  </export>
+</package>

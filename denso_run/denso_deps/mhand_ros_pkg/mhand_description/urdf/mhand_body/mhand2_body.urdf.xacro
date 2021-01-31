@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:macro name="mhand_body_v0" params="parent *joint_origin">
+    <joint name="mhand_link_joint" type="fixed">
+      <xacro:insert_block name="joint_origin"/>
+      <parent link="${parent}"/>
+      <child link="mhand_body_link"/>
+    </joint>
+
+    <link name="mhand_body_link">
+      <visual>
+	<geometry>
+	  <mesh filename="package://mhand_description/meshes/DAE/mhand2_body_origin.dae"/>
+	</geometry>
+	<!-- <material> -->
+	<!--   <color rgba="0.8 0 0.8 2.0"/> -->
+	<!-- </material> -->
+      </visual>
+      <collision>
+	<geometry>
+	  <mesh filename="package://mhand_description/meshes/STL/mhand2_body.stl"/>
+	</geometry>
+      </collision>
+      <inertial>
+	<origin xyz="0 0 0"/>
+	<mass value="0.968"/>
+	<inertia ixx="0.002" ixy="0.0" ixz="0.0"
+		 iyy="0.003" iyz="0.0"
+		 izz="0.001" />
+      </inertial>
+    </link>
+  </xacro:macro>
+
+</robot>

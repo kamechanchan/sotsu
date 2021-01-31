@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot name="teaching_booth_with_photoneo" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find denso_descriptions)/phoxi_camera_description/phoxi_camera.urdf.xacro" />
+  <xacro:include filename="$(find denso_descriptions)/common_description/common.xacro" />
+  <xacro:include filename="$(find teaching_booth)/urdf/world.urdf.xacro" />
+
+  <xacro:phoxi_camera_v0 size="L" sensor_parent_link_name="world" sensor_link_name="photoneo_center">
+    <origin xyz="-0.5429 -0.3457 0.8149" rpy="0.1866 0.851 0.2211" />
+  </xacro:phoxi_camera_v0>
+</robot>

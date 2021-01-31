@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find iai_gripper_description)/urdf/iai_gripper_finger/iai_gripper_finger.transmission.xacro"/>
+
+  <xacro:macro name="iai_gripper_finger_v0" params="suffix parent *joint_origin *joint_axis">
+	<joint name="finger_${suffix}_joint" type="prismatic">
+	  <xacro:insert_block name="joint_origin"/>
+	  <parent link="${parent}"/>
+	  <child link="iai_gripper_finger_${suffix}"/>
+	  <xacro:insert_block name="joint_axis"/>
+	  <limit lower="-0.007" upper="0" effort="0.5293" velocity="6.159937255" />
+	</joint>
+
+	<link name="iai_gripper_finger_${suffix}">
+	  <visual>
+	    <geometry>
+	      <mesh filename="package://iai_gripper_description/meshes/DAE/iai_gripper_finger.dae"/>
+	    </geometry>
+	  </visual>
+	  <collision>
+	    <geometry>
+	      <mesh filename="package://iai_gripper_description/meshes/STL/iai_gripper_finger.stl"/>
+	    </geometry>
+	  </collision>
+	  <inertial>
+	    <origin xyz="0 0 0"/>
+	    <mass value="0.145"/>
+	    <inertia ixx="0.002" ixy="0.0" ixz="0.0"
+		     iyy="0.002" iyz="0.0"
+		     izz="0.0" />
+	  </inertial>
+	</link>
+	<xacro:finger_transmission suffix="${suffix}"/>
+  </xacro:macro>
+
+</robot>

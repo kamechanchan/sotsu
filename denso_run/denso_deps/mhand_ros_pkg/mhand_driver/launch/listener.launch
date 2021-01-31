@@ -1,0 +1,10 @@
+<launch>
+
+  <arg name="default_torque" default="10" />
+  
+  <param name="use_hand" type="bool" value="true" />
+  <param name="/mhand/default_torque" type="int" value="$(arg default_torque)" />
+
+  <node pkg="mhand_driver" type="listener.py" name="mhand_listener" />
+  <node pkg="mhand_driver" type="set_default_torque.py" name="mhand_set_default_torque" />
+</launch>

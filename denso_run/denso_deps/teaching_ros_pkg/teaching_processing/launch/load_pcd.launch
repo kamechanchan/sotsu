@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="pcd_name" default="test"/>
+  <arg name="sensor_frame" default="photoneo_center_optical_frame"/>
+  <arg name="output_pc" default="pcd_data"/>
+  <arg name="package_name" default="teaching_processing"/>
+
+  <node pkg="teaching_processing" type="load_pcd" name="load_pcd_node">
+    <param name="pcd_name" value="$(arg pcd_name)"/>
+    <param name="sensor_frame" value="$(arg sensor_frame)"/>
+    <param name="output_pc" value="$(arg output_pc)"/>
+    <param name="package_name" value="$(arg package_name)"/>
+  </node>
+</launch>
