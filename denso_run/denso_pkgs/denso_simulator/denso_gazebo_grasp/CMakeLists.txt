@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(denso_gazebo_grasp)
 
-add_compile_options(-std=c++11)
+add_compile_options(-std=c++14)
 
 find_package(catkin REQUIRED COMPONENTS
   denso_gazebo_msgs
@@ -37,6 +37,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
+#[[
 
 add_executable(tercero_grasp_service_server
   src/process_vector.cpp
@@ -103,3 +104,4 @@ if(CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
   roslaunch_add_file_check(launch)
 endif()
+]]
