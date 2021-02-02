@@ -1,0 +1,32 @@
+------------Options------------
+arch: 3DCNN
+batch_size: 30
+beta1: 0.9
+checkpoints_dir: ../weights
+continue_train: False
+dataroot: ../datasets/
+dataset_mode: pose_estimation
+epoch_count: 1
+export_folder: ../weights/3DCNN/exports intermediate collapses to this folder
+gpu_ids: [0]
+gpu_num: 2
+is_train: True
+lr: 0.001
+lr_decay_iters: 50
+lr_policy: lambda
+max_dataset_size: 1000
+name: 3DCNN
+niter: 100
+niter_decay: 500
+no_vis: False
+num_epoch: 100
+num_threads: 8
+phase: train
+print_freq: 10
+run_test_freq: 1
+save_epoch_freq: 10
+save_latest_freq: 250
+serial_batches: True
+verbose_plot: True
+which_epoch: latest
+-------------End---------------

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="max_data" default="100" />
+  <arg name="lookup_timeout" default="20" />
+  <arg name="package_name" default="6dof_pose_estimator" />
+  <arg name="data_name" default="data1" />
+  <arg name="optical_sensor_frame" default="photoneo_center_optical_frame" />
+  <arg name="object_name" default="HV8" />
+  <arg name="src_cloud_topic" default="/photoneo_center/sensor/points" />
+
+  <node pkg="gen_dataset" type="record_euler" name="record_euler" output="screen">
+    <param name="max_data" value="$(arg max_data)" />
+    <param name="lookup_timeout" value="$(arg lookup_timeout)" />
+    <param name="package_name" value="$(arg package_name)" />
+    <param name="data_name" value="$(arg data_name)" />
+    <param name="optical_sensor_frame" value="$(arg optical_sensor_frame)" />
+    <param name="object_name" value="$(arg object_name)" />
+    <param name="src_cloud_topic" value="$(arg src_cloud_topic)" />
+  </node>
+</launch>

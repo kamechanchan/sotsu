@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<launch>
+ <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="world_name" value="$(find gen_dataset)/worlds/empty.world"/>
+  </include>
+
+  <arg name="gui" default="true"/>
+  <param name="use_gui" value="$(arg gui)"/>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find gen_dataset)/rviz/generator_config.rviz" required="true" />
+  <include file="$(find gen_dataset)/launch/gen_photoneo.launch" />
+
+    <arg name="sensor_parent_frame" default="photoneo_center_v2_optical_frame" />
+    <arg name="topic_name" default="photoneo_center" />
+    <arg name="object_name" default="HV7" />
+    <arg name="object_up" default="HV7_up" />
+    <arg name="object_down" default="HV7_down" />
+    <arg name="init_x" default="0" />
+    <include file="$(find gen_dataset)/launch/gen_object.launch" >
+      <arg name="object_name" value="$(arg object_name)" />
+      <arg name="object_up" value="$(arg object_up)" />
+      <!--arg name="object_down" value="$(arg object_down)" /-->
+    </include>
+    <node pkg="gen_dataset" type="random_move_euler.py" name="random_move_euler" output="screen" >
+      <param name="object_name" value="$(arg object_name)" />
+      <param name="sensor_parent_frame" value="$(arg sensor_parent_frame)" />
+      <param name="topic_name" value="$(arg topic_name)" />
+      <param name="object_up" value="$(arg object_up)" />
+      <param name="object_down" value="$(arg object_down)" />
+      <param name="init_x" value="$(arg init_x)" />
+    </node>
+  <node name="setup_commands" pkg="timed_roslaunch" type="timed_roslaunch.sh" args="3 gen_dataset setup_commands.launch" output="screen" />
+
+</launch>

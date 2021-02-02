@@ -1,0 +1,33 @@
+------------Options------------
+arch: C3D_Voxcel
+batch_size: 10
+beta1: 0.9
+checkpoints_dir: ../weights
+continue_train: False
+dataroot: ../
+dataset_mode: pose_estimation
+dataset_model: HV8
+epoch_count: 1
+export_folder: ../weights/debug/exports intermediate collapses to this folder
+gpu_ids: []
+gpu_num: 2
+is_train: True
+lr: 0.001
+lr_decay_iters: 50
+lr_policy: lambda
+max_dataset_size: inf
+name: debug
+niter: 100
+niter_decay: 500
+no_vis: False
+num_epoch: 150
+num_threads: 3
+phase: trainval
+print_freq: 10
+run_test_freq: 1
+save_epoch_freq: 1
+save_latest_freq: 250
+serial_batches: False
+verbose_plot: False
+which_epoch: latest
+-------------End---------------
