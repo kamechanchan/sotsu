@@ -1,7 +1,17 @@
+
+```
 sudo apt install ros-noetic-ros-numpy
+
+
 sudo apt install pcl-tools
+
+
 sudo apt install -y libpcl-dev
+
+
 sudo apt install -y python3-pip
+
+
 sudo apt install -y python3-pcl
 sudo apt install -y python3-h5py
 pip3 install open3d
@@ -14,3 +24,4 @@ pip3 install torch==1.7.1+cpu torchvision==0.8.2+cpu torchaudio==0.7.2 -f https:
 cd ~/ros_package/denso_ws 
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y
+```
