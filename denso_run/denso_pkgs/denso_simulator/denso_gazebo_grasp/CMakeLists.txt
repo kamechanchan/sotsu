@@ -37,7 +37,7 @@ include_directories(
   include
   ${catkin_INCLUDE_DIRS}
 )
-#[[
+
 
 add_executable(tercero_grasp_service_server
   src/process_vector.cpp
@@ -104,4 +104,3 @@ if(CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
   roslaunch_add_file_check(launch)
 endif()
-]]

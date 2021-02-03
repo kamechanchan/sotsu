@@ -41,7 +41,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
-#[[
+
 add_executable(moving_behavior
   src/moving/moving_behavior.cpp
   src/moving/moving_behavior_node.cpp)
@@ -120,4 +120,3 @@ if(CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
   roslaunch_add_file_check(launch)
 endif()
-]]

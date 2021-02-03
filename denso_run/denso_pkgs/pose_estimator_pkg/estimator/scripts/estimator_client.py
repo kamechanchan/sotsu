@@ -1,10 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../gen_dataset'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer/options'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/gen_dataset'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/options'))
 
 from options.test_options import TestOptions
 from test import *
@@ -75,8 +75,9 @@ class PoseEstNode():
 
         self.object_name_stl = model_loader("N" + self.object_name + ".pcd")
         if self.object_name == "HV8":
-            self.object_name_stl = self.object_name_stl.scale(0.001, center=False)
-
+           # self.object_name_stl.asnumpy()
+            #self.object_name_stl = self.object_name_stl.scale(0.001, center=True)
+            self.object_name_stl = self.object_name_stl
         self.stl_est = copy.deepcopy(self.object_name_stl)
         self.stl_ref = copy.deepcopy(self.object_name_stl)
 
@@ -110,7 +111,7 @@ class PoseEstNode():
         else:
             print("estimator_client.py error!: Cloud not find arch!!")
             sys.exit(3)
-
+        
         res = self.getPoseData()
         est_time = res.stamp
         if self.arch == "PointNet_Pose":

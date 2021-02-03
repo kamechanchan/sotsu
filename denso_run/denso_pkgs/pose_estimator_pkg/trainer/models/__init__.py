@@ -1,10 +1,10 @@
 from .pose_estimate import EstimatorModel
-import torch
+from torch import nn
 
 
 def create_model(opt):
-    model = torch.nn.DataParallel(opt)
+    model = nn.DataParallel(opt)
     #cudnn.benchmark = False
-    model = EstimatorModel(opt)
+    model = EstimatorModel(model.module)
     
     return model

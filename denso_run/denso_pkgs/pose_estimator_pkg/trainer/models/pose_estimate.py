@@ -101,7 +101,7 @@ class EstimatorModel:
         state_dict = torch.load(load_path, map_location=str(self.device))
         if hasattr(state_dict, "_metadata"):
             del state_dict._metadata
-        net.load_state_dict(state_dict)
+        net.load_state_dict(state_dict,strict=False)
 
 
     def save_network(self, which_epoch):
