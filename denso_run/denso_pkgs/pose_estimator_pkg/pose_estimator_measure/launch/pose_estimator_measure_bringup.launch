@@ -4,7 +4,7 @@
   her we connect to a Simulated or Real robot -->
   <!--  - if sim=false, a ip_address argument is required -->
   <arg name="sim" default="true" />
-  <arg name="ip_address" default="192.168.1.22" />
+  <arg name="ip_address" default="192.168.1.21" />
 
   <!-- Load defferent move_group.launch file -->
   <arg name="move_group_launch_file" default="move_group.launch" />
@@ -16,7 +16,7 @@
 
   <!-- Choose robot options -->
   <arg name="robot_name" default="vs087" />
-  <arg name="robot_options" default="vs087_with_measure" />
+  <arg name="robot_options" default="vs087" />
   <arg name="sensor_config" default="photoneo" />
 
   <!-- Use custom RobotHWSim? -->
@@ -57,15 +57,15 @@
   </group>
 
   <!-- photoneo_sensor: "photoneo_center" -->
-  <node name="from_world_to_photoneo_center_static_tf" pkg="tf" type="static_transform_publisher" args="1.1114 0.255 0.96 -2.9419 0.5721 0.1193 world photoneo_center 50" />
+<!--   <node name="from_world_to_photoneo_center_static_tf" pkg="tf" type="static_transform_publisher" args="1.1114 0.255 0.96 -2.9419 0.5721 0.1193 world photoneo_center 50" />
   <node pkg="sensor_frame_broadcaster" type="sensor_frame_broadcaster.py" name="photoneo_center_frame" output="screen">
     <param name="sensor_name" type="str" value="photoneo_center" />
   </node>
 
-  <!-- measure pose broadcaster -->
-  <node pkg="measure_bringup_pkg" name="grand_truth_broadcaster" type="grand_truth_broadcaster.py" output="screen" />
 
-  <!--  phoxi_bringup -->
-  <include file="$(find phoxi_bringup)/launch/phoxi_bringup.launch" />
+ -->  <!-- measure pose broadcaster -->
+  <node pkg="pose_estimator_measure" name="grand_truth_broadcaster" type="grand_truth_broadcaster.py" output="screen" />
+
+  <!--include file="$(find phoxi_bringup)/launch/phoxi_bringup.launch" /-->
 
 </launch>

@@ -1,6 +1,7 @@
 #request
 std_msgs/Float32MultiArray input_cloud
-pose_estimator_msgs/InputCNNArray input_voxel
+pose_estimator_msgs/InputCNN input_voxel
+# pose_estimator_msgs/InputCNNArray input_voxel
 string topic
 
 ---

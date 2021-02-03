@@ -27,7 +27,7 @@ class Voxel_Loader(Base_Loader):
             voxel = self.hdf5_file["data_" + str(n)]['voxel'][()]
             pose = self.hdf5_file["data_" + str(n)]['pose'][()]
             self.x_data[n, 1 - 1] = voxel.reshape(self.div, self.div, self.div)
-            self.y_data[n] = self.conv_quat2mat(pose)
+            self.y_data[n] = self.conv_euler2mat(pose)
 
 
 if __name__ == "__main__":

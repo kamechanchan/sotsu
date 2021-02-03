@@ -1,10 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+
 import rospy
 import tf2_ros
 from sensor_msgs.msg import PointCloud2
 import open3d as o3d
-from util import *
+from cloud_util import *
 import random
 import time
 import numpy as np
@@ -51,7 +54,7 @@ class GT_Listener(object):
 #        ))
 #
         try:
-            gt = self.tfBuffer.lookup_transform(self.sensor_frame_id, "Grand_Truth", rospy.Time())
+            gt = self.tfBuffer.lookup_transform(self.sensor_frame_id, "grand_truth", rospy.Time())
 #            print("Grand Truth\n")
 #            print('{0:.2f}, {1:.2f}, {2:.2f}, {3:.2f}, {4:.2f}, {5:2f}'.format(
 #                gt.transform.translation.x,
@@ -122,6 +125,6 @@ if __name__ == '__main__':
 
     rospy.init_node('cropped_cloud_repulisher')
     node = GT_Listener("cropped_pointcloud")
-    
+
     while not rospy.is_shutdown():
         rospy.sleep(0.1)

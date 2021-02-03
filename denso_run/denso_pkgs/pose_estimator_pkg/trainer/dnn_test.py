@@ -26,13 +26,11 @@ def run_test(opt, dataset):
         val_loss += loss
     return val_loss
 
-def estimation(opt, data):
+def estimation(model, data):
 
-    model = create_model(opt)
     time_sta = time.time()
     model.set_input(data)
     pred = model.test_step()
-    pred = pred.to('cpu').detach().numpy().copy()
     time_end = time.time()
 
     return pred, (time_end - time_sta)

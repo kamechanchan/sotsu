@@ -1,20 +1,27 @@
 #!/usr/bin/env bash
 
+echo 'Train with PointNet'
+echo 'Dataset Model is '$@'!'
+echo ''
+
+for i in $@
+do
+
 ## run the training
 python2 train.py \
 --dataroot ../datasets \
---dataset_model HV8 \
+--dataset_model $i \
 --resolution 1024 \
 --phase train \
 --name PointNet \
 --dataset_mode pose_estimation \
 --batch_size 32 \
---max_dataset_size 1000 \
---num_epoch 400 \
+--max_dataset_size 500 \
+--num_epoch 600 \
 --arch PointNet_Pose \
 --print_freq 10 \
---save_latest_freq 10000 \
---save_epoch_freq 1 \
+--save_latest_freq 1000 \
+--save_epoch_freq 10 \
 --run_test_freq 1 \
 --gpu_ids 0 \
 --gpu_num 3 \
@@ -23,3 +30,4 @@ python2 train.py \
 --verbose_plot True\
 --lr 0.0001 \
 
+done

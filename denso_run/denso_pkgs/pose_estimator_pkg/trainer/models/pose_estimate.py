@@ -7,14 +7,17 @@ from . import networks
 from os.path import join
 from utils.util import print_network
 
+
 class EstimatorModel:
     def __init__(self, opt):
         self.opt = opt
         self.name = opt.name
+        self.checkpoints_dir = opt.checkpoints_dir
+        self.dataset_model = self.opt.dataset_model
+        self.save_dir = join(self.checkpoints_dir, opt.name, self.dataset_model)
         self.gpu_ids = opt.gpu_ids
         self.device = torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
         self.is_train = opt.is_train
-        self.save_dir = join(opt.checkpoints_dir, opt.name)
 
         self.optimizer = None
         self.x_data  = None
@@ -33,6 +36,7 @@ class EstimatorModel:
         if not self.is_train:
             self.load_network(opt.which_epoch)
 
+
     def get_centroid(self, data):
         x_mean = torch.mean(data, axis=1)
         x_mean = x_mean.unsqueeze(1)
@@ -40,18 +44,27 @@ class EstimatorModel:
         data = data - x_mean
         return data
 
+
     def set_input(self, data):
-        x_data = torch.from_numpy(data["x_data"].astype(np.float32))
-        y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+        if self.opt.phase == "train":
+            x_data = torch.from_numpy(data["x_data"].astype(np.float32))
+            y_data = torch.from_numpy(data["y_data"].astype(np.float32))
 
-        if self.name == "PointNet":
-            x_data = self.get_centroid(x_data)
-            x_data = x_data.transpose(2, 1)
-            y_rot = y_data[:, 3:]
-            y_pos = y_data[:, :3] - self.position_offset.squeeze()
-            y_data = torch.cat([y_pos, y_rot], dim=1)
+            if self.name == "PointNet":
+                x_data = x_data.transpose(2, 1)
 
-        self.x_data, self.y_data = x_data.to(self.device), y_data.to(self.device)
+            self.x_data, self.y_data = x_data.to(self.device), y_data.to(self.device)
+
+        elif self.opt.phase == "test":
+            x_data = torch.from_numpy(data)
+            x_data = x_data.float()
+
+            if self.name == "PointNet":
+                # x_data = self.get_centroid(x_data)
+                x_data = x_data.transpose(2, 1)
+
+            self.x_data = x_data.to(self.device)
+
 
     def train_step(self):
         self.net.train()
@@ -63,16 +76,19 @@ class EstimatorModel:
         self.optimizer.step()
         return self.loss.item() * self.x_data.size(0)
 
+
     def val_step(self):
         self.net.eval()
         pred = self.net(self.x_data)
         self.loss = self.criterion(pred, self.y_data)
         return self.loss.item() * self.x_data.size(0)
 
+
     def test_step(self):
         pred = self.net(self.x_data)
-        pred = pred.to('cpu').detach().numpy.copy()
+        pred = pred.to('cpu').detach().numpy().copy()
         return pred
+
 
     def load_network(self, which_epoch):
         save_filename = "%s_net.pth" % which_epoch

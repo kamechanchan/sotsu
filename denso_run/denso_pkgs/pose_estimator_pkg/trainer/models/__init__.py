@@ -1,4 +1,4 @@
-def create_model(out):
+def create_model(opt):
     from .pose_estimate import EstimatorModel
-    model = EstimatorModel(out)
+    model = EstimatorModel(opt)
     return model

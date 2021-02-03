@@ -41,20 +41,20 @@ class C3D_VOXEL(nn.Module):
         out = self.max_pool1(out)
         fl = torch.flatten(out, 1)
 
+
         h1 = self.relu(self.fc_pos1(fl))
-        h1 = self.dropout(h1)
         h1 = self.relu(self.fc_pos2(h1))
         h1 = self.relu(self.fc_pos3(h1))
-        h1 = self.sigmoid(self.fc_pos4(h1))
+        h1 = self.tanh(self.fc_pos4(h1))
+        # h1 = self.fc_pos4(h1)
+        # h1 = self.sigmoid(self.fc_pos4(h1))
 
         h2 = self.relu(self.fc_ori1(fl))
-        h2 = self.dropout(h2)
         h2 = self.relu(self.fc_ori2(h2))
         h2 = self.relu(self.fc_ori3(h2))
         h2 = self.tanh(self.fc_ori4(h2))
 
         y = torch.cat([h1, h2], axis=1)
-
         return y
 
 

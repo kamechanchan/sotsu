@@ -38,6 +38,18 @@ $ mkdir {$arch}
 put on your datasets on the directory.
 Note, *.hdf5 format file is only available.
 
+### Make Dataset on your own
+Run generate_dataset
+ ```
+ $ cd gen_dataset
+ ```
+ 
+  ```
+ $ roslaunch gen_dataset gen_dataset.launch num_dataset:={$num_dataset}
+ ```
+ - `{$num_dataset}` -> dataset number
+ 
+
 ### Training
 Run training
  ```

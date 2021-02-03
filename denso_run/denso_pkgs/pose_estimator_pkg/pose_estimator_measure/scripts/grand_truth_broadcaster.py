@@ -7,21 +7,6 @@ import math
 
 
 
-class GrandTruthTFbr(object):
-    def _init__(self, x=0, y=0.24, z=0.024):
-        rospy.init_node('GrandTruthbr', anonymous=True)
-        self.tf_buffer = tf2_ros.Buffer()
-        self.tf_listener = tf2_ros.TransformListener(self.tf_buffer)
-        self.x = x
-        self.y = y
-        self.z = z
-        self.bbox_pose_center = geometry_msgs.msg.TransformStamped()
-
-    def set_center(self, bbox_pose_center):
-
-
-
-
 class GT_Broadcaster(object):
     def __init__(self, x=0, y=0.24, z=0.024):
         self.x = x
@@ -34,11 +19,11 @@ class GT_Broadcaster(object):
 
     def set_bbox(self, bbox_L, bbox_H):
         self.bbox_pose_L.header.stamp = rospy.Time.now()
-        self.bbox_pose_L.header.frame_id = "Grand_Truth"
+        self.bbox_pose_L.header.frame_id = "grand_truth"
         self.bbox_pose_L.child_frame_id = "BBox_L"
 
         self.bbox_pose_H.header.stamp = rospy.Time.now()
-        self.bbox_pose_H.header.frame_id = "Grand_Truth"
+        self.bbox_pose_H.header.frame_id = "grand_truth"
         self.bbox_pose_H.child_frame_id = "BBox_H"
 
         self.bbox_pose_H.transform.translation.x = bbox_H.position.x
@@ -62,13 +47,14 @@ class GT_Broadcaster(object):
         tf_list = []
         self.bbox_pose_center.header.stamp = rospy.Time.now()
         self.bbox_pose_center.header.frame_id = "J6"
-        self.bbox_pose_center.child_frame_id = "Grand_Truth"
+        self.bbox_pose_center.child_frame_id = "grand_truth"
 
         self.bbox_pose_center.transform.translation.x = self.x
         self.bbox_pose_center.transform.translation.y = self.y
         self.bbox_pose_center.transform.translation.z = self.z
 
-        quat = tf.transformations.quaternion_from_euler(0, math.pi, -math.pi/2 + 1.22)
+        # quat = tf.transformations.quaternion_from_euler(0, math.pi, -math.pi/2 + 1.22)
+        quat = tf.transformations.quaternion_from_euler(0, math.pi, -math.pi/2)
 
         self.bbox_pose_center.transform.rotation.x = quat[0]
         self.bbox_pose_center.transform.rotation.y = quat[1]
@@ -85,8 +71,15 @@ class GT_Broadcaster(object):
 
 if __name__ == '__main__':
     rospy.init_node('measure_position_broadcaster')
-    #node = GT_Broadcaster(x=0.16, y=0, z=0.1625)
-    node = GT_Broadcaster(x=0, y=0.16, z=0.1745)
+
+    node = GT_Broadcaster(x=-0.001, y=0.16149, z=0.171)  ##for HV8
+    # node = GT_Broadcaster(x=-0.001, y=0.160, z=0.169)    ##for HV6
+    # node = GT_Broadcaster(x=-0.001, y=0.160, z=0.167)    ##for HV6
+    # node = GT_Broadcaster(x=0.001, y=0.161, z=0.167)    ##for HV6
+
+    # node = GT_Broadcaster(x=-0.001, y=0.16149, z=0.174)  ##for HV8
+    #node = GT_Broadcaster(x=-0.001, y=0.160, z=0.169)    ##for HV6
+    # node = GT_Broadcaster(x=-0.001, y=0.160, z=0.169)    ##for HV6
 
     Bbox_L = geometry_msgs.msg.Pose()
     Bbox_H = geometry_msgs.msg.Pose()

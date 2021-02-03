@@ -4,17 +4,20 @@
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer/options'))
 
 from options.test_options import TestOptions
+from models import create_model
 from dnn_test import estimation
-import function as f
+import function.predict_pose as f
 
 import numpy as np
 from scipy import linalg
 import time
 
 # ROS
-import rospy
+import rospy, rospkg
 import roslib.packages
 from pose_estimator_srvs.srv import PoseEstimate, PoseEstimateResponse
 from geometry_msgs.msg import Vector3
@@ -29,51 +32,59 @@ class DnnNode():
     def __init__(self):
         rospy.init_node("Pose_Estimation_server")
         rospy.loginfo("Ready.")
-
+        rospack = rospkg.RosPack()
         self.opt = TestOptions().parse()
-        self.opt.name = "PointNet"
-        self.opt.dataset_mode = "pose_estimation"
-        self.opt.batch_size = 30
-        self.opt.arch = "PointNet"
-        self.opt.num_threads = 8
-        self.opt.gpu_id = "0"
-        self.opt.checkpoints_dir = "../../weights"
+        self.opt.dataset_model = rospy.get_param("~object_name", "HV8")
+        self.opt.name = rospy.get_param("~name", "PointNet")
+        self.opt.dataset_mode = rospy.get_param("~dataset_mode", "pose_estimation")
+        self.opt.batch_size = rospy.get_param("~batch_size", 30)
+        self.arch = rospy.get_param("~arch", "PointNet_Pose")
+        self.opt.arch = self.arch
+        self.opt.resolution = rospy.get_param("~resolution", 1024)
+        self.opt.num_threads = rospy.get_param("~num_threads", 8)
+        self.opt.gpu_id = rospy.get_param("~gpu_id", "1")
+        self.package_path = rospack.get_path("estimator")
+        self.opt.checkpoints_dir = self.package_path + "/../weights"
+
+        self.model = create_model(self.opt)
 
         self.output_pos_num = 3
         self.output_ori_num = 9
+
+    def run_service(self):
         service = rospy.Service("pose_estimation", PoseEstimate, self.callback)
 
     def callback(self, req):
         t0 = time.time()
         res = PoseEstimateResponse()
 
-        if  req.input_cloud.data:
+        if  self.arch == "PointNet_Pose":
             data = req.input_cloud.data
-            y_pre = f.predict_pose(self.opt, data, "PointNet")
-            y = y_pre[0].squeeze()
-            op_time = y_pre[1]
+            est_pose, est_time = f.predict_pose(self.model, data, "PointNet")
             res.success = True
-            res.pose.position.x = y[0]
-            res.pose.position.y =  y[1]
-            res.pose.position.z =  y[2]
-            res.pose.orientation.x = y[3]
-            res.pose.orientation.y = y[4]
-            res.pose.orientation.z = y[5]
-            res.pose.orientation.w = y[6]
-            res.stamp = op_time
 
-            return res
-
-        elif req.input_voxel.data:
+        elif self.arch == "3DCNN":
             data = req.input_voxel
-            y_pre = f.predict_pose(self.opt, data, "C3D_Voxel")
+            est_pose, est_time = f.predict_pose(self.model, data, "C3D_Voxel")
+            res.success = True
 
+        else:
+            print("Error while pose prediction operation")
+            res.success = False
+
+        res.trans.transform.translation = est_pose.pose.position
+        res.trans.transform.rotation = est_pose.pose.orientation
+        res.trans.header.stamp = rospy.Time.now()
+        res.stamp = est_time
+
+        return res
 
 if __name__ == "__main__":
-
+    node = DnnNode()
     try:
-        node = DnnNode()
+        node.run_service()
         rospy.spin()
-    except rospy.ROSInterruptException: pass
+    except rospy.ROSInterruptException:
+        sys.exit()
 
 

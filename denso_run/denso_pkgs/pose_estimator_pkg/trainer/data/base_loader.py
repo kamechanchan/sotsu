@@ -30,6 +30,7 @@ class Base_Loader(object):
         conv_vec[3:12] = trans_euler[0:3, 0:3].reshape(9)
         return conv_vec
 
+
     def get_data(self, index):
         return self.x_data[index], self.y_data[index]
 

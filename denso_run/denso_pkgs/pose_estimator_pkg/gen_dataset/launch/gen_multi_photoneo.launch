@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <launch>
-  <arg name="use_sensor_type" default="phoxi_camera_multi" />
+  <arg name="use_sensor_type" default="phoxi_camera" />
   <arg name="sensor_parent_frame" default="world" />
   <arg name="sensor_tag" default="photoneo_0" />
   <arg name="sensor_model" value="$(find denso_gazebo)/urdf/sensors/$(arg use_sensor_type).urdf.gazebo.xacro"/>

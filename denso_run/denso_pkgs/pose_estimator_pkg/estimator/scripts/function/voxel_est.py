@@ -1,57 +1,48 @@
 import sys
 import os
+import numpy as np
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../trainer'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
 
 from options.test_options import TestOptions
 from dnn_test import estimation
+from geometry_msgs.msg import Vector3, Quaternion, PoseStamped
+from tf.transformations import quaternion_from_matrix
+from scipy import linalg
+from scipy.spatial.transform import Rotation
+
+def pose_prediction(opt, input_data):
+    resolution = 50
+    x = np.array(input_data.voxel_array.data).reshape(resolution, resolution, resolution)[np.newaxis, :]
+    x = x[np.newaxis, :]
+    y_pre = estimation(opt, x)
+    y = np.squeeze(y_pre[0])
+    est_time = y_pre[1]
+    y_pos = y[0:3]
+    y_ori = y[3:]
 
 
-def pose_prediction(opt, data):
-    orientation = "quaternion"
-    n_data = len(input_voxel)
-    x = np.zeros((n_data, channel, axis_z, axis_y, axis_x), dtype="float32")
+    y_pos = y_pos * input_data.pose.orientation.x
+    translation = Vector3(y_pos[0] + input_data.pose.position.x,
+                          y_pos[1] + input_data.pose.position.y,
+                          y_pos[2] + input_data.pose.position.z)
 
-    for n in range(0, n_data):
-        voxel = np.array(input_voxel.voxels[n].input_voxel.data)
-        x[n, channel - 1] = voxel.reshape(axis_x, axis_y, axis_z)
 
-    y_pre = estimation(self.opt, x)
-    y = y_pre[0].squeeze()
-    y_pos = y[0, 0:3]
-    y_ori = y[0, 3:]
 
-    y_pos = y_pos * input_data.voxels[0].pose.orientation.x
-    translation = Vector3(y_pos[0] + input_data.voxels[0].pose.position.x,
-                          y_pos[1] + input_data.voxels[0].pose.position.y,
-                          y_pos[2] + input_data.voxels[0].pose.position.z)
-
-    if orientation == "quaternion":
-        nrm = y_ori[0]*y_ori[0] + y_ori[1] + y_ori[2]*y_ori[2] + y_ori[3]*y_ori[3]
-
-        y_ori_x = xp.sign(y_ori[0]) * xp.sqrt(
-        (y_ori[0] * y_ori[0] / float(nrm)))
-        y_ori_y = xp.sign(y_ori[1]) * xp.sqrt(
-        (y_ori[1] * y_ori[1] / float(nrm)))
-        y_ori_z = xp.sign(y_ori[2]) * xp.sqrt(
-        (y_ori[2] * y_ori[2] / float(nrm)))
-        y_ori_w = xp.sign(y_ori[3]) * xp.sqrt(
-        (y_ori[3] * y_ori[3] / float(nrm)))
-        rotation = Quaternion(y_ori_x, y_ori_y, y_ori_z, y_ori_w)
-
-    elif orientation == "euler":
-        y_ori = y_ori * np.pi
-        y_ori = quaternion_from_euler(y_ori[0], y_ori[1], y_ori[2])
-        rotation = Quaternion(y_ori[0], y_ori[1], y_ori[2], y_ori[3])
-
-    elif orientation == "rotation_matrix":
-        y_ori_mat = np.zeros((3, 3), dtype=np.float64)
-        for i in range(0, 3):
+    y_ori_mat = np.zeros((3, 3), dtype=np.float64)
+    for i in range(0, 3):
+        for j in range(0, 3):
             y_ori_mat[i][j] = y_ori[i * 3 + j]
-        u, p = linalg.polar(y_ori_mat, side="right")
-        rotation_matrix = u
-        rotation_matrix = np.insert(rotation_matrix, 3, [0, 0, 0], axis=1)
-        rotation_matrix = np.insert(rotation_matrix, 3, [0, 0, 0, 1], axis=0)
-        y_ori = quaternion_from_matrix(rotation_matrix)
-        rotation = Quaternion(y_ori[0], y_ori[1], y_ori[2], y_ori[3])
+    rot = Rotation.from_dcm(y_ori_mat)
+    y_euler = rot.as_quat()
 
-    return y_pos, rotation, y_pre[1]
+    est_pose = PoseStamped()
+    est_pose.pose.position.x = translation.x
+    est_pose.pose.position.y = translation.y
+    est_pose.pose.position.z = translation.z
+    est_pose.pose.orientation.x = y_euler[0]
+    est_pose.pose.orientation.y = y_euler[1]
+    est_pose.pose.orientation.z = y_euler[2]
+    est_pose.pose.orientation.w = y_euler[3]
+
+    return (est_pose, est_time)

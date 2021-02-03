@@ -19,9 +19,8 @@ RecordEuler::RecordEuler(ros::NodeHandle& nh) : nh_(nh), tf_listener_(tf_buffer_
 {
   ros::param::param<int>("~max_data", max_data_, 100);
   ros::param::param<int>("~lookup_timeout", timeout_, 20);
-  ros::param::param<std::string>("~package_name", package_name_, "6dof_pose_estimator");
-  ros::param::param<std::string>("~data_name", data_name_, "data1");
-  ros::param::param<std::string>("~optical_sensor_frame", optical_sensor_frame_, "photoneo_center_optical_frame");
+  ros::param::param<std::string>("~package_name", package_name_, "gen_dataset");
+  ros::param::param<std::string>("~optical_sensor_frame", optical_sensor_frame_, "photoneo_center_v3_optical_frame");
   ros::param::param<std::string>("~object_name", object_name_, "HV8");
   ros::param::param<std::string>("~src_cloud_topic", src_cloud_topic_, "/photoneo_center/sensor/points");
   cloud_sub_ = nh.subscribe(src_cloud_topic_, 1, &RecordEuler::receiveCloudCallback, this);

@@ -11,16 +11,16 @@ def num2ros_transform(pos, ori):
     trans.transform.rotation.w = ori[3]
     return trans
 
-def predict_pose(opt, data, arg):
+def predict_pose(model, data, arg):
     if arg == "PointNet":
         from pointnet_est import *
-        y = pose_prediction(opt, data)
-        return y
+        y, est_time = pose_prediction(model, data)
+        return y, est_time
 
-    elif arg == "C3D_voxel":
+    elif arg == "C3D_Voxel":
         from voxel_est import *
-        y = pose_prediction(opt, data)
-        return num2ros_transform(y[0], y[1])
+        y, est_time = pose_prediction(model, data)
+        return y, est_time
     else:
-        print("error")
+        print("Cloud not predict DNN arch. __init_.py Error!")
 

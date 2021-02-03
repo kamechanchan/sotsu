@@ -12,7 +12,8 @@ class Writer:
     def __init__(self, opt):
         self.opt = opt
         self.name = self.opt.name
-        self.save_dir = os.path.join(opt.checkpoints_dir, self.name)
+        self.dataset_model = self.opt.dataset_model
+        self.save_dir = os.path.join(opt.checkpoints_dir, self.name, self.dataset_model)
         self.log_name = os.path.join(self.save_dir, "loss_log.txt")
         self.testacc_log = os.path.join(self.save_dir, "testacc_log.txt")
         self.start_logs()
@@ -20,7 +21,7 @@ class Writer:
         self.ncorrect = 0
 
         if opt.is_train and not opt.no_vis and SummaryWriter is not None:
-            self.display = SummaryWriter(comment=self.name)
+            self.display = SummaryWriter(comment=self.name + "_" + self.dataset_model)
         else:
             self.display = None
 
