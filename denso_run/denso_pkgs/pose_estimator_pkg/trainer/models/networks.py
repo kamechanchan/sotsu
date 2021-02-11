@@ -24,7 +24,7 @@ def define_network(opt):
 
     if arch == "3DCNN":
         
-        net = C3D_VOXEL(3, 9)
+        net = C3D_VOXEL(3, 3)
     elif arch == "PointNet_Pose":
         
         net = POINTNET(3, 9)

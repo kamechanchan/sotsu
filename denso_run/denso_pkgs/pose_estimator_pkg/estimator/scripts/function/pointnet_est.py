@@ -12,13 +12,13 @@ from geometry_msgs.msg import PoseStamped
 def pose_prediction(opt, data):
     n_data = len(data)
     row = 3
-    col = n_data / row
+    col = n_data // row
     x = np.reshape(np.array(data), (col, row))[np.newaxis, :, :]
     y_pre = estimation(opt, x)
     y = np.squeeze(y_pre[0])
     est_time = y_pre[1]
     y_pos = y[0:3]
-    rot = Rotation.from_dcm(y[3:12].reshape(3, 3))
+    rot = Rotation.from_matrix(y[3:12].reshape(3, 3))
     y_euler = rot.as_quat()
     y = np.r_[y_pos, y_euler]
 

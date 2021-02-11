@@ -48,7 +48,8 @@ class EstimatorModel:
     def set_input(self, data):
         if self.opt.phase == "train":
             x_data = torch.from_numpy(data["x_data"].astype(np.float32))
-            y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+            y_data = torch.from_numpy(data["y_data"].astype(np.float32)) 
+        
 
             if self.name == "PointNet":
                 x_data = x_data.transpose(2, 1)
@@ -60,7 +61,7 @@ class EstimatorModel:
             x_data = x_data.float()
 
             if self.name == "PointNet":
-                # x_data = self.get_centroid(x_data)
+                #x_data = self.get_centroid(x_data)
                 x_data = x_data.transpose(2, 1)
 
             self.x_data = x_data.to(self.device)

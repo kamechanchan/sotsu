@@ -3,8 +3,8 @@ from torch import nn
 
 
 def create_model(opt):
-    model = nn.DataParallel(opt)
+    #model = nn.DataParallel(opt)
     #cudnn.benchmark = False
-    model = EstimatorModel(model.module)
+    model = EstimatorModel(opt)
     
     return model
