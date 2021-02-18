@@ -19,20 +19,21 @@ from tf_sync import TfMessageFilter
 import message_filters
 
 
+
 class RecordData(object):
     def __init__(self):
         rospack = rospkg.RosPack()
         self.num_ = 1
-        self.sensor_parent_frame_ = rospy.get_param("~sensor_parent_frame", "photoneo_center_v3_optical_frame")
+        self.sensor_parent_frame_ = rospy.get_param("~sensor_parent_frame", "photoneo_center_optical_frame")
         self.p = PoseStamped()
-        self.topic_name = rospy.get_param("~topic_name", "photoneo_center_v3")
+        self.topic_name = rospy.get_param("~topic_name", "photoneo_center")
         self.object_name_ = rospy.get_param("~object_name", "HV8")
-        self.num_dataset = rospy.get_param("~num_dataset", 100)
+        self.num_dataset = rospy.get_param("~num_dataset", 50000)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
         self.save_file_path = self.package_path_ + "/../datasets/" + self.sensor_parent_frame_ + "_" + self.object_name_
-        self.pcd_sub_ = message_filters.Subscriber("/" + self.topic_name + "/sensor/points", PointCloud2)
+        self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
         self.ts_ = TfMessageFilter(self.sync_sub_, self.sensor_parent_frame_, self.object_name_, queue_size=100)
         self.init_hdf5(self.save_file_path)
@@ -49,7 +50,7 @@ class RecordData(object):
             rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", True)
             pc = ros_numpy.numpify(point_cloud)
             height = pc.shape[0]
-            width = pc.shape[1]
+            width = 1
             np_points = np.zeros((height * width, 3), dtype=np.float32)
             np_points[:, 0] = np.resize(pc['x'], height * width)
             np_points[:, 1] = np.resize(pc['y'], height * width)
