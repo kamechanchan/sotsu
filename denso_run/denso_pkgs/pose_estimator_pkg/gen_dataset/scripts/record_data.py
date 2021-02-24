@@ -28,7 +28,7 @@ class RecordData(object):
         self.p = PoseStamped()
         self.topic_name = rospy.get_param("~topic_name", "photoneo_center")
         self.object_name_ = rospy.get_param("~object_name", "HV8")
-        self.num_dataset = rospy.get_param("~num_dataset", 50000)
+        self.num_dataset = rospy.get_param("~num_dataset", 1)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
@@ -58,10 +58,31 @@ class RecordData(object):
             pcd = np_points[~np.any(np.isnan(np_points), axis=1)]
             translation = np.array(trans_rot[0])
             rotation = np.array(trans_rot[1])
+            f = open('/home/ericlab/dataset_pose.txt', 'w')
+            f.writelines(str(translation))
+            f.writelines(str(rotation))
+            f.close()
+
             pose = np.concatenate([translation, rotation])
             self.savePCDandPose(pcd, pose)
         else:
             rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", True)
+    
+    def tf_lookup(self, source_frame, target_frame):
+        lister = tf.TransformListener()
+        while 1:
+            try:
+                (trans, rot) = lister.lookupTransform(source_frame, target_frame, rospy.Time(0))
+                f1 = open('/home/ericlab/groud_truth_pose.txt', 'w')
+                f1.writelines(str(trans))
+                f1.writelines(str(rot))
+                f1.close()
+                break
+            except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
+                continue
+        
+        
+        
 
  
 
@@ -84,9 +105,11 @@ class RecordData(object):
         rospy.spin()
 
 
+
 def main():
     rospy.init_node("record_data_node", anonymous=False)
     node = RecordData()
+    node.tf_lookup('/photoneo_center_optical_frame', '/HV8')
 
     time.sleep(5)
     node.record()
