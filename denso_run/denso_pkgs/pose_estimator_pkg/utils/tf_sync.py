@@ -2,7 +2,7 @@
 
 import rospy
 
-import Queue
+import queue
 import tf 
 from message_filters import SimpleFilter
 
@@ -16,7 +16,7 @@ class TfMessageFilter(SimpleFilter):
         self.connectInput(input_filter)
         self.base_frame = base_frame
         self.target_frame = target_frame
-        self.message_queue = Queue.Queue(maxsize=queue_size)
+        self.message_queue = queue.Queue(maxsize=queue_size)
         self.listener = tf.TransformListener()
         self.max_queue_size = queue_size
         self._max_queue_size_so_far = 0
@@ -32,7 +32,7 @@ class TfMessageFilter(SimpleFilter):
         and if not found keep all the messages.
         """
         # Check all the messages for transform availability
-        tmp_queue = Queue.Queue(self.max_queue_size)
+        tmp_queue = queue.Queue(self.max_queue_size)
         first_iter = True
         # Loop from old to new
         while not self.message_queue.empty():

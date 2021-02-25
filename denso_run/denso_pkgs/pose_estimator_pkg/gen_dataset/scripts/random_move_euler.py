@@ -19,7 +19,7 @@ class RandomMoveEuler(object):
         self.sensor_parent_frame_ = rospy.get_param("~sensor_parent_frame", "world")
         self.pos_.model_name = rospy.get_param("~object_name", "HV8")
         self.object_name = rospy.get_param("~object_name", "HV8")
-        self.init_x = rospy.get_param("~init_x")
+        self.init_x = rospy.get_param("~init_x", 0)
         self.receive_ok = rospy.set_param("/" + self.object_name + "/receive_cloud/is_ok", False)
         self.record_ok = rospy.set_param("/" + self.object_name + "/record_cloud/is_ok", False)
 
@@ -32,13 +32,13 @@ class RandomMoveEuler(object):
 
 
     def init_state_make(self):
-        self.pos_.pose.position.x = random.uniform(-0.05 + self.init_x, 0.05 + self.init_x)
-        self.pos_.pose.position.y = random.uniform(-0.3, 0.3)
-        self.pos_.pose.position.z = random.uniform(0.1, 0.5)
+        self.pos_.pose.position.x = random.uniform(-0.01 + self.init_x, 0.01 + self.init_x)
+        self.pos_.pose.position.y = random.uniform(-0.1, 0.1)
+        self.pos_.pose.position.z = random.uniform(0.1, 0.1)
 
-        roll = random.uniform(0, 3.14)
-        pitch = random.uniform(0, 3.14)
-        yaw = random.uniform(0, 3.14)
+        roll = random.uniform(0, 0.57)
+        pitch = random.uniform(0, 0.57)
+        yaw = random.uniform(0, 0.57)
 
         quat = quaternion_from_euler(roll, pitch, yaw)
         self.pos_.pose.orientation.x = quat[0]
