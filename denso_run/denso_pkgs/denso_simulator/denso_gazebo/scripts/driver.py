@@ -1,5 +1,8 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_simulator/denso_gazebo/scripts'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/devel/.private/denso_gazebo/lib/denso_gazebo/'))
 import rospy
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from control_msgs.msg import JointTrajectoryControllerState

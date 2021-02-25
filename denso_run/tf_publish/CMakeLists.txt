@@ -48,7 +48,7 @@ target_link_libraries(tf_lister
   ${catkin_LIBRARIES}
 )
 
-add_executable(model_tf_publisher src/model_tf_publisher.cpp src/model_tf_publisher_node.cpp)
+#[[add_executable(model_tf_publisher src/model_tf_publisher.cpp src/model_tf_publisher_node.cpp)
 target_link_libraries(model_tf_publisher
   ${catkin_LIBRARIES}
-)
+)]]

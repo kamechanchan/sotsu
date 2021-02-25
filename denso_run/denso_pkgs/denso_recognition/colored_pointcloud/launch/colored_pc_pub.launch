@@ -8,9 +8,9 @@
   <arg name="upper_filter_mode_val" default="220"/>
   <arg name="lower_filter_mode_val" default="30"/>
 
-  <arg name="image_topic"             default="/photoneo_center/rgb_texture"/>
-  <arg name="camera_info_topic"       default="/photoneo_center/camera_info"/>
-  <arg name="input_pointcloud_topic"  default="/workspace_pointcloud"/>
+  <arg name="image_topic"             default="/photoneo_center/sensor/image_color"/>
+  <arg name="camera_info_topic"       default="/photoneo_center/camera/camera_info"/>
+  <arg name="input_pointcloud_topic"  default="/cloud_without_segmented"/>
   <arg name="output_pointcloud_topic" default="/photoneo_center/colored_pointcloud"/>
 
   <node pkg="colored_pointcloud" type="colored_pointcloud" name="colored_pointcloud" output="screen">
