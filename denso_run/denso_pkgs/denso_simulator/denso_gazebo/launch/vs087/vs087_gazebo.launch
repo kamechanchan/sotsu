@@ -44,8 +44,8 @@
   </node>
 
   <!-- Denso-Arm-Sim driver -->
-  <node pkg="denso_gazebo" type="listener.py" name="denso_robot_arm_listener_sim" output="screen" >
+  <!--node pkg="denso_gazebo" type="listener.py" name="denso_robot_arm_listener_sim" output="screen" >
     <param name="robot_name" value="$(arg robot_name)" />
-  </node>
+  </node-->
 
 </launch>

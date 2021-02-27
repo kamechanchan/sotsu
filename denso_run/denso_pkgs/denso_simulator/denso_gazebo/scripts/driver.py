@@ -14,7 +14,7 @@ class DensoRobotArmSim(object):
         self.robot_controller_ = "/" + self.robot_name_ + "/arm_controller"
         self.arm_joints_state_ = JointTrajectoryControllerState()
         self.arm_joints_command_ = JointTrajectory()
-        self.arm_joints_ = rospy.get_param(self.robot_controller_ + "/joints")
+        self.arm_joints_ = rospy.get_param(self.robot_controller_ + "/joints", default="/vs087/arm_controller/jonints")
         self.arm_joint_pos_min_ = list()
         self.arm_joint_pos_max_ = list()
         self.arm_sub_ = rospy.Subscriber(
@@ -42,14 +42,14 @@ class DensoRobotArmSim(object):
                 self.robot_name_ +
                 "/joints_limit/arm/" +
                 self.arm_joints_[i] +
-                "/min_position")
+                "/min_position", default="")
             self.arm_joint_pos_min_.append(pos_min)
             pos_max = rospy.get_param(
                 "/" +
                 self.robot_name_ +
                 "/joints_limit/arm/" +
                 self.arm_joints_[i] +
-                "/max_position")
+                "/max_position", default="")
             self.arm_joint_pos_max_.append(pos_max)
 
         self.arm_joints_command_.points.append(initial_point)
