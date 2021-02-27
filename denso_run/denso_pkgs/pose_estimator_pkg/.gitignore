@@ -35,7 +35,7 @@
 *.ply
 *.zip
 *.tar
-*.hdf5
+
 
 trainer/runs/
 trainer/runs_back/
