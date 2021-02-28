@@ -2,7 +2,7 @@
 <launch>
     <arg name="src_frame_name" default="world"/>
     <arg name="model_name" default="HV8"/>
-    <node pkg="denso_gazebo" type="model_tf_broadcaster" name="model_tf_broadcaster">
+    <node pkg="tf_publish" type="model_tf_publisher" name="model_tf_broadcaster">
         <param name="src_frame_name" value="$(arg src_frame_name)"/>
         <param name="model_name" value="$(arg model_name)"/>
     </node>
