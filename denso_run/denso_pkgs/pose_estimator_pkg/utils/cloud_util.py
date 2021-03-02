@@ -222,10 +222,13 @@ def pcd_viewer(cloud):
 
 def getNormalizedPcd(np_cloud, resolution):
     pcd_offset = np.expand_dims(np.mean(np_cloud, axis=0), 0)
-    pcd_data = np_cloud - pcd_offset
+    pcd_data = np.asarray(np_cloud)
     choice_index = np.arange(pcd_data.shape[0])
+    
     choice = np.random.choice(choice_index, resolution)
     normalized_pcd = pcd_data[choice, :]
+    new_pcd = pcl.PointCloud(np.array(normalized_pcd, np.float32))
+    pcl.save(new_pcd, "/home/ericlab/random_2.pcd")
     return normalized_pcd, pcd_offset[0]
 
 

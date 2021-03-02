@@ -191,6 +191,6 @@ class PoseEstNode():
 
 if __name__ == "__main__":
     try:
-        node = PoseEstNode("cropped_pointcloud")
+        node = PoseEstNode("/cloud_without_segmented")
         rospy.spin()
     except rospy.ROSInterruptException: pass
