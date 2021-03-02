@@ -28,7 +28,7 @@ class RecordData(object):
         self.p = PoseStamped()
         self.topic_name = rospy.get_param("~topic_name", "photoneo_center")
         self.object_name_ = rospy.get_param("~object_name", "HV8")
-        self.num_dataset = rospy.get_param("~num_dataset", 1)
+        self.num_dataset = rospy.get_param("~num_dataset", 10)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
@@ -62,6 +62,8 @@ class RecordData(object):
             f.writelines(str(translation))
             f.writelines(str(rotation))
             f.close()
+            new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
+            pcl.save(new_pcd, "/home/ericlab/random_1.pcd")
 
             pose = np.concatenate([translation, rotation])
             self.savePCDandPose(pcd, pose)
