@@ -9,7 +9,7 @@
   <arg name="robot_description" value="$(arg robot_name)_description" />
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find denso_gazebo)/worlds/denso_room_mini.world"/>
+    <!--arg name="world_name" value="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
   </include>
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->

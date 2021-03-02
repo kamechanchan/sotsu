@@ -125,7 +125,7 @@ bool DensoRobotHWSim::initSim(const std::string& robot_namespace, ros::NodeHandl
     const std::string name = cmd_handle_names[i];
     hardware_interface::JointHandle cmd_handle = position_joint_interface_.getHandle(name);
 
-    boost::shared_ptr<const urdf::Joint> urdf_joint = urdf_model->getJoint(name);
+    urdf::JointConstSharedPtr urdf_joint = urdf_model->getJoint(name);
   
     joint_limits_interface::JointLimits limits;
     joint_limits_interface::SoftJointLimits soft_limits;
@@ -161,13 +161,13 @@ void DensoRobotHWSim::readSim(ros::Time time, ros::Duration period)
   {
     if (joint_types_[i] == 0)
     {
-      joint_pos_[i] = sim_joints_[i]->GetAngle(0).Radian();
+      joint_pos_[i] = sim_joints_[i]->Position(0);
 
       
     }
     else
     {
-      joint_pos_[i] += angles::shortest_angular_distance(joint_pos_[i], sim_joints_[i + 1]->GetAngle(0).Radian());
+      joint_pos_[i] += angles::shortest_angular_distance(joint_pos_[i], sim_joints_[i + 1]->Position(0));
     }
     joint_vel_[i] = sim_joints_[i + 1]->GetVelocity(0);
     joint_eff_[i] = sim_joints_[i + 1]->GetForce(0);

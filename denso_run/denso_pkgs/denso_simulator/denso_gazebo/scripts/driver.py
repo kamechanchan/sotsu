@@ -1,5 +1,8 @@
-#!/usr/bin/env python
-
+#!/usr/bin/env python3
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_simulator/denso_gazebo/scripts'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/devel/.private/denso_gazebo/lib/denso_gazebo/'))
 import rospy
 from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
 from control_msgs.msg import JointTrajectoryControllerState
@@ -11,7 +14,7 @@ class DensoRobotArmSim(object):
         self.robot_controller_ = "/" + self.robot_name_ + "/arm_controller"
         self.arm_joints_state_ = JointTrajectoryControllerState()
         self.arm_joints_command_ = JointTrajectory()
-        self.arm_joints_ = rospy.get_param(self.robot_controller_ + "/joints")
+        self.arm_joints_ = rospy.get_param(self.robot_controller_ + "/joints", default="/vs087/arm_controller/jonints")
         self.arm_joint_pos_min_ = list()
         self.arm_joint_pos_max_ = list()
         self.arm_sub_ = rospy.Subscriber(
@@ -39,14 +42,14 @@ class DensoRobotArmSim(object):
                 self.robot_name_ +
                 "/joints_limit/arm/" +
                 self.arm_joints_[i] +
-                "/min_position")
+                "/min_position", default="")
             self.arm_joint_pos_min_.append(pos_min)
             pos_max = rospy.get_param(
                 "/" +
                 self.robot_name_ +
                 "/joints_limit/arm/" +
                 self.arm_joints_[i] +
-                "/max_position")
+                "/max_position", default="")
             self.arm_joint_pos_max_.append(pos_max)
 
         self.arm_joints_command_.points.append(initial_point)

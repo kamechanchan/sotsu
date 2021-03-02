@@ -36,11 +36,10 @@
 *.zip
 *.tar
 *.hdf5
-*.pth
-*.txt
+
 trainer/runs/
 trainer/runs_back/
-weights/PointNet/HV6/
-weights/PointNet/HV7/
-weights/PointNet/HV8/
+#weights/PointNet/HV6/
+#weights/PointNet/HV7/
+#weights/PointNet/HV8/
 

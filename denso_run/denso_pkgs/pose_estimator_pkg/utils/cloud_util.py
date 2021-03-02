@@ -213,6 +213,7 @@ def stl2PointCloud(model):
     stl_file = os.path.join(package_path, "object_description", "meshes", "STL", model)
     mesh = io.read_triangle_mesh(stl_file)
     pcd = mesh.sample_points_poisson_disk(10000)
+    
     return pcd
 
 
@@ -228,7 +229,11 @@ def getNormalizedPcd(np_cloud, resolution):
     choice = np.random.choice(choice_index, resolution)
     normalized_pcd = pcd_data[choice, :]
     new_pcd = pcl.PointCloud(np.array(normalized_pcd, np.float32))
+<<<<<<< HEAD
     pcl.save(new_pcd, "/home/ericlab/random_2.pcd")
+=======
+    pcl.save(new_pcd, "/home/tsuchidashinya/random.pcd")
+>>>>>>> a9f5dfcb631d8f37ea73e101f5e4a546d9566e46
     return normalized_pcd, pcd_offset[0]
 
 

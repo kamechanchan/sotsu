@@ -62,7 +62,7 @@ target_link_libraries(gazebo_grasp_contacts_bridge_node
   ${GAZEBO_LIBRARIES}
   ${Boost_LIBRARIES}
 )
-#[[
+
 add_library(${PROJECT_NAME}
   src/denso_robot_hw_sim.cpp
 )
@@ -110,4 +110,3 @@ if (CATKIN_ENABLE_TESTING)
   find_package(roslaunch REQUIRED)
   roslaunch_add_file_check(launch)
 endif()
-]]
