@@ -24,12 +24,15 @@ pip3 install torch==1.7.1+cpu torchvision==0.8.2+cpu torchaudio==0.7.2 -f https:
 cd ~/ros_package/denso_ws 
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y
+```
 
+### Command is 
+```
 roslaunch tf_publish spawn_object.launch 
 
 roslaunch denso_gazebo model_tf_broadcaster.launch
 
-roslaunch pose_estimator_measure make_input.launch
+roslaunch cloud_practice planar_segmentation.launch
 
 roslaunch estimator pose_estimator.launch
 ```
