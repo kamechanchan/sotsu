@@ -92,7 +92,7 @@ class EstimatorModel:
 
 
     def load_network(self, which_epoch):
-        save_filename = "%s_net.pth" % which_epoch
+        save_filename = "%s_net-notgood-2.pth" % which_epoch
         load_path = join(self.save_dir, save_filename)
         net = self.net
 
