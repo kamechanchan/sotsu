@@ -30,7 +30,6 @@
 *.exe
 *.out
 *.app
-*.pcd
 
 *.zip
 *.tar
