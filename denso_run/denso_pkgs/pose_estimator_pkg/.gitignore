@@ -9,7 +9,7 @@
 
 # Precompiled Headers
 *.gch
-*.pch
+
 
 # Compiled Dynamic libraries
 *.so
@@ -30,16 +30,10 @@
 *.exe
 *.out
 *.app
-*.pyc
-*.pcd
-*.ply
 *.zip
 *.tar
-*.hdf5
+
 
 trainer/runs/
 trainer/runs_back/
-#weights/PointNet/HV6/
-#weights/PointNet/HV7/
-#weights/PointNet/HV8/
 
