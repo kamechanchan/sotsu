@@ -13,7 +13,7 @@
 
 # Compiled Dynamic libraries
 *.so
-*.dylib
+
 *.dll
 
 # Fortran module files
@@ -29,9 +29,15 @@
 # Executables
 *.exe
 *.out
+<<<<<<< HEAD
 *.app
 *.zip
 *.tar
+=======
+
+*.zip
+
+>>>>>>> 6e54ac0522f28f691322915e739a16a6f553fc7d
 
 
 trainer/runs/
