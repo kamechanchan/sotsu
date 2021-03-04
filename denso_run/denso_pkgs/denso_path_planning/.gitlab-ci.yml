@@ -1,0 +1,14 @@
+image: docker:git
+services:
+  - docker:dind
+before_script:
+  - apk add --update bash coreutils tar
+  - git clone --quiet --depth 1 -b mk/no-ssh https://github.com/MoriKen254/industrial_ci .industrial_ci
+
+kinetic:
+  script:
+    - .industrial_ci/gitlab.sh
+  variables:
+    ROS_DISTRO: "kinetic"
+    CATKIN_LINT: "true"
+    OPT_VI: "-vi"

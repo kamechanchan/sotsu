@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="target_frame" default="/photoneo_center" />
+  <arg name="source_frame" default="/base_link" />
+  <arg name="node_name" default="/hand_ar_oneshot_calibrator" />
+  <node pkg="oneshot_calibration_system" type="pc_calib_broadcaster" name="pc_calib_broadcaster" output="screen">
+    <param name="target_frame" value="$(arg target_frame)" />
+    <param name="source_frame" value="$(arg source_frame)" />
+    <param name="node_name" value="$(arg node_name)" />
+
+    <remap from="/ar_calibrator_nodename" to="/ar_oneshot_calibrator" />
+    <remap from="/transform_parameter" to="pointcloud_calib_transform"/>
+  </node>
+</launch>

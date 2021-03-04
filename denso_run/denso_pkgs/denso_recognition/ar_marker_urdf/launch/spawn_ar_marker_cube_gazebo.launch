@@ -1,0 +1,15 @@
+<launch>
+  <arg name="id" default="00"/>
+  <arg name="x" default="0.0"/>
+  <arg name="y" default="0.0"/>
+  <arg name="z" default="0.0"/>
+
+  <include file="$(find ar_marker_urdf)/launch/model_spawner.launch">
+    <arg name="id" value="$(arg id)"/>
+    <arg name="model_name" value="ar_marker_cube_$(arg id)"/>
+    <arg name="model" value="$(find ar_marker_urdf)/urdf/ar_marker_cube.xacro"/>
+    <arg name="x"  value="$(arg x)"/>
+    <arg name="y"  value="$(arg y)"/>
+    <arg name="z"  value="$(arg z)"/>
+  </include>
+</launch>

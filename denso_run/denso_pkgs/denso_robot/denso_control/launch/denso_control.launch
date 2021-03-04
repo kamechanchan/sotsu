@@ -1,0 +1,55 @@
+<launch>
+  <!-- Override ip_address argument -->
+  <arg name="ip_address" default="192.168.0.1" />
+
+  <!-- Override robot_name argument -->
+  <arg name="robot_name" default="vs087" />
+  <arg name="robot_options" default="vs087" />
+
+  <!-- Send format -->
+  <arg name="send_format" default="288" />
+
+  <!-- Recieve format -->
+  <arg name="recv_format" default="292" />
+
+  <include ns="/$(arg robot_name)" file="$(find bcap_service)/launch/bcap_service.launch.xml">
+    <arg name="ip_address" value="$(arg ip_address)" />
+  </include>
+
+  <include ns="/$(arg robot_name)" file="$(find denso_robot_core)/launch/denso_robot_core.launch.xml" />
+
+  <include ns="/$(arg robot_name)" file="$(find denso_control)/launch/denso_control.launch.xml">
+    <arg name="send_format" value="$(arg send_format)" />
+    <arg name="recv_format" value="$(arg recv_format)" />
+  </include>
+
+  <!-- Controller -->
+  <include ns="/$(arg robot_name)" file="$(find denso_control)/config/$(arg robot_options)/$(arg robot_options).launch.xml" />
+  <node name="denso_control" pkg="denso_control" type="denso_control" output="screen" ns="/$(arg robot_name)">
+    <param name="robot_name" value="$(arg robot_name)" />
+  </node>
+
+  <rosparam file="$(find denso_control)/config/$(arg robot_options)/$(arg robot_options)_control.yaml" command="load" />
+  <arg name="add_gripper_controller" value="$(eval '_with_tercero' in arg('robot_options'))" />
+  <group if="$(arg add_gripper_controller)">
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+    ns="/$(arg robot_name)" args="joint_state_controller arm_controller gripper_controller" />
+  </group>
+  <group unless="$(arg add_gripper_controller)">
+    <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+    ns="/$(arg robot_name)" args="joint_state_controller arm_controller " />
+  </group>
+
+  <!-- robot_state_publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+        type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/$(arg robot_name)/joint_states" />
+  </node>
+
+  <!-- joint_state_publisher -->
+  <arg name="robot_joint_states" default="[/$(arg robot_name)/joint_states]"/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <rosparam param="/source_list" subst_value="True">$(arg robot_joint_states)</rosparam>
+  </node>
+
+</launch>

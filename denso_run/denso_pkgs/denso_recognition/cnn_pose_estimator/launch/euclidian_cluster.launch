@@ -1,0 +1,43 @@
+<launch>
+  <arg name="source_pc_topic_name" default="/photoneo_center/pointcloud" />
+  <arg name="clustering_frame_id" default="photoneo_center_optical_frame" />
+
+  <node name="euclidean_cluster" pkg="cnn_pose_estimator" type="euclidean_cluster_node" output="screen">
+    <param name="loop_rate" value="5" />
+    <!-- クラスタリングのしきい値 -->
+    <param name="clusterTolerance" value="0.01" />
+    <param name="minSize" value="100" />
+    <param name="maxSize" value="250000" />
+    <!-- クラスタリングを行うエリア btn-->
+<!--    <param name="crop_x_min" value="0.01" />
+    <param name="crop_x_max" value="0.25" />
+    <param name="crop_y_min" value="0.034" />
+    <param name="crop_y_max" value="0.21" />
+    <param name="crop_z_min" value="0.039" />
+<param name="crop_z_max" value="0.15" /> -->
+    <!-- クラスタリングを行うエリア hv8
+    <param name="crop_x_min" value="0.00" />
+    <param name="crop_x_max" value="0.14" />
+    <param name="crop_y_min" value="0.034" />
+    <param name="crop_y_max" value="0.18" />
+    <param name="crop_z_min" value="0.024" />
+    <param name="crop_z_max" value="0.15" />  -->
+
+
+      <!-- クラスタリングを行うエリア oclusion_test -->
+    <param name="crop_x_min" value="0.12" />
+    <param name="crop_x_max" value="0.23" />
+    <param name="crop_y_min" value="0.18" />
+    <param name="crop_y_max" value="0.3" />
+    <param name="crop_z_min" value="-0.005" />
+    <param name="crop_z_max" value="0.2" />
+
+
+    <param name="clustering_min_height" value="0.01" />
+
+    <!-- <param name="source_pc_topic_name" value="/kinect_center/qhd/points" /> -->
+    <param name="source_pc_topic_name" value="/photoneo_center/pointcloud" />
+    <param name="box_name" value="/clustering_result" />
+    <param name="clustering_frame_id" value="photoneo_center_optical_frame" />
+  </node>
+</launch>

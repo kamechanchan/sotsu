@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="sensor_frame_id" default="photoneo_center"/>
+
+  <rosparam file="$(find oneshot_calibration_system)/config/oneshot_calibration_config.yaml" command="load" />
+  <param name="/ar_oneshot_calibrator/sensor_frame_id" value="$(arg sensor_frame_id)"/>
+
+  <node name="from_sensor_frame_to_sensor_optical_frame" pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.0 -1.57 0.0 -1.57 photoneo_center photoneo_center_optical_frame 50" />
+
+  <node pkg="oneshot_calibration_system" type="ar_center_broadcaster" name="ar_center_broadcaster" output="screen" />
+
+  <node pkg="oneshot_calibration_system" type="true_ar_center_broadcaster" name="true_ar_center_broadcaster" output="screen" />
+
+  <node pkg="oneshot_calibration_system" type="ar_oneshot_calibrator" name="ar_oneshot_calibrator" output="screen" />
+</launch>

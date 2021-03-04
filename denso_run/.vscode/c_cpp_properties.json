@@ -1,0 +1,32 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include/pcl-1.10",
+                "/usr/include/eigen3",
+                "${workspaceFolder}/denso_pkgs/pose_estimator_pkg/pose_estimator_measure/include",
+                "/opt/ros/noetic/include",
+                "/usr/include/vtk-7.1",
+                "/usr/include/opencv4",
+                "/usr/include/gazebo-11",
+                "/opt/ros/noetic/include/xmlrpcpp",
+                "/usr/include/ignition/math6",
+                "/usr/include/sdformat-9.4",
+                "/usr/include/ignition/transport8",
+                "/usr/include/ignition/msgs5",
+                "/usr/include/ignition/common3",
+                "/usr/include/ignition/fuel_tools4",
+                "${workspaceFolder}/pointcloud_usage/include",
+                "${workspaceFolder}/tf_publish/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

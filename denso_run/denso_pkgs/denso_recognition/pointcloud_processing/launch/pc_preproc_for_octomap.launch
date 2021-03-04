@@ -1,0 +1,69 @@
+<launch>
+
+  <arg name="robot_filter_pc_src" default="/photoneo_center/pointcloud" />
+  <arg name="robot_filter_pc_dst" default="/robot_filtered_cloud" />
+
+  <arg name="use_rgb" default="false" />
+
+  <arg name="loop_rate" default="60" />
+  <arg name="crop_x_min" default="0.15" />
+  <arg name="crop_x_max" default="1.0" />
+  <arg name="crop_y_min" default="-1.0" />
+  <arg name="crop_y_max" default="1.0" />
+  <arg name="crop_z_min" default="0.07" />
+  <arg name="crop_z_max" default="1" />
+  <arg name="crop_pc_src" default="/robot_filtered_cloud" />
+  <arg name="crop_pc_dst" default="/cropped_cloud" />
+  <arg name="crop_frame_id" default="world" />
+
+  <arg name="downsample_pc_src" default="/cropped_cloud" />
+  <arg name="downsample_pc_dst" default="/downsampled_cloud" />
+  <arg name="downsample_frame_id" default="world" />
+  <arg name="downsample_leafsize_x" default="0.02" />
+  <arg name="downsample_leafsize_y" default="0.02" />
+  <arg name="downsample_leafsize_z" default="0.02" />
+
+  <arg name="filter_pc_src" default="/downsampled_cloud" />
+  <arg name="filter_pc_dst" default="/filtered_cloud" />
+  <arg name="filter_frame_id" default="world" />
+  <arg name="filter_mean_k" default="10" />
+  <arg name="filter_stddev_mul_thresh" default="0.2" />
+
+
+  <include file="$(find robot_self_filter)/launch/robot_self_filter.launch">
+    <arg name="robot_filter_pc_src" value="$(arg robot_filter_pc_src)" />
+    <arg name="robot_filter_pc_dst" value="$(arg robot_filter_pc_dst)" />
+  </include>
+
+  <include file="$(find pointcloud_processing)/launch/crop_cloud.launch">
+    <arg name="loop_rate" value="$(arg loop_rate)" />
+    <arg name="crop_x_min" value="$(arg crop_x_min)" />
+    <arg name="crop_x_max" value="$(arg crop_x_max)" />
+    <arg name="crop_y_min" value="$(arg crop_y_min)" />
+    <arg name="crop_y_max" value="$(arg crop_y_max)" />
+    <arg name="crop_z_min" value="$(arg crop_z_min)" />
+    <arg name="crop_z_max" value="$(arg crop_z_max)" />
+    <arg name="crop_pc_src" value="$(arg crop_pc_src)" />
+    <arg name="crop_pc_dst" value="$(arg crop_pc_dst)" />
+    <arg name="use_rgb" value="$(arg use_rgb)" />
+    <arg name="crop_frame_id" value="$(arg crop_frame_id)" />
+  </include>
+
+  <node name="downsampling" pkg="pointcloud_processing" type="downsampling" output="screen">
+    <param name="downsample_pc_src" value="$(arg downsample_pc_src)" />
+    <param name="downsample_pc_dst" value="$(arg downsample_pc_dst)" />
+    <param name="downsample_frame_id" value="$(arg downsample_frame_id)" />
+    <param name="downsample_leafsize_x" value="$(arg downsample_leafsize_x)" />
+    <param name="downsample_leafsize_y" value="$(arg downsample_leafsize_y)" />
+    <param name="downsample_leafsize_z" value="$(arg downsample_leafsize_z)" />
+  </node>
+
+  <node name="filter" pkg="pointcloud_processing" type="filter" output="screen">
+    <param name="filter_pc_src" value="$(arg filter_pc_src)" />
+    <param name="filter_pc_dst" value="$(arg filter_pc_dst)" />
+    <param name="filter_frame_id" value="$(arg filter_frame_id)" />
+    <param name="filter_mean_k" value="$(arg filter_mean_k)" />
+    <param name="filter_stddev_mul_thresh" value="$(arg filter_stddev_mul_thresh)" />
+  </node>
+
+</launch>
