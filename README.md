@@ -45,7 +45,5 @@ roslaunch denso_gazebo model_tf_broadcaster.launch
 
 roslaunch cloud_practice planar_segmentation.launch
 
-python3 ~/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/gen_dataset/scripts/random_move_euler.py
-
-python3 denso_run/denso_pkgs/pose_estimator_pkg/gen_dataset/scripts/record_data.py
+roslaunch gen_dataset record_data.launch
 ```
