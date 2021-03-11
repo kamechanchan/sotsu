@@ -26,7 +26,7 @@ rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-### Command is 
+### Estimation Test 
 ```
 roslaunch tf_publish spawn_object.launch 
 
@@ -35,4 +35,18 @@ roslaunch denso_gazebo model_tf_broadcaster.launch
 roslaunch cloud_practice planar_segmentation.launch
 
 roslaunch estimator pose_estimator.launch
+```
+
+### Getting dataset
+```
+roslaunch tf_publish spawn_object.launch 
+
+roslaunch denso_gazebo model_tf_broadcaster.launch
+
+roslaunch cloud_practice planar_segmentation.launch
+
+python3 ~/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/gen_dataset/scripts/random_move_euler.py
+
+python3 denso_run/denso_pkgs/pose_estimator_pkg/gen_dataset/scripts/record_data.py
+
 ```
