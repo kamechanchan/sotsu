@@ -2,8 +2,8 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/options'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/options'))
 import numpy as np
 from tqdm import tqdm
 import torch, numpy, random
