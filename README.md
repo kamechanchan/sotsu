@@ -11,7 +11,6 @@ sudo apt install -y libpcl-dev
 
 sudo apt install -y python3-pip
 
-
 sudo apt install -y python3-pcl
 sudo apt install -y python3-h5py
 pip3 install open3d
