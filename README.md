@@ -35,6 +35,8 @@ roslaunch denso_gazebo model_tf_broadcaster.launch
 roslaunch cloud_practice planar_segmentation.launch
 
 roslaunch estimator pose_estimator.launch
+
+roslaunch tf_publish error_calculate.launch
 ```
 
 ### Getting dataset
