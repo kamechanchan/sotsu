@@ -1,6 +1,10 @@
 import torch 
 import torchvision.models as models
+<<<<<<< HEAD
 pth_file = '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/weights/PointNet/HV8/latest_net.pth'
+=======
+pth_file = '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/weights/PointNet/HV8/latest_net_original.pth'
+>>>>>>> b8a4e201324bbf227462141351058788a24b490f
 #pretrained_dict =torch.load(pth_file)
 #print('state:',type(pretrained_dict))
 #net = models.latest_net(pretrained=True)
