@@ -8,7 +8,7 @@ import sensor_msgs.point_cloud2 as pc2
 import time
 
 
-pcd = pcl.load('/home/tsuchidashinya/near_1.pcd')
+pcd = pcl.load('/home/ericlab/near_1.pcd')
 visual = pcl.pcl_visualization.CloudViewing()
 visual.ShowMonochromeCloud(pcd)
 v = True
