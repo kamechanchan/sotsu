@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot name="vs087" xmlns:xacro="http://ros.org/wiki/xacro">
+  <!-- <xacro:include filename="$(find denso_descriptions)/vs087_description/vs087/vs087.urdf.xacro"/> -->
+  <xacro:include filename="$(find tercero_description)/robots/tercero.urdf.xacro"/>
+  <xacro:include filename="$(find denso_descriptions)/phoxi_camera_description/phoxi_camera.urdf.xacro"/>
+  <xacro:include filename="$(find denso_descriptions)/common_description/common.xacro"/>
+
+  <xacro:arg name="sim" default="true" />
+
+  <xacro:if value="$(arg sim)" >
+    <xacro:include filename="$(find denso_descriptions)/vs087_description/vs087/vs087.urdf.xacro"/>
+  </xacro:if>
+  <xacro:unless value="$(arg sim)" >
+    <xacro:include filename="$(find denso_descriptions)/vs087_description/vs087/vs087_limited_joints_for_tercero.urdf.xacro" />
+  </xacro:unless>
+
+  <joint name="gripper_joint" type="fixed">
+    <xacro:if value="$(arg sim)" >
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:if>
+    <xacro:unless value="$(arg sim)" >
+      <origin xyz="0 0 0" rpy="0 0 ${M_PI/2}"/>
+    </xacro:unless>
+  <parent link="J6"/>
+  <child link="hand_link"/>
+  </joint>
+
+    <!--  <xacro:phoxi_camera_v0 size="L" sensor_parent_link_name="base_link" sensor_link_name="photoneo_center"> -->
+  <xacro:phoxi_camera_v0 size="L" sensor_parent_link_name="base_link" sensor_link_name="photoneo_center">
+    <!-- <origin xyz="1.28725 0.240169 1.25042" rpy="0.201 0.884 -2.878" /> -->
+    <origin xyz="1.2735 0.21539 1.27534" rpy="0.184 0.910 -2.894" />
+      <!-- <origin xyz="1.1385 0.2029 0.8865" rpy="0.1861 0.7943 -2.874" /> right robot with photoneo -->
+  </xacro:phoxi_camera_v0>
+
+</robot>
