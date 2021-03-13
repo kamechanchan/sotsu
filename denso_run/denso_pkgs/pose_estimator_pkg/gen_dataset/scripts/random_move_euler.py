@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys
 import random
@@ -32,9 +32,9 @@ class RandomMoveEuler(object):
 
 
     def init_state_make(self):
-        self.pos_.pose.position.x = random.uniform(-0.01 + self.init_x, 0.01 + self.init_x)
-        self.pos_.pose.position.y = random.uniform(-0.1, 0.1)
-        self.pos_.pose.position.z = random.uniform(0.1, 0.1)
+        self.pos_.pose.position.x = random.uniform(-0.04 + self.init_x, 0.04 + self.init_x)
+        self.pos_.pose.position.y = random.uniform(-0.4, 0.4)
+        self.pos_.pose.position.z = random.uniform(0.05, 0.25)
 
         roll = random.uniform(0, 0.57)
         pitch = random.uniform(0, 0.57)

@@ -1,5 +1,0 @@
-std_msgs/UInt16MultiArray roi_point
-std_msgs/UInt16MultiArray roi_size
-sensor_msgs/Image input
----
-sensor_msgs/Image output

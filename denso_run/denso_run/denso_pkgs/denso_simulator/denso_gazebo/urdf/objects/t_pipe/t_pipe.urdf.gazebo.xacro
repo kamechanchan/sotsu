@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<robot name="t_pipe_v0" xmlns:xacro="http://ros.org/wiki/xacro">
-  <xacro:include filename="$(find denso_descriptions)/object_description/t_pipe.urdf.xacro" />
-  <xacro:include filename="$(find denso_gazebo)/urdf/objects/t_pipe/t_pipe.gazebo.xacro" />
-
-  <xacro:t_pipe_gazebo />
-</robot>

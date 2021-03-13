@@ -1,6 +1,0 @@
-float64 offset
----
-bool success
-string[] joint_names
-float64[] joint_values
-float64[] joint_values_offset

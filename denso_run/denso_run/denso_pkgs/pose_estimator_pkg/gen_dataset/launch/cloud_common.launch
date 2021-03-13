@@ -1,4 +1,0 @@
-<launch>
-  <node name="cloud_downsampler" pkg="gen_dataset" type="cloud_downsampler" output="screen" />
-  <node name="cloud_planar_segmenter" pkg="gen_dataset" type="cloud_planar_segmenter" output="screen" />
-</launch>

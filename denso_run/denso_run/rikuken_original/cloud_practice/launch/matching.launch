@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-    <node pkg="cloud_practice" type="cloud_matching" name="cloud_matcher" output="screen"/>
-    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find cloud_practice)/rviz/matching.rviz"/>
-</launch>

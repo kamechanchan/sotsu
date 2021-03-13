@@ -9,12 +9,15 @@
 
 # Precompiled Headers
 *.gch
-
+*.hdf5
+*.pcd
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
+*.hdf5
+*.pcd
 
 # Fortran module files
 *.mod
@@ -29,6 +32,7 @@
 # Executables
 *.exe
 *.out
+
 *.app
 *.zip
 *.tar
