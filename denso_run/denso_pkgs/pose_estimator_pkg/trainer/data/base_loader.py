@@ -41,5 +41,6 @@ class Base_Loader(object):
         if len(file_name) == 1:
             return file_name
         else:
+            print(str(path_to_dir))
             print("Error, Cloud not load h5py data file!! or detect multi hdf5 file !!")
             sys.exit(1)

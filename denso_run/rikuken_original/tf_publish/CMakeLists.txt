@@ -62,8 +62,3 @@ add_executable(one_message_sub src/one_message_sub.cpp)
 target_link_libraries(one_message_sub
   ${catkin_LIBRARIES}
 )
-
-add_executable(model_name src/model_name.cpp)
-target_link_libraries(model_name
-  ${catkin_LIBRARIES}
-)

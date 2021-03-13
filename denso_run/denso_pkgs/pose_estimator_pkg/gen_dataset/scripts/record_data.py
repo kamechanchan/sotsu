@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import os, sys
@@ -28,7 +28,7 @@ class RecordData(object):
         self.p = PoseStamped()
         self.topic_name = rospy.get_param("~topic_name", "photoneo_center")
         self.object_name_ = rospy.get_param("~object_name", "HV8")
-        self.num_dataset = rospy.get_param("~num_dataset", 100)
+        self.num_dataset = rospy.get_param("~num_dataset", 10)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")

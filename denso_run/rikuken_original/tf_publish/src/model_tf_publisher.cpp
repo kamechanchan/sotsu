@@ -7,7 +7,6 @@ ModelTf::ModelTf(ros::NodeHandle &nh) : nh_(nh)
 {
     ROS_INFO_STREAM("Start Create Instance");
     pnh = new ros::NodeHandle("~");
-    TfListener = new tf2_ros::TransformListener(TfBuffer);
     ros::param::param<std::string>("~src_frame_name", src_frame_, "world");
     ros::param::param<std::string>("~model_name", urdf_model_name_, "Node");
     pnh->getParam("src_frame_name", src_frame_);
@@ -61,9 +60,4 @@ void ModelTf::broadcastModelTF()
         br_.sendTransform(tf_stamp_);
         ROS_INFO_STREAM("Broadcast " << model_names_[index] << "TF !!");
     }
-}
-
-void ModelTf::get_photoneo_tf(std::string photoneo_frame)
-{
-    photoneo_trans = TfBuffer.lookupTransform(photoneo_frame, "world", ros::Time(0));
 }
