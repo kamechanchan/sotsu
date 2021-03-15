@@ -25,7 +25,7 @@ class BaseOptions:
         self.parser.add_argument('--gpu_ids', type=str, default='-1')
         self.parser.add_argument('--gpu_num', type=int, default=2)
         self.parser.add_argument('--num_threads', type=int, default=3)
-        self.parser.add_argument('--checkpoints_dir', type=str, default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights")
+        self.parser.add_argument('--checkpoints_dir', type=str, default="/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights")
         self.parser.add_argument('--serial_batches', action='store_true', help='if true, takes meshs in order')
         self.parser.add_argument('--export_folder', type=str, default='exports intermediate collapses to this folder')
         self.initialized = True
