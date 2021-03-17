@@ -47,7 +47,7 @@ class RecordData(object):
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
         if self.receive_ok:
             rospy.set_param("/" + self.object_name_ + "/receive_cloud/is_ok", False)
-            rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", True)
+            rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", False)
             pc = ros_numpy.numpify(point_cloud)
             height = pc.shape[0]
             width = 1
@@ -58,12 +58,12 @@ class RecordData(object):
             pcd = np_points[~np.any(np.isnan(np_points), axis=1)]
             translation = np.array(trans_rot[0])
             rotation = np.array(trans_rot[1])
-            f = open('/home/tsuchidashinya/dataset_pose.txt', 'w')
-            f.writelines(str(translation))
-            f.writelines(str(rotation))
-            f.close()
-            new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
-            pcl.save(new_pcd, "/home/tsuchidashinya/random_1.pcd")
+            #f = open('/home/tsuchidashinya/dataset_pose.txt', 'w')
+            #f.writelines(str(translation))
+            #f.writelines(str(rotation))
+            #f.close()
+            #new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
+            #pcl.save(new_pcd, "/home/tsuchidashinya/random_1.pcd")
 
             pose = np.concatenate([translation, rotation])
             self.savePCDandPose(pcd, pose)

@@ -15,19 +15,24 @@ if __name__=='__main__':
     pose_data.model_name = rospy.get_param('~object_name', 'HV8')
     model_state_pub = rospy.Publisher('/gazebo/set_model_state', ModelState, queue_size=1)
     various_pose = Pose()
-    late = rospy.Rate(1)
+    late = rospy.Rate(10)
+    time_start = time()
+    record_ok = rospy.get_param("/HV8/record_cloud/is_ok", False)
     while not rospy.is_shutdown():
-        various_pose.position.x = random.uniform(-0.4, 0.4)
-        various_pose.position.y = random.uniform(-0.4, 0.4)
-        various_pose.position.z = random.uniform(0.01, 0.2)
-        roll = random.uniform(-0.5, 0.5)
-        pitch = random.uniform(-0.5, 0.5)
-        yaw = random.uniform(-3.14, 3.14)
-        quat = quaternion_from_euler(roll, pitch, yaw)
-        various_pose.orientation.x = quat[0]
-        various_pose.orientation.y = quat[1]
-        various_pose.orientation.z = quat[2]
-        various_pose.orientation.w = quat[3]
+        time_end = time()
+        if record_ok:
+            various_pose.position.x = random.uniform(-0.4, 0.4)
+            various_pose.position.y = random.uniform(-0.4, 0.4)
+            various_pose.position.z = random.uniform(0.01, 0.2)
+            roll = random.uniform(-0.5, 0.5)
+            pitch = random.uniform(-0.5, 0.5)
+            yaw = random.uniform(-3.14, 3.14)
+            quat = quaternion_from_euler(roll, pitch, yaw)
+            various_pose.orientation.x = quat[0]
+            various_pose.orientation.y = quat[1]
+            various_pose.orientation.z = quat[2]
+            various_pose.orientation.w = quat[3]
+            rospy.set_param("/HV8/receive_cloud/is_ok", True)
         pose_data.pose = various_pose
         model_state_pub.publish(pose_data)
         late.sleep()

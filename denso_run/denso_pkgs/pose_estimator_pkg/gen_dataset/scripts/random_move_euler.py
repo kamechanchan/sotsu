@@ -88,7 +88,7 @@ def main():
     while not random_state_maker.isReadyMove():
         rospy.logwarn("Not ready model ...")
 
-    rate = rospy.Rate(2)
+    rate = rospy.Rate(10)
     while not rospy.is_shutdown():
         if not random_state_maker.random_state_make():
             rospy.logwarn("Failed to move object !!")
