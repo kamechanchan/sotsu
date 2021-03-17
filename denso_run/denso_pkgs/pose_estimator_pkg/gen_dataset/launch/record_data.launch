@@ -18,5 +18,8 @@
     <param name="object_name" value="$(arg object_name)" />
     <param name="num_dataset" value="$(arg num_dataset)" />
   </node>
+
+  <node name="zero_gravity" pkg="tf_publish" type="zero_gravity.sh" output="screen"/>
+  
  
 </launch>

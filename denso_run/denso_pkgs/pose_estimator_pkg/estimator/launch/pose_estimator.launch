@@ -19,4 +19,6 @@
     <param name="arch" value="$(arg arch)" />
     <param name="resolution" value="$(arg resolution)" />
   </node>
+
+  <node name="zero_gravity" pkg="tf_publish" type="zero_gravity.sh" output="screen"/>
 </launch>

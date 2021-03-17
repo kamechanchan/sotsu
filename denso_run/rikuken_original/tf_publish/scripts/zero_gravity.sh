@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/env bash
 
 rosservice call /gazebo/set_physics_properties "
 time_step: 0.001

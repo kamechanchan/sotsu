@@ -95,7 +95,7 @@ class EstimatorModel:
         save_filename = "%s_net-has.pth" % which_epoch
         self.save_dir = "/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/weights/PointNet/HV8/"
         PC_NAME = "Precision-7820-Tower"
-        save_filename = "400_net.pth"
+        save_filename = "800_net.pth"
         self.save_dir = "/home/tsuchidashinya/Rikuken/Mega/X10/PointNet/dataset_20000.hdf5"
         #load_path = join(self.save_dir, PC_NAME,save_filename)
         load_path = join(self.save_dir, save_filename)

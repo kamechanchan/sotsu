@@ -2,8 +2,9 @@
 <sdf version="1.6">
     <model name="HV8">
         <link name="HV8">
-            <inertial>
-                <pose>0 0 0 0 0 0</pose>
+           
+            <!--inertial>
+                
                 <mass>0.05</mass>
                 <inertia>
                     <ixx>0.002</ixx>
@@ -13,20 +14,18 @@
                     <iyz>0.0</iyz>
                     <izz>0.002</izz>
                 </inertia>
-            </inertial>
-            <collision>
-                <pose>0 0 0 0 0 0</pose>
+            </inertial-->
+            <!--collision>
                 <geometry>
                     <mesh>
-                        <uri>model://HV8/meshes/HV8.stl</uri>
+                        <uri>model://HV8/meshes/HV8.dae</uri>
                     </mesh>
                 </geometry>
-            </collision>
+            </collision-->
             <visual>
-                <pose>0 0 0 0 0 0</pose>
                 <geometry>
                     <mesh>
-                        <uri>model://HV8/meshes/HV8.stl</uri>
+                        <uri>model://HV8/meshes/HV8.dae</uri>
                     </mesh>
                 </geometry>
             </visual>
