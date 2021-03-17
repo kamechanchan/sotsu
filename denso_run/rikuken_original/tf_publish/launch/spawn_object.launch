@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find gen_dataset)/worlds/empty.world"/>
+        <arg name="world_name" value="$(find tf_publish)/world/model.world"/>
     </include>
     <!--node name="setup_commands" pkg="timed_roslaunch" type="timed_roslaunch.sh" args="3 gen_dataset setup_commands.launch" output="screen" /-->
     <arg name="use_sensor_type" default="phoxi_camera"/>
@@ -11,6 +11,7 @@
     <include file="$(find gen_dataset)/launch/gen_multi_photoneo.launch" >
         <param name="use_sensor_type" default="$(arg use_sensor_type)" />
     </include>
+    <!-- 
     <arg name="object_name" default="HV8" />
     <arg name="object_up" default="HV8_up" />
     <arg name="init_pose_up" default="-x 0 -y 0 -z 0 -R 0.0 -Y -0.0" />
@@ -22,10 +23,10 @@
     </include>
     <arg name="src_frame_name" default="world"/>
     <arg name="model_name" default="HV8"/>
-    <!--node pkg="denso_gazebo" type="model_tf_broadcaster" name="model_tf_broadcaster">
+    <node pkg="denso_gazebo" type="model_tf_broadcaster" name="model_tf_broadcaster">
         <param name="src_frame_name" value="$(arg src_frame_name)"/>
         <param name="model_name" value="$(arg model_name)"/>
-    </node-->
-  
+    </node>
+    -->
 
 </launch>
