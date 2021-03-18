@@ -29,7 +29,7 @@ rosdep install --from-paths src --ignore-src -r -y
 ```
 roslaunch tf_publish spawn_object.launch 
 
-roslaunch denso_gazebo model_tf_broadcaster.launch
+roslaunch tf_publish model_tf.launch
 
 roslaunch cloud_practice planar_segmentation.launch
 
@@ -42,10 +42,13 @@ roslaunch tf_publish error_calculate.launch
 ```
 roslaunch tf_publish spawn_object.launch 
 
-roslaunch denso_gazebo model_tf_broadcaster.launch
+roslaunch tf_publish model_tf.launch
 
 roslaunch cloud_practice planar_segmentation.launch
 
 roslaunch gen_dataset record_data.launch
 ```
 
+```
+echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${HOME}/ros_package/denso_ws/src/denso_run/rikuken_original/tf_publish/models" >> ~/.bashrc
+```

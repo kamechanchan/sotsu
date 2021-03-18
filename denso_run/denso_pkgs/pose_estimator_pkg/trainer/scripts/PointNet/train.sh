@@ -1,26 +1,21 @@
 #!/usr/bin/env bash
 
 echo 'Train with PointNet'
-<<<<<<< HEAD
-echo 'Dataset Model is '$@'/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
-=======
-echo 'Dataset Model is  ''/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
->>>>>>> b8a4e201324bbf227462141351058788a24b490f
-echo ''
 
-for i in '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
+
+for i in '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
 do
 
 ## run the training
-python3 /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets \
+python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
+--dataroot /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets \
 --dataset_model  photoneo_center_optical_frame_HV8.hdf5\
 --resolution 1024 \
 --phase train \
 --name PointNet \
 --dataset_mode pose_estimation \
 --batch_size 32 \
---max_dataset_size 500 \
+--max_dataset_size 1000 \
 --num_epoch 600 \
 --arch PointNet_Pose \
 --print_freq 10 \
@@ -28,7 +23,7 @@ python3 /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_
 --save_epoch_freq 10 \
 --run_test_freq 1 \
 --gpu_ids 0 \
---gpu_num 3 \
+--gpu_num 1 \
 --num_threads 8 \
 --serial_batches False \
 --verbose_plot True\
