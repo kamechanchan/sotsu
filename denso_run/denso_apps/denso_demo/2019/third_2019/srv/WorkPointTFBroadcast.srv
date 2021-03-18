@@ -1,0 +1,3 @@
+denso_state_msgs/WorkPoint relative_point
+---
+bool success

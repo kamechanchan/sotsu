@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node pkg="denso_gazebo" type="new.py" name="denso_robot_arm_listener_sim" output="screen" />
+
+</launch>

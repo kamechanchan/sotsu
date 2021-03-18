@@ -1,0 +1,3 @@
+<launch>
+  <node name="meshcloud_publisher" pkg="meshcloud_publisher" type="meshcloud_pub" output="screen"/>
+</launch>
