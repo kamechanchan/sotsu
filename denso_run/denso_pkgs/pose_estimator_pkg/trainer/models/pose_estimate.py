@@ -92,8 +92,8 @@ class EstimatorModel:
 
 
     def load_network(self, which_epoch):
-        save_filename = "%s_net-has.pth" % which_epoch
-        self.save_dir = "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/weights/PointNet/HV8/ericlab-Precision-7820-Tower"
+        save_filename = "%s_net-0315.pth" % which_epoch
+        self.save_dir = "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/weights/PointNet/HV8/ericlab-X10"
         load_path = join(self.save_dir, save_filename)
         net = self.net
 

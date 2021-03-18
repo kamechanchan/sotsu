@@ -4,19 +4,18 @@ echo 'Train with PointNet'
 echo 'Dataset Model is  ''/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
 echo ''
 
-for i in '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
-do
+
 
 ## run the training
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets \
---dataset_model  photoneo_center_optical_frame_HV8.hdf5 \
+--dataroot /home/ericlab/MEGAsync/Precision-7820-Tower \
+--dataset_model  dataset.hdf5 \
 --resolution 1024 \
 --phase train \
 --name PointNet \
 --dataset_mode pose_estimation \
 --batch_size 32 \
---max_dataset_size 1000 \
+--max_dataset_size 5000 \
 --num_epoch 600 \
 --arch PointNet_Pose \
 --print_freq 10 \
