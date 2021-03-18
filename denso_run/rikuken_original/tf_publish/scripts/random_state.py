@@ -20,7 +20,7 @@ if __name__=='__main__':
     record_ok = rospy.get_param("/HV8/record_cloud/is_ok", False)
     while not rospy.is_shutdown():
         time_end = time()
-        if record_ok:
+        if time_end - time_start > 1.0:
             various_pose.position.x = random.uniform(-0.4, 0.4)
             various_pose.position.y = random.uniform(-0.4, 0.4)
             various_pose.position.z = random.uniform(0.01, 0.2)
@@ -32,8 +32,15 @@ if __name__=='__main__':
             various_pose.orientation.y = quat[1]
             various_pose.orientation.z = quat[2]
             various_pose.orientation.w = quat[3]
-            rospy.set_param("/HV8/receive_cloud/is_ok", True)
+            pose_data.pose = various_pose
+            model_state_pub.publish(pose_data)
+            late.sleep()
+            pose_data.pose = various_pose
+            model_state_pub.publish(pose_data)
+            time_start = time()
+            
         pose_data.pose = various_pose
+        rospy.set_param("/HV8/receive_cloud/is_ok", True)
         model_state_pub.publish(pose_data)
         late.sleep()
 

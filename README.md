@@ -29,7 +29,7 @@ rosdep install --from-paths src --ignore-src -r -y
 ```
 roslaunch tf_publish spawn_object.launch 
 
-roslaunch denso_gazebo model_tf_broadcaster.launch
+roslaunch tf_publish model_tf.launch
 
 roslaunch cloud_practice planar_segmentation.launch
 
@@ -42,7 +42,7 @@ roslaunch tf_publish error_calculate.launch
 ```
 roslaunch tf_publish spawn_object.launch 
 
-roslaunch denso_gazebo model_tf_broadcaster.launch
+roslaunch tf_publish model_tf.launch
 
 roslaunch cloud_practice planar_segmentation.launch
 

@@ -87,9 +87,40 @@
       <heading_deg>0</heading_deg>
     </spherical_coordinates>
     <model name='HV8'>
-      <pose>0.00644 -0.021785 0.02 0 -0 0</pose>
+      <pose>0.028188 -0.028155 0 0 -0 0</pose>
       <static>1</static>
       <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
         <visual name='visual'>
           <geometry>
             <mesh>
@@ -103,15 +134,15 @@
       </link>
     </model>
     <state world_name='default'>
-      <sim_time>34 723000000</sim_time>
-      <real_time>34 913076018</real_time>
-      <wall_time>1615993226 656329321</wall_time>
-      <iterations>34723</iterations>
+      <sim_time>47 49000000</sim_time>
+      <real_time>47 429191901</real_time>
+      <wall_time>1616041664 981751299</wall_time>
+      <iterations>47049</iterations>
       <model name='HV8'>
-        <pose>0.00644 -0.021785 0.02 0 -0 0</pose>
+        <pose>0.028188 -0.028155 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='HV8'>
-          <pose>0.00644 -0.021785 0.02 0 -0 0</pose>
+          <pose>0.028188 -0.028155 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -133,7 +164,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>5 -5 2 0 0.275643 2.35619</pose>
+        <pose>0.265437 -0.290492 0.174157 0 0.275643 2.35619</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

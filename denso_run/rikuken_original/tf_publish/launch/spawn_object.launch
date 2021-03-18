@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find tf_publish)/world/model.world"/>
     </include>
     <!--node name="setup_commands" pkg="timed_roslaunch" type="timed_roslaunch.sh" args="3 gen_dataset setup_commands.launch" output="screen" /-->
     <arg name="use_sensor_type" default="phoxi_camera"/>
