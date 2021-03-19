@@ -9,9 +9,9 @@ import time
 
 
 <<<<<<< HEAD
-pcd = pcl.load('/home/tsuchidashinya/near_1.pcd')
+pcd = pcl.load('/home/ericlab/near_1.pcd')
 =======
-pcd = pcl.load('/home/tsuchidashinya/1_/git_file_3/gpd/tutorials/table_mug.pcd')
+pcd = pcl.load('/home/ericlab/1_/git_file_3/gpd/tutorials/table_mug.pcd')
 >>>>>>> e6cc65836113879060692d92bd2bc7d3953d678e
 visual = pcl.pcl_visualization.CloudViewing()
 visual.ShowMonochromeCloud(pcd)
