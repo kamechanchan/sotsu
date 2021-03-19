@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="use_sensor_type" default="phoxi_camera" />
+  <arg name="sensor_parent_frame" default="world" />
+  <arg name="sensor_size" default="L"/>
+  <arg name="init_pose" default="-x 0 -y 0 -z 0" />
+
+  <include file="$(find gen_dataset)/launch/gen_multi_photoneo.launch">
+    <arg name="use_sensor_type" value="$(arg use_sensor_type)"/>
+    <arg name="sensor_parent_frame" value="$(arg sensor_parent_frame)"/>
+    <arg name="sensor_size" value="$(arg sensor_size)"/>
+    <arg name="init_pose" value="$(arg init_pose)"/>
+  </include>
+</launch>

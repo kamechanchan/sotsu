@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="max_data" default="100" />
+  <arg name="package_name" default="cnn_pose_estimator" />
+  <arg name="object_name" default="HV8" />
+  <arg name="dataset_name" default="data1" />
+  <arg name="voxel_n" default="64" />
+
+  <node pkg="gen_dataset" type="make_voxel_data" name="make_voxel_data" output="screen">
+    <param name="max_data" value="$(arg max_data)" />
+    <param name="package_name" value="$(arg package_name)" />
+    <param name="object_name" value="$(arg object_name)" />
+    <param name="dataset_name" value="$(arg dataset_name)" />
+  </node>
+</launch>
