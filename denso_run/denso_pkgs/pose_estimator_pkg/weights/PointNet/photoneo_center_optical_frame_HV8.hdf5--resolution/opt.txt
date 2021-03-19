@@ -2,13 +2,13 @@
 arch: PointNet_Pose
 batch_size: 32
 beta1: 0.9
-checkpoints_dir: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights
+checkpoints_dir: /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights
 continue_train: False
-dataroot: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets
+dataroot: /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets
 dataset_mode: pose_estimation
 dataset_model: photoneo_center_optical_frame_HV8.hdf5--resolution
 epoch_count: 1
-export_folder: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights/PointNet/photoneo_center_optical_frame_HV8.hdf5--resolution/exports intermediate collapses to this folder
+export_folder: /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights/PointNet/photoneo_center_optical_frame_HV8.hdf5--resolution/exports intermediate collapses to this folder
 gpu_ids: [0]
 gpu_num: 3
 is_train: True
