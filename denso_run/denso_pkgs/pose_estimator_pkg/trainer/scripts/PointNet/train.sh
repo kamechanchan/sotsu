@@ -1,11 +1,5 @@
 #!/usr/bin/env bash
 
-echo 'Train with PointNet'
-
-
-for i in '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
-do
-
 ## run the training
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/MEGAsync/Precision-7820-Tower \
