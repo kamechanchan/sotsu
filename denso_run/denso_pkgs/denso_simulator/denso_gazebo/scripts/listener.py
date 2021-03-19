@@ -1,19 +1,10 @@
 #!/usr/bin/env python3
 import sys
 import os
-<<<<<<< HEAD
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_simulator/denso_gazebo/scripts'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/devel/.private/denso_gazebo/lib/denso_gazebo/'))
-=======
-<<<<<<< HEAD
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_simulator/denso_gazebo/scripts'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/devel/.private/denso_gazebo/lib/denso_gazebo/'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/options'))
-=======
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_simulator/denso_gazebo/scripts'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/devel/.private/denso_gazebo/lib/denso_gazebo/'))
->>>>>>> 747f172c879fb883e58bb2ed9e265b51688e009f
->>>>>>> e6cc65836113879060692d92bd2bc7d3953d678e
 import rospy
 from test_options import TestOptions
 from denso_gazebo_srvs.srv import Pose, PoseResponse
