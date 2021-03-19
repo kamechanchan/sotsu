@@ -1,28 +1,15 @@
 #!/usr/bin/env bash
 
 echo 'Train with PointNet'
-<<<<<<< HEAD
-echo 'Dataset Model is  ''/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
-=======
-<<<<<<< HEAD
-echo 'Dataset Model is '$@'/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
-=======
-echo 'Dataset Model is  ''/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
->>>>>>> b8a4e201324bbf227462141351058788a24b490f
->>>>>>> e6cc65836113879060692d92bd2bc7d3953d678e
-echo ''
 
-for i in '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
+
+for i in '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
 do
 
 ## run the training
-python3 /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets \
-<<<<<<< HEAD
---dataset_model  photoneo_center_optical_frame_HV8.hdf5 \
-=======
+python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
+--dataroot /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets \
 --dataset_model  photoneo_center_optical_frame_HV8.hdf5\
->>>>>>> e6cc65836113879060692d92bd2bc7d3953d678e
 --resolution 1024 \
 --phase train \
 --name PointNet \

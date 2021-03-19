@@ -58,12 +58,12 @@ class RecordData(object):
             pcd = np_points[~np.any(np.isnan(np_points), axis=1)]
             translation = np.array(trans_rot[0])
             rotation = np.array(trans_rot[1])
-            #f = open('/home/tsuchidashinya/dataset_pose.txt', 'w')
+            #f = open('/home/ericlab/dataset_pose.txt', 'w')
             #f.writelines(str(translation))
             #f.writelines(str(rotation))
             #f.close()
             #new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
-            #pcl.save(new_pcd, "/home/tsuchidashinya/random_1.pcd")
+            #pcl.save(new_pcd, "/home/ericlab/random_1.pcd")
 
             pose = np.concatenate([translation, rotation])
             self.savePCDandPose(pcd, pose)
@@ -75,7 +75,7 @@ class RecordData(object):
         while 1:
             try:
                 (trans, rot) = lister.lookupTransform(source_frame, target_frame, rospy.Time(0))
-                f1 = open('/home/tsuchidashinya/groud_truth_pose.txt', 'w')
+                f1 = open('/home/ericlab/groud_truth_pose.txt', 'w')
                 f1.writelines(str(trans))
                 f1.writelines(str(rot))
                 f1.close()
