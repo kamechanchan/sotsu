@@ -96,10 +96,8 @@ class EstimatorModel:
         self.save_dir = "/home/ericlab/MEGAsync/X10/day_1/PointNet/dataset_20000.hdf5"
         PC_NAME = "X10"
         save_filename = "latest_net.pth"
-        self.save_dir = "/home/ericlab/Rikuken/Mega/X10/PointNet/dataset_20000.hdf5"
         #load_path = join(self.save_dir, PC_NAME,save_filename)
-        load_model_path = join(self.save_dir, save_filename)
-        load_path = rospy.get_param('~load_path', load_model_path)
+        load_path = join(self.save_dir, save_filename)
         net = self.net
 
         if isinstance(net, torch.nn.DataParallel):
