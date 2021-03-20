@@ -229,7 +229,7 @@ def getNormalizedPcd(np_cloud, resolution):
     normalized_pcd = pcd_data[choice, :]
     new_pcd = pcl.PointCloud(np.array(normalized_pcd, np.float32))
     #pcl.save(new_pcd, "/home/ericlab/random_original.pcd")
-    pcl.save(new_pcd, '/home/ericlab/random_improve.pcd')
+    #pcl.save(new_pcd, '/home/ericlab/random_improve.pcd')
     return normalized_pcd, pcd_offset[0]
 
 

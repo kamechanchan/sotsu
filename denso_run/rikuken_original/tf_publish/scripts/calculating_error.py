@@ -87,10 +87,13 @@ if __name__=='__main__':
 
             rate.sleep()    
 
-        except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-            rate.sleep()
-            continue
-        
+        except (tf2_ros.L
+    for i in range(6):
+        euler_error_average.append(euler_error_sum[i] / (count - 1))
+    print_result(euler_error_max, 'max_error')
+    print_result(euler_error_min, 'min_error')
+    print_result(euler_error_average, 'ave_error')
+    
     for i in range(6):
         euler_error_average.append(euler_error_sum[i] / (count - 1))
     print_result(euler_error_max, 'max_error')
