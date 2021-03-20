@@ -25,7 +25,7 @@ class BaseOptions:
         self.parser.add_argument('--gpu_ids', type=str, default='-1')
         self.parser.add_argument('--gpu_num', type=int, default=2)
         self.parser.add_argument('--num_threads', type=int, default=3)
-        self.parser.add_argument('--checkpoints_dir', type=str, default="/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights")
+        self.parser.add_argument('--checkpoints_dir', type=str, default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights")
         self.parser.add_argument('--serial_batches', action='store_true', help='if true, takes meshs in order')
         self.parser.add_argument('--export_folder', type=str, default='exports intermediate collapses to this folder')
         self.initialized = True
@@ -44,10 +44,7 @@ class BaseOptions:
             if id>= 0:
                 self.opt.gpu_ids.append(id)
 
-        if len(self.opt.gpu_ids) > 0:
-            torch.cuda.set_device(self.opt.gpu_ids[0])
-
-        args = vars(self.opt)
+        if len(self.opt.gpu_ids) > 0:base_loader
 
         if self.opt.export_folder:
             self.opt.export_folder = os.path.join(self.opt.checkpoints_dir, self.opt.name, self.opt.dataset_model, self.opt.export_folder)

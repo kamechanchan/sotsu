@@ -4,7 +4,7 @@
     <node name="cloud_save" pkg="pointcloud_usage" type="cloud_save"  output="screen" respawn="false" respawn_delay="0">
         <param name="topic_name" value="/photoneo_center/sensor/points"/>
         <!--param name="topic_name" value="/cloud_without_segmented"/-->
-        <param name="save_name" value="/home/tsuchidashinya/yes_1.pcd"/>
+        <param name="save_name" value="/home/ericlab/yes_1.pcd"/>
         <param name="pub_topic_name" value="/shonya_3"/>
     </node>
 

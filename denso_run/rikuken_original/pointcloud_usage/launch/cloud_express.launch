@@ -2,11 +2,7 @@
 <launch>
 
     <node name="cloud_express" pkg="pointcloud_usage" type="cloud_express"  output="screen" respawn="false" respawn_delay="0">
-<<<<<<< HEAD
-        <param name="load_file_name" value="/home/ericlab/random_1.pcd"/>
-=======
         <param name="load_file_name" value="/home/tsuchidashinya/random.pcd"/>
->>>>>>> 3fb2249c1f259f214e94cebb00bde5c16afaf021
         <param name="output_topic_name" value="shinya_2"/>
         <param name="parent_link" value="world"/>
     </node>

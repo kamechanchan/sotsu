@@ -1,37 +1,9 @@
 #!/usr/bin/env bash
 
-echo 'Train with PointNet'
-<<<<<<< HEAD
-echo 'Dataset Model is  ''/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
-=======
-<<<<<<< HEAD
-echo 'Dataset Model is '$@'/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
-=======
-echo 'Dataset Model is  ''/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
->>>>>>> b8a4e201324bbf227462141351058788a24b490f
->>>>>>> e6cc65836113879060692d92bd2bc7d3953d678e
-echo ''
-
-<<<<<<< HEAD
-
-
-## run the training
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/MEGAsync/Precision-7820-Tower \
---dataset_model  dataset.hdf5 \
-=======
-for i in '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
-do
-
-## run the training
-python3 /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets \
-<<<<<<< HEAD
---dataset_model  photoneo_center_optical_frame_HV8.hdf5 \
-=======
---dataset_model  photoneo_center_optical_frame_HV8.hdf5\
->>>>>>> e6cc65836113879060692d92bd2bc7d3953d678e
->>>>>>> 3fb2249c1f259f214e94cebb00bde5c16afaf021
+--dataset_model  dateset_20000_1.hdf5\
+--checkpoints_dir /home/ericlab/MEGAsync/X10/03_19 \
 --resolution 1024 \
 --phase train \
 --name PointNet \
@@ -39,6 +11,8 @@ python3 /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_
 --batch_size 32 \
 --max_dataset_size 5000 \
 --num_epoch 600 \
+--max_dataset_size 20000 \
+--num_epoch 800 \
 --arch PointNet_Pose \
 --print_freq 10 \
 --save_latest_freq 1000 \
