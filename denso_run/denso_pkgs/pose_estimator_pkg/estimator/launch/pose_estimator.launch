@@ -5,6 +5,7 @@
   <arg name="arch" default="PointNet_Pose" />
   <arg name="name" default="PointNet" />
   <arg name="resolution" default="50" />
+  <arg name="load_path" default="/home/ericlab/MEGAsync/X10/day_1/PointNet/dataset_20000.hdf5/70_net.pth"/>
   <node name="random_move" pkg="tf_publish" type="random_state.py"/>
   <node name="estimator_client" pkg="estimator" type="estimator_client.py" output="screen" >
     <param name="object_name" value="$(arg object_name)" />
@@ -18,6 +19,7 @@
     <param name="name" value="$(arg name)" />
     <param name="arch" value="$(arg arch)" />
     <param name="resolution" value="$(arg resolution)" />
+    <param name="load_path" value="$(arg load_path)"/>
   </node>
 
   
