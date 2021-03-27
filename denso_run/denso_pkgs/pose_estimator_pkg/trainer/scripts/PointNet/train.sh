@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 ## run the training
-python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/ericlab/MEGAsync/Precision-7820-Tower \
+python3 /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
+--dataroot /home/tsuchidashinya/MEGAsync/Precision-7820-Tower \
 --dataset_model  dateset_20000_1.hdf5\
---checkpoints_dir /home/ericlab/MEGAsync/X10/03_19 \
+--checkpoints_dir /home/tsuchidashinya/MEGAsync/X10/03_19 \
 --resolution 1024 \
 --phase train \
 --name PointNet \
