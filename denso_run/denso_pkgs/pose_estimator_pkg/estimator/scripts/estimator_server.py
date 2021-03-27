@@ -3,11 +3,11 @@
 
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/utils'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/options'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/scripts/function/__init__.py'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/scripts/function/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer/options'))
+sys.path.append(os.path.join(os.path.dirname(__file__), './function/__init__.py'))
+sys.path.append(os.path.join(os.path.dirname(__file__), './function/'))
 from options.test_options import TestOptions
 from models import create_model
 from dnn_test import estimation
