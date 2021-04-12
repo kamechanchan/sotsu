@@ -29,11 +29,11 @@ class RecordData(object):
         self.topic_name = rospy.get_param("~topic_name", "photoneo_center")
         self.object_name_ = rospy.get_param("~object_name", "HV8")
 
-        self.num_dataset = rospy.get_param("~num_dataset", 10)
+        self.num_dataset = rospy.get_param("~num_dataset", 20000)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
-        self.save_file_path = rospy.get_param("~save_file", "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/hajimari")
+        self.save_file_path = rospy.get_param("~save_file", "/home/ericlab/MEGAsync/TEI_PC/Dataset/pi/datset_-pi4-pi4")
 
         self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
