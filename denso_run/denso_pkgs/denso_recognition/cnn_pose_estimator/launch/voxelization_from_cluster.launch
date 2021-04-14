@@ -1,0 +1,29 @@
+<launch>
+  <arg name="source_pc_topic_name" default="/filtered_pointcloud" />
+  <arg name="clustering_id" default="photoneo_center_optical_frame" />
+  <node name="voxelize_cloud" pkg="cnn_pose_estimator" type="voxelization_from_cluster_node" output="screen">
+    <param name="loop_rate" value="60" />
+
+    <!-- 切り出すエリア -->
+    <!--    <param name="crop_x_min" value="0" />
+    <param name="crop_x_max" value="0.42" />
+    <param name="crop_y_min" value="-0.4" />
+    <param name="crop_y_max" value="0.3" />
+    <param name="crop_z_min" value="-0.025" />
+    <param name="crop_z_max" value="1" />-->
+    <!-- 切り出すエリア -->
+    <param name="crop_x_min" value="0.01" />
+    <param name="crop_x_max" value="0.25" />
+    <param name="crop_y_min" value="0.034" />
+    <param name="crop_y_max" value="0.21" />
+    <param name="crop_z_min" value="0.039" />
+    <param name="crop_z_max" value="0.15" />
+
+    <!-- <param name="source_pc_topic_name" value="/kinect_head/qhd/points" /> -->
+    <param name="source_pc_topic_name" value="/filtered_pointcloud" />
+    <!-- <param name="clustering_frame_id" value="velodyne" /> -->
+    <param name="clustering_id" value="photoneo_test_optical_frame" />
+    <param name="box_name" value="clustering_result" />
+    <!--<param name="crop_frame_id" value="kinect_head_rgb_optical_frame" /> -->
+  </node>
+</launch>

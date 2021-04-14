@@ -1,0 +1,4 @@
+string grasp_point_name
+string assemble_point_name
+---
+bool success
