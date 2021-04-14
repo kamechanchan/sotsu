@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find oneshot_calibration_system)/launch/true_other_ar_broadcast.launch"/>
+  <include file="$(find meshcloud_publisher)/launch/meshcloud_publisher.launch"/>
+  <include file="$(find pointcloud_registrator)/launch/pointcloud_registrator.launch"/>
+  <include file="$(find oneshot_calibration_system)/launch/ar_marker_extraction.launch"/>
+  <include file="$(find oneshot_calibration_system)/launch/icp_calibration.launch"/>
+  <include file="$(find oneshot_calibration_system)/launch/pc_calib_broadcaster.launch"/>
+</launch>

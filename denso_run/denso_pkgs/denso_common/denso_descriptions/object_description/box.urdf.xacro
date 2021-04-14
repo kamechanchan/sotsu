@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot name="box_v0" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find denso_descriptions)/common_description/common.xacro" />
+
+  <xacro:arg name="box_m" default="0.1" />
+  <xacro:arg name="box_h" default="0.1" />
+  <xacro:arg name="box_w" default="0.1" />
+  <xacro:arg name="box_d" default="0.1" />
+
+  <link name="box_base_link">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="$(arg box_h) $(arg box_w) $(arg box_d)" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="$(arg box_h) $(arg box_w) $(arg box_d)" />
+      </geometry>
+    </collision>
+    <inertial>
+      <xacro:box_inertial mass="$(arg box_m)" height="$(arg box_h)" width="$(arg box_w)" depth="$(arg box_d)">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+      </xacro:box_inertial>
+    </inertial>
+  </link>
+</robot>
