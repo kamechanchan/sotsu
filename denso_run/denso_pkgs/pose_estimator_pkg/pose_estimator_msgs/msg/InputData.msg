@@ -1,2 +1,0 @@
-sensor_msgs/PointCloud2 input_cloud
-pose_estimator_msgs/InputCNNArray input_voxel

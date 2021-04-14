@@ -1,5 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-  <include file="$(find gen_dataset)/launch/cloud_common.launch" />
-  <node name="open_3d_operator" pkg="gen_dataset" type="open_3d_operator.py" output="screen" />
-</launch>
