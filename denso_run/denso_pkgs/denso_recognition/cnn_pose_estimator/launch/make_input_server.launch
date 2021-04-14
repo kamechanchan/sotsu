@@ -1,0 +1,10 @@
+<launch>
+  <arg name="source_pc" default="/cropped_cloud" />
+  <arg name="division_number" default="50" />
+  <arg name="sensor_frame_id" default="photoneo_center_optical_frame" />
+  <node name="make_input_server" pkg="cnn_pose_estimator" type="make_input_server_node" output="screen">
+    <param name="division_number" value="$(arg division_number)" />
+    <param name="source_pc_topic_name" value="$(arg source_pc)" />
+    <param name="sensor_frame_id" value="$(arg sensor_frame_id)" />
+  </node>
+</launch>

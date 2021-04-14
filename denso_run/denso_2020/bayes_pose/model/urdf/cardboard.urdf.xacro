@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<robot name="cardboard" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find bayes_pose)/model/common/common.xacro" />
+
+  <xacro:arg name="id" default="00"/>
+
+  <link name="cardboard_link_$(arg id)">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
+      <geometry>
+        <mesh filename="package://bayes_pose/model/meshes/STL/cardboard_m.stl" />
+      </geometry>
+      <material name="cardboard_color">
+        <color rgba="0.78 0.47 0.2 1.0"/>
+      </material>
+    </visual>
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
+      <geometry>
+        <mesh filename="package://bayes_pose/model/meshes/STL/cardboard_m.stl" />
+      </geometry>
+    </collision>
+    <inertial>
+      <xacro:box_inertial mass="0.1" height="0.06" width="0.06" depth="0.06">
+        <origin xyz="0 0 0" rpy="0 0 -${M_PI/2}" />
+      </xacro:box_inertial>
+    </inertial>
+  </link>
+
+</robot>

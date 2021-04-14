@@ -1,0 +1,78 @@
+<launch>
+  <!-- Override robot_name argument -->
+  <arg name="robot_name" default="vs087" />
+  <arg name="robot_options" default="vs087" />
+  <arg name="sensor_config" default="sensors" />
+
+  <!-- Use custom RobotHWSim? -->
+  <arg name="use_custom_ros_control" default="false" />
+
+  <!-- Load defferent move_group.launch file -->
+  <arg name="move_group_launch_file" default="move_group.launch" />
+
+  <!-- the "sim" argument controls whether we connect to a Simulated or Real robot -->
+  <!--  - if sim=false, a ip_address argument is required -->
+  <arg name="sim" default="true" />
+  <arg name="ip_address" default="192.168.0.1" />
+
+  <!-- If you want to change send and recieve format of denso_control, -->
+  <!-- you can specify the send_format and recv_format parameters -->
+  <arg name="send_format" default="288" />
+  <arg name="recv_format" default="290" />
+
+  <!-- Simulator grasp config -->
+  <arg name="angle_tolerance" default="100" />
+  <arg name="ratio_threshold" default="0.3" />
+  <arg name="time" default="0.01" />
+  <!-- Flag for using grasp config -->
+  <arg name="use_grasp" value="$(eval 'tercero' in arg('robot_options'))" />
+
+  <!-- run the "real robot" interface nodes -->
+  <!--   - this typically includes: robot_state, motion_interface, and joint_trajectory_action nodes -->
+  <!--   - replace these calls with appropriate robot-specific calls or launch files -->
+  <group if="$(arg sim)">
+    <group if="$(arg use_grasp)">
+      <include file="$(find denso_gazebo)/launch/$(arg robot_name)/$(arg robot_options)_gazebo.launch">
+        <arg name="robot_name" value="$(arg robot_name)" />
+        <arg name="robot_options" value="$(arg robot_options)" />
+        <arg name="use_custom_ros_control" value="$(arg use_custom_ros_control)" />
+        <arg name="angle_tolerance" value="$(arg angle_tolerance)" />
+        <arg name="ratio_threshold" value="$(arg ratio_threshold)" />
+        <arg name="time" value="$(arg time)" />
+      </include>
+    </group>
+    <group unless="$(arg use_grasp)" >
+      <include file="$(find denso_gazebo)/launch/$(arg robot_name)/$(arg robot_options)_gazebo.launch">
+        <arg name="robot_name" value="$(arg robot_name)" />
+        <arg name="robot_options" value="$(arg robot_options)" />
+        <arg name="use_custom_ros_control" value="$(arg use_custom_ros_control)" />
+      </include>
+    </group>
+  </group>
+
+  <group unless="$(arg sim)">
+    <include file="$(find denso_control)/launch/denso_control.launch">
+      <arg name="robot_name" value="$(arg robot_name)" />
+      <arg name="robot_options" value="$(arg robot_options)" />
+      <arg name="ip_address" value="$(arg ip_address)" />
+      <arg name="send_format" value="$(arg send_format)" />
+      <arg name="recv_format" value="$(arg recv_format)" />
+    </include>
+  </group>
+
+  <arg name="planner" default="ompl" />
+
+  <include file="$(eval find(arg('robot_name')+'_moveit_config')+'/launch/'+arg('robot_options')+'/'+arg('move_group_launch_file'))">
+    <arg name="publish_monitored_planning_scene" value="true" />
+    <arg name="robot_name" value="$(arg robot_name)" />
+    <arg name="robot_options" value="$(arg robot_options)"/>
+    <arg name="sensor_config" value="$(arg sensor_config)"/>
+    <arg name="planner" value="$(arg planner)" />
+  </include>
+
+  <include file="$(eval find(arg('robot_name')+'_moveit_config')+'/launch/'+arg('robot_options')+'/moveit_rviz.launch')">
+    <arg name="config" value="true"/>
+    <arg name="robot_options" value="$(arg robot_options)"/>
+  </include>
+
+</launch>

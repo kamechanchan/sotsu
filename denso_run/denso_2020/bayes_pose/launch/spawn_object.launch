@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="id" default="00" />
+  <arg name="model_name" default="hv8" />
+  <arg name="x" default="0.5" />
+  <arg name="y" default="0" />
+  <arg name="z" default="0.1" />
+  <arg name="roll" default="0" />
+  <arg name="pitch" default="0" />
+  <arg name="yaw" default="0" />
+
+  <arg name="odom_topic_name" default="$(arg model_name)_link_$(arg id)_ground_truth" />
+
+  <arg name="model" default="$(find bayes_pose)/model/urdf/$(arg model_name).urdf.gazebo.xacro" />
+  <param name="$(arg model_name)_$(arg id)_description" command="$(find xacro)/xacro $(arg model) id:=$(arg id)" />
+
+  <node name="spawn_$(arg model_name)_$(arg id)"
+        pkg="gazebo_ros"
+        type="spawn_model"
+        args="-param $(arg model_name)_$(arg id)_description -urdf
+              -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw)
+              -model $(arg model_name)_$(arg id)"
+        respawn="false"
+        output="screen" />
+
+  <node name="$(arg model_name)_$(arg id)_sim_odom_tf_converter" pkg="bayes_pose" type="sim_odom_tf_converter" output="screen">
+    <param name="odom_topic_name" value="$(arg odom_topic_name)" />
+  </node>
+
+</launch>

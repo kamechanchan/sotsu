@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>denso_apps</name>
+  <version>1.0.0</version>
+  <description>The denso_apps package</description>
+
+  <maintainer email="atsuki.yokota@gmail.com">Atsuki Yokota</maintainer>
+  <license>BSD</license>
+  <url type="repository">http://github.com/Nishida-Lab/denso_apps</url>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>denso_bringup</exec_depend>
+
+  <export>
+    <metapackage />
+  </export>
+</package>
