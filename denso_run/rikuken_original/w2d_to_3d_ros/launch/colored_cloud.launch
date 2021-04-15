@@ -8,7 +8,7 @@
     <arg name="source_frame" default="world"/>
     
     
-    <node name="colored_point" pkg="2d_to_3d_ros" type="colord_cloud" output="screen">
+    <node name="colored_point" pkg="w2d_to_3d_ros" type="colord_cloud" output="screen">
         <param name="camera_info" value="$(arg camera_info)"/>
         <param name="image_raw" value="$(arg image_raw)"/>
         <param name="input_pointcloud" value="$(arg input_pointcloud)"/>

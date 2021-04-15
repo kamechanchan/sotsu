@@ -1,4 +1,3 @@
-#include <ros/ros.h>
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/CameraInfo.h>
 #include <sensor_msgs/PointCloud2.h>
@@ -10,6 +9,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv4/opencv2/opencv.hpp>
 #include <pcl_ros/transforms.h>
+#include <ros/ros.h>
 
 
 template <typename T>

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.0.2)
-project(2d_to_3d_ros)
+project(w2d_to_3d_ros)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -19,7 +19,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 catkin_package(
 #  INCLUDE_DIRS include
-#  LIBRARIES 2d_to_3d_ros
+#  LIBRARIES w2d_to_3d_ros
 #  CATKIN_DEPENDS cv_bridge image_geometry image_transport pcl_ros roscpp sensor_msgs tf
 #  DEPENDS system_lib
 )
