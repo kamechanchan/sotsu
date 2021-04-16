@@ -49,9 +49,9 @@ class RandomMoveEuler(object):
         #roll = random.uniform(-3.14, 3.14)
         #pitch = random.uniform(-3.14, 3.14)
         #yaw = random.uniform(-3.14, 3.14)
-        roll = -5*pi/5
+        roll = 0
         pitch = 0
-        yaw = 0
+        yaw = -5*pi/5
 
         quat = quaternion_from_euler(roll, pitch, yaw)
         self.pos_.pose.orientation.x = quat[0]
