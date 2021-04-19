@@ -1,0 +1,18 @@
+echo "***************************************"
+echo "*****      for PhoXi Control      *****"
+echo "***************************************"
+wget https://photoneo.com//files/installer/PhoXi/1.1.62/PhotoneoPhoXiControlInstaller-1.1.62-Ubuntu16.tar
+tar xf PhotoneoPhoXiControlInstaller-1.1.62-Ubuntu16.tar
+sudo sh ./PhotoneoPhoXiControlInstaller-1.1.62-Ubuntu16.run
+sudo rm -rf PhotoneoPhoXiControlInstaller-1.1.62-Ubuntu16.tar
+sudo rm -rf PhotoneoPhoXiControlInstaller-1.1.62-Ubuntu16.run
+
+
+echo "********************************************"
+echo "***** for Photoneo 3D Localization SDK *****"
+echo "********************************************"
+wget https://www.photoneo.com/files/installer/Localization/1.2.2/PhotoneoLocalizationSDKInstaller-1.2.2+49076c4-Linux-gcc5.4.0.run.tar
+tar xf PhotoneoLocalizationSDKInstaller-1.2.2+49076c4-Linux-gcc5.4.0.run.tar
+sudo sh ./PhotoneoLocalizationSDKInstaller-1.2.2+49076c4-Linux-gcc5.4.0.run
+sudo rm -rf PhotoneoLocalizationSDKInstaller-1.2.2+49076c4-Linux-gcc5.4.0.run.tar
+sudo rm -rf PhotoneoLocalizationSDKInstaller-1.2.2+49076c4-Linux-gcc5.4.0.run

@@ -1,0 +1,18 @@
+<launch>
+    <arg name="num" default="a"/>
+
+    <node pkg="pcl_ros" type="praw_to_pcd" name="praw_to_pcd" output="screen">
+        <remap from="input" to="rviz_selected_points"/>
+        
+        <param name="prefix" value="HV8_" />
+        <param name="fixed_frame" value="base_link" />
+        <param name="binary" value="false" />
+        <param name="compressed" value="false" />
+        <param name="num" value="$(arg num)" />
+    </node>
+
+    <!--<node name="extract" pkg="image_view" type="extract_images" respawn="false" required="true" output="screen"  cwd="ROS_HOME">
+        <remap from="image" to="/photoneo_center/rgb_texture"/>
+        <param name="filename_format" value="/home/HV8/images/hv8.jpg" />
+    </node> -->
+</launch>

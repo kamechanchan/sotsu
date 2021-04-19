@@ -1,0 +1,4 @@
+- git:
+    local-name: denso_pkgs/denso_common
+    uri: git@github.com:Nishida-Lab/denso_common.git
+    version: kinetic-devel
