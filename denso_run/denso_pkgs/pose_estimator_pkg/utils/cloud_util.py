@@ -221,6 +221,14 @@ def pcd_viewer(cloud):
 
 
 def getNormalizedPcd(np_cloud, resolution):
+    """
+    cloud_start=pcl.PointCloud(cloud_data)
+    pre_cloud = cloud_start.make_voxel_grid_filter()
+    pcl.VoxelGridFilter.set_leaf_size(pre_cloud, 0.0035, 0.0035, 0.0035)
+    cloud_filter=pcl.VoxelGridFilter.filter(pre_cloud)
+    np_cloud=np.array(cloud_filter)
+    """ 
+    
     pcd_offset = np.expand_dims(np.mean(np_cloud, axis=0), 0)
     pcd_data = np_cloud - pcd_offset  #original
     #pcd_data = np.asarray(np_cloud)  #improve
