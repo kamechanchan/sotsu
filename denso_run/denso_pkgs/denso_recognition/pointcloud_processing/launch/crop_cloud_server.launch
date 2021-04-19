@@ -1,0 +1,25 @@
+<launch>
+  <arg name="crop_x_min" default="0.1" />
+  <arg name="crop_x_max" default="1.0" />
+  <arg name="crop_y_min" default="-1.0" />
+  <arg name="crop_y_max" default="0.1" />
+  <arg name="crop_z_min" default="0.3" />
+  <arg name="crop_z_max" default="1" />
+  <arg name="crop_pc_src" default="/get_point_cloud" />
+  <arg name="crop_pc_dst" default="/cropped_cloud" />
+  <arg name="use_rgb" default="false" />
+  <arg name="crop_frame_id" default="world" />
+
+  <node name="crop_cloud_server" pkg="pointcloud_processing" type="crop_cloud_server_node" output="screen">
+    <param name="crop_x_min" value="$(arg crop_x_min)" />
+    <param name="crop_x_max" value="$(arg crop_x_max)" />
+    <param name="crop_y_min" value="$(arg crop_y_min)" />
+    <param name="crop_y_max" value="$(arg crop_y_max)" />
+    <param name="crop_z_min" value="$(arg crop_z_min)" />
+    <param name="crop_z_max" value="$(arg crop_z_max)" />
+    <param name="crop_pc_src" value="$(arg crop_pc_src)" />
+    <param name="crop_pc_dst" value="$(arg crop_pc_dst)" />
+    <param name="use_rgb" value="$(arg use_rgb)" />
+    <param name="crop_frame_id" value="$(arg crop_frame_id)" />
+  </node>
+</launch>

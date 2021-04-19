@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+
+  <node name="from_base_link_to_true_ar_marker_0_center" pkg="tf" type="static_transform_publisher" args="0.5675 -0.2975 0.0325 0.0 0.0 0.0 1 base_link true_ar_marker_0_center 50" />
+
+  <node name="from_base_link_to_true_ar_marker_2_center" pkg="tf" type="static_transform_publisher" args="0.0675 -0.2975 0.0325 0.0 0.0 0.0 1 base_link true_ar_marker_2_center 50" />
+
+  <node name="from_base_link_to_true_ar_marker_3_center" pkg="tf" type="static_transform_publisher" args="0.0675 0.2975 0.0325 0.0 0.0 0.0 1 base_link true_ar_marker_3_center 50" />
+
+  <node name="from_base_link_to_true_ar_marker_5_center" pkg="tf" type="static_transform_publisher" args="0.5675 0.2975 0.0325 0.0 0.0 0.0 1 base_link true_ar_marker_5_center 50" />
+
+</launch>

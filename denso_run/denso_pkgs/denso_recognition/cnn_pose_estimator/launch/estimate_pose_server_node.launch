@@ -1,0 +1,143 @@
+<launch>
+  <!-- Common args -->
+  <arg name="sensor_frame_id" default="photoneo_center_optical_frame" />
+  <arg name="estimate_frame_id" default="estimate_tf" />
+
+  <!-- Estimate object pose server node args -->
+  <arg name="use_clustering" default="true" />
+  <arg name="interval_time" default="2.0" />
+
+  <!-- Crop cloud server node args -->
+  <arg name="crop_x_min" default="0.22" />
+  <arg name="crop_x_max" default="0.45" />
+  <arg name="crop_y_min" default="0.15" />
+  <arg name="crop_y_max" default="0.3" />
+  <arg name="crop_z_min" default="0.0" />
+  <arg name="crop_z_max" default="0.3" />
+  <arg name="crop_pc_src" default="/get_point_cloud" />
+  <arg name="crop_pc_dst" default="/cropped_cloud" />
+  <arg name="use_rgb" default="false" />
+  <arg name="crop_frame_id" default="world" />
+
+  <!-- Region growing server node args -->
+  <arg name="cluster_cloud_size_min" default="5000"/>
+  <arg name="cluster_cloud_size_max" default="10000"/>
+  <arg name="k_search_size" default="50"/>
+  <arg name="number_of_neighbours" default="30"/>
+  <arg name="extract_cluster_cloud_size_min" default="5000"/>
+  <arg name="extract_cluster_cloud_size_max" default="10000"/>
+  <arg name="smooth_threshold_deg" default="3.0"/>
+  <arg name="curvature_threshold" default="1.0"/>
+  <arg name="scene_topic_name" default="$(arg crop_pc_dst)"/>
+  <arg name="extract_cloud_topic_name" default="/extract_cloud"/>
+  <arg name="extract_cloud_frame_id" default="world"/>
+
+  <!-- Make input node args -->
+  <group if="$(arg use_clustering)">
+    <arg name="source_pc" default="$(arg extract_cloud_topic_name)" />
+  </group>
+  <group unless="$(arg use_clustering)">
+    <arg name="source_pc" default="$(arg crop_pc_dst)" />
+  </group>
+  <arg name="division_number" default="50" />
+
+  <!-- Object pose estimator server node args -->
+  <arg name="use_gpu" default="true" />
+  <arg name="division" default="50" />
+  <arg name="orientation" default="rotation_matrix" />
+  <arg name="model" default="t_pipe_rotation.model" />
+
+  <!-- Registration pose server node args -->
+  <arg name="source_pc" default="$(arg extract_cloud_topic_name)" />
+  <arg name="method_name" default="ICP" />
+  <arg name="model_name" default="t_pipe" />
+  <arg name="registrated_frame_id" default="T_pipe" />
+  <arg name="leaf_scene" default="0.003" />
+  <arg name="leaf_model" default="0.003" />
+  <arg name="model_plane_threshold" default="0.0015" />
+  <arg name="scene_plane_threshold" default="0.0015" />
+  <arg name="model_planable_ratio" default="0.1" />
+  <arg name="scene_planable_ratio" default="0.1" />
+  <arg name="max_icp_iteration" default="500" />
+  <arg name="use_remove_plane" default="false" />
+
+  <!-- Inverse pose server node args -->
+  <arg name="object_name" default="$(arg registrated_frame_id)" />
+  <arg name="update_object_name" default="T_pipe_fix" />
+
+  <!-- Execute crop cloud server -->
+  <node name="crop_cloud_server" pkg="pointcloud_processing" type="crop_cloud_server_node" output="screen">
+    <param name="crop_x_min" value="$(arg crop_x_min)" />
+    <param name="crop_x_max" value="$(arg crop_x_max)" />
+    <param name="crop_y_min" value="$(arg crop_y_min)" />
+    <param name="crop_y_max" value="$(arg crop_y_max)" />
+    <param name="crop_z_min" value="$(arg crop_z_min)" />
+    <param name="crop_z_max" value="$(arg crop_z_max)" />
+    <param name="crop_pc_src" value="$(arg crop_pc_src)" />
+    <param name="crop_pc_dst" value="$(arg crop_pc_dst)" />
+    <param name="use_rgb" value="$(arg use_rgb)" />
+    <param name="crop_frame_id" value="$(arg crop_frame_id)" />
+  </node>
+
+  <!-- Execute region growing extractor server -->
+  <node pkg="target_extractor" type="region_growing_extractor_server" name="region_growing_extractor_server_node" output="screen">
+    <param name="cluster_cloud_size_min" value="$(arg cluster_cloud_size_min)"/>
+    <param name="cluster_cloud_size_max" value="$(arg cluster_cloud_size_max)"/>
+    <param name="k_search_size" value="$(arg k_search_size)"/>
+    <param name="number_of_neighbours" value="$(arg number_of_neighbours)"/>
+    <param name="extract_cluster_cloud_size_min" value="$(arg extract_cluster_cloud_size_min)"/>
+    <param name="extract_cluster_cloud_size_max" value="$(arg extract_cluster_cloud_size_max)"/>
+    <param name="smooth_threshold_deg" value="$(arg smooth_threshold_deg)"/>
+    <param name="curvature_threshold" value="$(arg curvature_threshold)"/>
+    <param name="scene_topic_name" value="$(arg scene_topic_name)"/>
+    <param name="extract_cloud_topic_name" value="$(arg extract_cloud_topic_name)"/>
+    <param name="extract_cloud_frame_id" value="$(arg extract_cloud_frame_id)"/>
+  </node>
+
+  <!-- Execute make input node -->
+  <node name="make_input_server" pkg="cnn_pose_estimator" type="make_input_server_node" output="screen">
+    <param name="division_number" value="$(arg division_number)" />
+    <param name="source_pc_topic_name" value="$(arg source_pc)" />
+    <param name="sensor_frame_id" value="$(arg sensor_frame_id)" />
+  </node>
+
+  <!-- Execute object pose estimator server node  -->
+  <node name="object_pose_estimator_server_node" pkg="cnn_pose_estimator" type="object_pose_estimator_server.py" output="screen">
+    <param name="use_gpu" value="$(arg use_gpu)" />
+    <param name="division" value="$(arg division)" />
+    <param name="orientation" value="$(arg orientation)" />
+    <param name="model" value="$(arg model)" />
+    <param name="sensor_frame_id" value="$(arg sensor_frame_id)" />
+    <param name="estimate_frame_id" value="$(arg estimate_frame_id)" />
+  </node>
+
+  <!-- Execute registration pose server node -->
+  <node name="registration_pose_server_node" pkg="cnn_pose_estimator" type="registration_pose_server" output="screen">
+    <param name="source_pc" value="$(arg source_pc)" />
+    <param name="method_name" value="$(arg method_name)" />
+    <param name="model_name" value="$(arg model_name)" />
+    <param name="sensor_frame_id" value="$(arg sensor_frame_id)" />
+    <param name="registrated_frame_id" value="$(arg registrated_frame_id)" />
+    <param name="leaf_scene" value="$(arg leaf_scene)" />
+    <param name="leaf_model" value="$(arg leaf_model)" />
+    <param name="model_plane_threshold" value="$(arg model_plane_threshold)" />
+    <param name="scene_plane_threshold" value="$(arg scene_plane_threshold)" />
+    <param name="model_planable_ratio" value="$(arg model_planable_ratio)" />
+    <param name="scene_planable_ratio" value="$(arg scene_planable_ratio)" />
+    <param name="estimate_frame_id" value="$(arg estimate_frame_id)" />
+    <param name="max_icp_iteration" value="$(arg max_icp_iteration)" />
+    <param name="use_remove_plane" value="$(arg use_remove_plane)" />
+  </node>
+
+  <!-- Execute inverse pose server node -->
+  <node name="inverse_pose_server_node" pkg="cnn_pose_estimator" type="inverse_pose_server" output="screen">
+    <param name="object_name" value="$(arg object_name)" />
+    <param name="update_object_name" value="$(arg update_object_name)" />
+  </node>
+
+  <!-- Execute estimate object pose server node -->
+  <node name="estimate_object_pose_server_node" pkg="cnn_pose_estimator" type="estimate_object_pose_server" output="screen">
+    <param name="use_clustering" value="$(arg use_clustering)"/>
+    <param name="interval_time" value="$(arg interval_time)"/>
+  </node>
+</launch>

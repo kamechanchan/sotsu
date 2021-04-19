@@ -1,0 +1,145 @@
+<launch>
+  <arg name="source_pc" default="/photoneo_center/pointcloud" />
+  <arg name="division_number" default="50" />
+  <arg name="sensor_frame_id" default="photoneo_center_optical_frame" />
+  <node name="make_input" pkg="cnn_pose_estimator" type="make_input_node" output="screen">
+    <param name="loop_rate" value="10" />
+    <param name="division_number" value="$(arg division_number)" />
+
+      <!-- 切り出すエリア
+    <param name="crop_x_min" value="0" />
+    <param name="crop_x_max" value="0.42" />
+    <param name="crop_y_min" value="-0.4" />
+    <param name="crop_y_max" value="0.3" />
+    <param name="crop_z_min" value="-0.025" />
+      <param name="crop_z_max" value="1" />-->
+      <!-- 切り出すエリアHV8
+    <param name="crop_x_min" value="0.01" />
+    <param name="crop_x_max" value="0.25" />
+    <param name="crop_y_min" value="0.034" />
+    <param name="crop_y_max" value="0.21" />
+    <param name="crop_z_min" value="0.039" />
+    <param name="crop_z_max" value="0.15" />-->
+      <!-- 切り出すエリアoclusion_test
+    <param name="crop_x_min" value="0.12" />
+    <param name="crop_x_max" value="0.23" />
+    <param name="crop_y_min" value="0.165" />
+    <param name="crop_y_max" value="0.33" />
+    <param name="crop_z_min" value="-0.001" />
+    <param name="crop_z_max" value="0.05" />-->
+    <!-- 切り出すエリアoclusion_test
+    <param name="crop_x_min" value="0.165" />
+    <param name="crop_x_max" value="0.30" />
+    <param name="crop_y_min" value="0.22" />
+    <param name="crop_y_max" value="0.34" />
+    <param name="crop_z_min" value="0.002" />
+    <param name="crop_z_max" value="0.05" />-->
+      <!-- 切り出すエリアpaper_hv6_left
+    <param name="crop_x_min" value="0.08" />
+    <param name="crop_x_max" value="0.315" />
+    <param name="crop_y_min" value="-0.265" />
+    <param name="crop_y_max" value="-0.1" />
+    <param name="crop_z_min" value="0.034" />
+    <param name="crop_z_max" value="0.05" />-->
+      <!-- 切り出すエリアpaper_hv7_left-->
+    <param name="crop_x_min" value="0.47" />
+    <param name="crop_x_max" value="0.60" />
+    <param name="crop_y_min" value="-0.265" />
+    <param name="crop_y_max" value="-0.1" />
+    <param name="crop_z_min" value="0.034" />
+    <param name="crop_z_max" value="0.06" />
+      <!-- 切り出すエリアpaper_hv8_left
+    <param name="crop_x_min" value="0.325" />
+    <param name="crop_x_max" value="0.46" />
+    <param name="crop_y_min" value="-0.265" />
+    <param name="crop_y_max" value="-0.1" />
+    <param name="crop_z_min" value="0.034" />
+    <param name="crop_z_max" value="0.08" />-->
+      <!-- 切り出すエリアpaper_hv8_right
+    <param name="crop_x_min" value="0.325" />
+    <param name="crop_x_max" value="0.47" />
+    <param name="crop_y_min" value="0.065" />
+    <param name="crop_y_max" value="0.3" />
+    <param name="crop_z_min" value="0.034" />
+    <param name="crop_z_max" value="0.08" />-->
+
+      <!-- 切り出すエリアpaper_free
+    <param name="crop_x_min" value="-1" />
+    <param name="crop_x_max" value="1" />
+    <param name="crop_y_min" value="-1" />
+    <param name="crop_y_max" value="1" />
+    <param name="crop_z_min" value="-1" />
+      <param name="crop_z_max" value="1" />-->
+
+        <!-- 切り出すエリアrobot_jig
+    <param name="crop_x_min" value="0.15" />
+    <param name="crop_x_max" value="0.52" />
+    <param name="crop_y_min" value="-0.6" />
+    <param name="crop_y_max" value="-0.02" />
+    <param name="crop_z_min" value="0.006" />
+    <param name="crop_z_max" value="0.05" /> -->
+
+      <!-- 切り出すエリアrobot_jig
+    <param name="crop_x_min" value="0.15" />
+    <param name="crop_x_max" value="0.62" />
+    <param name="crop_y_min" value="-0.2" />
+    <param name="crop_y_max" value="0.6" />
+    <param name="crop_z_min" value="0.027" />
+      <param name="crop_z_max" value="0.05" /> -->
+
+
+      <!-- 切り出すエリアpaper_hv6_right
+    <param name="crop_x_min" value="0.04" />
+    <param name="crop_x_max" value="0.2" />
+    <param name="crop_y_min" value="0" />
+    <param name="crop_y_max" value="0.15" />
+    <param name="crop_z_min" value="0.002" />
+      <param name="crop_z_max" value="0.05" />-->
+        <!-- 切り出すエリアpaper_hv7_right
+    <param name="crop_x_min" value="0.04" />
+    <param name="crop_x_max" value="0.2" />
+    <param name="crop_y_min" value="0.3" />
+    <param name="crop_y_max" value="0.5" />
+    <param name="crop_z_min" value="0.003" />
+    <param name="crop_z_max" value="0.05" />-->
+          <!-- 切り出すエリアpaper_hv8_left
+    <param name="crop_x_min" value="0.03" />
+    <param name="crop_x_max" value="0.16" />
+    <param name="crop_y_min" value="0.17" />
+    <param name="crop_y_max" value="0.30" />
+    <param name="crop_z_min" value="0.0035" />
+    <param name="crop_z_max" value="0.05" />-->
+      <!-- 切り出すエリアjigu_hv6_right
+    <param name="crop_x_min" value="0.05" />
+    <param name="crop_x_max" value="0.22" />
+    <param name="crop_y_min" value="0.2" />
+    <param name="crop_y_max" value="0.4" />
+    <param name="crop_z_min" value="0.008" />
+    <param name="crop_z_max" value="0.05" />-->
+
+      <!-- 切り出すエリアjigu_hv6_left
+    <param name="crop_x_min" value="0.22" />
+    <param name="crop_x_max" value="0.56" />
+    <param name="crop_y_min" value="0.08" />
+    <param name="crop_y_max" value="0.8" />
+    <param name="crop_z_min" value="0.008" />
+      <param name="crop_z_max" value="0.05" />-->
+        <!-- 切り出すエリアjigu_hv6_left
+    <param name="crop_x_min" value="0.02" />
+    <param name="crop_x_max" value="0.56" />
+    <param name="crop_y_min" value="-0.08" />
+    <param name="crop_y_max" value="0.8" />
+    <param name="crop_z_min" value="-0.5" />
+    <param name="crop_z_max" value="0.0" />-->
+
+
+
+
+    <!-- <param name="source_pc_topic_name" value="/kinect_head/qhd/points" /> -->
+    <param name="source_pc_topic_name" value="$(arg source_pc)" />
+    <!-- <param name="clustering_frame_id" value="velodyne" /> -->
+    <param name="crop_frame_id" value="world" />
+    <param name="sensor_frame_id" value="$(arg sensor_frame_id)" />
+    <!--<param name="crop_frame_id" value="kinect_head_rgb_optical_frame" /> -->
+  </node>
+</launch>
