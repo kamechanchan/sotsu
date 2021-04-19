@@ -1,0 +1,11 @@
+<launch>
+  <arg name="batch_size" default="100" />
+  <arg name="target_value" default="default" />
+  <arg name="attached_object" default="false" />
+
+  <node name="generate_opt_path" pkg="jacobi_planning" type="generate_opt_path" output="screen" >
+    <param name="batch_size" value="$(arg batch_size)" />
+    <param name="target_value" value="$(arg target_value)" />
+    <param name="attached_object" value="$(arg attached_object)" />
+  </node>
+</launch>

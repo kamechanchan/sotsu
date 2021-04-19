@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="2">
+
+  <name>denso_calib</name>
+  <version>0.0.0</version>
+  <description>The denso robot calibration bringup pkgs.</description>
+  <maintainer email="email@todo.com">TODO</maintainer>
+  <license>TODJ</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>ar_marker_urdf</exec_depend>
+  <exec_depend>denso_bringup</exec_depend>
+  <exec_depend>denso_descriptions</exec_depend>
+  <exec_depend>denso_gazebo</exec_depend>
+  <exec_depend>meshcloud_publisher</exec_depend>
+  <exec_depend>phoxi_bringup</exec_depend>
+  <exec_depend>phoxi_camera_info_pub</exec_depend>
+  <exec_depend>phoxi_img_converter</exec_depend>
+  <exec_depend>pointcloud_registrator</exec_depend>
+  <exec_depend>oneshot_calibration_system</exec_depend>
+  <exec_depend>sensor_frame_broadcaster</exec_depend>
+  <exec_depend>vs087_moveit_config</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <test_depend>roslaunch</test_depend>
+
+</package>

@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>colored_pointcloud</name>
+  <version>0.0.0</version>
+  <description>The colored_pointcloud package</description>
+
+  <maintainer email="nishidalab@todo.todo">nishidalab</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>pcl_ros</depend>
+  <depend>roscpp</depend>
+  <depend>sensor_msgs</depend>
+  <depend>tf</depend>
+  <depend>image_geometry</depend>
+  <depend>image_transport</depend>
+  <depend>message_filters</depend>
+
+  <build_depend>cv_bridge</build_depend>
+
+  <exec_depend>cv_bridge</exec_depend>
+
+  <test_depend>roslaunch</test_depend>
+
+</package>

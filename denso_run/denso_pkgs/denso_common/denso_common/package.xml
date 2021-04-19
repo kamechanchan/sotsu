@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>denso_common</name>
+  <version>1.0.0</version>
+  <description>The denso_common package</description>
+
+  <maintainer email="atsuki.yokota@gmail.com">Atsuki Yokota</maintainer>
+  <license>BSD</license>
+  <url type="repository">http://github.com/Nishida-Lab/denso_common</url>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>denso_descriptions</exec_depend>
+  <exec_depend>denso_execute</exec_depend>
+
+  <export>
+    <metapackage />
+  </export>
+</package>

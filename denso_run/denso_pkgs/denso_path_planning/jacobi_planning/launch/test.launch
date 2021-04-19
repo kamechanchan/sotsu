@@ -1,0 +1,5 @@
+<launch>
+  <include file="$(find jacobi_planning)/launch/scene_publish.launch" />
+  <rosparam command="load" file="$(find jacobi_planning)/config/param/param_config.yaml"/>
+  <node name="test_planning" pkg="jacobi_planning" type="test_planning" output="screen"/>
+</launch>
