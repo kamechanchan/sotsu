@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+
+  <name>denso_calib_gazebo</name>
+  <version>0.0.0</version>
+  <description>Calibration in Gazebo</description>
+  <license>TODO</license>
+  <maintainer email="todo@todo.com">TODO</maintainer>
+  <author email="todo@todo.com">TODO</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+  <exec_depend>ar_marker_urdf</exec_depend>
+  <exec_depend>denso_gazebo</exec_depend>
+
+  <test_depend>denso_descriptions</test_depend>
+  <test_depend>roslaunch</test_depend>
+
+</package>

@@ -1,0 +1,4 @@
+<launch>
+  <arg name="sensor_config" default="photoneo" />
+  <rosparam command="load" file="$(find vs087_moveit_config)/config/sensors/$(arg sensor_config).yaml" />
+</launch>

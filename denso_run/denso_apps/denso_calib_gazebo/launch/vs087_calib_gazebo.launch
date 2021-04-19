@@ -1,0 +1,8 @@
+<launch>
+  <include file="$(find denso_gazebo)/launch/vs087/vs087_and_kinectv2_gazebo.launch"/>
+  <include file="$(find ar_marker_urdf)/launch/spawn_ar_marker_00_gazebo.launch"/>
+  <include file="$(find ar_marker_urdf)/launch/spawn_ar_marker_01_gazebo.launch"/>
+  <include file="$(find ar_marker_urdf)/launch/spawn_ar_marker_02_gazebo.launch"/>
+  <include file="$(find ar_marker_urdf)/launch/spawn_ar_marker_03_gazebo.launch"/>
+  <include file="$(find ar_marker_urdf)/launch/detect_ar_marker.launch"/>
+</launch>
