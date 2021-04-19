@@ -2,8 +2,17 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import sys, os
+<<<<<<< HEAD
 sys.path.append(os.path.join(os.path.dirname(__file__), './options'))
 sys.path.append(os.path.join(os.path.dirname(__file__), './data'))
+=======
+sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
+sys.path.append(os.path.join(os.path.dirname(__file__), './options'))
+sys.path.append(os.path.join(os.path.dirname(__file__), './data'))
+#sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/'))
+#sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/options'))
+#sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/data'))
+>>>>>>> a3449ccc3e265eb954266948d4879cbd6a1ec396
 
 import numpy as np
 from tqdm import tqdm
@@ -17,6 +26,9 @@ from utils.writer import Writer
 from dnn_test import *
 
 if __name__ == '__main__':
+    print("------------------current main directory------------------")
+    print(__file__)
+    
     opt = TrainOptions().parse()
     opt_v = TestOptions().parse()
 

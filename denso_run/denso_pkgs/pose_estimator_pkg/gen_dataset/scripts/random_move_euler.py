@@ -32,6 +32,7 @@ class RandomMoveEuler(object):
 
 
     def init_state_make(self):
+<<<<<<< HEAD
         #self.pos_.pose.position.x = random.uniform(-0.04 + self.init_x, 0.04 + self.init_x)
         #self.pos_.pose.position.y = random.uniform(-0.4, 0.4)
         #self.pos_.pose.position.z = random.uniform(0.05, 0.25)
@@ -52,6 +53,18 @@ class RandomMoveEuler(object):
         roll = 0
         pitch = 0
         yaw = -5*pi/5
+=======
+
+        self.pos_.pose.position.x = random.uniform(-0.2, 0.2)
+        self.pos_.pose.position.y = random.uniform(-0.2, 0.2)
+        self.pos_.pose.position.z = random.uniform(0.1, 0.25)
+
+
+
+        roll = random.uniform(-pi, pi)
+        pitch = random.uniform(-pi, pi)
+        yaw = random.uniform(-pi, pi)
+>>>>>>> a3449ccc3e265eb954266948d4879cbd6a1ec396
 
         quat = quaternion_from_euler(roll, pitch, yaw)
         self.pos_.pose.orientation.x = quat[0]
@@ -65,6 +78,7 @@ class RandomMoveEuler(object):
     def random_state_make(self):
         self.record_ok = rospy.get_param("/" + self.object_name + "/record_cloud/is_ok", False)
         if self.record_ok:
+<<<<<<< HEAD
             self.pos_.pose.position.x = random.uniform(-0.4, 0.4)
             self.pos_.pose.position.y = random.uniform(-0.4, 0.4)
             self.pos_.pose.position.z = random.uniform(0.01, 0.2)
@@ -72,6 +86,15 @@ class RandomMoveEuler(object):
             roll = random.uniform(-0.5, 0.5)
             pitch = random.uniform(-0.5, 0.5)
             yaw = random.uniform(-3.14, 3.14)
+=======
+            self.pos_.pose.position.x = random.uniform(-0.2, 0.2)
+            self.pos_.pose.position.y = random.uniform(-0.2, 0.2)
+            self.pos_.pose.position.z = random.uniform(0.1, 0.25)
+
+            roll = random.uniform(-pi/4, pi/4)
+            pitch = random.uniform(-pi/4, pi/4)
+            yaw = random.uniform(-pi/4, pi/4)
+>>>>>>> a3449ccc3e265eb954266948d4879cbd6a1ec396
 
             quat = quaternion_from_euler(roll, pitch, yaw)
             self.pos_.pose.orientation.x = quat[0]

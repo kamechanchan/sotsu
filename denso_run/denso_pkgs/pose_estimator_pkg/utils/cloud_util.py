@@ -221,15 +221,28 @@ def pcd_viewer(cloud):
 
 
 def getNormalizedPcd(np_cloud, resolution):
+    """
+    cloud_start=pcl.PointCloud(cloud_data)
+    pre_cloud = cloud_start.make_voxel_grid_filter()
+    pcl.VoxelGridFilter.set_leaf_size(pre_cloud, 0.0035, 0.0035, 0.0035)
+    cloud_filter=pcl.VoxelGridFilter.filter(pre_cloud)
+    np_cloud=np.array(cloud_filter)
+    """ 
     pcd_offset = np.expand_dims(np.mean(np_cloud, axis=0), 0)
     pcd_data = np_cloud - pcd_offset  #original
     #pcd_data = np.asarray(np_cloud)  #improve
     choice_index = np.arange(pcd_data.shape[0])
     choice = np.random.choice(choice_index, resolution)
     normalized_pcd = pcd_data[choice, :]
+<<<<<<< HEAD
     new_pcd = pcl.PointCloud(np.array(normalized_pcd, np.float32))
     #pcl.save(new_pcd, "/home/tsuchidashinya/random_original.pcd")
     pcl.save(new_pcd, '/home/tsuchidashinya/random_improve.pcd')
+=======
+    #new_pcd = pcl.PointCloud(np.array(normalized_pcd, np.float32))
+    #pcl.save(new_pcd, "/home/ericlab/random_original.pcd")
+    #pcl.save(new_pcd, '/home/ericlab/random_improve.pcd')
+>>>>>>> a3449ccc3e265eb954266948d4879cbd6a1ec396
     return normalized_pcd, pcd_offset[0]
 
 

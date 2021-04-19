@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import sys
@@ -52,6 +52,7 @@ class DnnNode():
 
         self.output_pos_num = 3
         self.output_ori_num = 9
+        
 
     def run_service(self):
         service = rospy.Service("pose_estimation", PoseEstimate, self.callback)
