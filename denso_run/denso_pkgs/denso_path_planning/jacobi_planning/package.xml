@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>jacobi_planning</name>
+  <version>1.0.0</version>
+  <description>The jacobi_planning package</description>
+
+  <maintainer email="atsuki.yokota@gmail.com">Atsuki Yokota</maintainer>
+  <license>BSD</license>
+  <url type="repository">http://github.com/Nishida-Lab/jacobi_planning</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>moveit_core</depend>
+  <depend>moveit_msgs</depend>
+  <depend>moveit_ros_planning_interface</depend>
+  <depend>moveit_visual_tools</depend>
+  <depend>roscpp</depend>
+  <depend>rosparam_shortcuts</depend>
+  <depend>rospy</depend>
+
+  <test_depend>roslaunch</test_depend>
+
+</package>
