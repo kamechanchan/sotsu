@@ -96,13 +96,13 @@ class EstimatorModel:
 
 
     def load_network(self, which_epoch):
-        save_filename = "%s_net-has.pth" % which_epoch
-        self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
+        #save_filename = "%s_net-has.pth" % which_epoch
+        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
         save_filename = "latest_net.pth"
         #self.save_dir = "/home/ericlab/Rikuken/Mega/X10/PointNet/dataset_20000.hdf5"
-        self.save_dir = "/home/ericlab/MEGAsync/X10/03_20/PointNet/dataset_20000_1.hdf5"
-        save_filename = "latest_net.pth"
-        self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
+        #self.save_dir = "/home/ericlab/MEGAsync/X10/03_20/PointNet/dataset_20000_1.hdf5"
+        #save_filename = "latest_net.pth"
+        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
         #load_path = join(self.save_dir, PC_NAME,save_filename)
         load_path = join(self.save_dir, save_filename)
         net = self.net

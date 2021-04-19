@@ -14,7 +14,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --arch PointNet_Pose \
 --print_freq 10 \
 --save_latest_freq 1000 \
---save_epoch_freq 100 \
+--save_epoch_freq 1 \
 --run_test_freq 1 \
 --gpu_ids 0 \
 --gpu_num 1 \
@@ -24,4 +24,4 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --lr 0.0001 \
 --checkpoints_swich ishiyama/0406 \
 --dataroot_swich front \
---local_checkpoints_dir /home/ericlab/DENSO/raugh_recognition/checkpoint \
+--local_checkpoints_dir /home/ericlab/DENSO_results/raugh_recognition/checkpoint \
