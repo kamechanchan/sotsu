@@ -5,11 +5,7 @@
   <arg name="arch" default="PointNet_Pose" />
   <arg name="name" default="PointNet" />
   <arg name="resolution" default="50" />
-<<<<<<< HEAD
-  <arg name="load_path" default="/home/tsuchidashinya/MEGAsync/X10/day_1/PointNet/dataset_20000.hdf5/70_net.pth"/>
-=======
   <arg name="load_path" default="/home/ericlab/MEGAsync/X10/day_1/PointNet/dataset_20000.hdf5/70_net.pth"/>
->>>>>>> a3449ccc3e265eb954266948d4879cbd6a1ec396
   <node name="random_move" pkg="gen_dataset" type="random_move_euler.py"/>
   <node name="estimator_client" pkg="estimator" type="estimator_client.py" output="screen" >
     <param name="object_name" value="$(arg object_name)" />

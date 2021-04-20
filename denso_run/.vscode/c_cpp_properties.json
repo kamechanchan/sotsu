@@ -19,14 +19,10 @@
                 "/usr/include/ignition/common3",
                 "/usr/include/ignition/fuel_tools4",
                 "${workspaceFolder}/rikuken_original/pointcloud_usage/include",
-<<<<<<< HEAD
                 "${workspaceFolder}/rikuken_original/tf_publish/include",
                 "${workspaceFolder}/denso_2020/pc_segmentation/include",
                 "${workspaceFolder}/denso_2020/bayes_pose/include",
                 "${workspaceFolder}/denso_2020/meshcloud_pblisher_pkg/include"
-=======
-                "${workspaceFolder}/rikuken_original/tf_publish/include"
->>>>>>> a3449ccc3e265eb954266948d4879cbd6a1ec396
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

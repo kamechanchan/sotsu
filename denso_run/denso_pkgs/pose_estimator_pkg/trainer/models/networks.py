@@ -1,14 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.optim as optim
-<<<<<<< HEAD
-import os
-import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '../'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '../arch'))
-=======
 from .layer.PointNet import *
->>>>>>> a3449ccc3e265eb954266948d4879cbd6a1ec396
 
 
 def init_net(net, gpu_ids):

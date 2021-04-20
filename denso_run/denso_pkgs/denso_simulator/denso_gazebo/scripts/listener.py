@@ -15,10 +15,6 @@ from control_msgs.msg import JointTrajectoryControllerState
 
 #from driver import DensoRobotArmSim
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a3449ccc3e265eb954266948d4879cbd6a1ec396
 
 class DensoRobotArmSimListener(object):
     def __init__(self):
