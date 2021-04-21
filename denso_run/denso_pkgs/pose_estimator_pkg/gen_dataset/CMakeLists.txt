@@ -14,19 +14,13 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   tf2
   tf2_ros
-  message_generation
 )
 
 find_package(PCL REQUIRED)
 
-add_service_files(
-  FILES
-  range1.srv
-)
 
-generate_messages(
-  DEPENDENCIES
-)
+
+
 
 catkin_package(
   INCLUDE_DIRS include
@@ -37,7 +31,6 @@ catkin_package(
     roscpp
     sensor_msgs
     tf2_ros
-    message_runtime
   DEPENDS PCL
 )
 

@@ -9,8 +9,12 @@ from math import *
 from gazebo_msgs.msg import *
 import tf2_ros
 from time import *
-from gen_dataset.srv import range1req
+from pose_estimator_srvs.srv import PoseEstimate
+from pose_estimator_srvs.srv import range1Request
+gen = range1Request()
+gen.pi
 
+gen_dataset.srv.
 class RandomMoveEuler(object):
     def __init__(self):
         self.set_model_state_pub_ = rospy.Publisher('/gazebo/set_model_state', ModelState, queue_size=1)
