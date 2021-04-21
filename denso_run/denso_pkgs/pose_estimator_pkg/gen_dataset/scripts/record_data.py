@@ -3,6 +3,7 @@
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer'))
 
 import rospy, rospkg, tf, random, time, sys
 from tf.transformations import quaternion_from_euler
@@ -17,7 +18,9 @@ from gazebo_msgs.msg import *
 from tqdm import tqdm
 from tf_sync import TfMessageFilter
 import message_filters
-
+from utils import util
+import gen_dataset.srv
+import pose_estimator_srvs
 
 
 class RecordData(object):
@@ -28,11 +31,14 @@ class RecordData(object):
         self.p = PoseStamped()
         self.topic_name = rospy.get_param("~topic_name", "photoneo_center")
         self.object_name_ = rospy.get_param("~object_name", "HV8")
-        self.num_dataset = rospy.get_param("~num_dataset", 100)
+
+        self.num_dataset = rospy.get_param("~num_dataset", 20000)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
-        self.save_file_path = self.package_path_ + "/../datasets/" + self.sensor_parent_frame_ + "_" + self.object_name_
+        self.save_file_path = rospy.get_param("~save_directory", "/home/ericlab/MEGAsync/TEI_PC/Dataset/pi/datset_-pi4-pi4")
+        self.file = rospy.get_param("save_file", "dataset_20000")
+
         self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
         self.ts_ = TfMessageFilter(self.sync_sub_, self.sensor_parent_frame_, self.object_name_, queue_size=100)
@@ -40,7 +46,8 @@ class RecordData(object):
         self.pcd = None
 
     def init_hdf5(self, file_path):
-        file_path = file_path + ".hdf5"
+        util.mkdir(file_path)
+        file_path = file_path + self.file + ".hdf5"
         self.hdf5_file_ = h5py.File(file_path, 'w')
 
     def callback(self, point_cloud, trans_rot):
@@ -76,10 +83,11 @@ class RecordData(object):
         while 1:
             try:
                 (trans, rot) = lister.lookupTransform(source_frame, target_frame, rospy.Time(0))
-                f1 = open('/home/tsuchidashinya/groud_truth_pose.txt', 'w')
-                f1.writelines(str(trans))
-                f1.writelines(str(rot))
-                f1.close()
+                #f1 = open('/home/ericlab/groud_truth_pose.txt', 'w')
+                #f1.writelines(str(trans))
+                #f1.writelines(str(rot))
+                #f1.close()
+
                 break
             except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
                 continue
@@ -112,7 +120,7 @@ class RecordData(object):
 def main():
     rospy.init_node("record_data_node", anonymous=False)
     node = RecordData()
-    node.tf_lookup('/photoneo_center_optical_frame', '/HV8')
+    #node.tf_lookup('/photoneo_center_optical_frame', '/HV8')
 
     time.sleep(5)
     node.record()

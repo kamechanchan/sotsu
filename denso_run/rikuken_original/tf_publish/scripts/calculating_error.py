@@ -87,8 +87,3 @@ if __name__=='__main__':
     print_result(euler_error_max, 'max_error')
     print_result(euler_error_min, 'min_error')
     print_result(euler_error_average, 'ave_error')
-    
-    
-
-
-            

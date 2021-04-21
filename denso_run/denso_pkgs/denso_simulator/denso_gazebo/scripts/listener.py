@@ -16,7 +16,6 @@ from control_msgs.msg import JointTrajectoryControllerState
 #from driver import DensoRobotArmSim
 
 
-
 class DensoRobotArmSimListener(object):
     def __init__(self):
         self.robot_name = rospy.get_param("~robot_name", default="vs087")
@@ -71,3 +70,4 @@ if __name__ == '__main__':
     rospy.init_node('denso_robot_arm_sim_listener_node')
     denso_robot_arm_sim_listener = DensoRobotArmSimListener()
     rospy.spin()
+PointNet_Pose
