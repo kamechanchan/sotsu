@@ -19,8 +19,9 @@ from tqdm import tqdm
 from tf_sync import TfMessageFilter
 import message_filters
 from utils import util
-import gen_dataset.srv
 import pose_estimator_srvs
+from gen_dataset.srv import range1, range1Request, range1Response
+
 
 
 class RecordData(object):
@@ -31,6 +32,7 @@ class RecordData(object):
         self.p = PoseStamped()
         self.topic_name = rospy.get_param("~topic_name", "photoneo_center")
         self.object_name_ = rospy.get_param("~object_name", "HV8")
+        gen_dataset.srv.range1Request()
 
         self.num_dataset = rospy.get_param("~num_dataset", 20000)
         self.bar = tqdm(total=self.num_dataset)
