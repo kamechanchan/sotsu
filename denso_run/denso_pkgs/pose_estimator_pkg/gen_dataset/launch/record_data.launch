@@ -12,7 +12,7 @@
   <arg name="object_up" default="HV8_up" />
   <arg name="init_pose_up" default="-x 0 -y 0 -z 0 -R 0.0 -Y -0.0" />
   <arg name="init_x" default="1" />
-  <arg name="save_file" default="/home/ericlab/MEGAsync/TEI_PC/Dataset/dataset_20000_-pi4-pi4"/>
+  <arg name="save_file" default="/home/ericlab/saigo"/>
   
 
   <node pkg="gen_dataset" type="record_data.py" name="record_data" output="screen" >

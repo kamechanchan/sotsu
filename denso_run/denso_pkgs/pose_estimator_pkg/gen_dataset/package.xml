@@ -19,6 +19,8 @@
   <build_depend>roslib</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>tf2</build_depend>
+  <build_depend>message_generation</build_depend>
+  <exec_depend>message_runtime</exec_depend>
 
   <exec_depend>denso_gazebo</exec_depend>
   <exec_depend>gazebo_msgs</exec_depend>

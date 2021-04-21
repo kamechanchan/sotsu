@@ -3,6 +3,7 @@
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer'))
 
 import rospy, rospkg, tf, random, time, sys
 from tf.transformations import quaternion_from_euler
@@ -17,7 +18,9 @@ from gazebo_msgs.msg import *
 from tqdm import tqdm
 from tf_sync import TfMessageFilter
 import message_filters
-
+from utils import util
+import gen_dataset.srv
+import pose_estimator_srvs
 
 
 class RecordData(object):
@@ -33,7 +36,8 @@ class RecordData(object):
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
-        self.save_file_path = rospy.get_param("~save_file", "/home/ericlab/MEGAsync/TEI_PC/Dataset/pi/datset_-pi4-pi4")
+        self.save_file_path = rospy.get_param("~save_directory", "/home/ericlab/MEGAsync/TEI_PC/Dataset/pi/datset_-pi4-pi4")
+        self.file = rospy.get_param("save_file", "dataset_20000")
 
         self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
@@ -42,7 +46,8 @@ class RecordData(object):
         self.pcd = None
 
     def init_hdf5(self, file_path):
-        file_path = file_path + ".hdf5"
+        util.mkdir(file_path)
+        file_path = file_path + self.file + ".hdf5"
         self.hdf5_file_ = h5py.File(file_path, 'w')
 
     def callback(self, point_cloud, trans_rot):
