@@ -13,9 +13,12 @@ class Writer:
         self.opt = opt
         self.name = self.opt.name
         self.dataset_model = self.opt.dataset_model
-        self.save_dir = os.path.join(opt.checkpoints_dir, self.name, self.dataset_model)
+        self.save_dir = os.path.join(opt.checkpoints_dir, opt.checkpoints_swich, self.name, self.dataset_model)
+        self.local_save_dir=os.path.join(opt.local_checkpoints_dir, opt.checkpoints_swich, self.name, self.dataset_model)
         self.log_name = os.path.join(self.save_dir, "loss_log.txt")
+        self.local_log_name = os.path.join(self.local_save_dir, "loss_log.txt")
         self.testacc_log = os.path.join(self.save_dir, "testacc_log.txt")
+        self.local_testacc_log = os.path.join(self.local_save_dir, "testacc_log.txt")
         self.start_logs()
         self.nexampels = 0
         self.ncorrect = 0
@@ -42,6 +45,8 @@ class Writer:
         print(message)
         with open(self.log_name, "a") as log_file:
             log_file.write('%s\n' % message)
+        with open(self.local_log_name, "a") as log_file:
+            log_file.write('%s\n' % message)    
 
     def plot_loss(self, loss, epoch, i, n):
         iters = i + (epoch - 1) * n
