@@ -22,6 +22,6 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --serial_batches False \
 --verbose_plot True \
 --lr 0.0001 \
---checkpoints_swich ishiyama/0406 \
+--checkpoints_swich onoyama/0423 \ ##$$kokokaeru
 --dataroot_swich front \
 --local_checkpoints_dir /home/ericlab/DENSO_results/raugh_recognition/checkpoint \
