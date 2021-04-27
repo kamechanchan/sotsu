@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 import sys
@@ -46,7 +46,7 @@ class DnnNode():
         self.opt.num_threads = rospy.get_param("~num_threads", 8)
         self.opt.gpu_id = rospy.get_param("~gpu_id", "1")
         self.package_path = rospack.get_path("estimator")
-        self.opt.checkpoints_dir = self.package_path + "/weights"
+        self.opt.checkpoints_dir = rospy.get_param("~load_path", "/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth")
 
         self.model = create_model(self.opt)
 
