@@ -99,6 +99,7 @@ class EstimatorModel:
         if isinstance(net, torch.nn.DataParallel):
             net = net.module
         print("loading the model from %s" % load_path)
+        load_path = "/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth"
         state_dict = torch.load(load_path, map_location=str(self.device))
         if hasattr(state_dict, "_metadata"):
             del state_dict._metadata
