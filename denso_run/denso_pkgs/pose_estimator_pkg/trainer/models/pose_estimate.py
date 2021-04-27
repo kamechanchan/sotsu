@@ -38,7 +38,7 @@ class EstimatorModel:
             print_network(self.net)
 
         if not self.is_train:
-            self.load_network(opt.which_epoch)
+            self.load_network_estimator(opt.which_epoch)
 
 
     def get_centroid(self, data):
@@ -109,13 +109,33 @@ class EstimatorModel:
 
         if isinstance(net, torch.nn.DataParallel):
             net = net.module
+        
         print("loading the model from %s" % load_path)
-        load_path = "/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth"
         state_dict = torch.load(load_path, map_location=str(self.device))
         if hasattr(state_dict, "_metadata"):
             del state_dict._metadata
         net.load_state_dict(state_dict,strict=False)
 
+    def load_network_estimator(self, which_epoch):
+        #save_filename = "%s_net-has.pth" % which_epoch
+        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
+        save_filename = self.checkpoints_dir
+        #self.save_dir = "/home/ericlab/Rikuken/Mega/X10/PointNet/dataset_20000.hdf5"
+        #self.save_dir = "/home/ericlab/MEGAsync/X10/03_20/PointNet/dataset_20000_1.hdf5"
+        #save_filename = "latest_net.pth"
+        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
+        #load_path = join(self.save_dir, PC_NAME,save_filename)
+        load_path = save_filename
+        net = self.net
+
+        if isinstance(net, torch.nn.DataParallel):
+            net = net.module
+        #load_path = "/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth"
+        print("loading the model from %s" % load_path)
+        state_dict = torch.load(load_path, map_location=str(self.device))
+        if hasattr(state_dict, "_metadata"):
+            del state_dict._metadata
+        net.load_state_dict(state_dict,strict=False)
 
     def save_network(self, which_epoch):
         save_filename= "%s_net.pth" % (which_epoch)
