@@ -19,14 +19,16 @@ class PoseData(BaseDataset):
     def __init__(self, opt):
         BaseDataset.__init__(self, opt)
         self.arch = opt.arch
-        self.root = opt.dataroot
+        #self.root = opt.dataroot
         self.dataset_model = opt.dataset_model
         self.dir = opt.dataroot
+        self.dataroot_swich=opt.dataroot_swich
+        self.dataroot=os.path.join(self.dir,self.dataroot_swich)
         self.resolution = opt.resolution
         self.size = opt.max_dataset_size
         self.hdf5_data = None
 
-        self.hdf5_data = PCD_Loader(self.dir, self.dataset_model, self.size)
+        self.hdf5_data = PCD_Loader(self.dataroot,self.dataset_model, self.size)
         # self.hdf5_data = Voxel_Loader(self.dir, self.dataset_model, self.size)
         # self.hdf5_data.init_param(1, self.resolution)
         self.hdf5_data.load_hdf5()

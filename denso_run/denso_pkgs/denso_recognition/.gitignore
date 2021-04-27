@@ -39,7 +39,7 @@ denso_recognition/*.pcd
 meshcloud_publisher/*.pcd
 pointcloud_registrator/*.pcd
 
-*.pcd
+# *.pcd
 
 *.pyc
 qtcreator-*

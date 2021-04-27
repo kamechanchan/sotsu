@@ -13,8 +13,12 @@ class EstimatorModel:
         self.opt = opt
         self.name = opt.name
         self.checkpoints_dir = opt.checkpoints_dir
+        self.local_checkpoints_dir=opt.local_checkpoints_dir
         self.dataset_model = self.opt.dataset_model
-        self.save_dir = join(self.checkpoints_dir, opt.name, self.dataset_model)
+        self.name=opt.name
+        self.checkpoints_swich=opt.checkpoints_swich  
+        self.save_dir = join(self.checkpoints_dir, self.checkpoints_swich,self.name, self.dataset_model)
+        self.local_save_dir=join(self.local_checkpoints_dir, self.checkpoints_swich,self.name, self.dataset_model)
         self.gpu_ids = opt.gpu_ids
         self.device = torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
         self.is_train = opt.is_train
@@ -92,7 +96,14 @@ class EstimatorModel:
 
 
     def load_network(self, which_epoch):
-        save_filename = "%s_net-notgood-2.pth" % which_epoch
+        #save_filename = "%s_net-has.pth" % which_epoch
+        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
+        save_filename = "latest_net.pth"
+        #self.save_dir = "/home/ericlab/Rikuken/Mega/X10/PointNet/dataset_20000.hdf5"
+        #self.save_dir = "/home/ericlab/MEGAsync/X10/03_20/PointNet/dataset_20000_1.hdf5"
+        #save_filename = "latest_net.pth"
+        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
+        #load_path = join(self.save_dir, PC_NAME,save_filename)
         load_path = join(self.save_dir, save_filename)
         net = self.net
 
@@ -109,8 +120,10 @@ class EstimatorModel:
     def save_network(self, which_epoch):
         save_filename= "%s_net.pth" % (which_epoch)
         save_path = join(self.save_dir, save_filename)
+        local_save_path=join(self.local_save_dir,save_filename)
         if len(self.gpu_ids) > 0 and torch.cuda.is_available():
             torch.save(self.net.module.cpu().state_dict(), save_path)
+            torch.save(self.net.module.cpu().state_dict(), local_save_path)
             self.net.cuda(self.gpu_ids[0])
         else:
             torch.save(self.net.cpu().state_dict(), save_path)

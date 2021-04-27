@@ -15,7 +15,7 @@ is_train: True
 lr: 0.001
 lr_decay_iters: 50
 lr_policy: lambda
-max_dataset_size: 500
+max_dataset_size: 50000
 name: PointNet
 niter: 100
 niter_decay: 500

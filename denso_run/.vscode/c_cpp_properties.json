@@ -18,8 +18,8 @@
                 "/usr/include/ignition/msgs5",
                 "/usr/include/ignition/common3",
                 "/usr/include/ignition/fuel_tools4",
-                "${workspaceFolder}/pointcloud_usage/include",
-                "${workspaceFolder}/tf_publish/include"
+                "${workspaceFolder}/rikuken_original/pointcloud_usage/include",
+                "${workspaceFolder}/rikuken_original/tf_publish/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import os, sys
@@ -28,11 +28,13 @@ class RecordData(object):
         self.p = PoseStamped()
         self.topic_name = rospy.get_param("~topic_name", "photoneo_center")
         self.object_name_ = rospy.get_param("~object_name", "HV8")
-        self.num_dataset = rospy.get_param("~num_dataset", 10)
+
+        self.num_dataset = rospy.get_param("~num_dataset", 20000)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
-        self.save_file_path = self.package_path_ + "/../datasets/" + self.sensor_parent_frame_ + "_" + self.object_name_
+        self.save_file_path = rospy.get_param("~save_file", "/home/ericlab/MEGAsync/TEI_PC/Dataset/pi/datset_-pi4-pi4")
+
         self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
         self.ts_ = TfMessageFilter(self.sync_sub_, self.sensor_parent_frame_, self.object_name_, queue_size=100)
@@ -47,7 +49,8 @@ class RecordData(object):
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
         if self.receive_ok:
             rospy.set_param("/" + self.object_name_ + "/receive_cloud/is_ok", False)
-            rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", True)
+            rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", False)
+
             pc = ros_numpy.numpify(point_cloud)
             height = pc.shape[0]
             width = 1
@@ -58,12 +61,17 @@ class RecordData(object):
             pcd = np_points[~np.any(np.isnan(np_points), axis=1)]
             translation = np.array(trans_rot[0])
             rotation = np.array(trans_rot[1])
-            f = open('/home/ericlab/dataset_pose.txt', 'w')
-            f.writelines(str(translation))
-            f.writelines(str(rotation))
-            f.close()
-            new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
-            pcl.save(new_pcd, "/home/ericlab/random_1.pcd")
+
+
+            #f = open('/home/tsuchidashinya/dataset_pose.txt', 'w')
+
+            #f = open('/home/ericlab/dataset_pose.txt', 'w')
+            #f.writelines(str(translation))
+            #f.writelines(str(rotation))
+            #f.close()
+            #new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
+            #pcl.save(new_pcd, "/home/ericlab/random_1.pcd")
+
 
             pose = np.concatenate([translation, rotation])
             self.savePCDandPose(pcd, pose)
@@ -75,10 +83,11 @@ class RecordData(object):
         while 1:
             try:
                 (trans, rot) = lister.lookupTransform(source_frame, target_frame, rospy.Time(0))
-                f1 = open('/home/ericlab/groud_truth_pose.txt', 'w')
-                f1.writelines(str(trans))
-                f1.writelines(str(rot))
-                f1.close()
+                #f1 = open('/home/ericlab/groud_truth_pose.txt', 'w')
+                #f1.writelines(str(trans))
+                #f1.writelines(str(rot))
+                #f1.close()
+
                 break
             except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException):
                 continue
@@ -111,7 +120,7 @@ class RecordData(object):
 def main():
     rospy.init_node("record_data_node", anonymous=False)
     node = RecordData()
-    node.tf_lookup('/photoneo_center_optical_frame', '/HV8')
+    #node.tf_lookup('/photoneo_center_optical_frame', '/HV8')
 
     time.sleep(5)
     node.record()
