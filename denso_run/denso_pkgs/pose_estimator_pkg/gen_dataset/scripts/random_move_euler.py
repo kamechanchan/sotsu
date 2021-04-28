@@ -11,10 +11,8 @@ import tf2_ros
 from time import *
 from pose_estimator_srvs.srv import PoseEstimate
 from pose_estimator_srvs.srv import range1, range1Request, range1Response
-gen = range1Request()
-gen.pi
 
-gen_dataset.srv.
+
 class RandomMoveEuler(object):
     def __init__(self):
         self.set_model_state_pub_ = rospy.Publisher('/gazebo/set_model_state', ModelState, queue_size=1)
@@ -56,11 +54,13 @@ class RandomMoveEuler(object):
         self.pos_.pose.position.z = random.uniform(0.1, 0.25)
 
 
-        
-        roll = random.uniform(-pi, pi)
-        pitch = random.uniform(-pi, pi)
-        yaw = random.uniform(-pi, pi)
-
+        hani = 4
+        roll = random.uniform(-pi/hani, pi/hani)
+        pitch = random.uniform(-pi/hani, pi/hani)
+        yaw = random.uniform(-pi/hani, pi/hani)
+        #roll = pi/5
+        #pitch = 0
+        #yaw = pi/3
         quat = quaternion_from_euler(roll, pitch, yaw)
         self.pos_.pose.orientation.x = quat[0]
         self.pos_.pose.orientation.y = quat[1]

@@ -20,7 +20,6 @@ from tf_sync import TfMessageFilter
 import message_filters
 from utils import util
 import pose_estimator_srvs
-from gen_dataset.srv import range1, range1Request, range1Response
 
 
 
@@ -32,14 +31,13 @@ class RecordData(object):
         self.p = PoseStamped()
         self.topic_name = rospy.get_param("~topic_name", "photoneo_center")
         self.object_name_ = rospy.get_param("~object_name", "HV8")
-        gen_dataset.srv.range1Request()
 
         self.num_dataset = rospy.get_param("~num_dataset", 20000)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
-        self.save_file_path = rospy.get_param("~save_directory", "/home/ericlab/MEGAsync/TEI_PC/Dataset/pi/datset_-pi4-pi4")
-        self.file = rospy.get_param("save_file", "dataset_20000")
+        self.save_file_path = rospy.get_param("~save_directory", "/home/ericlab/")
+        self.file = rospy.get_param("~save_filename", "dataset_20000")
 
         self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
@@ -49,8 +47,9 @@ class RecordData(object):
 
     def init_hdf5(self, file_path):
         util.mkdir(file_path)
-        file_path = file_path + self.file + ".hdf5"
+        file_path = file_path + self.file + "_" + self.object_name_ + ".hdf5"
         self.hdf5_file_ = h5py.File(file_path, 'w')
+        self.all_file_path = file_path
 
     def callback(self, point_cloud, trans_rot):
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
@@ -109,13 +108,17 @@ class RecordData(object):
         self.bar.update(1)
         if self.num_ >  self.num_dataset:
             print("Finish recording")
+            print("save on" + self.all_file_path)
             self.hdf5_file_.flush()
             self.hdf5_file_.close()
+            rospy.signal_shutdown('finish')
             os._exit(10)
 
+
     def record(self):
-        self.ts_.registerCallback(self.callback)
-        rospy.spin()
+        while not rospy.is_shutdown():
+            self.ts_.registerCallback(self.callback)
+            rospy.spin()
 
 
 
