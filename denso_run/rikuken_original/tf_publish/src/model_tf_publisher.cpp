@@ -9,7 +9,7 @@ ModelTf::ModelTf(ros::NodeHandle &nh) : nh_(nh)
     pnh = new ros::NodeHandle("~");
     TfListener = new tf2_ros::TransformListener(TfBuffer);
     ros::param::param<std::string>("~src_frame_name", src_frame_, "world");
-    ros::param::param<std::string>("~model_name", urdf_model_name_, "Node");
+    ros::param::param<std::string>("~object_name", urdf_model_name_, "Node");
     pnh->getParam("src_frame_name", src_frame_);
     pnh->getParam("model_name", urdf_model_name_);
     model_state_sub_ = nh_.subscribe("/gazebo/model_states", 1, &ModelTf::modelstatesCallback, this);

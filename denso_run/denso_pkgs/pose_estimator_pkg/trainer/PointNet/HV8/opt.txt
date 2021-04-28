@@ -2,13 +2,13 @@
 arch: PointNet_Pose
 batch_size: 8
 beta1: 0.9
-checkpoints_dir: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer
+checkpoints_dir: /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer
 continue_train: False
-dataroot: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets
+dataroot: /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets
 dataset_mode: pose_estimation
 dataset_model: HV8
 epoch_count: 1
-export_folder: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/PointNet/HV8/exports intermediate collapses to this folder
+export_folder: /home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/PointNet/HV8/exports intermediate collapses to this folder
 gpu_ids: []
 gpu_num: 1
 is_train: True

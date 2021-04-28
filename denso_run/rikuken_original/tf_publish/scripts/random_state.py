@@ -19,7 +19,9 @@ if __name__=='__main__':
     time_start = time()
     record_ok = rospy.get_param("/HV8/record_cloud/is_ok", False)
     while not rospy.is_shutdown():
-        l = input()
+        time_end = time()
+        #if time_end - time_start > 1.0:
+        ls = input()
         various_pose.position.x = random.uniform(-0.4, 0.4)
         various_pose.position.y = random.uniform(-0.4, 0.4)
         various_pose.position.z = random.uniform(0.01, 0.2)

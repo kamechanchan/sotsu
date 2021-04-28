@@ -97,7 +97,7 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
   // cv::Mat buffer_image;
   try
   {
-    cv_img_ptr = cv_bridge::toCvCopy(image, sensor_msgs::image_encodings::TYPE_8UC3);
+    cv_img_ptr = cv_bridge::toCvCopy(image, sensor_msgs::image_encodings::BGR8);
     // buffer_image = cv_bridge::toCvCopy(image, sensor_msgs::image_encodings::BGR8)->image;
     // cv_img_ptr = cv_bridge::toCvShare(image);
   }
@@ -135,6 +135,7 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
     if (uv.x > (-rgb_image.cols / 2) && uv.x < (rgb_image.cols / 2) && uv.y > (-rgb_image.rows / 2) &&
         uv.y < (rgb_image.rows / 2))
     {
+      std::cout << "ttuuka!!" << std::endl;
       cv::Point2d converted_uv(uv.x + rgb_image.cols / 2, uv.y + rgb_image.rows / 2);
       cv::Vec3b rgb = rgb_image.at<cv::Vec3b>(converted_uv.y, converted_uv.x);
       pcl::PointXYZRGB buffer_point;
@@ -153,6 +154,7 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
       buffer_point.b = rgb[2];
       colored_points_.push_back(buffer_point);
     }
+    std::cout << "tuuka??" << std::endl;
   }
   std::cout << "average uv.x: " << debug_x / count << std::endl;
   std::cout << "average uv.y: " << debug_y / count << std::endl;
@@ -160,6 +162,7 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
   std::cout << count << std::endl;
   if (tf_flag_ == true && pub_flag_)
   {
+    //pcl::io::savePCDFile("/home/tsuchidashinya/nigeru.pcd", colored_points_);
     ROS_INFO("%zu", colored_points_.size());
     ROS_INFO("convert_pointcloud_color finished!!");
   }

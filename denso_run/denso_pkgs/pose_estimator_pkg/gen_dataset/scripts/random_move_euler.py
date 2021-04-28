@@ -9,6 +9,9 @@ from math import *
 from gazebo_msgs.msg import *
 import tf2_ros
 from time import *
+from pose_estimator_srvs.srv import PoseEstimate
+from pose_estimator_srvs.srv import range1, range1Request, range1Response
+
 
 class RandomMoveEuler(object):
     def __init__(self):
@@ -22,7 +25,7 @@ class RandomMoveEuler(object):
         self.init_x = rospy.get_param("~init_x", 0)
         self.receive_ok = rospy.set_param("/" + self.object_name + "/receive_cloud/is_ok", False)
         self.record_ok = rospy.set_param("/" + self.object_name + "/record_cloud/is_ok", False)
-
+        
     def isReadyMove(self):
         try:
             self.tf_buffer_.lookup_transform("world", self.pos_.model_name, rospy.Time(0), rospy.Duration(1.0))
@@ -30,7 +33,20 @@ class RandomMoveEuler(object):
         except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException, tf.Exception):
             return False
 
-
+    def parameter_make(self, req):
+        self.xsmall = req.xsmall
+        self.xlarge = req.xlarge
+        self.ysmall = req.ysmall
+        self.ylarge = req.ylarge
+        self.zsmall = req.zsmall
+        self.zlarge = req.zlarge
+        self.rollsmall = req.rollsmall
+        self.rolllarge = req.rolllarge
+        self.pitchsmall = req.pitchsmall
+        self.pitchlarge = req.pitchlarge
+        self.yawsmall = req.yawsmall
+        self.yawlarge = req.yawlarge
+        
     def init_state_make(self):
 
         self.pos_.pose.position.x = random.uniform(-0.2, 0.2)
@@ -38,11 +54,13 @@ class RandomMoveEuler(object):
         self.pos_.pose.position.z = random.uniform(0.1, 0.25)
 
 
-
-        roll = random.uniform(-pi, pi)
-        pitch = random.uniform(-pi, pi)
-        yaw = random.uniform(-pi, pi)
-
+        hani = 4
+        roll = random.uniform(-pi/hani, pi/hani)
+        pitch = random.uniform(-pi/hani, pi/hani)
+        yaw = random.uniform(-pi/hani, pi/hani)
+        #roll = pi/5
+        #pitch = 0
+        #yaw = pi/3
         quat = quaternion_from_euler(roll, pitch, yaw)
         self.pos_.pose.orientation.x = quat[0]
         self.pos_.pose.orientation.y = quat[1]
@@ -81,6 +99,8 @@ class RandomMoveEuler(object):
 def main():
     rospy.init_node("random_state_maker_node", anonymous=False)
     random_state_maker = RandomMoveEuler()
+    s = rospy.Service('range_decision', range1, random_state_maker.parameter_make)
+
     random_state_maker.init_state_make()
     while not random_state_maker.isReadyMove():
         rospy.logwarn("Not ready model ...")

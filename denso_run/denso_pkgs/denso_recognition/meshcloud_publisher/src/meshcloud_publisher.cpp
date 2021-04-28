@@ -9,11 +9,11 @@ using meshcloud_publisher::MeshCloudPublisher;
 using meshcloud_publisher::MeshCloudParam;
 using meshcloud_sampler::uniform_sampling;
 
-const int sampling_points = 10000;
+const int sampling_points = 100000;
 
 const int MeshCloudParam::RETRY_COUNT_LIMIT = 10;
 const float MeshCloudParam::DURATION_TIME = 1.0;
-const float MeshCloudParam::LEAF_SIZE = 0.01f;
+const float MeshCloudParam::LEAF_SIZE = 0.0003f;
 
 MeshCloudPublisher::MeshCloudPublisher(ros::NodeHandle& nh)
   : nh_(nh), downsampled_mesh_pointcloud_ptr_pcl_(new pcl::PointCloud<pcl::PointXYZ>())
@@ -37,8 +37,8 @@ MeshCloudPublisher::MeshCloudPublisher(ros::NodeHandle& nh)
   }*/
   const std::string relative_path = "/object_description/meshes/STL/HV8.stl";
   //this->getMesh(ros::package::getPath("denso_descriptions") + relative_path);
-  this->getMesh("/home/tsuchida/HV8.stl");
-  frame_names_.push_back("HV8");
+  this->getMesh("/home/ericlab/HV8.stl");
+  frame_names_.push_back("photoneo_center_camera_frame");
 
   this->transformMesh();
 
@@ -127,7 +127,7 @@ void MeshCloudPublisher::publishCloud()
   // pcl::toROSMsg(mesh_pointcloud_pcl_, mesh_pointcloud_ros_);
   pcl::toROSMsg(*downsampled_mesh_pointcloud_ptr_pcl_, mesh_pointcloud_ros_);
   mesh_pointcloud_ros_.header.stamp = ros::Time::now();
-  mesh_pointcloud_ros_.header.frame_id = "/world";
+  mesh_pointcloud_ros_.header.frame_id = "world";
   mesh_pointcloud_publisher_.publish(mesh_pointcloud_ros_);
   std::cout << "===================================" << std::endl;
 }

@@ -3,6 +3,7 @@
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer'))
 
 import rospy, rospkg, tf, random, time, sys
 from tf.transformations import quaternion_from_euler
@@ -17,6 +18,8 @@ from gazebo_msgs.msg import *
 from tqdm import tqdm
 from tf_sync import TfMessageFilter
 import message_filters
+from utils import util
+import pose_estimator_srvs
 
 
 
@@ -33,7 +36,8 @@ class RecordData(object):
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
-        self.save_file_path = rospy.get_param("~save_file", "/home/ericlab/MEGAsync/TEI_PC/Dataset/pi/datset_-pi4-pi4")
+        self.save_file_path = rospy.get_param("~save_directory", "/home/ericlab/")
+        self.file = rospy.get_param("~save_filename", "dataset_20000")
 
         self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
@@ -42,15 +46,16 @@ class RecordData(object):
         self.pcd = None
 
     def init_hdf5(self, file_path):
-        file_path = file_path + ".hdf5"
+        util.mkdir(file_path)
+        file_path = file_path + self.file + "_" + self.object_name_ + ".hdf5"
         self.hdf5_file_ = h5py.File(file_path, 'w')
+        self.all_file_path = file_path
 
     def callback(self, point_cloud, trans_rot):
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
         if self.receive_ok:
             rospy.set_param("/" + self.object_name_ + "/receive_cloud/is_ok", False)
             rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", False)
-
             pc = ros_numpy.numpify(point_cloud)
             height = pc.shape[0]
             width = 1
@@ -61,17 +66,13 @@ class RecordData(object):
             pcd = np_points[~np.any(np.isnan(np_points), axis=1)]
             translation = np.array(trans_rot[0])
             rotation = np.array(trans_rot[1])
-
-
-            #f = open('/home/tsuchidashinya/dataset_pose.txt', 'w')
-
-            #f = open('/home/ericlab/dataset_pose.txt', 'w')
-            #f.writelines(str(translation))
-            #f.writelines(str(rotation))
-            #f.close()
-            #new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
-            #pcl.save(new_pcd, "/home/ericlab/random_1.pcd")
-
+            #if true:
+                #f = open('/home/tsuchidashinya/dataset_pose.txt', 'w')
+                #f.writelines(str(translation))
+                #f.writelines(str(rotation))
+                #f.close()
+                #new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
+                #pcl.save(new_pcd, "/home/tsuchidashinya/random_1.pcd")
 
             pose = np.concatenate([translation, rotation])
             self.savePCDandPose(pcd, pose)
@@ -107,13 +108,17 @@ class RecordData(object):
         self.bar.update(1)
         if self.num_ >  self.num_dataset:
             print("Finish recording")
+            print("save on" + self.all_file_path)
             self.hdf5_file_.flush()
             self.hdf5_file_.close()
+            rospy.signal_shutdown('finish')
             os._exit(10)
 
+
     def record(self):
-        self.ts_.registerCallback(self.callback)
-        rospy.spin()
+        while not rospy.is_shutdown():
+            self.ts_.registerCallback(self.callback)
+            rospy.spin()
 
 
 
