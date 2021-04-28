@@ -1,0 +1,53 @@
+* pc_segmentation
+
+** Requirement
+- PCL >= 1.8
+
+*** Installing PCL version 1.8 in ubuntu16.04
+
+** related source file
+[[https://github.com/PointCloudLibrary/pcl/blob/master/segmentation/include/pcl/segmentation/supervoxel_clustering.h]]
+[[https://github.com/PointCloudLibrary/pcl/blob/master/segmentation/include/pcl/segmentation/impl/supervoxel_clustering.hpp]]
+
+** Correct Segmentation Data
+[[./.img/seg_number.png]]
+PCD place: ./pcd/colored.pcd
+** ROS
+** Reference page
+- [[https://www.cv-foundation.org/openaccess/content_cvpr_2013/papers/Papon_Voxel_Cloud_Connectivity_2013_CVPR_paper.pdf]]
+- [[https://www.researchgate.net/profile/Linh_Truong-Hong/publication/274645446_Octree-based_region_growing_for_point_cloud_segmentation/links/5a180b330f7e9be37f95c982/Octree-based-region-growing-for-point-cloud-segmentation.pdf]]
+- [[https://d1wqtxts1xzle7.cloudfront.net/46660633/bare_jrnl_03_clive_05c.pdf?1466474876=&response-content-disposition=inline%3B+filename%3DAn_automatic_and_threshold_free_performa.pdf&Expires=1603069298&Signature=JtcAZMVjiRskJUlO1DYDzEHRc8FahOvGcuM22ROEafdgvkwPirO-Rizk10MVIATtWB7A8w-NGPclWhIIukcTok5sa52-lHI3Z9uvngpjTOcEhaBN5xvxM08krimO2VCG5vxN7zTXhlHwh7Rr0Wk4PkmX4-z7cuhdAv6MJUnnnE8u5lLvDdxg5E12QOc8SZIrrmq255i6I7AyV4~lSK4Wb59HMF8Rhv~1f522vp5VHY9Q0ypaSrGPpm6M8XoroMdBJcGknmZVa3yWoibZR-kh6Ym5cOEvj1AF9sxlmlT9vGvQM99U45dau10eOGF~vQ80v35R5kBhHm~MpQ66GeOU2Q__&Key-Pair-Id=APKAJLOHF5GGSLRBV4ZA]]
+
+** Usage
+*** Build Source files
+#+BEGIN_SRC sh
+mkdir build && cd build
+#+END_SRC
+#+BEGIN_SRC sh
+cmake .. && make
+#+END_SRC
+
+*** SuperVoxels Clustering
+**** Parameter Setting
+For executing supervoxel clustering, you need to set 7 parameters.
+- =voxel_resolution= : Resolution of voxels [m]
+- =seed_resolution= : Distance of Seeding some seed-voxels [m] (In the paper, this parameter is recommenede as same as the size of the target object)
+- =color_importance= : Coefficient of distances in CIELAB space for labeling voxels
+- =spatial_importance= : Coefficient of spatial distances for labeling voxels
+- =normal_importance= : Coefficient of Fast Point Feature Histograms (FPFH) for labeling voxels
+- =search_radius_coeff= : Coefficient of standard search area ( =seed_resolution= ) for deleting seed-voxels
+- =min_points_coeff= : Coefficient of standard size of pointcloud for deleting seed-voxels
+
+For setting these parameters, modifiled these lines in =src/super_voxel.cpp=
+#+BEGIN_SRC C++
+  float voxel_resolution = 0.000656593f;
+  float seed_resolution = 0.0911658f;
+  float color_importance = 0.0f;
+  float spatial_importance = 0.299297f;
+  float normal_importance = 0.130032f;
+  float search_radius_coeff = 0.615881f;
+  float min_points_coeff = 0.507035f;
+#+END_SRC
+
+*** 使用するPCDの設定
+supervoxel clusteringを実行する対象のPCDファイルを設定するために =src/super_voxel.cpp= の以下の部分を任意に変更する

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="box_v0" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find bayes_pose)/model/urdf/cardboard.urdf.xacro" />
+
+  <xacro:arg name="id" default="00"/>
+
+  <gazebo reference="cardboard_link_$(arg id)">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="cardboard_link_$(arg id)_ground_truth" filename="libgazebo_ros_p3d.so">
+      <frameName>world</frameName>
+      <bodyName>cardboard_link_$(arg id)</bodyName>
+      <topicName>cardboard_link_$(arg id)_ground_truth</topicName>
+      <updateRate>10.0</updateRate>
+    </plugin>
+  </gazebo>
+</robot>

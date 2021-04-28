@@ -7,7 +7,6 @@ import numpy as np
 import math
 import time
 
-
 def space_(space_num):
     for i in range(space_num):
         print('')
@@ -22,7 +21,6 @@ def print_result(result_array, result_string):
 
 def print_3(n1, n2, n3):
     print(str(n1) + '   ' + str(n2) + '    ' + str(n3))
-
 
 if __name__=='__main__':
     rospy.init_node('error_node')
@@ -42,7 +40,6 @@ if __name__=='__main__':
         if process_time - start_time > limit:
             break
         try:
-            
             euler_error.clear()
             estimation = tfBuffer.lookup_transform('world', 'estimated_tf', rospy.Time(0))
             groud_truth = tfBuffer.lookup_transform('world', 'HV8', rospy.Time(0))
@@ -65,14 +62,11 @@ if __name__=='__main__':
             euler = tf.transformations.euler_from_matrix(error_matrix)
             for i in range(3):
                 euler_error.append(euler[i])
-    
             if count == 1:
                 for i in range(6):
                     euler_error_min.append(abs(euler_error[i]))
                     euler_error_max.append(abs(euler_error[i]))
                     euler_error_sum.append(abs(euler_error[i]))
-
-                
             else:
                 for i in range(6):
                     if abs(euler_error[i]) > abs(euler_error_max[i]):
@@ -80,13 +74,10 @@ if __name__=='__main__':
                     if abs(euler_error[i]) < abs(euler_error_min[i]):
                         euler_error_min[i] = abs(euler_error[i])
                     euler_error_sum[i] = euler_error_sum[i] + abs(euler_error[i])
-                    
             euler_error_average.clear()
             #print(count)
             count = count + 1
-
             rate.sleep()    
-
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             rate.sleep()
             continue

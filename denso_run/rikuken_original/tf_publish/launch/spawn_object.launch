@@ -1,8 +1,28 @@
 <?xml version="1.0"?>
 <launch>
-    <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find tf_publish)/world/model.world"/>
-    </include>
+    <arg name="object_name" default="HV8"/>
+    <group if="$(eval object_name=='HV8')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV8.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='HV7')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV7.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='HV6')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV6.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='t_pipe')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/t_pipe.world"/>
+        </include>
+    </group>
+
+    
     <!--node name="setup_commands" pkg="timed_roslaunch" type="timed_roslaunch.sh" args="3 gen_dataset setup_commands.launch" output="screen" /-->
     <arg name="use_sensor_type" default="phoxi_camera"/>
     <arg name="gui" default="true"/>

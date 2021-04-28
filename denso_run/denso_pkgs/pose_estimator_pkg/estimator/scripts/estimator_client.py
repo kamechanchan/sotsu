@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 import sys, os
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/utils'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/gen_dataset'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/options'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../..//trainer'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../gen_dataset'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer/options'))
 
 from options.test_options import TestOptions
 from test import *
@@ -27,6 +27,7 @@ from geometry_msgs.msg import Vector3, Quaternion, Point, Pose, PoseStamped, Tra
 from std_msgs.msg import Int32MultiArray, MultiArrayLayout, MultiArrayDimension, Float32MultiArray
 from tf.transformations import quaternion_from_euler, euler_from_quaternion, quaternion_from_matrix
 from tf2_sensor_msgs.tf2_sensor_msgs import do_transform_cloud
+
 
 
 class TimeLog():

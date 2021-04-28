@@ -1,12 +1,4 @@
 #!/usr/bin/env bash
-
-echo 'Train with PointNet'
-echo 'Dataset Model is '$@'/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/photoneo_center_optical_frame_HV8.hdf5'
-echo ''
-
-for i in $@
-do
-
 ## run the training
 python3 train.py \
 --dataroot ../datasets \
