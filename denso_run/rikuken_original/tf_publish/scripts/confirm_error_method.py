@@ -22,6 +22,7 @@ if __name__=='__main__':
     ros_euler = [0, 0, 0]
     quat_euler = [0, 0, 0]
     axis_sum = [0, 0, 0]
+    result_euler = [0, 0, 0]
     kakeru = 180 / pi
     while 1:
         process_time = time.time()
@@ -45,6 +46,7 @@ if __name__=='__main__':
                 ros_euler[i] = ros_euler[i] + euler[i]
                 quat_euler[i] = quat_euler[i] + my_quaternion.yaw_pitch_roll[i]
                 axis_sum[i] = axis_sum[i] + u[i]
+                result_euler[i] = result_euler[i] + (my_quaternion.yaw_pitch_roll[2-i] *kakeru)
             count = count + 1
             rate.sleep()    
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
@@ -54,6 +56,7 @@ if __name__=='__main__':
     error_roll = (ros_euler[0] - quat_euler[2]) * kakeru / count
     error_pitch = (ros_euler[1] - quat_euler[1]) * kakeru / count
     error_yaw = (ros_euler[2] - quat_euler[0]) * kakeru / count
-    print('error between ros and pyquaternion is ' + str(error_roll) + '  ' + str(error_pitch) + '  ' + str(error_yaw))
-    print(str(quat_euler[2] * kakeru / count) + '  ' + str(quat_euler[1] * kakeru / count) + '  ' + str(quat_euler[2] * kakeru / count))
+    #print('error between ros and pyquaternion is ' + str(error_roll) + '  ' + str(error_pitch) + '  ' + str(error_yaw))
+    #print(str(quat_euler[2] * kakeru / count) + '  ' + str(quat_euler[1] * kakeru / count) + '  ' + str(quat_euler[2] * kakeru / count))
     print(str(axis_sum[0] / count) + '  ' + str(axis_sum[1] / count) + '  ' + str(axis_sum[2] / count))
+    print(str(result_euler[0] / count) + '  ' + str(result_euler[1] / count) +  '   ' + str(result_euler[2] / count))
