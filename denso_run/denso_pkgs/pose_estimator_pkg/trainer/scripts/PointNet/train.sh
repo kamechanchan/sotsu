@@ -26,4 +26,4 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --dataroot_swich front \
 --local_checkpoints_dir /home/ericlab/DENSO_results/raugh_recognition/checkpoint \
 --tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
---tensorboardX_results_directory_switch ishiyama \
+--tensorboardX_results_directory_switch ishiyama/0430 \
