@@ -33,6 +33,8 @@ class BaseOptions:
         self.parser.add_argument('--dataroot_swich',type=str,default='front')
         self.parser.add_argument('--local_checkpoints_dir',type=str,default='/home/ericlab/DENSO/raugh_recognition/checkpoint')
         self.parser.add_argument('--local_export_folder', type=str, default='exports intermediate collapses to this folder')
+        self.parser.add_argument('--tensorboardX_results_directory',type=str,default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/")
+        self.parser.add_argument('--tensorboardX_results_directory_switch',type=str,default="ishiyama")
         self.initialized = True
 
 

@@ -22,10 +22,10 @@ class Writer:
         self.start_logs()
         self.nexampels = 0
         self.ncorrect = 0
+        self.tensorboardX_results_directory = os.path.join(self.opt.tensorboardX_results_directory,self.opt.tensorboardX_results_directory_switch)
 
         if opt.is_train and not opt.no_vis and SummaryWriter is not None:
-            self.display = SummaryWriter(comment=self.name + "_" + self.dataset_model)
-            print("tensorboardXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+            self.display = SummaryWriter(self.tensorboardX_results_directory)
         else:
             self.display = None
 

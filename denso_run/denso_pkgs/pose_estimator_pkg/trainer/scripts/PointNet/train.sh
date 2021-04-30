@@ -9,7 +9,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --name PointNet \
 --dataset_mode pose_estimation \
 --batch_size 8 \
---num_epoch 800 \
+--num_epoch 10 \
 --max_dataset_size 20000 \
 --arch PointNet_Pose \
 --print_freq 10 \
@@ -22,6 +22,8 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --serial_batches False \
 --verbose_plot True \
 --lr 0.0001 \
---checkpoints_swich ishiyama/0406 \
+--checkpoints_swich ishiyama/0430 \
 --dataroot_swich front \
 --local_checkpoints_dir /home/ericlab/DENSO_results/raugh_recognition/checkpoint \
+--tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
+--tensorboardX_results_directory_switch ishiyama \
