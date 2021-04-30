@@ -21,7 +21,7 @@ class EstimatorModel:
         self.local_save_dir=join(self.local_checkpoints_dir, self.checkpoints_swich,self.name, self.dataset_model)
         self.gpu_ids = opt.gpu_ids
         self.device = torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
-        self.is_train = opt.is_train
+        self.is_train = self.opt.is_train
 
         self.optimizer = None
         self.x_data  = None
@@ -31,14 +31,15 @@ class EstimatorModel:
 
         self.net = networks.define_network(opt)
         self.criterion = networks.define_loss(opt).to(self.device)
-
+        print('is_train is ' + str(self.is_train))
         if self.is_train:
             self.net.train(self.is_train)
-            self.optimizer = torch.optim.Adam(self.net.parameters(), lr=opt.lr)
+            self.optimizer = torch.optim.Adam(self.net.parameters(), lr=self.opt.lr)
             print_network(self.net)
 
         if not self.is_train:
-            self.load_network_estimator(opt.which_epoch)
+            #self.load_network_estimator(opt.which_epoch)
+            self.load_network(opt.which_epoch)
 
 
     def get_centroid(self, data):
