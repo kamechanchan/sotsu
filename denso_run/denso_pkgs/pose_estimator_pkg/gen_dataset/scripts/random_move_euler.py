@@ -9,8 +9,6 @@ from math import *
 from gazebo_msgs.msg import *
 import tf2_ros
 from time import *
-from pose_estimator_srvs.srv import PoseEstimate
-from pose_estimator_srvs.srv import range1, range1Request, range1Response
 
 
 class RandomMoveEuler(object):
@@ -99,7 +97,6 @@ class RandomMoveEuler(object):
 def main():
     rospy.init_node("random_state_maker_node", anonymous=False)
     random_state_maker = RandomMoveEuler()
-    s = rospy.Service('range_decision', range1, random_state_maker.parameter_make)
 
     random_state_maker.init_state_make()
     while not random_state_maker.isReadyMove():

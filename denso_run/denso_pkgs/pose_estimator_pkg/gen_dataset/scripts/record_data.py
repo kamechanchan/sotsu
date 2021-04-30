@@ -19,7 +19,6 @@ from tqdm import tqdm
 from tf_sync import TfMessageFilter
 import message_filters
 from utils import util
-import pose_estimator_srvs
 
 
 
@@ -47,7 +46,7 @@ class RecordData(object):
 
     def init_hdf5(self, file_path):
         util.mkdir(file_path)
-        file_path = file_path + self.file + "_" + self.object_name_ + ".hdf5"
+        file_path = file_path + self.file + "_" + self.object_name_ + "_" + str(self.num_dataset) + ".hdf5"
         self.hdf5_file_ = h5py.File(file_path, 'w')
         self.all_file_path = file_path
 
