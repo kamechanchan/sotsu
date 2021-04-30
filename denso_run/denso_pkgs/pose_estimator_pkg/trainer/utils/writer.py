@@ -25,6 +25,7 @@ class Writer:
 
         if opt.is_train and not opt.no_vis and SummaryWriter is not None:
             self.display = SummaryWriter(comment=self.name + "_" + self.dataset_model)
+            print("tensorboardXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
         else:
             self.display = None
 
