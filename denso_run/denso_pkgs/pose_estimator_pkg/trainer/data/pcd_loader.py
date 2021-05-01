@@ -1,14 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-import sys, os
+import random
+import h5py
+import time
+from cloud_util import *
+from base_loader import Base_Loader
+from tqdm import tqdm
+import numpy as np
+import sys
+import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
 
-import h5py, random
-import numpy as np
-from tqdm import tqdm
-from base_loader import Base_Loader
-from cloud_util import *
-import time
 
 class PCD_Loader(Base_Loader):
     def __init__(self, dir_name, dataset_model, dataset_size):
@@ -18,6 +20,9 @@ class PCD_Loader(Base_Loader):
         path = self.find_h5py_filenames(self.dir)[0]
         dir_path = self.dir+"/"+path
         self.hdf5_file = h5py.File(dir_path, "r")
+        print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+        print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
+        print(self.hdf5_file)
 
         print("Start loading datasets !!")
         for n in tqdm(range(0, self.dataset_size)):
@@ -36,7 +41,6 @@ class PCD_Loader(Base_Loader):
         y_data = np.concatenate([y_pos, y_rot])
 
         return x_data, y_data
-
 
     def get_voxel_data(self, index, resolution):
         channel = 1
@@ -84,6 +88,3 @@ if __name__ == "__main__":
         e_time = time.time()
         lap_time = e_time - s_time
         op_time += lap_time
-        
-
-
