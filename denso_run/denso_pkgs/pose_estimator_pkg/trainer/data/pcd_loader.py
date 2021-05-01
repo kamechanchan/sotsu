@@ -1,16 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import random
-import h5py
-import time
-from cloud_util import *
-from base_loader import Base_Loader
-from tqdm import tqdm
-import numpy as np
-import sys
-import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+
+import os
+import sys
+import numpy as np
+from tqdm import tqdm
+from base_loader import Base_Loader
+from cloud_util import *
+import time
+import h5py
+import random
+
 
 
 class PCD_Loader(Base_Loader):
