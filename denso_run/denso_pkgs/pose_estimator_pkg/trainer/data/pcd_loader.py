@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
-
 import os
 import sys
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
 import numpy as np
 from tqdm import tqdm
 from base_loader import Base_Loader
@@ -23,9 +22,6 @@ class PCD_Loader(Base_Loader):
         path = self.find_h5py_filenames(self.dir)[0]
         dir_path = self.dir+"/"+path
         self.hdf5_file = h5py.File(dir_path, "r")
-        print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-        print("wwwwwwwwwwwwwwwwwwwwwwwwwwwwww")
-        print(self.hdf5_file)
 
         print("Start loading datasets !!")
         for n in tqdm(range(0, self.dataset_size)):
