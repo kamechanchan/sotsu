@@ -41,7 +41,7 @@ class PointNet_global_feat(nn.Module):
         super(PointNet_global_feat, self).__init__()
 
         self.num_points = num_points
-
+        
         self.conv1 = torch.nn.Conv1d(3, 128, 1)
         self.conv2 = torch.nn.Conv1d(128, 256, 1)
         self.conv3 = torch.nn.Conv1d(256, self.num_points, 1)
