@@ -23,6 +23,8 @@ from dnn_test import *
 if __name__ == '__main__':
     print("------------------current main directory------------------")
     print(__file__)
+
+    print("a")
     
     opt = TrainOptions().parse()
     opt_v = TestOptions().parse()
