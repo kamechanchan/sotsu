@@ -30,8 +30,9 @@ def define_network(opt):
             net = PointNet_Pose(3, 9)
         elif arch == "T_net_Pose":
             net = T_net_Pose(3, 9)
-    #elif name == "segmentation"
-        #net = 
+    elif name == "segmentation":
+        if arch == "segmentation_PointNet":
+            pass 
     else:
         print("Error!")
 

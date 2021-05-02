@@ -46,6 +46,9 @@ class PoseData(BaseDataset):
                 meta["x_data"] = x_data
                 meta["y_data"] = y_data
                 return meta
+            elif self.arch == "Segmentation_PointNet":
+                pass 
+                
         except:
             print("pose_estimate_data.py: Error! Cloud not load hdf5_data")
             sys.exit(1)
