@@ -11,21 +11,22 @@ from cloud_util import *
 import time
 
 class PCD_Loader(Base_Loader):
-    def __init__(self, dir_name, dataset_model, dataset_size):
+    def __init__(self, dir_name, dataset_model, dataset_size, dataset_number):
         super(PCD_Loader, self).__init__(dir_name, dataset_model, dataset_size)
 
     def load_hdf5(self):
-        path = self.find_h5py_filenames(self.dir)[0]
-        dir_path = self.dir+"/"+path
-        self.hdf5_file = h5py.File(dir_path, "r")
+        for i in range(self.dataset_number):
+            path = self.find_h5py_filenames(self.dir)[i] #get file_name
+            dir_path = self.dir+"/"+path #get path
+            self.hdf5_file = h5py.File(dir_path, "r")
 
-        print("Start loading datasets !!")
-        for n in tqdm(range(0, self.dataset_size)):
-            pcl_data = self.hdf5_file["data_" + str(n + 1)]['pcl'][()]
-            pose_data = self.hdf5_file["data_" + str(n + 1)]['pose'][()]
-            pose_data = self.conv_quat2mat(pose_data)
-            self.x_data.append(pcl_data)
-            self.y_data.append(pose_data)
+            print("Start loading datasets !!")
+            for n in tqdm(range(0, self.dataset_size[i])):
+                pcl_data = self.hdf5_file["data_" + str(n + 1)]['pcl'][()]
+                pose_data = self.hdf5_file["data_" + str(n + 1)]['pose'][()]
+                pose_data = self.conv_quat2mat(pose_data)
+                self.x_data.append(pcl_data)
+                self.y_data.append(pose_data)
 
     def get_pcd_data(self, index):
         pcd_data = self.x_data[index]
