@@ -77,7 +77,7 @@ class RandomMoveEuler(object):
             self.set_model_state_pub_.publish(self.pos_)
 
         return True
-        
+
     def make_histgram(self):
         with open(self.save_histgram_dictory, "wt") as histgram_file:
             for i in range(10):
@@ -91,7 +91,7 @@ class RandomMoveEuler(object):
                 for k in range(10):
                     histgram_file.write(",%s," ",%s," ",%s," ",%s," ",%s," "%s,\n" %(str(histgram_list_1[k]),str(histgram_list_2), 
                                                                                     str(histgram_list_3), str(histgram_list_4), str(histgram_list_5), str(histgram_list_6)))
-                opt_file.write("\n") 
+                opt_file.write("\n")
 
 
 def main():
