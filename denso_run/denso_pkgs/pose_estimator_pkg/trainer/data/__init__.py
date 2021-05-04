@@ -13,7 +13,7 @@ def TrainValDataset(opt):
         subset1_indices = list(range(0, train_size))
         subset2_indices = list(range(train_size, n_samples))
 
-        subset1 = Subset(dataset, subset1_indices)
+        subset1 = Subset(dataset, subset1_indices) #set train_data and index(対応付け)
         subset2 = Subset(dataset, subset2_indices)
     else:
         print("Error!! ")

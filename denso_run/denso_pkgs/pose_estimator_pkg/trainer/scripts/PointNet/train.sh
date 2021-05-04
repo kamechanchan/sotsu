@@ -10,7 +10,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --dataset_mode pose_estimation \
 --batch_size 8 \
 --num_epoch 10 \
---max_dataset_size 20000 \
+--max_dataset_size 20000 20000 #when dataset is two and each dataset is 20000 \
 --arch PointNet_Pose \
 --print_freq 10 \
 --save_latest_freq 1000 \

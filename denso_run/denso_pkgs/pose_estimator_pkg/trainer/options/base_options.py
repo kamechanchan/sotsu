@@ -12,12 +12,13 @@ class BaseOptions:
     def __init__(self):
         self.parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         self.initialized = False
+        self.dataset_number=2
 
     def initialize(self):
         self.parser.add_argument('--main_directory',type=str,default=__file__)
         self.parser.add_argument('--dataset_mode', choices={"segmentation", "pose_estimation"}, default='pose_estimation')
-        self.parser.add_argument('--dataset_model', type=str, default='HV8')
-        self.parser.add_argument('--max_dataset_size', type=int, default=float("inf"), help='Maximum num of samples per epoch')
+        self.parser.add_argument('--dataset_model', nargs=self.dataset_number, type=str, default='HV8')
+        self.parser.add_argument('--max_dataset_size', nargs=self.dataset_number, type=int, default=float("inf"), help='Maximum num of samples per epoch')
         self.parser.add_argument('--name', type=str, default="debug")
         self.parser.add_argument('--batch_size', type=int, default=8)
         self.parser.add_argument('--num_epoch', type=int, default=150)
@@ -35,6 +36,7 @@ class BaseOptions:
         self.parser.add_argument('--local_export_folder', type=str, default='exports intermediate collapses to this folder')
         self.parser.add_argument('--tensorboardX_results_directory',type=str,default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/")
         self.parser.add_argument('--tensorboardX_results_directory_switch',type=str,default="ishiyama")
+        self.parser.add_argument('--dataset_number', type=int, default=self.dataset_number)
         self.initialized = True
 
 
