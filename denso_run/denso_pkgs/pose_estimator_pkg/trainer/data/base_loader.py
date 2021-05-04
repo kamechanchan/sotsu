@@ -38,7 +38,14 @@ class Base_Loader(object):
     def find_h5py_filenames(self, path_to_dir, suffix=".hdf5"):
         filenames = listdir(path_to_dir)
         file_list = [filename for filename in filenames if filename.endswith(suffix)]
-        file_name = [f for f in file_list if self.dataset_model in f] #dataset_model==dataset
+        file_name = []
+        for i in range(self.dataset_number):
+            for f in file_list:
+                if self.dataset_model[i] in f: #dataset_model==dataset
+                    file_name.append(f)
+
+        print(file_name)
+
         if len(file_name) == self.dataset_number:
             return file_name
         else:

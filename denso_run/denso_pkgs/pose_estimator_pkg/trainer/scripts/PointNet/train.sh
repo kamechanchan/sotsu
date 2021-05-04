@@ -2,7 +2,7 @@
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets \
---dataset_model dataset_20000.hdf5 \
+--dataset_model HV8_20000.hdf5 \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint \
 --resolution 1024 \
 --phase train \
@@ -10,7 +10,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --dataset_mode pose_estimation \
 --batch_size 8 \
 --num_epoch 10 \
---max_dataset_size 20000 20000 #when dataset is two and each dataset is 20000 \
+--max_dataset_size 20000 \
 --arch PointNet_Pose \
 --print_freq 10 \
 --save_latest_freq 1000 \

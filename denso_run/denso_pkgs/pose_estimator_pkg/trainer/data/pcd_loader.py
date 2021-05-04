@@ -16,7 +16,7 @@ import random
 
 class PCD_Loader(Base_Loader):
     def __init__(self, dir_name, dataset_model, dataset_size, dataset_number):
-        super(PCD_Loader, self).__init__(dir_name, dataset_model, dataset_size)
+        super(PCD_Loader, self).__init__(dir_name, dataset_model, dataset_size, dataset_number)
 
     def load_hdf5(self):
         for i in range(self.dataset_number):

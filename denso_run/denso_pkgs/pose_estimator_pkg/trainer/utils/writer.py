@@ -13,8 +13,9 @@ class Writer:
         self.opt = opt
         self.name = self.opt.name
         self.dataset_model = self.opt.dataset_model
-        self.save_dir = os.path.join(opt.checkpoints_dir, opt.checkpoints_swich, self.name, self.dataset_model)
-        self.local_save_dir=os.path.join(opt.local_checkpoints_dir, opt.checkpoints_swich, self.name, self.dataset_model)
+        self.concat_dataset_model = '+'.join(self.opt.dataset_model)
+        self.save_dir = os.path.join(opt.checkpoints_dir, opt.checkpoints_swich, self.name, self.concat_dataset_model)
+        self.local_save_dir=os.path.join(opt.local_checkpoints_dir, opt.checkpoints_swich, self.name, self.concat_dataset_model)
         self.log_name = os.path.join(self.save_dir, "loss_log.txt")
         self.local_log_name = os.path.join(self.local_save_dir, "loss_log.txt")
         self.testacc_log = os.path.join(self.save_dir, "testacc_log.txt")
