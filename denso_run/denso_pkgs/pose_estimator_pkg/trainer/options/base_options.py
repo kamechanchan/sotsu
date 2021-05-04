@@ -48,7 +48,7 @@ class BaseOptions:
         str_ids = self.opt.gpu_ids.split(',')
         self.opt.gpu_ids = []
         
-        self.concat_dataset_model = ';'.join(self.opt.dataset_model)
+        self.concat_dataset_model = '+'.join(self.opt.dataset_model)
 
         for str_id in str_ids:
             id = int(str_id)
