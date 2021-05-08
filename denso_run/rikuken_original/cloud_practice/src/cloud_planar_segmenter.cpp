@@ -39,7 +39,7 @@ private:
       
         segmentation.setMethodType(pcl::SAC_RANSAC);
         segmentation.setMaxIterations(1000);
-        segmentation.setDistanceThreshold(0.01);
+        segmentation.setDistanceThreshold(0.001);
         segmentation.setInputCloud(cloud_input_pcl_.makeShared());
         segmentation.segment(*inliers, coefficients_pcl);
         
@@ -80,7 +80,7 @@ int main(int argc, char ** argv)
 {
     ros::init(argc, argv, "cloud_planar_segmenter");
     ros::NodeHandle nh;
-    CloudOperationHandler handler(nh, new CloudPlanarSegmenter(nh), "cloud_downsampled");
+    CloudOperationHandler handler(nh, new CloudPlanarSegmenter(nh), "cloud_raw");
     ros::spin();
     return 0;
 }
