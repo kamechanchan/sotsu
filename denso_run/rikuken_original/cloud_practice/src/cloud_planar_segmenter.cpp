@@ -80,7 +80,7 @@ int main(int argc, char ** argv)
 {
     ros::init(argc, argv, "cloud_planar_segmenter");
     ros::NodeHandle nh;
-    CloudOperationHandler handler(nh, new CloudPlanarSegmenter(nh), "/photoneo_center/sensor/points");
+    CloudOperationHandler handler(nh, new CloudPlanarSegmenter(nh), "cloud_downsampled");
     ros::spin();
     return 0;
 }

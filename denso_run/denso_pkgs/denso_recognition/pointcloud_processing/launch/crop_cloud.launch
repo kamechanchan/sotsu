@@ -7,10 +7,10 @@
   <arg name="crop_y_max" default="0.1" />
   <arg name="crop_z_min" default="0.3" />
   <arg name="crop_z_max" default="1" />
-  <arg name="crop_pc_src" default="/photoneo_center/pointcloud" />
+  <arg name="crop_pc_src" default="/photoneo_center/sensor/points" />
   <arg name="crop_pc_dst" default="/cropped_cloud" />
   <arg name="use_rgb" default="false" />
-  <arg name="crop_frame_id" default="world" />
+  <arg name="crop_frame_id" default="HV8" />
 
   <node name="crop_cloud" pkg="pointcloud_processing" type="crop_cloud_node" output="screen">
     <param name="loop_rate" value="$(arg loop_rate)" />
