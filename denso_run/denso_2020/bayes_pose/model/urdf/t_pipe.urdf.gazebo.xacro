@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<robot name="box_v0" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find bayes_pose)/model/urdf/t_pipe.urdf.xacro" />
+
+  <xacro:arg name="id" default="00"/>
+
+  <gazebo reference="t_pipe_link_$(arg id)">
+    <mu1>1.0</mu1>
+    <mu2>1.0</mu2>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="t_pipe_link_$(arg id)_ground_truth" filename="libgazebo_ros_p3d.so">
+      <frameName>world</frameName>
+      <bodyName>t_pipe_link_$(arg id)</bodyName>
+      <topicName>t_pipe_link_$(arg id)_ground_truth</topicName>
+      <updateRate>10.0</updateRate>
+    </plugin>
+  </gazebo>
+</robot>

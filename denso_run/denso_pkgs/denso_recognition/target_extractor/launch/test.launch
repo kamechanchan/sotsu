@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="base_pc_topic_name" default="/base_cloud" />
+  <arg name="diff_pc_filename" default="box_center.pcd" />
+  <!-- rate : if publish at 10 Hz, set 0.1 -->
+  <arg name="rate" value="0.5"/>
+
+  <!-- you should set pcd file path -->
+  <!--  <arg name="base_cloud" value="$(find target_extractor)/pcd/bulk_hv8_box_center_0.pcd"/>
+  <node pkg="pcl_ros" type="pcd_to_pointcloud" name="base_cloud" args="$(arg base_cloud) $(arg rate)" output="screen">
+    <remap from="cloud_pcd" to="$(arg base_pc_topic_name)"/>
+    <param name="frame_id" value="world" />
+  </node> -->
+
+  <node pkg="target_extractor" name="bulk_extractor" type="bulk_extractor" output="screen">
+    <param name="base_pc_topic_name" value="$(arg base_pc_topic_name)" />
+    <param name="diff_pc_filename" value="$(arg diff_pc_filename)" />
+  </node>
+
+  <!-- <node name="rviz" pkg="rviz" type="rviz" args="-d $(find target_extractor)/config/test.rviz" required="true" /> -->
+
+</launch>

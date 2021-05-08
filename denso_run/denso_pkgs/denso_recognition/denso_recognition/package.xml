@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>denso_recognition</name>
+  <version>1.0.0</version>
+  <description>The denso_recognition package</description>
+
+  <maintainer email="atsuki.yokota@gmail.com">Atsuki Yokota</maintainer>
+  <license>BSD</license>
+  <url type="repository">http://github.com/Nishida-Lab/denso_recognition</url>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>ar_marker_urdf</exec_depend>
+  <exec_depend>meshcloud_publisher</exec_depend>
+  <exec_depend>pointcloud_processing</exec_depend>
+  <exec_depend>pointcloud_registrator</exec_depend>
+
+  <export>
+    <metapackage />
+  </export>
+</package>

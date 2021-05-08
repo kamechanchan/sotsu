@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>third_2019</name>
+  <version>1.0.0</version>
+  <description>The third_2019 package</description>
+
+  <maintainer email="atsuki.yokota@gmail.com">Atsuki Yokota</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>message_generation</build_depend>
+  <build_depend>denso_state_msgs</build_depend>
+
+  <exec_depend>denso_state_msgs</exec_depend>
+  <!-- <exec_depend>geometry_msgs</exec_depend>    -->
+  <!-- <exec_depend>rospy</exec_depend>            -->
+  <!-- <exec_depend>smach</exec_depend>            -->
+  <!-- <exec_depend>smach_ros</exec_depend>        -->
+  <!-- <exec_depend>tf</exec_depend>               -->
+  <!-- <exec_depend>tf2_ros</exec_depend>          -->
+  <!-- <exec_depend>jacobi_planning</exec_depend>  -->
+  <exec_depend>photoneo_localization</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
+
+  <test_depend>roslaunch</test_depend>
+
+</package>

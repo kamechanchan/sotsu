@@ -1,0 +1,14 @@
+<launch>
+  <!--param name="ar_marker_description" textfile="$(find ar_marker_urdf)/urdf/ar_marker.urdf" />
+  <node name="spawn_robot" pkg="gazebo" type="spawn_model_ar01"
+        args="-urdf -param ar_marker_description -model ar_marker_thin_01
+              -x 1 -y 1 -z 0.05" respawn="false" output="screen" /-->
+
+  <include file="$(find ar_marker_urdf)/launch/model_spawner.launch">
+    <arg name="model_name" value="ar_marker_02"/>
+    <arg name="model" value="$(find ar_marker_urdf)/urdf/ar_marker_02.urdf"/>
+    <arg name="x" value="-0.15"/>
+    <arg name="y" value="-0.35"/>
+    <arg name="z" value="0.05"/>
+  </include>
+</launch>

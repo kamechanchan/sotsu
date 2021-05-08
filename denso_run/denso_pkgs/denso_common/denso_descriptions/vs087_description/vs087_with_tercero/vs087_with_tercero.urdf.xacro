@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<robot name="vs087" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find denso_descriptions)/vs087_description/vs087/vs087.urdf.xacro"/>
+  <!-- <xacro:include filename="$(find denso_robot_descriptions)/vs087_description/vs087_and_mhand/vs087_limited_joints_for_mhand.urdf.xacro"/> -->
+  <xacro:include filename="$(find tercero_description)/robots/tercero.urdf.xacro"/>
+  <xacro:include filename="$(find denso_descriptions)/common_description/common.xacro"/>
+
+  <xacro:arg name="sim" default="true" />
+
+  <joint name="gripper_joint" type="fixed">
+    <xacro:if value="$(arg sim)" >
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </xacro:if>
+    <xacro:unless value="$(arg sim)" >
+      <origin xyz="0 0 0" rpy="0 0 ${M_PI/2}"/>
+    </xacro:unless>
+  <parent link="J6"/>
+  <child link="hand_link"/>
+  </joint>
+
+</robot>

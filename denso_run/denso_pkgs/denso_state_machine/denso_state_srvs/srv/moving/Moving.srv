@@ -1,0 +1,6 @@
+geometry_msgs/PoseStamped target_pose
+uint32 num_generate_traj
+string[] joint_names
+float64[] target_joint_values
+---
+bool success

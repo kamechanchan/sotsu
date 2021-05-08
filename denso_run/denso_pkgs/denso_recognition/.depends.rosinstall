@@ -1,0 +1,8 @@
+- git:
+    local-name: denso_deps/robot_self_filter
+    uri: https://github.com/Nishida-Lab/robot_self_filter.git
+    version: kinetic-devel
+- git:
+    local-name: denso_deps/phoxi_ros_pkg
+    uri: https://github.com/Nishida-Lab/phoxi_ros_pkg.git
+    version: yamafuku/add_get_one_frame_srv

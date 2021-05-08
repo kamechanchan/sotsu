@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<robot name="cobotta" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find denso_descriptions)/cobotta_description/cobotta/cobotta.urdf.xacro"/>
+  <!-- <xacro:include filename="$(find denso_robot_descriptions)/cobotta_description/cobotta_and_mhand/vs087_limited_joints_for_iai_gripper.urdf.xacro"/> -->
+  <xacro:include filename="$(find cobotta_gripper_description)/robots/parallel_gripper.urdf.xacro"/>
+
+  <joint name="gripper_joint" type="fixed">
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <parent link="J6"/>
+    <child link="hand_link"/>
+  </joint>
+
+</robot>
