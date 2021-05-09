@@ -15,8 +15,16 @@ namespace mesh_cloud
         ~MeshCloud(){}
         void getMesh(const std::string dir_path);
         void transformMesh();
-        void downSample(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ> cloud_filtered);
+        void downSample(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud, pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_filtered);
         void publishCloud();
+        void frame_set();
+        void stl_file_set();
+        int OBJECT_QUANTITY;
+        template <typename T>
+        void print_parameter(T para)
+        {
+            std::cout << para << std::endl;
+        }
         
 
     private:
@@ -33,8 +41,13 @@ namespace mesh_cloud
         std::vector<std::string> link_names_;
         std::vector<std::string> frame_names_;
         std::string frame_;
+        std::string object_name;
         std::string link_;
         std::string mesh_path;
+        std::string mesh_topic_name_;
         float LEAF_SIZE;
+        int sample_points;
+        int RETRY_COUNT_LIMIT;
+        float DURATION_TIME;
     };
 }

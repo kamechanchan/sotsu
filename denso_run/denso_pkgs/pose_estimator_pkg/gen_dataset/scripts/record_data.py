@@ -45,6 +45,10 @@ class RecordData(object):
         self.ts_ = TfMessageFilter(self.sync_sub_, self.sensor_parent_frame_, self.object_name_, queue_size=100)
         self.init_hdf5(self.save_file_path)
         self.pcd = None
+        rospy.set_param("/shori_1", 0)
+        rospy.set_param("/shori_2", 0)
+        rospy.set_param("/shori_3", 0)
+        rospy.set_param("/shori_4", 0)
 
     def init_hdf5(self, file_path):
         util.mkdir(file_path)
@@ -53,8 +57,13 @@ class RecordData(object):
         self.all_file_path = file_path
 
     def callback(self, point_cloud, trans_rot):
+        get_shori_3 = rospy.get_param("/shori_3")
+        get_shori_3 = get_shori_3 + 1
+        print("my_callback_tf_pc is " + str(get_shori_3))
+        rospy.set_param("/shori_3", get_shori_3)
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
         if self.receive_ok:
+            
             rospy.set_param("/" + self.object_name_ + "/receive_cloud/is_ok", False)
             rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", False)
             pc = ros_numpy.numpify(point_cloud)
