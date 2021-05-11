@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package format="2">
+<name>pose_estimator_pkg</name>
+<version>1.0.0</version>
+<description>The pose_estimator_pkg package</description>
+
+<maintainer email="shuichi.maeda@gmail.com">Shuichi Maeda</maintainer>
+<license>BSD</license>
+<url type="repository">http://github.com/maeshu/pose_estimator_pkg</url>
+<buildtool_depend>catkin</buildtool_depend>
+
+<export>
+    <metapackage />
+  </export>
+</package>

@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find denso_bringup)/launch/vs087_bringup/vs087_with_mhand2_bringup.launch"/>
+  <include file="$(find phoxi_bringup)/launch/phoxi_bringup.launch"/>
+  <include file="$(find ar_marker_urdf)/launch/detect_3d_ar_marker_small_no_kinect.launch"/>
+  <include file="$(find oneshot_calibration_system)/launch/ar_oneshot_calibration.launch"/>
+  <!--include file="$(find oneshot_calibration_system)/launch/display_calibration.launch"/-->
+</launch>

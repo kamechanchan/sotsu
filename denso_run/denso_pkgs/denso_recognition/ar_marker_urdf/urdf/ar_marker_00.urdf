@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<robot name="ar_marker">
+  <!--link name="world" />
+
+  <joint name="joint_w" type="fixed">
+    <parent link="world" />
+    <child link="ar_marker_link" />
+  </joint-->
+
+  <link name="ar_marker_link_00">
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <mesh filename="package://ar_marker_urdf/meshes/ar_marker_thin_id00/ar_marker_thin_id00.dae" /><!-- scale="0 0 0"/> -->
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <!--mesh filename="package://ar_marker_urdf/meshes/ar_marker_thin_id01/ar_marker_thin_id01.dae" /--><!-- scale="0 0 0"/> -->
+        <box size="0.23 0.23 0.020"/>
+      </geometry>
+    </collision>
+  <inertial>
+    <mass value="0.1"/>
+    <inertia ixx="1" ixy="0" ixz="0" iyy="1" iyz="0" izz="1"/>
+  </inertial>
+  </link>
+</robot>

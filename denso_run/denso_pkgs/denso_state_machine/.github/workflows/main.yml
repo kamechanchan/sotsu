@@ -1,0 +1,33 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  industrial_ci:
+    strategy:
+      matrix:
+        env:
+          - {ROS_DISTRO: "kinetic",
+            ROS_REPO: "main",
+            OPT_VI: "-vi",
+            CATKIN_LINT: "true",
+            ROSDEP_SKIP_KEYS: "denso_gazebo_srvs",
+            CATKIN_LINT_ARGS: "--ignore unknown_package --skip-pkg eip_pkg"}
+
+    runs-on: ubuntu-latest
+    steps:
+      - uses: webfactory/ssh-agent@v0.2.0
+        with:
+          ssh-private-key: ${{secrets.SSH_PRIVATE_KEY}}
+      - uses: actions/checkout@v2
+        with:
+          repository: Nishida-Lab/denso_simulator
+          ref: kinetic-devel
+          token: ${{secrets.ACCESS_TOKEN}}
+      - uses: actions/checkout@v2
+        with:
+          repository: Nishida-Lab/tercero_ros_pkg
+          ref: master
+          token: ${{secrets.ACCESS_TOKEN}}
+      - uses: 'ros-industrial/industrial_ci@master'
+        env: ${{matrix.env}}

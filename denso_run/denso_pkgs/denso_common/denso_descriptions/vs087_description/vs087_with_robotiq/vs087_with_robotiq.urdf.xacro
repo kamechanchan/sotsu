@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="vs087" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find denso_descriptions)/vs087_description/vs087/vs087.urdf.xacro"/>
+  <xacro:include filename="$(find robotiq_3f_description)/robots/robotiq_3f_gripper.urdf.xacro"/>
+
+  <joint name="gripper_joint" type="fixed">
+    <!-- <origin xyz="0 0 0.038" rpy="${pi/2} 0 ${pi}"/> -->
+    <origin xyz="0 0 0.038" rpy="${pi/2} 0 ${-pi/6}"/>
+    <parent link="J6"/>
+    <child link="palm"/>
+  </joint>
+</robot>

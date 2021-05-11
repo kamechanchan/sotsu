@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>second_2019</name>
+  <version>1.0.0</version>
+  <description>The second_2019 package</description>
+
+  <maintainer email="atsuki.yokota@gmail.com">Atsuki Yokota</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>denso_state_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>smach</exec_depend>
+  <exec_depend>smach_ros</exec_depend>
+  <exec_depend>tf</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+  <exec_depend>jacobi_planning</exec_depend>
+
+  <test_depend>roslaunch</test_depend>
+
+</package>

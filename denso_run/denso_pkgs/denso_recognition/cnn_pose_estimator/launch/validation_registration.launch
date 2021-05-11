@@ -1,0 +1,27 @@
+<launch>
+  <arg name="source_pc" default="/filtered_pointcloud" />
+  <arg name="method_name" default="ICP" />
+  <arg name="model_filename" default="hv8" />
+  <arg name="sensor_frame_id" default="photoneo_center_optical_frame" />
+  <arg name="registrated_frame_id" default="jig_HV6_0" />
+
+  <arg name="leaf" default="0.003" />
+  <arg name="model_plane_threshold" default="0.0015" />
+  <arg name="scene_plane_threshold" default="0.0015" />
+  <arg name="model_planable_ratio" default="0.1" />
+  <arg name="scene_planable_ratio" default="0.1" />
+
+  <node name="validation_registration" pkg="cnn_pose_estimator" type="validation_registration_node" output="screen">
+    <param name="source_pc" value="$(arg source_pc)" />
+    <param name="method_name" value="$(arg method_name)" />
+    <param name="model_filename" value="$(arg model_filename)" />
+    <param name="sensor_frame_id" value="$(arg sensor_frame_id)" />
+    <param name="registrated_frame_id" value="$(arg registrated_frame_id)" />
+
+    <param name="leaf" value="$(arg leaf)" />
+    <param name="model_plane_threshold" value="$(arg model_plane_threshold)" />
+    <param name="scene_plane_threshold" value="$(arg scene_plane_threshold)" />
+    <param name="model_planable_ratio" value="$(arg model_planable_ratio)" />
+    <param name="scene_planable_ratio" value="$(arg scene_planable_ratio)" />
+  </node>
+</launch>

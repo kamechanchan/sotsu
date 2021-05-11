@@ -1,0 +1,38 @@
+cmake_minimum_required(VERSION 3.0.2)
+project(annotation_package)
+# add_compile_options(-std=c++11)
+find_package(catkin REQUIRED COMPONENTS
+  pcl_conversions
+  pcl_msgs
+  pcl_ros
+  roscpp
+  rospy
+  sensor_msgs
+  std_msgs
+  tf
+  tf_conversions
+)
+
+find_package(VTK REQUIRED)
+find_package(PCL REQUIRED)
+catkin_package(
+  INCLUDE_DIRS include
+#  LIBRARIES annotation_package
+  CATKIN_DEPENDS 
+    pcl_conversions 
+    pcl_msgs 
+    pcl_ros 
+    roscpp 
+    rospy 
+    sensor_msgs 
+    std_msgs 
+    tf 
+    tf_conversions
+  DEPENDS PCL
+)
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+  ${PCL_INCLUDE_DIRS}
+)
+

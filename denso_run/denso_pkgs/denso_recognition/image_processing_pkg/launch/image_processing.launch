@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  <!-- launch all image processing servers -->
+  <!-- <node pkg="image_processing_pkg" type="image_processing_server" name="image_processing_server" output="screen"/> -->
+
+  <!-- launch each image processing server -->
+  <!-- <node pkg="image_processing_pkg" type="contrast_modifier" name="contrast_modifier" output="screen"/> -->
+  <!-- <node pkg="image_processing_pkg" type="contrast_test" name="contrast_test"/> -->
+  <!-- <node pkg="image_processing_pkg" type="gamma_modifier" name="gamma_modifier" output="screen"/> -->
+  <!-- <node pkg="image_processing_pkg" type="gamma_test" name="gamma_test"/> -->
+  <node pkg="image_processing_pkg" type="histogram_flattening" name="histogram_flattening" output="screen"/>
+  <node pkg="image_processing_pkg" type="histogram_test" name="histogram_test"/>
+</launch>
