@@ -47,6 +47,9 @@ namespace nearest_point_extractor
         std::string mesh_topic_name_;
         std::string sensor_topic_name_;
         std::string output_topic_name_;
+        int red;
+        int blue;
+        int green;
         int radius;
 
     };

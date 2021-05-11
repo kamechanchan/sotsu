@@ -16,6 +16,9 @@ namespace nearest_point_extractor
         pnh_->getParam("LEAF_SIZE", LEAF_SIZE);
         pnh_->getParam("radius", radius);
         pnh_->getParam("num_of_nearest_points", num_of_nearest_points);
+        pnh_->getParam("red", red);
+        pnh_->getParam("blue", blue);
+        pnh_->getParam("green", green);
 
         cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(output_topic_name_, 10);
         sensor_cloud_sub_ = new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh_, sensor_topic_name_, 10);
@@ -87,9 +90,9 @@ namespace nearest_point_extractor
                     part_of_extract.x = sensor_cloud.points[pointIndices[j]].x;
                     part_of_extract.y = sensor_cloud.points[pointIndices[j]].y;
                     part_of_extract.z = sensor_cloud.points[pointIndices[j]].z;
-                    part_of_extract.r = 0;
-                    part_of_extract.g = 255;
-                    part_of_extract.b = 120;
+                    part_of_extract.r = red;
+                    part_of_extract.g = green;
+                    part_of_extract.b = blue;
                     out_cloud->push_back(part_of_extract);
 
                 }
