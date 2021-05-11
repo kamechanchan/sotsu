@@ -52,7 +52,7 @@ class RandomMoveEuler(object):
         self.pos_.pose.position.z = random.uniform(0.1, 0.25)
 
 
-        hani = 4
+        hani = 2
         roll = random.uniform(-pi/hani, pi/hani)
         pitch = random.uniform(-pi/hani, pi/hani)
         yaw = random.uniform(-pi/hani, pi/hani)
@@ -75,9 +75,10 @@ class RandomMoveEuler(object):
             self.pos_.pose.position.y = random.uniform(-0.2, 0.2)
             self.pos_.pose.position.z = random.uniform(0.1, 0.25)
 
-            roll = random.uniform(-pi/4, pi/4)
-            pitch = random.uniform(-pi/4, pi/4)
-            yaw = random.uniform(-pi/4, pi/4)
+            hani = 2
+            roll = random.uniform(-pi/hani, pi/hani)
+            pitch = random.uniform(-pi/hani, pi/hani)
+            yaw = random.uniform(-pi/hani, pi/hani)
 
             quat = quaternion_from_euler(roll, pitch, yaw)
             self.pos_.pose.orientation.x = quat[0]
