@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="initial_pc_topic_name" default="/photoneo_center/pointcloud" />
+  <arg name="diff_pc_filename" default="diff_cloud.pcd" />
+
+  <node pkg="target_extractor" name="set_initial_cloud" type="set_initial_cloud" output="screen">
+    <param name="initial_pc_topic_name" value="$(arg initial_pc_topic_name)" />
+    <param name="pc_filename" value="$(arg diff_pc_filename)" />
+  </node>
+
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find target_extractor)/config/test.rviz" required="true" />
+
+</launch>

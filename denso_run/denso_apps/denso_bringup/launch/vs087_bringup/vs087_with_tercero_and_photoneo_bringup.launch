@@ -1,0 +1,72 @@
+<launch>
+  <!-- the "sim" argument controls whet
+  her we connect to a Simulated or Real robot -->
+  <!--  - if sim=false, a ip_address argument is required -->
+  <arg name="sim" default="true" />
+  <arg name="ip_address" default="192.168.1.22" />
+
+  <!-- Load defferent move_group.launch file -->
+  <arg name="move_group_launch_file" default="move_group.launch" />
+
+  <!-- If you want to change send and recieve format of denso_control, -->
+  <!-- you can specify the send_format and recv_format parameters -->
+  <arg name="send_format" default="288" />
+  <arg name="recv_format" default="290" />
+
+  <!-- Choose robot options -->
+  <arg name="robot_name" default="vs087"/>
+  <arg name="robot_options" default="vs087_with_tercero_and_photoneo" />
+  <arg name="sensor_config" default="photoneo" />
+
+  <!-- Use custom RobotHWSim? -->
+  <arg name="use_custom_ros_control" default="false" />
+
+  <!-- Simulator grasp config -->
+  <arg name="angle_tolerance" default="100" />
+  <arg name="ratio_threshold" default="0.3" />
+  <arg name="time" default="0.01" />
+
+  <!-- Define the motion planner we want to use (ompl, stomp, or multi) -->
+  <arg name="planner" default="ompl" />
+
+  <group if="$(arg sim)">
+    <!-- denso_bringup.launch -->
+    <include file="$(find denso_bringup)/launch/denso_bringup.launch">
+      <arg name="robot_name" value="$(arg robot_name)"/>
+      <arg name="sim" value="$(arg sim)"/>
+      <arg name="move_group_launch_file" default="move_group_sim.launch" />
+      <arg name="robot_options" value="$(arg robot_options)"/>
+      <arg name="sensor_config" value="$(arg sensor_config)"/>
+      <arg name="ip_address" value="$(arg ip_address)"/>
+      <arg name="send_format" value="$(arg send_format)" />
+      <arg name="recv_format" value="$(arg recv_format)" />
+      <arg name="planner" value="$(arg planner)" />
+      <arg name="use_custom_ros_control" value="$(arg use_custom_ros_control)" />
+      <arg name="angle_tolerance" value="$(arg angle_tolerance)" />
+      <arg name="ratio_threshold" value="$(arg ratio_threshold)" />
+      <arg name="time" value="$(arg time)" />
+    </include>
+  </group>
+
+  <group unless="$(arg sim)">
+    <!-- denso_bringup.launch -->
+    <include file="$(find denso_bringup)/launch/denso_bringup.launch">
+      <arg name="robot_name" value="$(arg robot_name)"/>
+      <arg name="move_group_launch_file" value="$(arg move_group_launch_file)"/>
+      <arg name="sim" value="$(arg sim)"/>
+      <arg name="robot_options" value="$(arg robot_options)"/>
+      <arg name="sensor_config" value="$(arg sensor_config)"/>
+      <arg name="ip_address" value="$(arg ip_address)"/>
+      <arg name="send_format" value="$(arg send_format)" />
+      <arg name="recv_format" value="$(arg recv_format)" />
+      <arg name="planner" value="$(arg planner)" />
+    </include>
+    <!-- Tercero driver -->
+    <include file="$(find tercero_driver)/launch/tercero_activate.launch" />
+    <node pkg="tercero_control"  type="tercero_joint_state_republisher"  name="tercero_joint_state_republisher" output="screen">
+    <param name="joint_state_republish_topic_name" value="/$(arg robot_options)/joint_states" />
+    <param name="joint_state_subscribe_topic_name" value="/$(arg robot_name)/joint_states" />
+    </node>
+  </group>
+
+</launch>

@@ -1,0 +1,20 @@
+- git:
+    local-name: denso_deps/gitlab_ci_deps
+    uri: git@github.com:Nishida-Lab/gitlab_ci_deps.git
+    version: private/no_eip
+- git:
+    local-name: denso_deps/phoxi_ros_pkg
+    uri: git@github.com:Nishida-Lab/phoxi_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/robot_self_filter
+    uri: git@github.com:Nishida-Lab/robot_self_filter.git
+    version: kinetic-devel
+- git:
+    local-name: denso_deps/gazebo-pkgs
+    uri: git@github.com:Nishida-Lab/gazebo-pkgs.git
+    version: master
+- git:
+    local-name: denso_deps/general-message-pkgs
+    uri: git@github.com:Nishida-Lab/general-message-pkgs.git
+    version: master

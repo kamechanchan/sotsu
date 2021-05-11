@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="cluster_cloud_size_min" default="5000"/>
+  <arg name="cluster_cloud_size_max" default="10000"/>
+  <arg name="k_search_size" default="50"/>
+  <arg name="number_of_neighbours" default="30"/>
+  <arg name="extract_cluster_cloud_size_min" default="5000"/>
+  <arg name="extract_cluster_cloud_size_max" default="10000"/>
+  <arg name="smooth_threshold_deg" default="3.0"/>
+  <arg name="curvature_threshold" default="1.0"/>
+  <arg name="scene_topic_name" default="/pcd_data"/>
+  <arg name="extract_cloud_topic_name" default="/extract_cloud"/>
+  <arg name="extract_cloud_frame_id" default="world"/>
+
+  <node pkg="target_extractor" type="region_growing_extractor_server" name="region_growing_extractor_server_node" output="screen">
+    <param name="cluster_cloud_size_min" value="$(arg cluster_cloud_size_min)"/>
+    <param name="cluster_cloud_size_max" value="$(arg cluster_cloud_size_max)"/>
+    <param name="k_search_size" value="$(arg k_search_size)"/>
+    <param name="number_of_neighbours" value="$(arg number_of_neighbours)"/>
+    <param name="extract_cluster_cloud_size_min" value="$(arg extract_cluster_cloud_size_min)"/>
+    <param name="extract_cluster_cloud_size_max" value="$(arg extract_cluster_cloud_size_max)"/>
+    <param name="smooth_threshold_deg" value="$(arg smooth_threshold_deg)"/>
+    <param name="curvature_threshold" value="$(arg curvature_threshold)"/>
+    <param name="scene_topic_name" value="$(arg scene_topic_name)"/>
+    <param name="extract_cloud_topic_name" value="$(arg extract_cloud_topic_name)"/>
+    <param name="extract_cloud_frame_id" value="$(arg extract_cloud_frame_id)"/>
+  </node>
+</launch>

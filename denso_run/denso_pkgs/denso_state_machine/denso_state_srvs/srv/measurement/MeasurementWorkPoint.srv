@@ -1,0 +1,3 @@
+---
+bool success
+denso_state_msgs/WorkPoint workpoint
