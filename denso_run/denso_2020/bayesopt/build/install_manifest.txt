@@ -1,7 +1,13 @@
 /usr/local/lib/libbayesopt.a
+<<<<<<< HEAD
 /usr/local/include/bayesopt/bayesopt.hpp
 /usr/local/include/bayesopt/bayesopt.h
 /usr/local/include/bayesopt/bayesoptbase.hpp
+=======
+/usr/local/include/bayesopt/bayesoptbase.hpp
+/usr/local/include/bayesopt/bayesopt.h
+/usr/local/include/bayesopt/bayesopt.hpp
+>>>>>>> 5f02dbb65b71e7a8b2db30608bda7c5ef2c02074
 /usr/local/include/bayesopt/parameters.h
 /usr/local/include/bayesopt/parameters.hpp
 /usr/local/include/nlopt.hpp

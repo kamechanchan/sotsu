@@ -1,4 +1,4 @@
-# Install script for directory: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples
+# Install script for directory: /home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
