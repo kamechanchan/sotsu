@@ -25,6 +25,7 @@ class RandomMoveEuler(object):
         self.init_x = rospy.get_param("~init_x", 0)
         self.receive_ok = rospy.set_param("/" + self.object_name + "/receive_cloud/is_ok", False)
         self.record_ok = rospy.set_param("/" + self.object_name + "/record_cloud/is_ok", False)
+        self.angle_range = rospy.get_param("~angle_range", 2)
         
     def isReadyMove(self):
         try:
@@ -54,7 +55,7 @@ class RandomMoveEuler(object):
         self.pos_.pose.position.z = random.uniform(0.1, 0.25)
 
 
-        hani = 4
+        hani = self.angle_range
         roll = random.uniform(-pi/hani, pi/hani)
         pitch = random.uniform(-pi/hani, pi/hani)
         yaw = random.uniform(-pi/hani, pi/hani)
@@ -77,9 +78,10 @@ class RandomMoveEuler(object):
             self.pos_.pose.position.y = random.uniform(-0.2, 0.2)
             self.pos_.pose.position.z = random.uniform(0.1, 0.25)
 
-            roll = random.uniform(-pi/4, pi/4)
-            pitch = random.uniform(-pi/4, pi/4)
-            yaw = random.uniform(-pi/4, pi/4)
+            kake = self.angle_range
+            roll = random.uniform(-pi/kake, pi/kake)
+            pitch = random.uniform(-pi/kake, pi/kake)
+            yaw = random.uniform(-pi/kake, pi/kake)
 
             quat = quaternion_from_euler(roll, pitch, yaw)
             self.pos_.pose.orientation.x = quat[0]
@@ -99,7 +101,7 @@ class RandomMoveEuler(object):
 def main():
     rospy.init_node("random_state_maker_node", anonymous=False)
     random_state_maker = RandomMoveEuler()
-    s = rospy.Service('range_decision', range1, random_state_maker.parameter_make)
+    #s = rospy.Service('range_decision', range1, random_state_maker.parameter_make)
 
     random_state_maker.init_state_make()
     while not random_state_maker.isReadyMove():

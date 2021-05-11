@@ -52,14 +52,14 @@ class RecordData(object):
 
     def init_hdf5(self, file_path):
         util.mkdir(file_path)
-        file_path = file_path + self.file  + self.object_name_ + ".hdf5"
+        file_path = file_path + "/" + self.file  + self.object_name_ + ".hdf5"
         self.hdf5_file_ = h5py.File(file_path, 'w')
         self.all_file_path = file_path
 
     def callback(self, point_cloud, trans_rot):
         get_shori_3 = rospy.get_param("/shori_3")
         get_shori_3 = get_shori_3 + 1
-        print("my_callback_tf_pc is " + str(get_shori_3))
+        #print("my_callback_tf_pc is " + str(get_shori_3))
         rospy.set_param("/shori_3", get_shori_3)
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
         if self.receive_ok:
