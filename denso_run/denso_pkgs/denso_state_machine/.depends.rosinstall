@@ -1,0 +1,8 @@
+- git:
+    local-name: denso_pkgs/denso_simulator
+    uri: git@github.com:Nishida-Lab/denso_simulator.git
+    version: kinetic_devel
+- git:
+    local-name: denso_deps/tercero_ros_pkg
+    uri: git@github.com:Nishida-Lab/tercero_ros_pkg.git
+    version: master

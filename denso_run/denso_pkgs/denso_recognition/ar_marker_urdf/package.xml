@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>ar_marker_urdf</name>
+  <version>1.0.0</version>
+  <description>The ar_marker_urdf package</description>
+
+  <maintainer email="atsuki.yokota@gmail.com">Atsuki Yokota</maintainer>
+  <license>BSD</license>
+  <url type="repository">http://github.com/Nishida-Lab/denso_recognition</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>ar_track_alvar</exec_depend>
+  <exec_depend>gazebo_ros</exec_depend>
+
+  <test_depend>roslaunch</test_depend>
+  <test_depend>xacro</test_depend>
+
+</package>

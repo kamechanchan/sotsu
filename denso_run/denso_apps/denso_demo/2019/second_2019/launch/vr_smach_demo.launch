@@ -1,0 +1,12 @@
+<launch>
+
+  <arg name="num_moving_generate_traj" default="25" />
+  <arg name="num_approach_generate_traj" default="3" />
+
+  <node name="pick_and_place_demo" pkg="second_2019" type="pick_and_place_demo.py" output="screen">
+    <param name="num_moving_generate_traj" type="int" value="$(arg num_moving_generate_traj)"/>
+    <param name="num_approach_generate_traj" type="int" value="$(arg num_approach_generate_traj)"/>
+  </node>
+  <node name="target_value_generator" pkg="second_2019" type="target_value_generator.py" output="screen"/>
+  <node name="work_points_tf_broadcaster" pkg="second_2019" type="work_points_tf_broadcaster.py" output="screen"/>
+</launch>

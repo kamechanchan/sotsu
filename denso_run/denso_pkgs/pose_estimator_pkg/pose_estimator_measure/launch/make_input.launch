@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="division_number" default="50" />
+  <arg name="crop_frame_id" default="HV8" />
+  <arg name="sensor_frame_id" default="photoneo_center_optical_frame" />
+  <arg name="source_pc_topic_name" default="/photoneo_center/sensor/points" />
+  <arg name="cropped_pc_topic_name" default="/cropped_pointcloud" />
+
+  <node pkg="pose_estimator_measure" name="crop_cloud_node" type="crop_cloud_node" output="screen" >
+    <param name="loop_rate" value="10" />
+    <param name="division_number" value="$(arg division_number)" />
+    <param name="source_pc_topic_name" value="$(arg source_pc_topic_name)" />
+    <param name="crop_frame_id" value="$(arg crop_frame_id)" />
+    <param name="sensor_frame_id" value="$(arg sensor_frame_id)" />
+
+      <!-- 切り出すエリア -->
+    <param name="crop_x_min" value="-0.1" />
+    <param name="crop_x_max" value="0.1" />
+    <param name="crop_y_min" value="-0.1" />
+    <param name="crop_y_max" value="0.1" />
+    <param name="crop_z_min" value="-0.025" />
+    <param name="crop_z_max" value="0.03" />
+
+  </node>
+  <!-- measure pose broadcaster -->
+  <!-- <node pkg="pose_estimator_measure" name="grand_truth_listener" type="grand_truth_listener.py" output="screen" /> -->
+
+</launch>

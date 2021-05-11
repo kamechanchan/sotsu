@@ -1,0 +1,76 @@
+- git:
+    local-name: denso_pkgs/denso_common
+    uri: git@github.com:Nishida-Lab/denso_common.git
+    version: kinetic-devel
+- git:
+    local-name: denso_pkgs/denso_robot
+    uri: git@github.com:Nishida-Lab/denso_robot.git
+    version: kinetic-devel
+- git:
+    local-name: denso_pkgs/denso_moveit
+    uri: git@github.com:Nishida-Lab/denso_moveit.git
+    version: kinetic-devel
+- git:
+    local-name: denso_pkgs/denso_simulator
+    uri: git@github.com:Nishida-Lab/denso_simulator.git
+    version: kinetic-devel
+- git:
+    local-name: denso_pkgs/denso_recognition
+    uri: git@github.com:Nishida-Lab/denso_recognition.git
+    version: kinetic-devel
+- git:
+    local-name: denso_pkgs/denso_state_machine
+    uri: git@github.com:Nishida-Lab/denso_state_machine.git
+    version: kinetic-devel
+- git:
+    local-name: denso_pkgs/denso_path_planning
+    uri: git@github.com:Nishida-Lab/denso_path_planning.git
+    version: kinetic-devel
+- git:
+    local-name: denso_deps/moveit
+    uri: git@github.com:Nishida-Lab/moveit.git
+    version: kinetic-devel
+- git:
+    local-name: denso_deps/industrial_moveit
+    uri: git@github.com:Nishida-Lab/industrial_moveit.git
+    version: kinetic-devel
+- git:
+    local-name: denso_deps/phoxi_ros_pkg
+    uri: git@github.com:Nishida-Lab/phoxi_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/phoxi_camera
+    uri: git@github.com:Nishida-Lab/phoxi_camera.git
+    version: master_backup_1.1
+- git:
+    local-name: denso_deps/robotiq
+    uri: git@github.com:Nishida-Lab/robotiq.git
+    version: kinetic-devel
+- git:
+    local-name: denso_deps/robotiq_3f_ros_pkg
+    uri: git@github.com:Nishida-Lab/robotiq_3f_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/iai_gripper_ros_pkg
+    uri: git@github.com:Nishida-Lab/iai_gripper_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/tercero_ros_pkg
+    uri: git@github.com:Nishida-Lab/tercero_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/mhand_ros_pkg
+    uri: git@github.com:Nishida-Lab/mhand_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/robot_self_filter
+    uri: git@github.com:Nishida-Lab/robot_self_filter.git
+    version: kinetic-devel
+- git:
+    local-name: denso_deps/gazebo-pkgs
+    uri: git@github.com:Nishida-Lab/gazebo-pkgs.git
+    version: master
+- git:
+    local-name: denso_deps/general-message-pkgs
+    uri: git@github.com:Nishida-Lab/general-message-pkgs.git
+    version: master
