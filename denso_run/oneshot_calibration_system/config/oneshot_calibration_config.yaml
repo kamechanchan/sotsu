@@ -1,0 +1,58 @@
+ar_oneshot_calibrator:
+  origin_frame_id: base_link
+  sensor_frame_id: photoneo_center
+  targetA_frame_id: ar_center
+  targetB_frame_id: true_ar_center
+
+ar_marker_indices:
+  index_numbers : [0, 2, 3, 5]
+
+ar_center_broadcaster:
+  marker_frame:
+    marker_0:
+      child_frame_id: ar_marker_0
+    marker_1:
+      child_frame_id: ar_marker_2
+    marker_2:
+      child_frame_id: ar_marker_3
+    marker_3:
+      child_frame_id: ar_marker_5
+
+true_ar_center_broadcaster:
+  marker_frame:
+    marker_0:
+      child_frame_id: true_ar_marker_0
+      position_x: 0.5675
+      position_y: -0.2975
+      position_z: 0.065
+      orientation_x: 0.0
+      orientation_y: 0.0
+      orientation_z: 0.0
+      orientation_w: 1.0
+    marker_1:
+      child_frame_id: true_ar_marker_2
+      position_x: 0.0675
+      position_y: -0.2975
+      position_z: 0.065
+      orientation_x: 0.0
+      orientation_y: 0.0
+      orientation_z: 0.0
+      orientation_w: 1.0
+    marker_2:
+      child_frame_id: true_ar_marker_3
+      position_x: 0.0675
+      position_y: 0.2975
+      position_z: 0.065
+      orientation_x: 0.0
+      orientation_y: 0.0
+      orientation_z: 0.0
+      orientation_w: 1.0
+    marker_3:
+      child_frame_id: true_ar_marker_5
+      position_x: 0.5675
+      position_y: 0.2975
+      position_z: 0.065
+      orientation_x: 0.0
+      orientation_y: 0.0
+      orientation_z: 0.0
+      orientation_w: 1.0

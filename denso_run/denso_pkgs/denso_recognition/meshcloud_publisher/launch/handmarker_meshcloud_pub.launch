@@ -1,0 +1,4 @@
+<launch>
+  <node name="from_base_link_to_tercero" pkg="tf" type="static_transform_publisher" args="0.380393 0.000625 0.586193 0.0 0.0 0.0 1 base_link tercero_cover_for_mesh_center 50" />
+  <node name="handmarker_meshcloud_pub" pkg="meshcloud_publisher" type="hand_meshcloud_pub" output="screen"/>
+</launch>

@@ -1,0 +1,25 @@
+<launch>
+
+  <!-- <arg name="scene_source" default="2019-02-014-LC3" /> -->
+  <arg name="scene_source" default="PhoXiTemp(0)(File3DCamera)" />
+
+  <arg name="reference_frame" default="photoneo_center_optical_frame" />
+  <!-- <arg name="reference_frame" default="photoneo_left_optical_frame" /> -->
+
+  <arg name="target_names_file" default="target_names_jigHV6.yaml" />
+  <!-- <arg name="target_names_file" default="target_names_HV8.yaml" /> -->
+
+  <arg name="tf_id" default="initial" />
+
+  <node pkg="photoneo_localization" type="localization_node.py" name="$(arg tf_id)_localization_node" output="screen">
+    <param name="scene_source" type="str" value="$(arg scene_source)" />
+    <param name="reference_frame" type="str" value="$(arg reference_frame)" />
+    <param name="target_names_file" type="str" value="$(arg target_names_file)" />
+    <param name="tf_id" type="str" value="$(arg tf_id)" />
+  </node>
+
+  <node pkg="photoneo_localization" type="tf_broadcaster.py" name="$(arg tf_id)_tf_broadcaster" output="screen">
+    <param name="tf_id" type="str" value="$(arg tf_id)" />
+  </node>
+
+</launch>

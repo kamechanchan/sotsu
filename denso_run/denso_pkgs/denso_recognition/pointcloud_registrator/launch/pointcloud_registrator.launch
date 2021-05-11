@@ -1,0 +1,3 @@
+<launch>
+  <node name="pointcloud_registrator" pkg="pointcloud_registrator" type="pointcloud_registrator" output="screen"/>
+</launch>

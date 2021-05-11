@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<robot name="HV6_v0" xmlns:xacro="http://ros.org/wiki/xacro">
+  <xacro:include filename="$(find denso_descriptions)/object_description/HV6.urdf.xacro" />
+  <xacro:include filename="$(find denso_gazebo)/urdf/objects/denso_parts/HV6.gazebo.xacro" />
+
+  <xacro:HV6_gazebo />
+</robot>
