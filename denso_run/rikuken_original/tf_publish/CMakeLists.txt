@@ -67,3 +67,8 @@ add_executable(model_name src/model_name.cpp)
 target_link_libraries(model_name
   ${catkin_LIBRARIES}
 )
+
+add_executable(model_tf_publisher_bara src/model_tf_publisher_bara.cpp src/model_tf_publisher_bara_node.cpp)
+target_link_libraries(model_tf_publisher_bara
+  ${catkin_LIBRARIES}
+)
