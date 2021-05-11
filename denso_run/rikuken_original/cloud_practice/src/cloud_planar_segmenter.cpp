@@ -10,7 +10,10 @@ public:
         cloud_without_segmented_pub_(nh.advertise<sensor_msgs::PointCloud2>("cloud_without_segmented", 1)),
         indices_pub_(nh.advertise<pcl_msgs::PointIndices>("indices", 1)),
         coefficients_pub_(nh.advertise<pcl_msgs::ModelCoefficients>("coefficients", 1))
-    {}
+    {
+        pnh_ = new ros::NodeHandle("~");
+        pnh_->getParam("distance_threshold", distance_threshold);
+    }
 
     void operate()
     {
@@ -26,6 +29,7 @@ public:
         indices_pub_.publish(indices_ros_);
         coefficients_pub_.publish(coefficients_ros_);
     }
+    float distance_threshold;
 
 private:
     void segment(pcl::PointIndices::Ptr inliers)
@@ -39,7 +43,7 @@ private:
       
         segmentation.setMethodType(pcl::SAC_RANSAC);
         segmentation.setMaxIterations(1000);
-        segmentation.setDistanceThreshold(0.01);
+        segmentation.setDistanceThreshold(distance_threshold);
         segmentation.setInputCloud(cloud_input_pcl_.makeShared());
         segmentation.segment(*inliers, coefficients_pcl);
         
@@ -74,6 +78,8 @@ protected:
     pcl_msgs::PointIndices indices_ros_;
     pcl_msgs::ModelCoefficients coefficients_ros_;
     pcl::PointCloud<pcl::PointXYZ> cloud_input_pcl_;
+    ros::NodeHandle *pnh_;
+    
 };
 
 int main(int argc, char ** argv)
