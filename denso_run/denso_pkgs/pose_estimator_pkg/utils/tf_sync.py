@@ -39,7 +39,7 @@ class TfMessageFilter(SimpleFilter):
         first_iter = True
         get_shori_2 = rospy.get_param("/shori_2")
         get_shori_2 = get_shori_2 + 1
-        print("poll_transform is " + str(get_shori_2))
+        #print("poll_transform is " + str(get_shori_2))
         rospy.set_param("/shori_2", get_shori_2)
         # Loop from old to new
         while not self.message_queue.empty():
@@ -61,7 +61,7 @@ class TfMessageFilter(SimpleFilter):
                 self.signalMessage(msg, (trans, quat))
                 get_shori_4 = rospy.get_param("/shori_4")
                 get_shori_4 = get_shori_4 + 1
-                print("signal message is " + str(get_shori_4))
+                #print("signal message is " + str(get_shori_4))
                 rospy.set_param("/shori_4", get_shori_4)
                 
                 # Note that we are deliberately throwing away the messages
@@ -84,7 +84,7 @@ class TfMessageFilter(SimpleFilter):
         self.message_queue.put(msg)
         get_shori_1 = rospy.get_param("/shori_1")
         get_shori_1 = get_shori_1 + 1
-        print("input_callback is " + str(get_shori_1))
+        #print("input_callback is " + str(get_shori_1))
         rospy.set_param("/shori_1", get_shori_1)
         # This can be part of another timer thread
         # TODO: call this only when a new/changed transform

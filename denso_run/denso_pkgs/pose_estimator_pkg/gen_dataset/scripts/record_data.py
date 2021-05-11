@@ -38,7 +38,7 @@ class RecordData(object):
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
         self.save_file_path = rospy.get_param("~save_directory", "/home/ericlab/")
-        self.file = rospy.get_param("~save_filename", "dataset_20000")
+        self.angle_range = rospy.get_param("~angle_range", 2)
 
         self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
@@ -52,14 +52,14 @@ class RecordData(object):
 
     def init_hdf5(self, file_path):
         util.mkdir(file_path)
-        file_path = file_path + self.file  + self.object_name_ + ".hdf5"
+        file_path = file_path + "/" + self.object_name_ + "_size_" + str(self.num_dataset) + "_range_pi_" + str(self.angle_range) +".hdf5"
         self.hdf5_file_ = h5py.File(file_path, 'w')
         self.all_file_path = file_path
 
     def callback(self, point_cloud, trans_rot):
         get_shori_3 = rospy.get_param("/shori_3")
         get_shori_3 = get_shori_3 + 1
-        print("my_callback_tf_pc is " + str(get_shori_3))
+        #print("my_callback_tf_pc is " + str(get_shori_3))
         rospy.set_param("/shori_3", get_shori_3)
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
         if self.receive_ok:
