@@ -52,3 +52,9 @@ target_link_libraries(nearest_search
   ${PCL_LIBRARIES}
 )
 
+add_executable(mesh_cloud_bara_publisher src/mesh_cloud.cpp src/mesh_sampler.cpp src/mesh_cloud_bara_node.cpp)
+target_link_libraries(mesh_cloud_bara_publisher
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+  ${VTK_LIBRARIES}
+)

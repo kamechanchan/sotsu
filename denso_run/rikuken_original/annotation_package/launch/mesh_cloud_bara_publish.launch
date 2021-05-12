@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="sample_points" default="100000"/>
+    <arg name="LEAF_SIZE" default="0.0003"/>
+    
+    <node name="mesh_bara_publisher" pkg="annotation_package" type="mesh_cloud_bara_publisher"  output="screen">
+        <param name="the_number_of_object" value="$(arg the_number_of_object)"/>
+        <param name="object_name" value="$(arg object_name)"/>
+        <param name="sample_points" value="$(arg sample_points)"/>
+        <param name="LEAF_SIZE" value="$(arg LEAF_SIZE)"/>
+        <param name="RETRY_COUNT_LIMIT" value="$(arg RETRY_COUNT_LIMIT)"/>
+        <param name="DURATION_TIME" value="$(arg DURATION_TIME)"/>
+    </node>
+
+</launch>

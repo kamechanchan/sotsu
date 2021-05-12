@@ -36,7 +36,7 @@ class BaseOptions:
         self.parser.add_argument('--lr', type=float, default=0.001, help='initial learning rate of adam')
         self.parser.add_argument('--is_train', type=bool, default=True)
         
-
+        self.is_train = True
         
         self.initialized = True
 
