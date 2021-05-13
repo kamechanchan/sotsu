@@ -20,18 +20,12 @@ def define_network(opt):
     print(arch)
     print(name)
 
-    if name == "3DCNN":
-        if arch == "C3D_Voxel_Euler":
-            net == C3D_Voxel_Euler(3, 3)
-        elif arch == "C3D_Voxel":
-            net = C3D_Voxel_Matrix(3, 9)
-    elif name == "PointNet":
+    if name == "PointNet":
         if arch == "PointNet_Pose":
             net = PointNet_Pose(3, 9)
-        elif arch == "T_net_Pose":
-            net = T_net_Pose(3, 9)
-    #elif name == "segmentation"
-        #net = 
+    elif name == "segmentation":
+        if arch == "PointNet_Segmentation":
+            pass 
     else:
         print("Error!")
 
@@ -46,120 +40,6 @@ def define_loss(opt):
 
     return loss
 
-
-class C3D_Voxel_Euler(nn.Module):
-
-    def __init__(self):
-        super(C3D_Voxel, self, output_pos_num, output_ori_num).__init__()
-        self.output_pos_num = output_pos_num
-        self.output_ori_num = output_ori_num
-
-        self.conv1 = nn.Conv3d(1, 5, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), bias=False)
-        self.conv2 = nn.Conv3d(5, 10, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), bias=False)
-        self.conv3 = nn.Conv3d(10, 5, kernel_size=(3, 3, 3), stride=(1, 1, 1), padding=(1, 1, 1), bias=False)
-        self.max_pool_1 = nn.MaxPool3d(kernel_size=(3, 3, 3), stride=(2, 2, 2), padding=(1, 1, 1))
-        self.max_pool_2 = nn.MaxPool3d(kernel_size=(3, 3, 3), stride=(2, 2, 2))
-
-        self.fc_pos1 = nn.Linear(1080, 1000)
-        self.fc_pos2 = nn.Linear(1000, 500)
-        self.fc_pos3 = nn.Linear(500, 100)
-        self.fc_pos4 = nn.Linear(100, self.output_pos_num)
-
-        self.fc_ori1 = nn.Linear(1080, 1000)
-        self.fc_ori2 = nn.Linear(1000, 500)
-        self.fc_ori3 = nn.Linear(500, 100)
-        self.fc_ori4 = nn.Linear(100, self.output_ori_num)
-
-        self.relu = nn.ReLU()
-        self.tan = nn.Tanh()
-        self.sigmoid = nn.Sigmoid()
-
-        self.dropout = nn.Dropout(0.5)
-
-    def forward(self, x):
-        out = self.conv1(x)
-        out = self.max_pool_1(out)
-        out = self.conv2(out)
-        out = self.max_pool_2(out)
-        out = self.conv3(out)
-        out = self.max_pool_1(out)
-
-        fl = torch.flatten(out, 1)
-
-        h1 = self.relu(self.fc_pos1(fl))
-        h1 = self.relu(self.fc_pos2(h1))
-#        h1 = self.relu(self.fc_pos3(h1))
-        h1 = self.dropout(h1)
-        h1 = self.relu(self.fc_pos4(h1))
-#        h1 = self.tan(h1)
-        h1 = self.sigmoid(h1)
-
-        h2 = self.relu(self.fc_ori1(fl))
-        h2 = self.dropout(h2)
-        h2 = self.relu(self.fc_ori2(h2))
-        h2 = self.relu(self.fc_ori3(h2))
-        h2 = self.relu(self.fc_ori4(h2))
-        h2 = self.tan(h2)
-
-        y = torch.cat([h1, h2], axis=1)
-
-        return y
-
-
-class C3D_Voxel_Matrix(nn.Module):
-
-    def __init__(self, output_pos_num, output_ori_num):
-        super(C3D_Voxel_Matrix, self).__init__()
-
-        self.output_pos_num = output_pos_num
-        self.output_ori_num = output_ori_num
-
-        self.conv1 = nn.Conv3d(1, 5, kernel_size=3, padding=1, bias=False)
-        self.conv2 = nn.Conv3d(5, 10, kernel_size=3, padding=1, bias=False)
-        self.conv3 = nn.Conv3d(10, 5, kernel_size=3, padding=1, bias=False)
-        self.max_pool1 = nn.MaxPool3d(kernel_size=3, stride=2, padding=1)
-        self.max_pool2 = nn.MaxPool3d(kernel_size=3, stride=2)
-
-        self.fc_pos1 = nn.Linear(1080, 1000)
-        self.fc_pos2 = nn.Linear(1000, 500)
-        self.fc_pos3 = nn.Linear(500, 100)
-        self.fc_pos4 = nn.Linear(100, self.output_pos_num)
-
-        self.fc_ori1 = nn.Linear(1080, 1000)
-        self.fc_ori2 = nn.Linear(1000, 500)
-        self.fc_ori3 = nn.Linear(500, 100)
-        self.fc_ori4 = nn.Linear(100, self.output_ori_num)
-
-        self.relu = nn.ReLU()
-        self.tanh = nn.Tanh()
-        self.sigmoid = nn.Sigmoid()
-
-        self.dropout = nn.Dropout(0.5)
-
-    def forward(self, x):
-        out = self.conv1(x)
-        out = self.max_pool1(out)
-        out = self.conv2(out)
-        out = self.max_pool2(out)
-        out = self.conv3(out)
-        out = self.max_pool1(out)
-        fl = torch.flatten(out, 1)
-
-        h1 = self.relu(self.fc_pos1(fl))
-        h1 = self.dropout(h1)
-        h1 = self.relu(self.fc_pos2(h1))
-        h1 = self.relu(self.fc_pos3(h1))
-        h1 = self.sigmoid(self.fc_pos4(h1))
-
-        h2 = self.relu(self.fc_ori1(fl))
-        h2 = self.dropout(h2)
-        h2 = self.relu(self.fc_ori2(h2))
-        h2 = self.relu(self.fc_ori3(h2))
-        h2 = self.tanh(self.fc_ori4(h2))
-
-        y = torch.cat([h1, h2], axis=1)
-
-        return y
 
 class PointNet_Pose(nn.Module):
     def __init__(self, out_num_pos, out_num_rot):
@@ -200,20 +80,34 @@ class PointNet_Pose(nn.Module):
         y = torch.cat([h1, h2], axis=1)
         return y
 
+class PointNet_Segmentation(nn.Module):
+    def __init__(self, num_class):
+        super(PointNet_Pose, self).__init__()
+        self.num_class=num_class
+        
+        self.pointnet_global_feat = PointNet_feat_segmentation(grobal_feat = False,feature_transform = True)
+        self.conv1 = nn.conv1d(1088, 512, 1)
+        self.conv2 = nn.conv1d(512, 256, 1)
+        self.conv3 = nn.conv1d(256, 128, 1)
+        self.last_conv = nn.conv1d(128, self.num_class,1)
 
-class T_net_Pose(nn.Module):
-    def __init__(self, out_num_pos, out_num_ori):
-        super(T_net_Pose, self).__init__()
-        self.out_num_pos = out_num_pos
-        self.out_num_ori = out_num_ori
+        self.bn1 = nn.BatchNorm1d(512)
+        self.bn2 = nn.BatchNorm1d(256)
+        self.bn3 = nn.BatchNorm1d(128)
+        
+        self.relu = nn.ReLU()
+        self.soft_max=nn.LogSoftmax()
+        self.dropout = nn.Dropout(0.3)
 
-        self.stn_trans = STN3d_Trans(num_points=1024)
-        #self.point_net = PointNet_ori(num_points=1024)
-
-    def forward(self, global_points):
-        trans_offset = self.stn_trans(global_points)
-        canonical_points = global_points - trans_offset.unsqueeze(2).repeat(1, 1, global_points.size()[2])
-        y = self.stn_trans(canonical_points)
-        #y = self.stn_trans(global_points)
-        return y
-
+    def forward(self, x):
+        batchsize = x.size()[0]
+        pc_pts = x.size()[2]
+        x, trans, trans_feat = self.pointnet_global_feat(x)
+        x = self.relu(self.bn1(self.conv1(x)))
+        x = self.relu(self.bn2(self.conv2(x)))
+        x = self.relu(self.bn3(self.conv3(x)))
+        x = self.last_conv(x)
+        x = x.transpose(2,1).contiguous() #memory clean for view
+        x = self.soft_max(x.view(-1,self.num_class), dim=-1)
+        x = x.view(batchsize, pc_pts, self.num_class)
+        return x, trans_feat

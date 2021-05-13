@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
- 
+
 
   <arg name="num_dataset" default="20000" />
 
@@ -19,6 +19,10 @@
     <param name="object_name" value="$(arg object_name)"/>
     <param name="angle_range" value="$(arg angle_range)"/>
   </node>
+  <arg name="save_file" default="/home/ericlab/MEGAsync/TEI_PC/Dataset/dataset_20000_-pi4-pi4"/>
+  <arg name="save_histgram_directory" default="/home/ericlab/~" />
+
+
   <node pkg="gen_dataset" type="record_data.py" name="record_data" output="screen" >
     <param name="sensor_parent_frame" value="$(arg sensor_parent_frame)" />
     <param name="topic_name" value="$(arg topic_name)" />
@@ -31,7 +35,7 @@
     <remap from="image" to="/photoneo_center/camera/image_color"/>
     <param name="autosize" value="true" />
   </node>
-  
-  
- 
+
+
+
 </launch>

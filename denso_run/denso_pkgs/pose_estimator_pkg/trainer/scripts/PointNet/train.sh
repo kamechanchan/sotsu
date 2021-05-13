@@ -2,7 +2,7 @@
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets \
---dataset_model HV8_size_20000_range_pi_3.hdf5 \
+--dataset_model HV8_size_20000_range_pi_3.hdf5 HV8_size_20000_range_pi_2.hdf5 \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint \
 --resolution 1024 \
 --phase train \
@@ -10,7 +10,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --dataset_mode pose_estimation \
 --batch_size 8 \
 --num_epoch 200 \
---max_dataset_size 20000 \
+--max_dataset_size 20000 20000 \
 --arch PointNet_Pose \
 --print_freq 10 \
 --save_latest_freq 1000 \
@@ -25,3 +25,5 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --checkpoints_swich tsuchida \
 --dataroot_swich tsuchida \
 --local_checkpoints_dir /home/ericlab/DENSO_results/raugh_recognition/checkpoint \
+--tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
+--tensorboardX_results_directory_switch ishiyama/0430 \

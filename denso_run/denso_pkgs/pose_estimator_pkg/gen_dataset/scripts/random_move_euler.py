@@ -9,8 +9,6 @@ from math import *
 from gazebo_msgs.msg import *
 import tf2_ros
 from time import *
-from pose_estimator_srvs.srv import PoseEstimate
-from pose_estimator_srvs.srv import range1, range1Request, range1Response
 
 
 class RandomMoveEuler(object):
@@ -25,7 +23,13 @@ class RandomMoveEuler(object):
         self.init_x = rospy.get_param("~init_x", 0)
         self.receive_ok = rospy.set_param("/" + self.object_name + "/receive_cloud/is_ok", False)
         self.record_ok = rospy.set_param("/" + self.object_name + "/record_cloud/is_ok", False)
+<<<<<<< HEAD
         self.angle_range = rospy.get_param("~angle_range", 2)
+=======
+        self.list_for_histgram = [[[],[],[],[],[],[]] for i in range(10)]
+        self.save_histgram_dictory=rospy.get_param("~save_histgram_directory")
+        
+>>>>>>> 7154777a6f5649c58105403c269010fafa66e029
         
     def isReadyMove(self):
         try:
@@ -97,11 +101,29 @@ class RandomMoveEuler(object):
 
         return True
 
+    def make_histgram(self):
+        with open(self.save_histgram_dictory, "wt") as histgram_file:
+            for i in range(10):
+                histgram_file.write("%s;\n" %(str(i)))
+                histgram_list_1=self.list_for_histgram[i][0]
+                histgram_list_2=self.list_for_histgram[i][1]
+                histgram_list_3=self.list_for_histgram[i][2]
+                histgram_list_4=self.list_for_histgram[i][3]
+                histgram_list_5=self.list_for_histgram[i][4]
+                histgram_list_6=self.list_for_histgram[i][5]
+                for k in range(10):
+                    histgram_file.write(",%s," ",%s," ",%s," ",%s," ",%s," "%s,\n" %(str(histgram_list_1[k]),str(histgram_list_2), 
+                                                                                    str(histgram_list_3), str(histgram_list_4), str(histgram_list_5), str(histgram_list_6)))
+                opt_file.write("\n")
+
 
 def main():
     rospy.init_node("random_state_maker_node", anonymous=False)
     random_state_maker = RandomMoveEuler()
+<<<<<<< HEAD
     #s = rospy.Service('range_decision', range1, random_state_maker.parameter_make)
+=======
+>>>>>>> 7154777a6f5649c58105403c269010fafa66e029
 
     random_state_maker.init_state_make()
     while not random_state_maker.isReadyMove():
@@ -111,6 +133,8 @@ def main():
     while not rospy.is_shutdown():
         if not random_state_maker.random_state_make():
             rospy.logwarn("Failed to move object !!")
+            #ここが正解？
+            random_state_maker.
         rate.sleep()
 
 if __name__ == '__main__':

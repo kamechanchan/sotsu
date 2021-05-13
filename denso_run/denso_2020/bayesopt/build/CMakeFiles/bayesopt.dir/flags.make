@@ -6,5 +6,5 @@ CXX_FLAGS = -O3 -DNDEBUG   -fPIC
 
 CXX_DEFINES = -DUSE_SOBOL
 
-CXX_INCLUDES = -I/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/include -I/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils -I/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/sobol -I/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/nlopt2/api 
+CXX_INCLUDES = -I/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/include -I/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils -I/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/sobol -I/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/nlopt2/api 
 
