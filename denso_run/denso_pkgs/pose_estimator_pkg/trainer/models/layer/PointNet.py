@@ -41,7 +41,7 @@ class PointNet_global_feat(nn.Module):
         super(PointNet_global_feat, self).__init__()
 
         self.num_points = num_points
-
+        
         self.conv1 = torch.nn.Conv1d(3, 128, 1)
         self.conv2 = torch.nn.Conv1d(128, 256, 1)
         self.conv3 = torch.nn.Conv1d(256, self.num_points, 1)
@@ -152,9 +152,9 @@ class STNkd(nn.Module):
         x = x.view(-1, self.k, self.k)
         return x
 
-class PointNetfeat(nn.Module):
-    def __init__(self, global_feat = True, feature_transform = False):
-        super(PointNetfeat, self).__init__()
+class PointNet_feat_segmentation(nn.Module):
+    def __init__(self, global_feat = False, feature_transform = True):
+        super(PointNet_feat_segmentation, self).__init__()
         self.stn = STN3d()
         self.conv1 = torch.nn.Conv1d(3, 64, 1)
         self.conv2 = torch.nn.Conv1d(64, 128, 1)
@@ -168,10 +168,10 @@ class PointNetfeat(nn.Module):
             self.fstn = STNkd(k=64)
 
     def forward(self, x):
-        n_pts = x.size()[2]
-        trans = self.stn(x)
-        x = x.transpose(2, 1)
-        x = torch.bmm(x, trans)
+        n_pts = x.size()[2] #getting number of point_cloud (dataset structure: batch_size ch point_cloud)
+        trans = self.stn(x) #T-Net
+        x = x.transpose(2, 1) #transpose for matrix multiplication
+        x = torch.bmm(x, trans) #matrix multiplication 
         x = x.transpose(2, 1)
         x = F.relu(self.bn1(self.conv1(x)))
 
@@ -186,10 +186,10 @@ class PointNetfeat(nn.Module):
         pointfeat = x
         x = F.relu(self.bn2(self.conv2(x)))
         x = self.bn3(self.conv3(x))
-        x = torch.max(x, 2, keepdim=True)[0]
+        x = torch.max(x, 2, keepdim=True)[0] #getting max data of each ch  (※:[0] is role for getting maxed data([1] is index))
         x = x.view(-1, 1024)
         if self.global_feat:
             return x, trans, trans_feat
         else:
-            x = x.view(-1, 1024, 1).repeat(1, 1, n_pts)
-            return torch.cat([x, pointfeat], 1), trans, trans_feat
+            x = x.view(-1, 1024, 1).repeat(1, 1, n_pts) #set number of point_cloud for cat (********)
+            return torch.cat([x, pointfeat], 1), trans, trans_feat #convoluted point_cloud(concat final_encoded_data and data_passed_T-net (purpose:add ch_data)) and first T-net second T-Net

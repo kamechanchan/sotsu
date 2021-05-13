@@ -15,10 +15,11 @@ class EstimatorModel:
         self.checkpoints_dir = opt.checkpoints_dir
         self.local_checkpoints_dir=opt.local_checkpoints_dir
         self.dataset_model = self.opt.dataset_model
+        self.concat_dataset_model = '+'.join(self.opt.dataset_model)
         self.name=opt.name
-        self.checkpoints_swich=opt.checkpoints_swich  
-        self.save_dir = join(self.checkpoints_dir, self.checkpoints_swich,self.name, self.dataset_model)
-        self.local_save_dir=join(self.local_checkpoints_dir, self.checkpoints_swich,self.name, self.dataset_model)
+        self.checkpoints_swich=opt.checkpoints_swich
+        self.save_dir = join(self.checkpoints_dir, self.checkpoints_swich,self.name, self.concat_dataset_model)
+        self.local_save_dir=join(self.local_checkpoints_dir, self.checkpoints_swich,self.name, self.concat_dataset_model)
         self.gpu_ids = opt.gpu_ids
         self.device = torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
         self.is_train = opt.is_train

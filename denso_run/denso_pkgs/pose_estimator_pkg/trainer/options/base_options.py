@@ -12,12 +12,13 @@ class BaseOptions:
     def __init__(self):
         self.parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         self.initialized = False
+        self.dataset_number=1
 
     def initialize(self):
         self.parser.add_argument('--main_directory',type=str,default=__file__)
         self.parser.add_argument('--dataset_mode', choices={"segmentation", "pose_estimation"}, default='pose_estimation')
-        self.parser.add_argument('--dataset_model', type=str, default='HV8')
-        self.parser.add_argument('--max_dataset_size', type=int, default=float("inf"), help='Maximum num of samples per epoch')
+        self.parser.add_argument('--dataset_model', nargs=self.dataset_number, type=str, default='HV8')
+        self.parser.add_argument('--max_dataset_size', nargs=self.dataset_number, type=int, default=float("inf"), help='Maximum num of samples per epoch')
         self.parser.add_argument('--name', type=str, default="debug")
         self.parser.add_argument('--batch_size', type=int, default=8)
         self.parser.add_argument('--num_epoch', type=int, default=150)
@@ -33,6 +34,9 @@ class BaseOptions:
         self.parser.add_argument('--dataroot_swich',type=str,default='front')
         self.parser.add_argument('--local_checkpoints_dir',type=str,default='/home/ericlab/DENSO/raugh_recognition/checkpoint')
         self.parser.add_argument('--local_export_folder', type=str, default='exports intermediate collapses to this folder')
+        self.parser.add_argument('--tensorboardX_results_directory',type=str,default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/")
+        self.parser.add_argument('--tensorboardX_results_directory_switch',type=str,default="ishiyama")
+        self.parser.add_argument('--dataset_number', type=int, default=self.dataset_number)
         self.initialized = True
 
 
@@ -43,6 +47,8 @@ class BaseOptions:
         self.opt.is_train = self.is_train
         str_ids = self.opt.gpu_ids.split(',')
         self.opt.gpu_ids = []
+        
+        self.concat_dataset_model = '+'.join(self.opt.dataset_model)
 
         for str_id in str_ids:
             id = int(str_id)
@@ -55,11 +61,11 @@ class BaseOptions:
         args = vars(self.opt)
 
         if self.opt.export_folder:
-            self.opt.export_folder = os.path.join(self.opt.checkpoints_dir, self.opt.checkpoints_swich,self.opt.name, self.opt.dataset_model, self.opt.export_folder)
+            self.opt.export_folder = os.path.join(self.opt.checkpoints_dir, self.opt.checkpoints_swich,self.opt.name, self.concat_dataset_model, self.opt.export_folder)
             util.mkdir(self.opt.export_folder)
 
         if self.opt.local_export_folder:
-            self.opt.local_export_folder = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_swich,self.opt.name, self.opt.dataset_model, self.opt.local_export_folder)
+            self.opt.local_export_folder = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_swich,self.opt.name, self.concat_dataset_model, self.opt.local_export_folder)
             util.mkdir(self.opt.export_folder)    
 
         if self.is_train:
@@ -68,8 +74,8 @@ class BaseOptions:
                 print('%s: %s' % (str(k), str(v)))
             print("---------------End-------------")
 
-            expr_dir = os.path.join(self.opt.checkpoints_dir,self.opt.checkpoints_swich, self.opt.name, self.opt.dataset_model)
-            local_expr_dir = os.path.join(self.opt.local_checkpoints_dir,self.opt.checkpoints_swich, self.opt.name, self.opt.dataset_model)
+            expr_dir = os.path.join(self.opt.checkpoints_dir,self.opt.checkpoints_swich, self.opt.name, self.concat_dataset_model)
+            local_expr_dir = os.path.join(self.opt.local_checkpoints_dir,self.opt.checkpoints_swich, self.opt.name, self.concat_dataset_model)
             util.mkdir(expr_dir)
             util.mkdir(local_expr_dir)
 
