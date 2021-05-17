@@ -27,7 +27,7 @@ if __name__ == '__main__':
     
     opt = TrainOptions().parse()
     opt_v = TestOptions().parse()
-
+    print(opt.name)
     train_dataset, val_dataset = TrainValDataset(opt)
     train_dataset = TrainDataLoader(train_dataset, opt)
     val_dataset = ValDataLoader(val_dataset, opt)
