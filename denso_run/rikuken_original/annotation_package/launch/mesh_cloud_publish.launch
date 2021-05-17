@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="sample_points" default="100000"/>
-    <arg name="LEAF_SIZE" default="0.0003"/>
+    <arg name="sample_points" default="5000"/>
+    <arg name="LEAF_SIZE" default="0.003"/>
     <arg name="RETRY_COUNT_LIMIT" default="10"/>
     <arg name="DURATION_TIME" default="1"/>
     <arg name="OBJECT_QUANTITY" default="1"/>

@@ -23,6 +23,7 @@ MeshCloud::MeshCloud(ros::NodeHandle &nh, std::string object_name, std::string m
     mesh_topic_name_ = mesh_topic_name;
     object_name_ = object_name;
     OBJECT_QUANTITY = 1;
+    print_parameter("sample_point is" + std::to_string(sample_points));
     
     frame_set();
     stl_file_set();

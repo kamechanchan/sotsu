@@ -21,7 +21,10 @@ namespace nearest_point_extractor
         void publish();
         void InputCallback(const sensor_msgs::PointCloud2ConstPtr&, const sensor_msgs::PointCloud2ConstPtr&);
         void downsampleCloud(pcl::PointCloud<pcl::PointXYZ>::Ptr input_cloud);
-        pcl::PointCloud<pcl::PointXYZRGB>::Ptr extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, pcl::PointCloud<pcl::PointXYZ> mesh_cloud, int radius);
+        void param_register(std::string, std::string, std::string, int);
+        void color_decide(unsigned char, unsigned char, unsigned char);
+        void exect();
+        pcl::PointCloud<pcl::PointXYZRGB>::Ptr extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, pcl::PointCloud<pcl::PointXYZ> mesh_cloud, double radius);
         typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::PointCloud2, sensor_msgs::PointCloud2> Sensor_Sync_Sub_Type;
         template <typename T>
         void print_parameter(T para)
@@ -42,15 +45,15 @@ namespace nearest_point_extractor
         pcl::PointCloud<pcl::PointXYZ>::Ptr mesh_cloud_;
         pcl::PointCloud<pcl::PointXYZRGB>::Ptr output_cloud_;
         float LEAF_SIZE;
-        int num_of_nearest_points;
+        int num_of_nearest_points_;
         bool flag_;
         std::string mesh_topic_name_;
         std::string sensor_topic_name_;
         std::string output_topic_name_;
-        int red;
-        int blue;
-        int green;
-        int radius;
+        int red_;
+        int blue_;
+        int green_;
+        double radius;
 
     };
 }
