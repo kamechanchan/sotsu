@@ -21,7 +21,7 @@ class BaseOptions:
         self.parser.add_argument('--name', type=str, default="debug")
         self.parser.add_argument('--batch_size', type=int, default=8)
         self.parser.add_argument('--num_epoch', type=int, default=150)
-        self.parser.add_argument('--arch', type=str, default="PointNet_Pose")
+        self.parser.add_argument('--arch', type=str, default="debug")
         self.parser.add_argument('--resolution', type=int, default=1024)
         self.parser.add_argument('--gpu_ids', type=str, default='-1')
         self.parser.add_argument('--gpu_num', type=int, default=0)
