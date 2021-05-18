@@ -7,7 +7,7 @@ class CloudLoader
 {
 public:
     CloudLoader(){}
-    CloudLoader(ros::NodeHandle &nh, const std::string &pub_topic_name, 
+    CloudLoader(ros::NodeHandle &nh, const std::string &pub_topic_name,
         const std::string &pcd_file_name = ""):
         nh_(nh),
         cloud_pub_(nh_.advertise<sensor_msgs::PointCloud2>(pub_topic_name, 1))
@@ -72,8 +72,9 @@ public:
         cloud_operator_->setInputCloud(cloud_input_ros);
         cloud_operator_->operate();
         cloud_operator_->publish();
-    }      
+    }
 protected:
     CloudOperator *cloud_operator_;
     ros::Subscriber cloud_sub_;
 };
+

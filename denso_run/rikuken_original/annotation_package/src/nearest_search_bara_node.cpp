@@ -1,0 +1,52 @@
+#include <annotation_package/nearest_search.hpp>
+#include <stdlib.h>
+#include <time.h>
+
+int main(int argc, char** argv)
+{
+    ros::init(argc, argv, "bara_nearest");
+    ros::NodeHandle nh;
+    ros::NodeHandle pnh("~");
+    std::vector<nearest_point_extractor::NearestPointExtractor*> loader_;
+    std::string sensor_topic, mesh_base_topic, output_topic;
+    int num_of_object, num_of_nearest_points;
+    double radius;
+    srand(time(NULL));
+    unsigned char red, blue, green;
+    pnh.getParam("num_of_object", num_of_object);
+    pnh.getParam("sensor_topic", sensor_topic);
+    pnh.getParam("mesh_base_topic", mesh_base_topic);
+    pnh.getParam("output_topic_base", output_topic);
+    pnh.getParam("radius", radius);
+    pnh.getParam("num_of_nearest_points", num_of_nearest_points);
+    for (int i = 0; i < num_of_object; i++) 
+    {
+        loader_.push_back(new nearest_point_extractor::NearestPointExtractor(nh));
+    }
+    for (int i = 0; i < num_of_object; i++) {
+        loader_[i]->param_register(sensor_topic, mesh_base_topic + "_" + std::to_string(i), output_topic + "_" + std::to_string(i), num_of_nearest_points);
+    }
+    loader_[0]->color_decide(255, 0, 0);
+    loader_[1]->color_decide(0, 255, 0);
+    loader_[2]->color_decide(0, 0, 255);
+    loader_[3]->color_decide(255, 255, 0);
+    loader_[4]->color_decide(0, 255, 255);
+    loader_[5]->color_decide(255, 0, 255);
+    loader_[6]->color_decide(255, 100, 255);
+    for (int i = 0; i < num_of_object; i++)
+    {
+        loader_[i]->exect();
+    }
+    ros::Rate loop(1);
+    while (ros::ok())
+    {
+        for (int i = 0; i < num_of_object; i++)
+        {
+            loader_[i]->publish();
+        }
+        ros::spinOnce();
+        loop.sleep();
+    }
+    return 0;
+    
+}

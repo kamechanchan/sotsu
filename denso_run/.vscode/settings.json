@@ -76,6 +76,11 @@
     },
     "python.autoComplete.extraPaths": [
         "/home/ericlab/ros_package/denso_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/ericlab/ros_package/denso_ws/devel/lib/python3/dist-packages",
         "/opt/ros/noetic/lib/python3/dist-packages"
     ],
     "python.analysis.extraPaths": [

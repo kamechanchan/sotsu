@@ -1,4 +1,4 @@
-#include <annotation_package/mesh_cloud.hpp>
+#include <annotation_package/mesh_kai_cloud.hpp>
 
 int main(int argc, char** argv)
 {
@@ -17,9 +17,13 @@ int main(int argc, char** argv)
     while (ros::ok())
     {
         for (int i = 0; i < the_number_of_object; i++) {
-            loader_[i]->publishCloud();
-            ros::spinOnce();
-            loop.sleep();
+            loader_[i]->publishCloud(); 
+        }
+        ros::spinOnce();
+        loop.sleep();
+        for (int i = 0; i < the_number_of_object; i++) {
+            loader_[i]->get_tf();
+            loader_[i]->transformMesh();
         }
     }
     return 0;

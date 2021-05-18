@@ -49,10 +49,13 @@ class PoseEstNode():
     def __init__(self, sub_topic_name):
         rospy.init_node("Pose_Estimation_client", anonymous=True)
         rospy.wait_for_service("pose_estimation")
-
+        
+        
         self.sub_topic_name = sub_topic_name
-
+        
         rospack = rospkg.RosPack()
+        self.start = time.time()
+        self.time_file = open(rospack.get_path("estimator") + '/naka.txt', 'w')
         self.package_path = rospack.get_path("pose_estimator_measure")
         self.opt = TestOptions().parse()
         self.object_name = rospy.get_param("~object_name", "HV8")
@@ -73,9 +76,14 @@ class PoseEstNode():
         self.input_data = PoseEstimateRequest()
         self.offset_data = None
         self.index = 0
+        hennsuu_difine = time.time()
+        self.time_file.write(str(hennsuu_difine - self.start) + '\n')
 
         #self.object_name_stl = model_loader("N" + self.object_name + ".pcd")
         self.object_name_stl = model_loader('random_original.pcd')
+        self.model_road = time.time()
+        self.time_file.write(str(self.model_road - hennsuu_difine) + '\n')
+        self.time_file.close()
         if self.object_name == "HV8":
            # self.object_name_stl.asnumpy()
             #self.object_name_stl = self.object_name_stl.scale(0.001, center=True)
@@ -84,6 +92,8 @@ class PoseEstNode():
         self.stl_ref = copy.deepcopy(self.object_name_stl)
 
     def callback(self, data):
+        self.start_callback = time.time()
+
         self.o3d_data = convertCloudFromRosToOpen3d(data)
 
         if self.arch == "PointNet_Pose":

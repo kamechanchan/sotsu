@@ -23,13 +23,10 @@ class RandomMoveEuler(object):
         self.init_x = rospy.get_param("~init_x", 0)
         self.receive_ok = rospy.set_param("/" + self.object_name + "/receive_cloud/is_ok", False)
         self.record_ok = rospy.set_param("/" + self.object_name + "/record_cloud/is_ok", False)
-<<<<<<< HEAD
         self.angle_range = rospy.get_param("~angle_range", 2)
-=======
         self.list_for_histgram = [[[],[],[],[],[],[]] for i in range(10)]
-        self.save_histgram_dictory=rospy.get_param("~save_histgram_directory")
+        self.save_histgram_dictory=rospy.get_param("~save_histgram_directory", "/home/ericlab")
         
->>>>>>> 7154777a6f5649c58105403c269010fafa66e029
         
     def isReadyMove(self):
         try:
@@ -120,10 +117,7 @@ class RandomMoveEuler(object):
 def main():
     rospy.init_node("random_state_maker_node", anonymous=False)
     random_state_maker = RandomMoveEuler()
-<<<<<<< HEAD
     #s = rospy.Service('range_decision', range1, random_state_maker.parameter_make)
-=======
->>>>>>> 7154777a6f5649c58105403c269010fafa66e029
 
     random_state_maker.init_state_make()
     while not random_state_maker.isReadyMove():
@@ -134,7 +128,6 @@ def main():
         if not random_state_maker.random_state_make():
             rospy.logwarn("Failed to move object !!")
             #ここが正解？
-            random_state_maker.
         rate.sleep()
 
 if __name__ == '__main__':

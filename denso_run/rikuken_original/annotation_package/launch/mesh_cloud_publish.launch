@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="sample_points" default="100000"/>
-    <arg name="LEAF_SIZE" default="0.0003"/>
-    <arg name="RETRY_COUNT_LIMIT" default="10"/>
+    <arg name="sample_points" default="5000"/>
+    <arg name="LEAF_SIZE" default="0.003"/>
+    <arg name="RETRY_COUNT_LIMIT" default="100"/>
     <arg name="DURATION_TIME" default="1"/>
     <arg name="OBJECT_QUANTITY" default="1"/>
-    <arg name="mesh_path" default="/home/ericlab/HV8.stl"/>
+    <arg name="mesh_path" default="$(find annotation_package)/mesh/HV8.stl"/>
     <arg name="object_name" default="HV8"/>
     <arg name="mesh_topic_name" default="mesh_cloud_publisher"/>
     

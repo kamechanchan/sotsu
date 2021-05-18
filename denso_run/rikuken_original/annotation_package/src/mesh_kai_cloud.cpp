@@ -1,4 +1,4 @@
-#include <annotation_package/mesh_cloud.hpp>
+#include <annotation_package/mesh_kai_cloud.hpp>
 #include <pcl/filters/voxel_grid.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <ros/ros.h>
@@ -27,6 +27,7 @@ MeshCloud::MeshCloud(ros::NodeHandle &nh, std::string object_name, std::string m
     
     frame_set();
     stl_file_set();
+    this->get_tf();
     this->transformMesh();
    /* for (int i = 0; i < parts_clouds_.size(); i++) {
         mesh_point_pcl_ += parts_clouds_[i];
@@ -78,54 +79,52 @@ void MeshCloud::getMesh(const std::string dir_name)
     parts_clouds_.push_back(*parts_clou);
 }
 
-void MeshCloud::transformMesh()
+void MeshCloud::get_tf()
 {
-    pcl::PointCloud<pcl::PointXYZ> transformed_parts_cloud;
-
-    for (int retryCount = 0; retryCount < RETRY_COUNT_LIMIT; ++retryCount)
+    while (true) 
     {
-        for (size_t i = 0; i < parts_clouds_.size(); ++i)
-        {
-            try
+        try
             {
-                tf::StampedTransform transform;
-                tf_.lookupTransform("/world", frame_names_[i], ros::Time(0), transform);
-                pcl_ros::transformPointCloud(parts_clouds_[i], transformed_parts_cloud, transform);
-                mesh_point_pcl_ += transformed_parts_cloud;
-                ROS_INFO_STREAM("Get transform : " << frame_names_[i]);
+                tf_.lookupTransform("world", frame_names_[0], ros::Time(0), transform_);
+                //ROS_INFO_STREAM("Get transform : " << frame_names_[0]);
+                break;
             }
             catch (tf2::LookupException e)
             {
                 ROS_ERROR("pcl::ros %s", e.what());
                 ros::Duration(DURATION_TIME).sleep();
                 mesh_point_pcl_.clear();
-                break;
+                continue;
             }
             catch (tf2::ExtrapolationException e)
             {
                 ROS_ERROR("pcl::ros %s", e.what());
                 ros::Duration(DURATION_TIME).sleep();
                 mesh_point_pcl_.clear();
-                break;
+                continue;
             }
             catch (...)
             {
                 ros::Duration(DURATION_TIME).sleep();
                 mesh_point_pcl_.clear();
-                break;
+                continue;
             }
-        }
-        if (mesh_point_pcl_.points.size() == (sample_points * parts_clouds_.size())) {
-            std::cout << "0) mesh : " << mesh_point_pcl_.points.size() << std::endl;
-            pcl::PointCloud<pcl::PointXYZ>::Ptr mesh_point_ptr_pcl(
-                new pcl::PointCloud<pcl::PointXYZ>(mesh_point_pcl_));
-            downSample(mesh_point_ptr_pcl, downsampled_mesh_ptr_pcl_);
-            return;            
-        }
     }
-    ROS_WARN_STREAM("try if transform 5times, but failed");
-    exit(-1);
-    return;
+}
+void MeshCloud::transformMesh()
+{
+
+    pcl_ros::transformPointCloud(parts_clouds_[0], mesh_point_pcl_, transform_);
+    if (mesh_point_pcl_.points.size() == (sample_points * parts_clouds_.size())) {
+        std::cout << "0) mesh : " << mesh_point_pcl_.points.size() << std::endl;
+        pcl::PointCloud<pcl::PointXYZ>::Ptr mesh_point_ptr_pcl(
+            new pcl::PointCloud<pcl::PointXYZ>(mesh_point_pcl_));
+        downSample(mesh_point_ptr_pcl, downsampled_mesh_ptr_pcl_);           
+    }
+    
+    //ROS_WARN_STREAM("try if transform 5times, but failed");
+    //exit(-1);
+   // return;
 }
 
 void MeshCloud::downSample(pcl::PointCloud<pcl::PointXYZ>::Ptr cloud,
@@ -143,7 +142,7 @@ void MeshCloud::publishCloud()
 {
     pcl::toROSMsg(*downsampled_mesh_ptr_pcl_, mesh_cloud_ros_);
     mesh_cloud_ros_.header.stamp = ros::Time::now();
-    mesh_cloud_ros_.header.frame_id = object_name_;
+    mesh_cloud_ros_.header.frame_id = "world";
     mesh_point_pub_.publish(mesh_cloud_ros_);
     std::cout << "========================" << std::endl;
 
