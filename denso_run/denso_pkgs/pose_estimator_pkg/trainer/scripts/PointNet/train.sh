@@ -2,7 +2,7 @@
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets \
---dataset_model dataset_20000.hdf5 \
+--dataset_model HV8_size_20000_range_pi_2.hdf5 \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint \
 --resolution 1024 \
 --phase train \
@@ -16,7 +16,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --save_latest_freq 1000 \
 --save_epoch_freq 1 \
 --run_test_freq 1 \
---gpu_ids 0 \
+--gpu_ids -1 \
 --gpu_num 1 \
 --num_threads 0 \
 --serial_batches False \

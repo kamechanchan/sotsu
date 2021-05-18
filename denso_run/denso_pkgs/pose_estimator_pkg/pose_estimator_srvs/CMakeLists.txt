@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_service_files(
   FILES
   PoseEstimate.srv
+  range1.srv
 )
 
 generate_messages(

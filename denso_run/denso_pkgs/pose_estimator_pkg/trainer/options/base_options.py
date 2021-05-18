@@ -25,7 +25,7 @@ class BaseOptions:
         self.parser.add_argument('--arch', type=str, default="PointNet_Pose")
         self.parser.add_argument('--resolution', type=int, default=1024)
         self.parser.add_argument('--gpu_ids', type=str, default='-1')
-        self.parser.add_argument('--gpu_num', type=int, default=2)
+        self.parser.add_argument('--gpu_num', type=int, default=0)
         self.parser.add_argument('--num_threads', type=int, default=3)
         self.parser.add_argument('--checkpoints_dir', type=str, default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights")
         self.parser.add_argument('--serial_batches', action='store_true', help='if true, takes meshs in order')
@@ -37,6 +37,11 @@ class BaseOptions:
         self.parser.add_argument('--tensorboardX_results_directory',type=str,default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/")
         self.parser.add_argument('--tensorboardX_results_directory_switch',type=str,default="ishiyama")
         self.parser.add_argument('--dataset_number', type=int, default=self.dataset_number)
+        self.parser.add_argument('--lr', type=float, default=0.001, help='initial learning rate of adam')
+        self.parser.add_argument('--is_train', type=bool, default=True)
+        
+        self.is_train = False
+        
         self.initialized = True
 
 
@@ -44,7 +49,7 @@ class BaseOptions:
         if not self.initialized:
             self.initialize()
         self.opt, unknown = self.parser.parse_known_args()
-        self.opt.is_train = self.is_train
+        #self.opt.is_train = self.is_train
         str_ids = self.opt.gpu_ids.split(',')
         self.opt.gpu_ids = []
         

@@ -1,13 +1,13 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/utils'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/options'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/scripts/function/__init__.py'))
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/scripts/function/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer/options'))
+sys.path.append(os.path.join(os.path.dirname(__file__), './function/__init__.py'))
+sys.path.append(os.path.join(os.path.dirname(__file__), './function/'))
 from options.test_options import TestOptions
 from models import create_model
 from dnn_test import estimation
@@ -46,7 +46,7 @@ class DnnNode():
         self.opt.num_threads = rospy.get_param("~num_threads", 8)
         self.opt.gpu_id = rospy.get_param("~gpu_id", "1")
         self.package_path = rospack.get_path("estimator")
-        self.opt.checkpoints_dir = self.package_path + "/weights"
+        self.opt.checkpoints_dir = rospy.get_param("~load_path", "/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth")
 
         self.model = create_model(self.opt)
 

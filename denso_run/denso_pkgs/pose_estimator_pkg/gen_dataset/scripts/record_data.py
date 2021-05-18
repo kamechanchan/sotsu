@@ -3,6 +3,7 @@
 
 import os, sys
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer'))
 
 import rospy, rospkg, tf, random, time, sys
 from tf.transformations import quaternion_from_euler
@@ -17,6 +18,9 @@ from gazebo_msgs.msg import *
 from tqdm import tqdm
 from tf_sync import TfMessageFilter
 import message_filters
+from utils import util
+import pose_estimator_srvs
+from pose_estimator_srvs.srv import range1, range1Request, range1Response
 
 
 
@@ -33,24 +37,35 @@ class RecordData(object):
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
-        self.save_file_path = rospy.get_param("~save_file", "/home/ericlab/MEGAsync/TEI_PC/Dataset/pi/datset_-pi4-pi4")
+        self.save_file_path = rospy.get_param("~save_directory", "/home/ericlab/")
+        self.angle_range = rospy.get_param("~angle_range", 2)
 
         self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
         self.ts_ = TfMessageFilter(self.sync_sub_, self.sensor_parent_frame_, self.object_name_, queue_size=100)
         self.init_hdf5(self.save_file_path)
         self.pcd = None
+        rospy.set_param("/shori_1", 0)
+        rospy.set_param("/shori_2", 0)
+        rospy.set_param("/shori_3", 0)
+        rospy.set_param("/shori_4", 0)
 
     def init_hdf5(self, file_path):
-        file_path = file_path + ".hdf5"
+        util.mkdir(file_path)
+        file_path = file_path + "/" + self.object_name_ + "_size_" + str(self.num_dataset) + "_range_pi_" + str(self.angle_range) +".hdf5"
         self.hdf5_file_ = h5py.File(file_path, 'w')
+        self.all_file_path = file_path
 
     def callback(self, point_cloud, trans_rot):
+        get_shori_3 = rospy.get_param("/shori_3")
+        get_shori_3 = get_shori_3 + 1
+        #print("my_callback_tf_pc is " + str(get_shori_3))
+        rospy.set_param("/shori_3", get_shori_3)
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
         if self.receive_ok:
+            
             rospy.set_param("/" + self.object_name_ + "/receive_cloud/is_ok", False)
             rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", False)
-
             pc = ros_numpy.numpify(point_cloud)
             height = pc.shape[0]
             width = 1
@@ -61,17 +76,13 @@ class RecordData(object):
             pcd = np_points[~np.any(np.isnan(np_points), axis=1)]
             translation = np.array(trans_rot[0])
             rotation = np.array(trans_rot[1])
-
-
-            #f = open('/home/tsuchidashinya/dataset_pose.txt', 'w')
-
-            #f = open('/home/ericlab/dataset_pose.txt', 'w')
-            #f.writelines(str(translation))
-            #f.writelines(str(rotation))
-            #f.close()
-            #new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
-            #pcl.save(new_pcd, "/home/ericlab/random_1.pcd")
-
+            #if true:
+                #f = open('/home/ericlabshinya/dataset_pose.txt', 'w')
+                #f.writelines(str(translation))
+                #f.writelines(str(rotation))
+                #f.close()
+                #new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
+                #pcl.save(new_pcd, "/home/ericlabshinya/random_1.pcd")
 
             pose = np.concatenate([translation, rotation])
             self.savePCDandPose(pcd, pose)
@@ -107,13 +118,17 @@ class RecordData(object):
         self.bar.update(1)
         if self.num_ >  self.num_dataset:
             print("Finish recording")
+            print("save on" + self.all_file_path)
             self.hdf5_file_.flush()
             self.hdf5_file_.close()
+            rospy.signal_shutdown('finish')
             os._exit(10)
 
+
     def record(self):
-        self.ts_.registerCallback(self.callback)
-        rospy.spin()
+        while not rospy.is_shutdown():
+            self.ts_.registerCallback(self.callback)
+            rospy.spin()
 
 
 

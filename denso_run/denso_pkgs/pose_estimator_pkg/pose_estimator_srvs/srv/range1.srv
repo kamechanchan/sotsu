@@ -1,0 +1,14 @@
+float64 xsmall
+float64 xlarge
+float64 ysmall
+float64 ylarge
+float64 zsmall
+float64 zlarge
+float64 rollsmall
+float64 rolllarge
+float64 pitchsmall
+float64 pitchlarge
+float64 yawsmall
+float64 yawlarge
+---
+bool hantei
