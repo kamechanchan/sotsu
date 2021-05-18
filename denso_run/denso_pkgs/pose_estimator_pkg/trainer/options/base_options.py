@@ -12,7 +12,7 @@ class BaseOptions:
     def __init__(self):
         self.parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         self.initialized = False
-        self.dataset_number=1
+        self.dataset_number=4
 
     def initialize(self):
         self.parser.add_argument('--main_directory',type=str,default=__file__)
@@ -40,8 +40,6 @@ class BaseOptions:
         self.parser.add_argument('--lr', type=float, default=0.001, help='initial learning rate of adam')
         self.parser.add_argument('--is_train', type=bool, default=True)
         
-        self.is_train = False
-        
         self.initialized = True
 
 
@@ -49,7 +47,6 @@ class BaseOptions:
         if not self.initialized:
             self.initialize()
         self.opt, unknown = self.parser.parse_known_args()
-        #self.opt.is_train = self.is_train
         str_ids = self.opt.gpu_ids.split(',')
         self.opt.gpu_ids = []
         
@@ -73,7 +70,7 @@ class BaseOptions:
             self.opt.local_export_folder = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_swich,self.opt.name, self.concat_dataset_model, self.opt.local_export_folder)
             util.mkdir(self.opt.export_folder)    
 
-        if self.is_train:
+        if self.opt.is_train:
             print("---------------Options-------------")
             for k, v in sorted(args.items()):
                 print('%s: %s' % (str(k), str(v)))
