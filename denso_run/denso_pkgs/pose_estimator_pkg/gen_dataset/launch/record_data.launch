@@ -13,7 +13,7 @@
   <arg name="object_up" default="HV8_up" />
   <arg name="init_pose_up" default="-x 0 -y 0 -z 0 -R 0.0 -Y -0.0" />
   <arg name="init_x" default="1" />
-  <arg name="save_directory" default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/tsuchida"/>
+  <arg name="save_directory" default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/datasets/ericlab"/>
   
   <node name="random_move" pkg="gen_dataset" type="random_move_euler.py">
     <param name="object_name" value="$(arg object_name)"/>

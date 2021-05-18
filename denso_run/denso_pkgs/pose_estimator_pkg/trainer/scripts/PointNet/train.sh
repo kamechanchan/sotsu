@@ -23,5 +23,5 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --verbose_plot True \
 --lr 0.0001 \
 --checkpoints_swich kakunin \
---dataroot_swich tsuchida \
+--dataroot_swich ericlab \
 --local_checkpoints_dir /home/ericlab/DENSO_results/raugh_recognition/checkpoint \
