@@ -38,7 +38,7 @@ include_directories(
   ${PCL_INCLUDE_DIRS}
 )
 
-add_executable(mesh_cloud_publisher src/mesh_cloud_node.cpp src/mesh_cloud.cpp src/mesh_sampler.cpp)
+add_executable(mesh_cloud_publisher src/mesh_cloud_node.cpp src/mesh_kai_cloud.cpp src/mesh_sampler.cpp)
 target_link_libraries(mesh_cloud_publisher
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
@@ -52,7 +52,7 @@ target_link_libraries(nearest_search
   ${PCL_LIBRARIES}
 )
 
-add_executable(mesh_cloud_bara_publisher src/mesh_cloud.cpp src/mesh_sampler.cpp src/mesh_cloud_bara_node.cpp)
+add_executable(mesh_cloud_bara_publisher src/mesh_kai_cloud.cpp src/mesh_sampler.cpp src/mesh_cloud_bara_node.cpp)
 target_link_libraries(mesh_cloud_bara_publisher
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}

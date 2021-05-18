@@ -1,4 +1,4 @@
-#include <annotation_package/mesh_cloud.hpp>
+#include <annotation_package/mesh_kai_cloud.hpp>
 
 int main(int argc, char** argv)
 {
@@ -12,9 +12,12 @@ int main(int argc, char** argv)
     ros::Rate rate(1.0);
     while (ros::ok())
     {
+        
         mcp.publishCloud();
         ros::spinOnce();
         rate.sleep();
+        mcp.get_tf();
+        mcp.transformMesh();
     }
     return 0;
 }
