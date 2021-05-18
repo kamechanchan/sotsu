@@ -22,7 +22,8 @@
                 "${workspaceFolder}/denso_2020/pc_segmentation/include",
                 "${workspaceFolder}/denso_2020/bayes_pose/include",
                 "${workspaceFolder}/denso_2020/meshcloud_pblisher_pkg/include",
-                "${workspaceFolder}/rikuken_original/annotation_package/include"
+                "${workspaceFolder}/rikuken_original/annotation_package/include",
+                "${workspaceFolder}/rikuken_original/tf_publish/include/tf_publish"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

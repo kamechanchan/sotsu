@@ -77,12 +77,12 @@ class RecordData(object):
             translation = np.array(trans_rot[0])
             rotation = np.array(trans_rot[1])
             #if true:
-                #f = open('/home/tsuchidashinya/dataset_pose.txt', 'w')
+                #f = open('/home/ericlabshinya/dataset_pose.txt', 'w')
                 #f.writelines(str(translation))
                 #f.writelines(str(rotation))
                 #f.close()
                 #new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
-                #pcl.save(new_pcd, "/home/tsuchidashinya/random_1.pcd")
+                #pcl.save(new_pcd, "/home/ericlabshinya/random_1.pcd")
 
             pose = np.concatenate([translation, rotation])
             self.savePCDandPose(pcd, pose)

@@ -6,7 +6,10 @@
 using mesh_cloud::MeshCloud;
 using mesh_sampler::uniform_sampling;
 
-MeshCloud::MeshCloud(ros::NodeHandle &nh)
+/*
+MeshCloud(nodehandle, object_name, mesh_topic_name)
+*/
+MeshCloud::MeshCloud(ros::NodeHandle &nh, std::string object_name, std::string mesh_topic_name)
     : nh_(nh), downsampled_mesh_ptr_pcl_(new pcl::PointCloud<pcl::PointXYZ>())
 {
     pnh_ = new ros::NodeHandle("~");
@@ -15,29 +18,45 @@ MeshCloud::MeshCloud(ros::NodeHandle &nh)
     pnh_->getParam("RETRY_COUNT_LIMIT", RETRY_COUNT_LIMIT);
     pnh_->getParam("DURATION_TIME", DURATION_TIME);
     pnh_->getParam("OBJECT_QUANTITY", OBJECT_QUANTITY);
-    pnh_->getParam("object_name", object_name);
-    pnh_->getParam("mesh_topic_name", mesh_topic_name_);
+    //pnh_->getParam("object_name", object_name);
+    //pnh_->getParam("mesh_topic_name", mesh_topic_name_);
+    mesh_topic_name_ = mesh_topic_name;
+    object_name_ = object_name;
+    OBJECT_QUANTITY = 1;
+    print_parameter("sample_point is" + std::to_string(sample_points));
     
     frame_set();
     stl_file_set();
     this->transformMesh();
+   /* for (int i = 0; i < parts_clouds_.size(); i++) {
+        mesh_point_pcl_ += parts_clouds_[i];
+    }
+    pcl::PointCloud<pcl::PointXYZ>::Ptr mesh_point_ptr_pcl(
+                new pcl::PointCloud<pcl::PointXYZ>(mesh_point_pcl_));
+    this->downSample(mesh_point_ptr_pcl, downsampled_mesh_ptr_pcl_);*/
     mesh_point_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(mesh_topic_name_, 1);
 }
 
 void MeshCloud::frame_set()
 {
-    for (int i = 0; i < OBJECT_QUANTITY; i++) {
-        //frame_names_.push_back("HV8_" + std::to_string(i));
-        frame_names_.push_back(object_name);
-        print_parameter(frame_names_[i]);
+    if (OBJECT_QUANTITY == 1) {
+        frame_names_.push_back(object_name_);
     }
+    else {
+        for (int i = 0; i < OBJECT_QUANTITY; i++) {
+            frame_names_.push_back("HV8_" + std::to_string(i));
+            //frame_names_.push_back(object_name);
+            print_parameter(frame_names_[i]);
+        }
+    }
+    
 }
 
 void MeshCloud::stl_file_set()
 {
-    pnh_->getParam("mesh_path", mesh_path);
-    for (int i = 0; i < OBJECT_QUANTITY; i++) {
-        link_names_.push_back(mesh_path);
+    pnh_->getParam("mesh_path", mesh_path_);
+    for (int i = 0; i < 1; i++) {
+        link_names_.push_back(mesh_path_);
     }
     print_parameter(link_names_[0]);
     print_parameter(OBJECT_QUANTITY);
@@ -124,7 +143,7 @@ void MeshCloud::publishCloud()
 {
     pcl::toROSMsg(*downsampled_mesh_ptr_pcl_, mesh_cloud_ros_);
     mesh_cloud_ros_.header.stamp = ros::Time::now();
-    mesh_cloud_ros_.header.frame_id = "world";
+    mesh_cloud_ros_.header.frame_id = object_name_;
     mesh_point_pub_.publish(mesh_cloud_ros_);
     std::cout << "========================" << std::endl;
 

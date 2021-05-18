@@ -11,7 +11,10 @@ namespace mesh_cloud
     class MeshCloud
     {
     public:
-        MeshCloud(ros::NodeHandle& nh);
+            /*
+        MeshCloud(nodehandle, object_name, mesh_topic_name)
+        */
+        MeshCloud(ros::NodeHandle& nh, std::string, std::string);
         ~MeshCloud(){}
         void getMesh(const std::string dir_path);
         void transformMesh();
@@ -41,9 +44,9 @@ namespace mesh_cloud
         std::vector<std::string> link_names_;
         std::vector<std::string> frame_names_;
         std::string frame_;
-        std::string object_name;
+        std::string object_name_;
         std::string link_;
-        std::string mesh_path;
+        std::string mesh_path_;
         std::string mesh_topic_name_;
         float LEAF_SIZE;
         int sample_points;
