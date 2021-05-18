@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="node_id" default="0" />
+  <arg name="parent_frame" default="world" />
+  <arg name="yaml_file" default="four_AR_cubes.yaml" />
+  <arg name="leaf_size" default="0.01" />
+  <arg name="sampling_points" default="10000" />
+
+  <node pkg="meshcloud_publisher_pkg" type="meshcloud_publisher" name="meshcloud_$(arg node_id)_publisher" output="screen">
+    <param name="node_id" value="$(arg node_id)" />
+    <param name="parent_frame" value="$(arg parent_frame)" />
+    <param name="yaml_file" value="$(arg yaml_file)" />
+    <param name="leaf_size" value="$(arg leaf_size)" />
+    <param name="sampling_points" value="$(arg sampling_points)" />
+  </node>
+</launch>

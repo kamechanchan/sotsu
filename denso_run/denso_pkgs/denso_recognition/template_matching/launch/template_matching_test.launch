@@ -1,0 +1,26 @@
+<launch>
+  <node pkg="template_matching" name="template_matching" type="template_matching.py" output="screen">
+    <param name="debug"                value="False"        />
+    <param name="template_image_1"     value="$(find template_matching)/data/pattern1.png" />
+    <param name="template_image_2"     value="$(find template_matching)/data/pattern2.png" />
+    <param name="template_image_3"     value="$(find template_matching)/data/pattern3.png" />
+    <param name="template_mathing_th"  value="0.50"         />
+    <param name="crop_area/x1"         value="800"         />
+    <param name="crop_area/y1"         value="700"          />
+    <param name="crop_area/x2"         value="1300"         />
+    <param name="crop_area/y2"         value="1000"          />
+    <!-- <param name="crop_area/x1"         value="450"         />
+    <param name="crop_area/y1"         value="390"          />
+    <param name="crop_area/x2"         value="1500"         />
+    <param name="crop_area/y2"         value="1000"          />-->
+
+    <param name="correction/gamma"     value="2.5"          />
+    <param name="correction/contrast"  value="15"           />
+    <param name="correction/noise_h"   value="100"          />
+    <param name="result_circle_radius" value="10"           />
+    <param name="bb_error"             value="15"           />
+    <param name="bb_num_th"            value="5"           />
+    <remap from="~inputIm"            to="/photoneo_center/rgb_texture" />
+    <!--<remap from="~outputIm"       to="time_abs_remaped" />-->
+  </node>
+</launch>

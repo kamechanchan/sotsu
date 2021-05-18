@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="sample_points" default="20000"/>
+    <arg name="LEAF_SIZE" default="0.0003"/>
+    <arg name="RETRY_COUNT_LIMIT" default="10"/>
+    <arg name="DURATION_TIME" default="1"/>
+    <arg name="object_name" default="HV8"/>
+    <arg name="the_number_of_object" default="7"/>
+    <arg name="mesh_path" default="$(find annotation_package)/mesh/HV8.stl"/>
+    
+    <node name="mesh_bara_publisher" pkg="annotation_package" type="mesh_cloud_bara_publisher"  output="screen">
+        <param name="the_number_of_object" value="$(arg the_number_of_object)"/>
+        <param name="object_name" value="$(arg object_name)"/>
+        <param name="sample_points" value="$(arg sample_points)"/>
+        <param name="LEAF_SIZE" value="$(arg LEAF_SIZE)"/>
+        <param name="RETRY_COUNT_LIMIT" value="$(arg RETRY_COUNT_LIMIT)"/>
+        <param name="DURATION_TIME" value="$(arg DURATION_TIME)"/>
+        <param name="mesh_path" value="$(arg mesh_path)"/>
+        
+    </node>
+
+</launch>

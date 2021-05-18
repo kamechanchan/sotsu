@@ -1,0 +1,16 @@
+<?xml version='1.0'?>
+<package format="2">
+  <name>denso_state_smach</name>
+  <version>1.0.0</version>
+  <description>The denso_state_smach package</description>
+
+  <maintainer email="shun.nishidalab@gmail.com">Shun Oyabu</maintainer>
+  <license>BSD</license>
+  <url type="repository">http://github.com/Nishida-Lab/denso_state_smach</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>smach</exec_depend>
+
+</package>

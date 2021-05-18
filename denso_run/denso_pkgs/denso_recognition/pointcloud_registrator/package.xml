@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>pointcloud_registrator</name>
+  <version>1.0.0</version>
+  <description>The pointcloud_registrator package</description>
+
+  <maintainer email="todo@todo.com">TODO</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>eigen_conversions</depend>
+  <depend>pcl_ros</depend>
+  <depend>roscpp</depend>
+  <depend>sensor_msgs</depend>
+
+  <build_depend>pcl_conversions</build_depend>
+
+  <exec_depend>meshcloud_publisher</exec_depend>
+  <exec_depend>pcl_conversions</exec_depend>
+
+  <test_depend>roslaunch</test_depend>
+
+</package>
