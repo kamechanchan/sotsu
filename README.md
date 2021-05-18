@@ -19,7 +19,7 @@ sudo apt install python3-catkin-pkg
 sudo apt install python3-osrf-pycommon
 pip3 install torch==1.7.1+cpu torchvision==0.8.2+cpu torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
 
-
+sudo apt install -y ros-noetic-tf2-sensor-msgs
 cd ~/ros_package/denso_ws 
 rosdep update
 rosdep install --from-paths src --ignore-src -r -y
