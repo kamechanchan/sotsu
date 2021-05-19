@@ -23,7 +23,8 @@ class TrainOptions(BaseOptions):
         # for ternsorboard visualization
         self.parser.add_argument('--no_vis', action='store_true', help='will not use tensorboard')
         self.parser.add_argument('--verbose_plot', action='store_true', help='plots network weights, etc.')
+
         
-        #self.is_train = True
+        self.is_train = True
 
 

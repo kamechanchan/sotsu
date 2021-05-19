@@ -77,13 +77,12 @@ class PoseEstNode():
         self.offset_data = None
         self.index = 0
         hennsuu_difine = time.time()
-        self.time_file.write(str(hennsuu_difine - self.start) + '\n')
+        self.time_file.write("変数の定義の時間は: " + str(hennsuu_difine - self.start) + '\n')
 
         #self.object_name_stl = model_loader("N" + self.object_name + ".pcd")
         self.object_name_stl = model_loader('random_original.pcd')
         self.model_road = time.time()
-        self.time_file.write(str(self.model_road - hennsuu_difine) + '\n')
-        self.time_file.close()
+        self.time_file.write("model_loaderの処理時間は : " + str(self.model_road - hennsuu_difine) + '\n')
         if self.object_name == "HV8":
            # self.object_name_stl.asnumpy()
             #self.object_name_stl = self.object_name_stl.scale(0.001, center=True)
@@ -93,13 +92,16 @@ class PoseEstNode():
 
     def callback(self, data):
         self.start_callback = time.time()
+        self.time_file.write("インスタンスからコールバックまでかかった時間は: " + str(self.start_callback - self.model_road) + '\n')
 
         self.o3d_data = convertCloudFromRosToOpen3d(data)
+        self.open3d_time = time.time()
+        self.time_file.write("open3dへ点群を変換するまでの時間は : " + str(self.open3d_time - self.start_callback) + '\n')
 
         if self.arch == "PointNet_Pose":
-            start_time = time.time()
             normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, 1024)
-            preprocess_time = time.time() - start_time
+            norma = time.time()
+            self.time_file.write("getNormalizedPcdの処理時間は : " + str(norma - self.open3d_time) + '\n')
             self.input_data.input_cloud = Float32MultiArray(data=np.array(normalized_pcd).flatten())
 
         elif self.arch == "3DCNN":
@@ -124,12 +126,21 @@ class PoseEstNode():
             print("estimator_client.py error!: Cloud not find arch!!")
             sys.exit(3)
         
+        pose_start = time.time()
         res = self.getPoseData()
+        pose_finish = time.time()
+        self.time_file.write("ネットワークから姿勢データを得るまでの時間は　: " + str(pose_finish - pose_start) + '\n')
         est_time = res.stamp
         if self.arch == "PointNet_Pose":
             res_denormalized = self.deNormalize(res)
+            deno = time.time()
+            self.time_file.write("Denormalizedが終了するまでの時間は : " + str(deno - pose_finish) + '\n')
             res = res_denormalized
         est_cloud = self.tfPublisher(res, self.stl_est, "estimated_tf")
+        call_finish = time.time()
+        self.time_file.write("tf_publisherが終了するまでの時間は : " + str(call_finish - deno) + '\n')
+        self.time_file.write("最初からcallbackの最後までの時間は : " + str(call_finish - self.start) + '\n')
+        self.time_file.write("callbackの処理時間は" + str(call_finish - self.start_callback) + '\n\n\n')
 
         if self.icp_flag:
             res_refine = PoseEstimateResponse()

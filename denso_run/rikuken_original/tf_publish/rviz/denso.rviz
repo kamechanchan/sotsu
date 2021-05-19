@@ -34,7 +34,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: PointCloud2
+    SyncSource: Image
 Preferences:
   PromptSaveOnExit: true
 Toolbars:
@@ -89,10 +89,24 @@ Visualization Manager:
       Use rainbow: true
       Value: false
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        HV8:
+          Value: true
+        estimated_tf:
+          Value: true
+        photoneo_center:
+          Value: true
+        photoneo_center_camera_frame:
+          Value: true
+        photoneo_center_optical_frame:
+          Value: true
+        photoneo_center_sensor_frame:
+          Value: true
+        world:
+          Value: true
       Marker Alpha: 1
       Marker Scale: 1
       Name: TF
@@ -100,9 +114,19 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        world:
+          HV8:
+            {}
+          photoneo_center:
+            photoneo_center_camera_frame:
+              {}
+            photoneo_center_optical_frame:
+              estimated_tf:
+                {}
+            photoneo_center_sensor_frame:
+              {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Alpha: 1
       Autocompute Intensity Bounds: true
       Autocompute Value Bounds:
@@ -591,7 +615,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 0.5277962684631348
+      Distance: 2.496799945831299
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -607,9 +631,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 1.3897955417633057
+      Pitch: 0.7447959780693054
       Target Frame: <Fixed Frame>
-      Yaw: 5.323564529418945
+      Yaw: 5.503567695617676
     Saved: ~
 Window Geometry:
   Displays:
