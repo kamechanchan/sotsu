@@ -130,7 +130,6 @@ def main():
         if not random_state_maker.random_state_make():
             rospy.logwarn("Failed to move object !!")
             #ここが正解？
-            random_state_maker.
         rate.sleep()
 
 if __name__ == '__main__':
