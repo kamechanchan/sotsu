@@ -36,7 +36,7 @@ if __name__=='__main__':
             u = my_quaternion.axis
             #print(str(u))
             theta = my_quaternion.degrees
-            #print(str(theta))
+            print(str(theta))
             theta_sum = theta_sum + theta
             
            # print(str(my_quaternion.yaw_pitch_roll[2]*kakeru) + ' ' + str(my_quaternion.yaw_pitch_roll[1]*kakeru) + ' ' + str(my_quaternion.yaw_pitch_roll[0]*kakeru))
