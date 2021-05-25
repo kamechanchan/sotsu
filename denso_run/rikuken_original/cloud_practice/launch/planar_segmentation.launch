@@ -4,7 +4,7 @@
     <node pkg="cloud_practice" type="cloud_filter" name="cloud_filter" />
     <node pkg="cloud_practice" type="cloud_downsampler" name="cloud_downsampler" /-->
     <arg name="input_pc_topic" default="/photoneo_center/sensor/points"/>
-    <arg name="distance_threshold" default="0.005"/>
+    <arg name="distance_threshold" default="0.05"/>
     
     <node pkg="cloud_practice" type="cloud_planar_segmenter" name="cloud_planar_segmenter" output="screen" >
         <param name="input_pc_topic" value="$(arg input_pc_topic)"/>

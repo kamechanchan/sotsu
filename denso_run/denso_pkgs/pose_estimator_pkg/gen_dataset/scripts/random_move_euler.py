@@ -78,6 +78,7 @@ class RandomMoveEuler(object):
 
     def random_state_make(self):
         self.record_ok = rospy.get_param("/" + self.object_name + "/record_cloud/is_ok", False)
+        print(self.record_ok)
         if self.record_ok:
             self.pos_.pose.position.x = random.uniform(-0.2, 0.2)
             self.pos_.pose.position.y = random.uniform(-0.2, 0.2)
@@ -129,7 +130,7 @@ def main():
     while not random_state_maker.isReadyMove():
         rospy.logwarn("Not ready model ...")
 
-    rate = rospy.Rate(1)
+    rate = rospy.Rate(10)
     while not rospy.is_shutdown():
         if not random_state_maker.random_state_make():
             rospy.logwarn("Failed to move object !!")
