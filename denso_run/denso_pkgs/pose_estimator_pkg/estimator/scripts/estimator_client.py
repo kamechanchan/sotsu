@@ -141,6 +141,7 @@ class PoseEstNode():
         self.time_file.write("tf_publisherが終了するまでの時間は : " + str(call_finish - deno) + '\n')
         self.time_file.write("最初からcallbackの最後までの時間は : " + str(call_finish - self.start) + '\n')
         self.time_file.write("callbackの処理時間は" + str(call_finish - self.start_callback) + '\n\n\n')
+      
 
         if self.icp_flag:
             res_refine = PoseEstimateResponse()
@@ -165,6 +166,7 @@ class PoseEstNode():
             ros_pcd = convertCloudFromOpen3dToRos(cloud, header)
             est_cloud = do_transform_cloud(ros_pcd, t)
             self.tf.sendTransform(t)
+            print("send_transform")
             self.pub_est.publish(est_cloud)
             return est_cloud
         elif child_frame_id == "icpRefine":
