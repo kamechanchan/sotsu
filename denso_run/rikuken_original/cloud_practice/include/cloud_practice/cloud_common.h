@@ -64,17 +64,24 @@ public:
                             CloudOperator *cloud_operator,
                             const std::string &sub_topic_name) :
         cloud_operator_(cloud_operator),
-        cloud_sub_(nh.subscribe(sub_topic_name, 10, &CloudOperationHandler::operateCB, this))
+        cloud_sub_(nh.subscribe(sub_topic_name, 10, &CloudOperationHandler::operateCB, this)),
+        count(0)
     {}
 
     void operateCB(const sensor_msgs::PointCloud2& cloud_input_ros)
     {
         cloud_operator_->setInputCloud(cloud_input_ros);
         cloud_operator_->operate();
+        std::cout << "ukerta" << std::to_string(count++) << std::endl;
         cloud_operator_->publish();
     }
 protected:
     CloudOperator *cloud_operator_;
     ros::Subscriber cloud_sub_;
+<<<<<<< HEAD
 };
 
+=======
+    int count;
+};
+>>>>>>> 64984bb32ab33f043db1abf8288f9b265b0d4cf5

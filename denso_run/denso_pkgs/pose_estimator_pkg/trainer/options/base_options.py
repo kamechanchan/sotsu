@@ -38,7 +38,7 @@ class BaseOptions:
         self.parser.add_argument('--tensorboardX_results_directory_switch',type=str,default="ishiyama")
         self.parser.add_argument('--dataset_number', type=int, default=self.dataset_number)
         self.parser.add_argument('--lr', type=float, default=0.001, help='initial learning rate of adam')
-        self.parser.add_argument('--is_train', type=bool, default=True)
+        
         
         self.initialized = True
 
@@ -70,7 +70,7 @@ class BaseOptions:
             self.opt.local_export_folder = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_swich,self.opt.name, self.concat_dataset_model, self.opt.local_export_folder)
             util.mkdir(self.opt.export_folder)    
 
-        if self.opt.is_train:
+        if self.is_train:
             print("---------------Options-------------")
             for k, v in sorted(args.items()):
                 print('%s: %s' % (str(k), str(v)))
