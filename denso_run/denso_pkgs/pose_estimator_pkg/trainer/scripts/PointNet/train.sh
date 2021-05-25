@@ -22,8 +22,8 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --serial_batches False \
 --verbose_plot True \
 --lr 0.0001 \
---checkpoints_swich hatena \
+--checkpoints_swich iranai \
 --dataroot_swich tsuchida \
 --local_checkpoints_dir /home/ericlab/DENSO_results/raugh_recognition/checkpoint \
 --tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
---tensorboardX_results_directory_switch tsuchida/0518 \
+--tensorboardX_results_directory_switch tsuchida/0526 \
