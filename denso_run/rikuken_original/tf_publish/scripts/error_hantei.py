@@ -28,13 +28,14 @@ if __name__=='__main__':
     rospy.init_node('error_node')
     tfBuffer = tf2_ros.Buffer()
     listener = tf2_ros.TransformListener(tfBuffer)
-    rate = rospy.Rate(30)
+    rate = rospy.Rate(10)
     rospack = rospkg.RosPack()
     count = 0
     model_state_pub_ = rospy.Publisher('/gazebo/set_model_state', ModelState, queue_size=1)
     pos_ = ModelState()
     pos_.model_name = "HV8"
     file = open(rospack.get_path("estimator") + '/zentai.txt', 'w')
+    ll = 0
     while not rospy.is_shutdown():
         
         try:
@@ -63,14 +64,14 @@ if __name__=='__main__':
                 time_start = rospy.get_param("time_start", time.time())
                 
                 kake = 180 / pi
-
-                file.write("姿勢を移動させていい感じの位置を認識するまでの時間は　: " + str(time.time() - time_start) + '\n')
-                file.write("真値　 x: " + str(groud_trans.x) + "  y: " + str(groud_trans.y) + "  z: " + str(groud_trans.z))
-                file.write("  roll: " + str(groud_euler[0]*kake) + "   pitch: " + str(groud_euler[1]*kake) + "    yaw: " + str(groud_euler[2]*kake) + " \n")
-                file.write("推定値 x: " + str(esti_trans.x) + "  y: " + str(esti_rot.y) + "  z: " + str(esti_rot.z))
-                file.write(" roll: " + str(esti_euler[0]*kake) + "  pitch: " + str(esti_euler[1]*kake) + "  yaw: " + str(esti_euler[2]*kake) + " \n")
-                file.write("error  x: " + str(error_trans.x) + "  y: " + str(error_trans.y) + "  z: " + str(error_trans.z))
-                file.write("  roll: " + str(error_euler[0] * kake) + "  pitch: " + str(error_euler[1] * kake) + "  yaw: " + str(error_euler[2]* kake) + "\n\n\n")
+                ll = ll + 1
+                file.write(str(ll) + ": シミュレーション上のモデルを移動させておおよその位置を認識するまでの時間は　: " + str(time.time() - time_start) + '秒\n')
+                #file.write("真値　 x: " + str(groud_trans.x) + "  y: " + str(groud_trans.y) + "  z: " + str(groud_trans.z))
+                #file.write("  roll: " + str(groud_euler[0]*kake) + "   pitch: " + str(groud_euler[1]*kake) + "    yaw: " + str(groud_euler[2]*kake) + " \n")
+                #file.write("推定値 x: " + str(esti_trans.x) + "  y: " + str(esti_rot.y) + "  z: " + str(esti_rot.z))
+                #file.write(" roll: " + str(esti_euler[0]*kake) + "  pitch: " + str(esti_euler[1]*kake) + "  yaw: " + str(esti_euler[2]*kake) + " \n")
+                file.write("error  x: " + str(error_trans.x)+"[m]" + "  y: " + str(error_trans.y)+"[m]" + "  z: " + str(error_trans.z)+"[m]" + "\n")
+                file.write("roll: " + str(error_euler[0] * kake) + "°" + "  pitch: " + str(error_euler[1] * kake) + "°" + "  yaw: " + str(error_euler[2]* kake) + "°" + "\n\n\n")
                 pos_.pose.position.x = random.uniform(-0.2, 0.2)
                 pos_.pose.position.y = random.uniform(-0.2, 0.2)
                 pos_.pose.position.z = random.uniform(0.1, 0.25)
@@ -86,6 +87,15 @@ if __name__=='__main__':
                 model_state_pub_.publish(pos_)
 
                 rospy.set_param("time_start", time.time())
+            else:
+                pos_.pose.position.x = groud_trans.x
+                pos_.pose.position.y = groud_trans.y
+                pos_.pose.position.z = groud_trans.z
+                pos_.pose.orientation.x = groud_rot.x
+                pos_.pose.orientation.y = groud_rot.y
+                pos_.pose.orientation.z = groud_rot.z
+                pos_.pose.orientation.w = groud_rot.w
+                model_state_pub_.publish(pos_)
             
                 
             
