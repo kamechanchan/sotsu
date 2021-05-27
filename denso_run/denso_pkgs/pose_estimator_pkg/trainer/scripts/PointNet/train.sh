@@ -2,7 +2,7 @@
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets \
---dataset_model HV8_size_80000_range_pi_1.hdf5 \
+--dataset_model t_pipe_size_80000_range_pi_1.hdf5 \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint \
 --resolution 1024 \
 --phase train \
@@ -22,7 +22,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --serial_batches False \
 --verbose_plot True \
 --lr 0.0001 \
---checkpoints_swich iranai \
+--checkpoints_swich hasire \
 --dataroot_swich tsuchida \
 --local_checkpoints_dir /home/ericlab/DENSO_results/raugh_recognition/checkpoint \
 --tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
