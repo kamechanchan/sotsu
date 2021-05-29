@@ -48,6 +48,19 @@ roslaunch cloud_practice planar_segmentation.launch
 
 roslaunch gen_dataset record_data.launch
 ```
+### annotation pointnet
+```
+roslaunch tf_publish spawn_object.launch object_name:=HV8_barazumi
+
+roslaunch tf_publish bara_model_tf.launch
+
+roslaunch cloud_practice planar_segmentation.launch
+
+roslaunch annotation_package mesh_cloud_bara_publish.launch
+
+roslaunch annotation_package nearest_search_bara.launch
+
+```
 
 ```
 echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${HOME}/ros_package/denso_ws/src/denso_run/rikuken_original/tf_publish/models" >> ~/.bashrc
