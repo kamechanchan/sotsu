@@ -69,6 +69,7 @@ namespace nearest_point_extractor
         sensor_msgs::PointCloud2 cloud_msg;
         output_cloud_->header.frame_id = sensor_cloud_->header.frame_id;
         print_parameter(std::to_string(output_cloud_->points.size()) + "output_point");
+        frame_id_ = output_cloud_->header.frame_id;
         pcl::toROSMsg(*output_cloud_, cloud_msg);
         cloud_pub_.publish(cloud_msg);
     }

@@ -4,9 +4,10 @@
 
 static int cout = 0;
 ros::Publisher pub;
+std::string save_name;
 void point_callback(const sensor_msgs::PointCloud2ConstPtr &cloud_msg)
 {
-    pcl::PointCloud<pcl::PointXYZRGB> cloud, without_segment, segment;
+    pcl::PointCloud<pcl::PointXYZ> cloud, without_segment, segment;
     pcl::ModelCoefficients coefficient;
     sensor_msgs::PointCloud2 sensr;
     /*for (int i = 0; i < cloud_msg->fields.size(); i++) {
@@ -17,11 +18,11 @@ void point_callback(const sensor_msgs::PointCloud2ConstPtr &cloud_msg)
     pcl::PointIndices::Ptr inlier(new pcl::PointIndices());
     PointCloud_class::segment(inlier, cloud, coefficient);
     PointCloud_class::extract(inlier, cloud, segment, without_segment);
-    pcl::PointCloud<pcl::PointXYZI> inten_cloud;
+    //pcl::PointCloud<pcl::PointXYZI> inten_cloud;
     //pcl::copyPointCloud(without_segment, inten_cloud);
-    pcl::PointCloudXYZRGBtoXYZI(without_segment, inten_cloud);
-    PointCloud_class::save_pcd(inten_cloud, "/home/ericlabshinya/yes_1.pcd");
-    Point_and_ROS::convert_1_to_2(inten_cloud, sensr);
+    //pcl::PointCloudXYZRGBtoXYZI(without_segment, inten_cloud);
+    PointCloud_class::save_pcd(cloud, save_name);
+    //Point_and_ROS::convert_1_to_2(inten_cloud, sensr);
     sensr.header.frame_id = cloud_msg->header.frame_id;
     pub.publish(sensr);
     
@@ -37,7 +38,7 @@ int main(int argc, char** argv)
     ros::NodeHandle pnh("~");
     std::string pub_topic_name = "shinya_3";
     std::string topic_name = "/photoneo_center/sensor/points";
-    std::string save_name = "/home/ericlabshinya/yes_1.pcd";
+    
     pnh.getParam("topic_name", topic_name);
     pnh.getParam("save_name", save_name);
     pnh.getParam("pub_topic_name", pub_topic_name);
