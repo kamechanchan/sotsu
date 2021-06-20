@@ -14,7 +14,7 @@ path = "/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annota
 hdf5_file = h5py.File(path, "r")
 ff = open('/home/ericlab/tameshi_pcd/subara.txt', "w")
 for i in range(1):
-    pcl_data = hdf5_file["data_" + str(i + 2)]['pcl'][()]
+    pcl_data = hdf5_file["data_" + str(i + 5)]['pcl'][()]
     list_1 = pcl_data.tolist()
     print(path)
     print(pcl_data)

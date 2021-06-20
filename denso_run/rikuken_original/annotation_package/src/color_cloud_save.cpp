@@ -11,14 +11,11 @@ static int count = 0;
 
 void callback(sensor_msgs::PointCloud2ConstPtr msg)
 {
-    ROS_INFO_STREAM("msg_data is " << msg->data[0] << " " << msg->data[1] << " " << msg->data[2] << " " << msg->data[3]);
-    ROS_INFO_STREAM(msg->fields);
     bool hantei;
     pnh->getParam("/is_record_kekkyoku/ok", hantei);
     ROS_INFO_STREAM("hantei = " << hantei);
     if (hantei) {
         pcl::PointCloud<pcl::PointXYZRGB> cloud;
-        cloud.points[0].rgb
         pcl::fromROSMsg(*msg, cloud);
         std::string path = pcd_dir_name + "save_" + std::to_string(count++) + ".pcd";
         pcl::io::savePCDFile(path, cloud);
