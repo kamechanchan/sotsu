@@ -64,7 +64,8 @@ class PoseData(BaseDataset):
 class Segmentation_Data(PoseData):
     def __init__(self, opt):
         PoseData.__init__(self, opt)
-        self.hdf5_data = Segmentation_PCD_Loader(self.dataroot,self.dataset_model, self.size, self.dataset_number)
+        self.instance_number = opt.instance_number
+        self.hdf5_data = Segmentation_PCD_Loader(self.dataroot,self.dataset_model, self.size, self.dataset_number, self.instance_number)
         self.hdf5_data.load_hdf5()
 
     def __getitem__(self, index):
