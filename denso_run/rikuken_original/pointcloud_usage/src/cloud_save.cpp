@@ -17,10 +17,10 @@ void point_callback(const sensor_msgs::PointCloud2ConstPtr &cloud_msg)
     pcl::PointIndices::Ptr inlier(new pcl::PointIndices());
     PointCloud_class::segment(inlier, cloud, coefficient);
     PointCloud_class::extract(inlier, cloud, segment, without_segment);
-    pcl::PointCloud<pcl::PointXYZI> inten_cloud;
+    pcl::PointCloud<pcl::PointXYZRGB> inten_cloud;
     //pcl::copyPointCloud(without_segment, inten_cloud);
-    pcl::PointCloudXYZRGBtoXYZI(without_segment, inten_cloud);
-    PointCloud_class::save_pcd(inten_cloud, "/home/ericlabshinya/yes_1.pcd");
+    //pcl::PointCloudXYZRGBtoXYZI(without_segment, inten_cloud);
+    PointCloud_class::save_pcd(cloud, "/home/tsuchida/yes_1.pcd");
     Point_and_ROS::convert_1_to_2(inten_cloud, sensr);
     sensr.header.frame_id = cloud_msg->header.frame_id;
     pub.publish(sensr);
