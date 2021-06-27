@@ -57,7 +57,7 @@ class EstimatorModel:
             y_data = torch.from_numpy(data["y_data"].astype(np.float32)) 
         
 
-            if self.name == "PointNet":
+            if self.name == "raugh_recognition":
                 x_data = x_data.transpose(2, 1)
 
             self.x_data, self.y_data = x_data.to(self.device), y_data.to(self.device)
@@ -66,7 +66,7 @@ class EstimatorModel:
             x_data = torch.from_numpy(data)
             x_data = x_data.float()
 
-            if self.name == "PointNet":
+            if self.name == "raugh_recognition":
                 #x_data = self.get_centroid(x_data)
                 x_data = x_data.transpose(2, 1)
 
@@ -98,14 +98,7 @@ class EstimatorModel:
 
 
     def load_network(self, which_epoch):
-        #save_filename = "%s_net-has.pth" % which_epoch
-        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
         save_filename = "latest_net.pth"
-        #self.save_dir = "/home/ericlab/Rikuken/Mega/X10/PointNet/dataset_20000.hdf5"
-        #self.save_dir = "/home/ericlab/MEGAsync/X10/03_20/PointNet/dataset_20000_1.hdf5"
-        #save_filename = "latest_net.pth"
-        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
-        #load_path = join(self.save_dir, PC_NAME,save_filename)
         load_path = join(self.save_dir, save_filename)
         net = self.net
 
@@ -119,20 +112,12 @@ class EstimatorModel:
         net.load_state_dict(state_dict,strict=False)
 
     def load_network_estimator(self, which_epoch):
-        #save_filename = "%s_net-has.pth" % which_epoch
-        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
         save_filename = self.checkpoints_dir
-        #self.save_dir = "/home/ericlab/Rikuken/Mega/X10/PointNet/dataset_20000.hdf5"
-        #self.save_dir = "/home/ericlab/MEGAsync/X10/03_20/PointNet/dataset_20000_1.hdf5"
-        #save_filename = "latest_net.pth"
-        #self.save_dir = "/home/ericlab/MEGAsync/TEI_PC/3_24-6layer/PointNet/dataset_20000_1.hdf5"
-        #load_path = join(self.save_dir, PC_NAME,save_filename)
         load_path = save_filename
         net = self.net
 
         if isinstance(net, torch.nn.DataParallel):
             net = net.module
-        #load_path = "/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth"
         print("loading the model from %s" % load_path)
         state_dict = torch.load(load_path, map_location=str(self.device))
         if hasattr(state_dict, "_metadata"):

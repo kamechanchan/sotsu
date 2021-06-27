@@ -13,6 +13,7 @@ from options.train_options import TrainOptions
 from data.base_dataset import BaseDataset
 from pcd_loader import PCD_Loader
 from voxel_loader import Voxel_Loader
+from Segmentation_PCD_loader import Segmentation_PCD_Loader
 
 
 class PoseData(BaseDataset):
@@ -51,9 +52,6 @@ class PoseData(BaseDataset):
                 meta["x_data"] = x_data
                 meta["y_data"] = y_data
                 return meta
-            elif self.arch == "Segmentation_PointNet":
-                pass 
-                
         except:
             print("pose_estimate_data.py: Error! Cloud not load hdf5_data")
             sys.exit(1)
@@ -61,6 +59,27 @@ class PoseData(BaseDataset):
 
     def __len__(self):
         return self.len_size
+
+
+class Segmentation_Data(PoseData):
+    def __init__(self, opt):
+        PoseData.__init__(self, opt)
+        self.hdf5_data = Segmentation_PCD_Loader(self.dataroot,self.dataset_model, self.size, self.dataset_number)
+        self.hdf5_data.load_hdf5()
+
+    def __getitem__(self, index):
+        meta = {}
+        try:
+            if self.arch == "Segmentation_PointNet":
+                x_data, y_data = self.hdf5_data.get_pcd_data(index)
+                meta["x_data"] = x_data
+                meta["y_data"] = y_data
+                #meta["sizes"] = sizes
+                return meta
+        except:
+            print("pose_estimate_data.py: Error! Cloud not load hdf5_data")
+            sys.exit(1)
+
 
 if __name__ == "__main__":
     opt = TrainOptions().parse()
