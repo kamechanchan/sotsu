@@ -18,7 +18,7 @@ class record_file(object):
     def __init__(self):
         rospack = rospkg.RosPack()
         self.package_path = rospack.get_path("annotation_package")
-        self.filepath = rospy.get_param("~filepath", self.package_path + "/dataset")
+        self.filepath = rospy.get_param("~filepath", "/home/ericlab/ishiyama_tanomu.hdf5")
         self.num_dataset = rospy.get_param("~num_dataset", 5)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
@@ -72,15 +72,13 @@ class record_file(object):
             msg_size = len(msg.x)
             print(msg_size)
            
-            np_points = np.zeros((msg_size, 7), dtype=np.float32)
+            np_points = np.zeros((msg_size, 3), dtype=np.float32)
+            np_masks = np.zeros((msg_size, 1), dtype=np.float32)
             for i in range(msg_size):
                 np_points[i, 0] = msg.x[i]
                 np_points[i, 1] = msg.y[i]
                 np_points[i, 2] = msg.z[i]
-                np_points[i, 3] = msg.r[i]
-                np_points[i, 4] = msg.g[i]
-                np_points[i, 5] = msg.b[i]
-                np_points[i, 6] = msg.instance[i]
+                np_masks[i, 0] = msg.instance[i]
             
             for i in range(10):
                 print(str(msg.r[i]) + " " + str(msg.g[i]) + " " + str(msg.b[i]) + " " + str(msg.instance[i]))
@@ -90,21 +88,22 @@ class record_file(object):
             np_points[:, 2] = np.resize(msg.z, msg_size)
             np_points[:, 3] = np.resize(msg.rgb, msg_size)
             '''
-            self.savePCD(np_points)
+            self.savePCD(np_points, np_masks)
             rospy.set_param("/is_move/ok", True)
             rospy.set_param("/is_record/ok", False)
             self.matu = 0
 
             
 
-    def savePCD(self, cloud):
+    def savePCD(self, cloud, masks):
         if self.num_ >  self.num_dataset:
             rospy.signal_shutdown('finish')
             os._exit(10)
         else:
             
             data_g = self.hdf5_file.create_group("data_" + str(self.num_))
-            data_g.create_dataset("pcl", data=cloud, compression="lzf")
+            data_g.create_dataset("Points", data=cloud, compression="lzf")
+            data_g.create_dataset("masks", data=masks, compression="lzf")
             self.hdf5_file.flush()
             
             self.num_ += 1
