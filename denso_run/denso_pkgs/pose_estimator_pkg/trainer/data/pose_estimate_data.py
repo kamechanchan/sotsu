@@ -66,6 +66,9 @@ class Segmentation_Data(BaseDataset):
             print("pose_estimate_data(Segmentation_Data).py: Error! Cloud not load hdf5_data")
             sys.exit(1)
 
+    def __len__(self):
+        return self.len_size
+
 
 if __name__ == "__main__":
     opt = TrainOptions().parse()

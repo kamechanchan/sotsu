@@ -24,6 +24,10 @@ def TrainValDataset(opt):
 
     subset1 = Subset(dataset, subset1_indices) #set train_data and index(対応付け)
     subset2 = Subset(dataset, subset2_indices)
+
+    print("subset")
+    print(subset1)
+    print(subset2)
     
     return subset1, subset2
 
