@@ -20,8 +20,10 @@ class Segmentation_PCD_Loader(PCD_Loader):
 
             print("Start loading datasets !!")
             for n in tqdm(range(0, self.dataset_size[i])):
-                pcl_data = self.hdf5_file["data_" + str(n + 1)]['pcl'][()]
-                mask_data = self.hdf5_file["data_" + str(n + 1)]['masks'][()]
+                #pcl_data = self.hdf5_file["data_" + str(n + 1)]['points'][()]
+                #mask_data = self.hdf5_file["data_" + str(n + 1)]['masks'][()]
+                pcl_data = self.hdf5_file["data_"]['Points'][()]
+                mask_data = self.hdf5_file["data_"]['masks'][()]
                 print("aaaaaaaaaaaaa")
                 print(mask_data)
 

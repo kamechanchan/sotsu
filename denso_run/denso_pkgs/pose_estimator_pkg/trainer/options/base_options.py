@@ -12,11 +12,11 @@ class BaseOptions:
     def __init__(self):
         self.parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         self.initialized = False
-        self.dataset_number=4
+        self.dataset_number = 1
 
     def initialize(self):
         self.parser.add_argument('--main_directory',type=str,default=__file__)
-        self.parser.add_argument('--dataset_mode', choices={"segmentation", "pose_estimation"}, default='pose_estimation')
+        self.parser.add_argument('--dataset_mode', choices={"instance_segmentation", "pose_estimation"}, default='pose_estimation')
         self.parser.add_argument('--dataset_model', nargs=self.dataset_number, type=str, default='HV8')
         self.parser.add_argument('--max_dataset_size', nargs=self.dataset_number, type=int, default=float("inf"), help='Maximum num of samples per epoch')
         self.parser.add_argument('--name', type=str, default="debug")

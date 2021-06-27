@@ -1,4 +1,4 @@
-from discriminative import DiscriminativeLoss
+from .discriminative import DiscriminativeLoss
 import torch
 import torch.nn as nn
 import torch.optim as optim
