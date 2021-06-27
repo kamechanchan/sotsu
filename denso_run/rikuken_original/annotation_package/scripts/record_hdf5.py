@@ -71,16 +71,19 @@ class record_file(object):
             #msg = dummy_pcl()
             msg_size = len(msg.x)
             print(msg_size)
-            
-            np_points = np.zeros((msg_size, 4), dtype=np.float32)
+           
+            np_points = np.zeros((msg_size, 7), dtype=np.float32)
             for i in range(msg_size):
                 np_points[i, 0] = msg.x[i]
                 np_points[i, 1] = msg.y[i]
                 np_points[i, 2] = msg.z[i]
-                np_points[i, 3] = msg.rgb[i]
+                np_points[i, 3] = msg.r[i]
+                np_points[i, 4] = msg.g[i]
+                np_points[i, 5] = msg.b[i]
+                np_points[i, 6] = msg.instance[i]
             
             for i in range(10):
-                print(str(msg.x[i]) + " " + str(msg.rgb[i]))
+                print(str(msg.r[i]) + " " + str(msg.g[i]) + " " + str(msg.b[i]) + " " + str(msg.instance[i]))
             '''
             np_points[:, 0] = np.resize(msg.x, msg_size)
             np_points[:, 1] = np.resize(msg.y, msg_size)
