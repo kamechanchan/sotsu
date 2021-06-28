@@ -24,7 +24,7 @@ void callback(sensor_msgs::PointCloud2ConstPtr msg)
         return;
     }
     ROS_INFO_STREAM("change ros msg to pcl");
-    pcl::io::savePCDFile("/home/ericlab/dummy_cloud/hab.pcd", cloud);
+    //pcl::io::savePCDFile("/home/ericlab/dummy_cloud/hab.pcd", cloud);
     color_cloud_bridge::dummy_pcl dummy;
     int r_p, g_p, b_p;
     for (int i = 0; i < cloud.points.size(); i++) {

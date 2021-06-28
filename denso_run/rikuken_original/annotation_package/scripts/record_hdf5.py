@@ -32,7 +32,7 @@ class record_file(object):
 
     def init_file(self):
         util_rikuken.mkdir(self.filepath)
-        self.all_file_path = self.filepath + "/init.hdf5"
+        self.all_file_path = self.filepath + "/ishiyama_1000.hdf5"
         self.hdf5_file = h5py.File(self.all_file_path, "w")
     '''
     def callback(self, cloud):
@@ -70,7 +70,7 @@ class record_file(object):
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()
             msg_size = len(msg.x)
-            print(msg_size)
+            #print(msg_size)
            
             np_points = np.zeros((msg_size, 3), dtype=np.float32)
             np_masks = np.zeros((msg_size, 1), dtype=np.float32)
@@ -80,8 +80,8 @@ class record_file(object):
                 np_points[i, 2] = msg.z[i]
                 np_masks[i, 0] = msg.instance[i]
             
-            for i in range(10):
-                print(str(msg.r[i]) + " " + str(msg.g[i]) + " " + str(msg.b[i]) + " " + str(msg.instance[i]))
+            #for i in range(10):
+                #print(str(msg.r[i]) + " " + str(msg.g[i]) + " " + str(msg.b[i]) + " " + str(msg.instance[i]))
             '''
             np_points[:, 0] = np.resize(msg.x, msg_size)
             np_points[:, 1] = np.resize(msg.y, msg_size)
