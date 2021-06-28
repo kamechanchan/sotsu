@@ -23,6 +23,7 @@ class EstimatorModel:
         self.gpu_ids = opt.gpu_ids
         self.device = torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
         self.is_train = self.opt.is_train
+        self.instance_number = opt.instance_number
 
         self.optimizer = None
         self.x_data  = None
@@ -59,6 +60,8 @@ class EstimatorModel:
 
             if self.name == "raugh_recognition":
                 x_data = x_data.transpose(2, 1)
+            elif self.name == "object_segment":
+                x_data = x_data.transpose(2, 1)
 
             self.x_data, self.y_data = x_data.to(self.device), y_data.to(self.device)
 
@@ -69,6 +72,8 @@ class EstimatorModel:
             if self.name == "raugh_recognition":
                 #x_data = self.get_centroid(x_data)
                 x_data = x_data.transpose(2, 1)
+            elif self.name == "object_segment":
+                x_data = x_data.transpose(2, 1)
 
             self.x_data = x_data.to(self.device)
 
@@ -78,7 +83,10 @@ class EstimatorModel:
         self.optimizer.zero_grad()
         pred = self.net(self.x_data)
 
-        self.loss = self.criterion(pred, self.y_data)
+        if self.name == "raugh_recognition":
+            self.loss = self.criterion(pred, self.y_data)
+        elif self.name == "object_segment":
+            self.loss = self.criterion(pred, self.y_data, self.instance_number)
         self.loss.backward()
         self.optimizer.step()
         return self.loss.item() * self.x_data.size(0)
@@ -87,7 +95,10 @@ class EstimatorModel:
     def val_step(self):
         self.net.eval()
         pred = self.net(self.x_data)
-        self.loss = self.criterion(pred, self.y_data)
+        if self.name == "raugh_recognition":
+            self.loss = self.criterion(pred, self.y_data)
+        elif self.name == "object_segment":
+            self.loss = self.criterion(pred, self.y_data, self.instance_number)
         return self.loss.item() * self.x_data.size(0)
 
 

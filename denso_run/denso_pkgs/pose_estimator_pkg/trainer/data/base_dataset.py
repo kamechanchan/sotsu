@@ -31,6 +31,7 @@ class BaseDataset(data.Dataset):
 
 def collate_fn(batch):
     meta = {}
+    #print(np.array(batch))
     keys = batch[0].keys()
     for key in keys:
         meta.update({key:np.array([d[key] for d in batch])})

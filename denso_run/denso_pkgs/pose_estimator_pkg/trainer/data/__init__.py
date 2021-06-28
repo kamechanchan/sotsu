@@ -8,7 +8,7 @@ def TrainValDataset(opt):
         from data.pose_estimate_data import PoseData
         dataset = PoseData(opt)
     elif opt.dataset_mode == "instance_segmentation":
-        from data.pose_estimate_data import Segmentation_Data
+        from data.object_segment import Segmentation_Data
         dataset = Segmentation_Data(opt)
     else:
         print("Error!! ")
@@ -25,9 +25,9 @@ def TrainValDataset(opt):
     subset1 = Subset(dataset, subset1_indices) #set train_data and index(対応付け)
     subset2 = Subset(dataset, subset2_indices)
 
-    print("subset")
-    print(subset1)
-    print(subset2)
+    print("dataset_dataset")
+    print(type(subset1))
+    print(type(subset2))
     
     return subset1, subset2
 

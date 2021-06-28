@@ -34,7 +34,7 @@ def define_loss(opt):
     if opt.dataset_mode == "pose_estimation":
         loss = nn.MSELoss()
     elif opt.dataset_mode == "instance_segmentation":
-        loss = DiscriminativeLoss()
+        loss = DiscriminativeLoss(delta_d = opt.delta_d, delta_v = opt.delta_v)
         
     return loss
 
@@ -85,10 +85,10 @@ class PointNet_Semantic_Segmentation(nn.Module):
         self.num_class=num_class
         
         self.pointnet_global_feat = PointNet_feat_segmentation(grobal_feat = False,feature_transform = True)
-        self.conv1 = nn.conv1d(1088, 512, 1)
-        self.conv2 = nn.conv1d(512, 256, 1)
-        self.conv3 = nn.conv1d(256, 128, 1)
-        self.last_conv = nn.conv1d(128, self.num_class,1)
+        self.conv1 = nn.Conv1d(1088, 512, 1)
+        self.conv2 = nn.Conv1d(512, 256, 1)
+        self.conv3 = nn.Conv1d(256, 128, 1)
+        self.last_conv = nn.Conv1d(128, self.num_class,1)
 
         self.bn1 = nn.BatchNorm1d(512)
         self.bn2 = nn.BatchNorm1d(256)
@@ -117,11 +117,11 @@ class JSIS3D(nn.Module):
         super(JSIS3D, self).__init__()
         self.embedded_size = embedded_size
         
-        self.pointnet_global_feat = PointNet_feat_segmentation(grobal_feat = False,feature_transform = True)
-        self.conv1 = nn.conv1d(1088, 512, 1)
-        self.conv2 = nn.conv1d(512, 256, 1)
-        self.conv3 = nn.conv1d(256, 128, 1)
-        self.last_conv = nn.conv1d(128, self.embedded_size,1)
+        self.pointnet_global_feat = PointNet_feat_segmentation(global_feat = False,feature_transform = True)
+        self.conv1 = nn.Conv1d(1088, 512, 1)
+        self.conv2 = nn.Conv1d(512, 256, 1)
+        self.conv3 = nn.Conv1d(256, 128, 1)
+        self.last_conv = nn.Conv1d(128, self.embedded_size,1)
 
         self.bn1 = nn.BatchNorm1d(512)
         self.bn2 = nn.BatchNorm1d(256)
