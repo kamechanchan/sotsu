@@ -71,6 +71,11 @@ class DnnNode():
             est_pose, est_time = f.predict_pose(self.model, data, "C3D_Voxel")
             res.success = True
 
+        elif self.arch == "JSIS3D":
+            data = req.input_cloud.data
+            est_pose, est_time = f.predict_pose(self.model, data, "JSIS3D")
+            res.success = True
+
         else:
             print("Error while pose prediction operation")
             res.success = False
