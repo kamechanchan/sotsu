@@ -31,6 +31,8 @@ namespace nearest_point_extractor
         {
             std::cout << para << std::endl;
         }
+        pcl::PointCloud<pcl::PointXYZRGB>::Ptr output_cloud_;
+        std::string frame_id_;
     private:
         ros::NodeHandle nh_;
         ros::NodeHandle *pnh_;
@@ -43,7 +45,7 @@ namespace nearest_point_extractor
 
         pcl::PointCloud<pcl::PointXYZ>::Ptr sensor_cloud_;
         pcl::PointCloud<pcl::PointXYZ>::Ptr mesh_cloud_;
-        pcl::PointCloud<pcl::PointXYZRGB>::Ptr output_cloud_;
+        
         float LEAF_SIZE;
         int num_of_nearest_points_;
         bool flag_;

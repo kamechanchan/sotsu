@@ -96,7 +96,7 @@ int main(int argc, char **argv)
     ros::init(argc, argv, "cloud_cluster");
     ros::NodeHandle nh;
 
-    CloudOperationHandler handler(nh, new CloudClusterer(nh), "/cloud_without_segmented");
+    CloudOperationHandler handler(nh, new CloudClusterer(nh), "cloud_without_segmented");
 
     ros::spin();
 

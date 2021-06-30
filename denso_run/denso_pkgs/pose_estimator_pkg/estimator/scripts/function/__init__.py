@@ -1,6 +1,7 @@
+#!/usr/bin/env python3
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), '/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/scripts/function/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
 
 from geometry_msgs.msg import TransformStamped
 

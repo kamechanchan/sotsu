@@ -41,8 +41,8 @@ class EstimatorModel:
             print_network(self.net)
 
         if not self.is_train:
-            #self.load_network_estimator(opt.which_epoch)
-            self.load_network(opt.which_epoch)
+            self.load_network_estimator(opt.which_epoch)
+            #self.load_network(opt.which_epoch)
 
 
     def get_centroid(self, data):

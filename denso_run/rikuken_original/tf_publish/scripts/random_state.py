@@ -12,7 +12,7 @@ from geometry_msgs.msg import Pose
 if __name__=='__main__':
     rospy.init_node('random_state')
     pose_data =ModelState()
-    pose_data.model_name = rospy.get_param('~object_name', 'HV8')
+    pose_data.model_name = rospy.get_param('~object_name', 'HV8_0')
     model_state_pub = rospy.Publisher('/gazebo/set_model_state', ModelState, queue_size=1)
     various_pose = Pose()
     late = rospy.Rate(10)

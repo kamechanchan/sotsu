@@ -49,6 +49,7 @@ class DnnNode():
         self.opt.checkpoints_dir = rospy.get_param("~load_path", "/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth")
 
         self.model = create_model(self.opt)
+        self.opt.is_train = False
 
         self.output_pos_num = 3
         self.output_ori_num = 9

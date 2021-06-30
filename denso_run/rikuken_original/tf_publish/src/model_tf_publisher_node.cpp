@@ -11,7 +11,7 @@ int main(int argc, char** argv)
 
     ModelTf br(nh);
     ROS_INFO_STREAM("Publish model TF");
-    ros::Rate loop_rate(10);
+    ros::Rate loop_rate(100);
     while (ros::ok())
     {
         ros::spinOnce();

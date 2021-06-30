@@ -70,6 +70,7 @@ namespace nearest_point_extractor
         sensor_msgs::PointCloud2 cloud_msg;
         output_cloud_->header.frame_id = sensor_cloud_->header.frame_id;
         print_parameter(std::to_string(output_cloud_->points.size()) + "output_point");
+        frame_id_ = output_cloud_->header.frame_id;
         pcl::toROSMsg(*output_cloud_, cloud_msg);
         cloud_pub_.publish(cloud_msg);
     }
@@ -92,8 +93,8 @@ namespace nearest_point_extractor
             }
         }
         sensor_msgs::PointCloud2 msg_transformed;
-        //print_parameter(sensor_pc_msgs->header.frame_id);
-        //print_parameter(mesh_pc_msgs->header.frame_id);
+        print_parameter(sensor_pc_msgs->header.frame_id);
+        print_parameter(mesh_pc_msgs->header.frame_id);
         pcl_ros::transformPointCloud("world", transform_, *sensor_pc_msgs, msg_transformed);
         pcl::fromROSMsg(msg_transformed, *sensor_cloud_);
         pcl::fromROSMsg(*mesh_pc_msgs, *mesh_cloud_);
@@ -111,7 +112,7 @@ namespace nearest_point_extractor
         double c2c_distance = 0.0;
         int point_size = 0;
 
-        //print_parameter("mesh size is " + std::to_string(mesh_cloud.points.size()));
+        print_parameter("mesh size is " + std::to_string(mesh_cloud.points.size()));
         //for (int i = 0; i < 1; i++) {
         for (auto mesh : mesh_cloud.points)
         {
