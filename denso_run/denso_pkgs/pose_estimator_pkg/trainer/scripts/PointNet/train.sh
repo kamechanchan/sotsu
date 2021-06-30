@@ -6,8 +6,8 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint \
 --resolution 1024 \
 --phase train \
---name PointNet \
---dataset_mode pose_estimation \
+--process_swich object_segment \
+--dataset_mode instance_segmentation \
 --batch_size 8 \
 --num_epoch 200 \
 --max_dataset_size 80000 \

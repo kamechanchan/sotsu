@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     opt = TrainOptions().parse()
     opt_v = TestOptions().parse()
-    print(opt.name)
+    print(opt.arch)
     train_dataset, val_dataset = TrainValDataset(opt)
     train_dataset = TrainDataLoader(train_dataset, opt)
     val_dataset = ValDataLoader(val_dataset, opt)
@@ -94,7 +94,7 @@ if __name__ == '__main__':
         writer.close()
     plt.plot(plot_x, loss_plot_y)
     plt.grid()
-    plot_file = opt.checkpoints_dir + "/" + opt.checkpoints_swich + "/" + opt.name + "/" + opt.dataset_model + "/loss_plot.png"
+    plot_file = opt.checkpoints_dir + "/" + opt.checkpoints_process_swich + opt.checkpoints_human_swich + "/" + opt.arch + "/" + opt.dataset_model + "/loss_plot.png"
     plt.savefig(plot_file)
     print(plot_file)
     

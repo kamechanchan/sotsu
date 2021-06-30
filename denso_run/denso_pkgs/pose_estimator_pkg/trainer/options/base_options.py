@@ -16,10 +16,10 @@ class BaseOptions:
 
     def initialize(self):
         self.parser.add_argument('--main_directory',type=str,default=__file__)
-        self.parser.add_argument('--dataset_mode', choices={"segmentation", "pose_estimation"}, default='pose_estimation')
+        self.parser.add_argument('--dataset_mode', choices={"instance_segmentation", "pose_estimation"}, default='pose_estimation')
         self.parser.add_argument('--dataset_model', nargs=self.dataset_number, type=str, default='HV8')
         self.parser.add_argument('--max_dataset_size', nargs=self.dataset_number, type=int, default=float("inf"), help='Maximum num of samples per epoch')
-        self.parser.add_argument('--name', type=str, default="debug")
+        self.parser.add_argument('--process_swich', type=str, choices={"raugh_recognition", "object_segment"}, default="debug")
         self.parser.add_argument('--batch_size', type=int, default=8)
         self.parser.add_argument('--num_epoch', type=int, default=150)
         self.parser.add_argument('--arch', type=str, default="debug")
@@ -30,7 +30,7 @@ class BaseOptions:
         self.parser.add_argument('--checkpoints_dir', type=str, default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights")
         self.parser.add_argument('--serial_batches', action='store_true', help='if true, takes meshs in order')
         self.parser.add_argument('--export_folder', type=str, default='exports intermediate collapses to this folder')
-        self.parser.add_argument('--checkpoints_swich',type=str,default='ishiyama')
+        self.parser.add_argument('--checkpoints_human_swich',type=str,default='ishiyama')
         self.parser.add_argument('--dataroot_swich',type=str,default='front')
         self.parser.add_argument('--local_checkpoints_dir',type=str,default='/home/ericlab/DENSO/raugh_recognition/checkpoint')
         self.parser.add_argument('--local_export_folder', type=str, default='exports intermediate collapses to this folder')
@@ -39,7 +39,13 @@ class BaseOptions:
         self.parser.add_argument('--dataset_number', type=int, default=self.dataset_number)
         self.parser.add_argument('--lr', type=float, default=0.001, help='initial learning rate of adam')
         self.parser.add_argument('--is_train', type=bool, default=True)
-        
+        # for instance-segmentation
+        self.parser.add_argument('--embedded_size', type=int, default=32)
+        self.parser.add_argument('--delta_d', type=float, default=1.5)
+        self.parser.add_argument('--delta_v', type=float, default=0.5)
+        self.parser.add_argument('--instance_number', type=int, default=7)
+        self.parser.add_argument('--checkpoints_process_swich',type=str,default='raugh_recognition')
+
         self.initialized = True
 
 
@@ -63,11 +69,11 @@ class BaseOptions:
         args = vars(self.opt)
 
         if self.opt.export_folder:
-            self.opt.export_folder = os.path.join(self.opt.checkpoints_dir, self.opt.checkpoints_swich,self.opt.name, self.concat_dataset_model, self.opt.export_folder)
+            self.opt.export_folder = os.path.join(self.opt.checkpoints_dir, self.opt.checkpoints_process_swich, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model, self.opt.export_folder)
             util.mkdir(self.opt.export_folder)
 
         if self.opt.local_export_folder:
-            self.opt.local_export_folder = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_swich,self.opt.name, self.concat_dataset_model, self.opt.local_export_folder)
+            self.opt.local_export_folder = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_process_swich, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model, self.opt.local_export_folder)
             util.mkdir(self.opt.export_folder)    
 
         if self.opt.is_train:
@@ -76,8 +82,8 @@ class BaseOptions:
                 print('%s: %s' % (str(k), str(v)))
             print("---------------End-------------")
 
-            expr_dir = os.path.join(self.opt.checkpoints_dir,self.opt.checkpoints_swich, self.opt.name, self.concat_dataset_model)
-            local_expr_dir = os.path.join(self.opt.local_checkpoints_dir,self.opt.checkpoints_swich, self.opt.name, self.concat_dataset_model)
+            expr_dir = os.path.join(self.opt.checkpoints_dir, self.opt.checkpoints_process_swich, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model)
+            local_expr_dir = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_process_swich, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model)
             util.mkdir(expr_dir)
             util.mkdir(local_expr_dir)
 

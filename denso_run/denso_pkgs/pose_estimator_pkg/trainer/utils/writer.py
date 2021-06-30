@@ -11,11 +11,11 @@ except ImportError as error:
 class Writer:
     def __init__(self, opt):
         self.opt = opt
-        self.name = self.opt.name
         self.dataset_model = self.opt.dataset_model
+        self.arch = self.opt.arch
         self.concat_dataset_model = '+'.join(self.opt.dataset_model)
-        self.save_dir = os.path.join(opt.checkpoints_dir, opt.checkpoints_swich, self.name, self.concat_dataset_model)
-        self.local_save_dir=os.path.join(opt.local_checkpoints_dir, opt.checkpoints_swich, self.name, self.concat_dataset_model)
+        self.save_dir = os.path.join(opt.checkpoints_dir, opt.checkpoints_process_swich, opt.checkpoints_human_swich, self.arch, self.concat_dataset_model)
+        self.local_save_dir=os.path.join(opt.local_checkpoints_dir, opt.checkpoints_process_swich, opt.checkpoints_human_swich, self.arch, self.concat_dataset_model)
         self.log_name = os.path.join(self.save_dir, "loss_log.txt")
         self.local_log_name = os.path.join(self.local_save_dir, "loss_log.txt")
         self.testacc_log = os.path.join(self.save_dir, "testacc_log.txt")
@@ -23,7 +23,7 @@ class Writer:
         self.start_logs()
         self.nexampels = 0
         self.ncorrect = 0
-        self.tensorboardX_results_directory = os.path.join(self.opt.tensorboardX_results_directory,self.opt.tensorboardX_results_directory_switch)
+        self.tensorboardX_results_directory = os.path.join(self.opt.tensorboardX_results_directory, self.opt.arch, self.opt.tensorboardX_results_directory_switch)
 
         if opt.is_train and not opt.no_vis and SummaryWriter is not None:
             self.display = SummaryWriter(self.tensorboardX_results_directory)
