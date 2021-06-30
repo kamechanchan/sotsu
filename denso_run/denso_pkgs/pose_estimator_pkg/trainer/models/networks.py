@@ -14,16 +14,16 @@ def init_net(net, gpu_ids):
 def define_network(opt):
     net = None
     arch = opt.arch
-    name = opt.name
+    process_swich = opt.process_swich
     gpu_ids = opt.gpu_ids
 
     print(arch)
-    print(name)
+    print(process_swich)
 
-    if name == "raugh_recognition":
+    if process_swich == "raugh_recognition":
         if arch == "PointNet_Pose":
             net = PointNet_Pose(3, 9)
-    elif name == "object_segment":
+    elif process_swich == "object_segment":
         if arch == "JSIS3D":
             net = JSIS3D(opt.embedded_size)
 

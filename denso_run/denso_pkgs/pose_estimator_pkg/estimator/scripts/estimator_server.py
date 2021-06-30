@@ -37,7 +37,7 @@ class DnnNode():
         rospack = rospkg.RosPack()
         self.opt = TestOptions().parse()
         self.opt.dataset_model = rospy.get_param("~object_name", "HV8")
-        self.opt.name = rospy.get_param("~name", "PointNet")
+        self.opt.process_swich = rospy.get_param("~name", "PointNet")
         self.opt.dataset_mode = rospy.get_param("~dataset_mode", "pose_estimation")
         self.opt.batch_size = rospy.get_param("~batch_size", 30)
         self.arch = rospy.get_param("~arch", "PointNet_Pose")
