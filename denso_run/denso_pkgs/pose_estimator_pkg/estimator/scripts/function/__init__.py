@@ -7,6 +7,7 @@ from geometry_msgs.msg import TransformStamped
 
 from pointnet_est import pose_prediction as pp1
 from voxel_est import pose_prediction as pp2
+from JSIS3D_est import pose_prediction as pp3
 
 def num2ros_transform(pos, ori):
     trans = TransformStamped()
@@ -27,6 +28,11 @@ def predict_pose(model, data, arg):
     elif arg == "C3D_Voxel":
         y, est_time = pp2(model, data)
         return y, est_time
+    
+    elif arg == "JSIS3D":
+        y, est_time = pp3(model, data)
+        return y, est_time
+    
     else:
         print("Cloud not predict DNN arch. __init_.py Error!")
 

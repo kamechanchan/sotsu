@@ -192,4 +192,4 @@ class PointNet_feat_segmentation(nn.Module):
             return x, trans, trans_feat
         else:
             x = x.view(-1, 1024, 1).repeat(1, 1, n_pts) #set number of point_cloud for cat (********)
-            return torch.cat([x, pointfeat], 1), trans, trans_feat #convoluted point_cloud(concat final_encoded_data and data_passed_T-net (purpose:add ch_data)) and first T-net second T-Net
+            return torch.cat([x, pointfeat], 1) #convoluted point_cloud(concat final_encoded_data and data_passed_T-net (purpose:add ch_data)) and first T-net second T-Net

@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   tf_conversions
+  message_filters
 )
 
 find_package(VTK REQUIRED)
@@ -28,6 +29,7 @@ catkin_package(
     std_msgs 
     tf 
     tf_conversions
+    message_filters
   DEPENDS PCL
 )
 include_directories(
@@ -36,3 +38,29 @@ include_directories(
   ${PCL_INCLUDE_DIRS}
 )
 
+add_executable(mesh_cloud_publisher src/mesh_cloud_node.cpp src/mesh_kai_cloud.cpp src/mesh_sampler.cpp)
+target_link_libraries(mesh_cloud_publisher
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+  ${VTK_LIBRARIES}
+)
+
+add_executable(nearest_search src/nearest_search.cpp src/nearest_search_node.cpp)
+
+target_link_libraries(nearest_search
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(mesh_cloud_bara_publisher src/mesh_kai_cloud.cpp src/mesh_sampler.cpp src/mesh_cloud_bara_node.cpp)
+target_link_libraries(mesh_cloud_bara_publisher
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+  ${VTK_LIBRARIES}
+)
+
+add_executable(nearest_search_bara src/nearest_search.cpp src/nearest_search_bara_node.cpp)
+target_link_libraries(nearest_search_bara
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)

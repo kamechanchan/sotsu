@@ -8,10 +8,10 @@ import sensor_msgs.point_cloud2 as pc2
 import time
 
 
-cloud = pcl.load('/home/tsuchidashinya/near_1.pcd')
+cloud = pcl.load('/home/ericlabshinya/near_1.pcd')
 np_cloud = np.asarray(cloud)
 pcd_offset = np.expand_dims(np.mean(np_cloud, axis=0), 0)
 pcd_data = np_cloud - pcd_offset  #original
 new_pcd = pcl.PointCloud(np.array(pcd_data, np.float32))
-#pcl.save(new_pcd, "/home/tsuchidashinya/random_original.pcd")
-pcl.save(new_pcd, '/home/tsuchidashinya/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_common/denso_descriptions/object_description/meshes/PCD/random_original.pcd')
+#pcl.save(new_pcd, "/home/ericlabshinya/random_original.pcd")
+pcl.save(new_pcd, '/home/ericlabshinya/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_common/denso_descriptions/object_description/meshes/PCD/random_original.pcd')

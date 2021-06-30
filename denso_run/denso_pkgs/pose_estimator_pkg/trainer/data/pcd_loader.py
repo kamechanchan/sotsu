@@ -74,7 +74,6 @@ class PCD_Loader(Base_Loader):
         print(pose_data)
         return voxel_data, pose_data
 
-
 if __name__ == "__main__":
     loader = PCD_Loader("../../datasets/", "HV7", 200)
     loader.load_hdf5()

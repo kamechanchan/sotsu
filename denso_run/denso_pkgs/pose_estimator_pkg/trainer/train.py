@@ -19,6 +19,7 @@ from data import *
 from models import create_model
 from utils.writer import Writer
 from dnn_test import *
+import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     print("------------------current main directory------------------")
@@ -28,7 +29,7 @@ if __name__ == '__main__':
     
     opt = TrainOptions().parse()
     opt_v = TestOptions().parse()
-
+    print(opt.arch)
     train_dataset, val_dataset = TrainValDataset(opt)
     train_dataset = TrainDataLoader(train_dataset, opt)
     val_dataset = ValDataLoader(val_dataset, opt)
@@ -42,7 +43,10 @@ if __name__ == '__main__':
     model = create_model(opt)
     writer = Writer(opt)
     total_steps = 0
-
+    count = 0
+    loss_plot_y = []
+    plot_x = []
+   
     for epoch in range(opt.epoch_count, opt.num_epoch + 1):
         epoch_start_time = time.time()
         iter_data_time = time.time()
@@ -60,6 +64,9 @@ if __name__ == '__main__':
             model.set_input(data)
             t_loss = model.train_step()
             train_loss += t_loss
+            loss_plot_y.append(t_loss)
+            count = count + 1
+            plot_x.append(count)
 
             if total_steps % opt.print_freq == 0:
                 t = (time.time() - iter_start_time / opt.batch_size)
@@ -87,4 +94,10 @@ if __name__ == '__main__':
             print("epoch: {}, train_loss: {:.3}" ", val_loss: {:.3}".format(epoch, train_loss, val_loss))
             writer.plot_loss(epoch, train_loss, val_loss)
         writer.close()
+    plt.plot(plot_x, loss_plot_y)
+    plt.grid()
+    plot_file = opt.checkpoints_dir + "/" + opt.checkpoints_process_swich + opt.checkpoints_human_swich + "/" + opt.arch + "/" + opt.dataset_model + "/loss_plot.png"
+    plt.savefig(plot_file)
+    print(plot_file)
+    
 

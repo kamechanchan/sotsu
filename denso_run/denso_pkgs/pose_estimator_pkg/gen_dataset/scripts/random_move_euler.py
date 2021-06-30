@@ -26,6 +26,7 @@ class RandomMoveEuler(object):
         self.list_for_histgram = [[[],[],[],[],[],[]] for i in range(10)]
         self.save_histgram_dictory=rospy.get_param("~save_histgram_directory")
         
+        self.angle_range = rospy.get_param("~angle_range", 2)
         
     def isReadyMove(self):
         try:
@@ -55,7 +56,7 @@ class RandomMoveEuler(object):
         self.pos_.pose.position.z = random.uniform(0.1, 0.25)
 
 
-        hani = 4
+        hani = self.angle_range
         roll = random.uniform(-pi/hani, pi/hani)
         pitch = random.uniform(-pi/hani, pi/hani)
         yaw = random.uniform(-pi/hani, pi/hani)
@@ -78,9 +79,10 @@ class RandomMoveEuler(object):
             self.pos_.pose.position.y = random.uniform(-0.2, 0.2)
             self.pos_.pose.position.z = random.uniform(0.1, 0.25)
 
-            roll = random.uniform(-pi/4, pi/4)
-            pitch = random.uniform(-pi/4, pi/4)
-            yaw = random.uniform(-pi/4, pi/4)
+            kake = self.angle_range
+            roll = random.uniform(-pi/kake, pi/kake)
+            pitch = random.uniform(-pi/kake, pi/kake)
+            yaw = random.uniform(-pi/kake, pi/kake)
 
             quat = quaternion_from_euler(roll, pitch, yaw)
             self.pos_.pose.orientation.x = quat[0]
@@ -115,6 +117,7 @@ class RandomMoveEuler(object):
 def main():
     rospy.init_node("random_state_maker_node", anonymous=False)
     random_state_maker = RandomMoveEuler()
+    #s = rospy.Service('range_decision', range1, random_state_maker.parameter_make)
 
     random_state_maker.init_state_make()
     while not random_state_maker.isReadyMove():
@@ -125,7 +128,6 @@ def main():
         if not random_state_maker.random_state_make():
             rospy.logwarn("Failed to move object !!")
             #ここが正解？
-            random_state_maker.
         rate.sleep()
 
 if __name__ == '__main__':

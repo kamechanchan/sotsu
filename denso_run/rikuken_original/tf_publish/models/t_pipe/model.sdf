@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <sdf version="1.6">
     <model name="t_pipe">
-        <pose>0 0 0.03 0 0 0</pose>
+        <pose>0 0 0 0 0 0</pose>
         <static>true</static>
         <link name="t_pipe">   
             <inertial>
