@@ -38,7 +38,7 @@ class BaseOptions:
         self.parser.add_argument('--tensorboardX_results_directory_switch',type=str,default="ishiyama")
         self.parser.add_argument('--dataset_number', type=int, default=self.dataset_number)
         self.parser.add_argument('--lr', type=float, default=0.001, help='initial learning rate of adam')
-        self.parser.add_argument('--is_train', type=bool, default=True)
+        self.parser.add_argument('--is_train', type=bool, default=False)
         # for instance-segmentation
         self.parser.add_argument('--embedded_size', type=int, default=32)
         self.parser.add_argument('--delta_d', type=float, default=1.5)

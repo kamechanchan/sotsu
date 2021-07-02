@@ -25,7 +25,7 @@ namespace nearest_point_extractor
         void color_decide(unsigned char, unsigned char, unsigned char);
         void exect();
         pcl::PointCloud<pcl::PointXYZRGB>::Ptr extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, pcl::PointCloud<pcl::PointXYZ> mesh_cloud, double radius);
-        typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::PointCloud2, sensor_msgs::PointCloud2>:: Sensor_Sync_Sub_Type;
+        typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::PointCloud2, sensor_msgs::PointCloud2> Sensor_Sync_Sub_Type;
         template <typename T>
         void print_parameter(T para)
         {

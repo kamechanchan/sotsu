@@ -123,6 +123,11 @@ class PoseEstNode():
             voxel = voxel[np.newaxis, :]
             preprocess_time = time.time() - start_time
             self.input_data.input_voxel.voxel_array = Int32MultiArray(data=np.asarray(voxel).flatten())
+        elif self.arch == "JSIS3D":
+            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, 1024)
+            norma = time.time()
+            self.time_file.write("getNormalizedPcdの処理時間は  　　　    　: " + str(norma - self.open3d_time) + '秒\n')
+            self.input_data.input_cloud = Float32MultiArray(data=np.array(normalized_pcd).flatten())
         else:
             print("estimator_client.py error!: Cloud not find arch!!")
             sys.exit(3)

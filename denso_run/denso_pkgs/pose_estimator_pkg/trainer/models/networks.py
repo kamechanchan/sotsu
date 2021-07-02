@@ -17,9 +17,6 @@ def define_network(opt):
     process_swich = opt.process_swich
     gpu_ids = opt.gpu_ids
 
-    print(arch)
-    print(process_swich)
-
     if process_swich == "raugh_recognition":
         if arch == "PointNet_Pose":
             net = PointNet_Pose(3, 9)

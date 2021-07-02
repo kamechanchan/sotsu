@@ -1,0 +1,34 @@
+------------Options------------
+arch: debug
+batch_size: 8
+checkpoints_dir: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights
+checkpoints_human_swich: ishiyama
+checkpoints_process_swich: raugh_recognition
+dataroot_swich: front
+dataset_mode: pose_estimation
+dataset_model: HV8
+dataset_number: 1
+delta_d: 1.5
+delta_v: 0.5
+embedded_size: 32
+export_folder: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights/raugh_recognition/ishiyama/debug/H+V+8/exports intermediate collapses to this folder
+gpu_ids: []
+gpu_num: 0
+instance_number: 7
+is_train: True
+local_checkpoints_dir: /home/ericlab/DENSO/raugh_recognition/checkpoint
+local_export_folder: /home/ericlab/DENSO/raugh_recognition/checkpoint/raugh_recognition/ishiyama/debug/H+V+8/exports intermediate collapses to this folder
+lr: 0.001
+main_directory: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/scripts/../../trainer/options/base_options.py
+max_dataset_size: inf
+num_epoch: 150
+num_threads: 3
+phase: test
+process_swich: debug
+resolution: 1024
+results_dir: ../../weights
+serial_batches: False
+tensorboardX_results_directory: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/
+tensorboardX_results_directory_switch: ishiyama
+which_epoch: latest
+-------------End---------------

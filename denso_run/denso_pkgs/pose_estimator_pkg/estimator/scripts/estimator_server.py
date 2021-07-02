@@ -28,6 +28,7 @@ from std_msgs.msg import Int32MultiArray, MultiArrayLayout, MultiArrayDimension,
 from geometry_msgs.msg import Point, Pose, PoseStamped, Vector3, Quaternion, TransformStamped
 import tf2_ros
 from tf.transformations import quaternion_from_euler, euler_from_quaternion, quaternion_from_matrix
+from color_cloud_bridge.msg import out_segmentation
 
 
 class DnnNode():
@@ -37,16 +38,17 @@ class DnnNode():
         rospack = rospkg.RosPack()
         self.opt = TestOptions().parse()
         self.opt.dataset_model = rospy.get_param("~object_name", "HV8")
-        self.opt.process_swich = rospy.get_param("~name", "PointNet")
+        self.opt.process_swich = rospy.get_param("~process_swich", "object_segment")
         self.opt.dataset_mode = rospy.get_param("~dataset_mode", "pose_estimation")
         self.opt.batch_size = rospy.get_param("~batch_size", 30)
-        self.arch = rospy.get_param("~arch", "PointNet_Pose")
+        self.arch = rospy.get_param("~arch", "JSIS3D")
         self.opt.arch = self.arch
         self.opt.resolution = rospy.get_param("~resolution", 1024)
         self.opt.num_threads = rospy.get_param("~num_threads", 8)
         self.opt.gpu_id = rospy.get_param("~gpu_id", "1")
         self.package_path = rospack.get_path("estimator")
         self.opt.checkpoints_dir = rospy.get_param("~load_path", "/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth")
+        self.instance_pub = rospy.Publisher("instance_pub", out_segmentation, queue_size=10)
 
         self.model = create_model(self.opt)
         self.opt.is_train = False
@@ -61,6 +63,8 @@ class DnnNode():
     def callback(self, req):
         t0 = time.time()
         res = PoseEstimateResponse()
+        msg_iro = out_segmentation()
+        print(self.arch)
 
         if  self.arch == "PointNet_Pose":
             data = req.input_cloud.data
@@ -74,8 +78,10 @@ class DnnNode():
 
         elif self.arch == "JSIS3D":
             data = req.input_cloud.data
-            est_pose, est_time = f.predict_pose(self.model, data, "JSIS3D")
+            segme, est_time = f.predict_pose(self.model, data, "JSIS3D")
             res.success = True
+            self.instance_pub.publish(segme)
+            print("pubish")
 
         else:
             print("Error while pose prediction operation")

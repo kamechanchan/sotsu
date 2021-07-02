@@ -50,6 +50,7 @@ add_message_files(
    FILES
    dummy_pcl.msg
    sensor_and_index.msg
+   out_segmentation.msg
    #Message2.msg
  )
 

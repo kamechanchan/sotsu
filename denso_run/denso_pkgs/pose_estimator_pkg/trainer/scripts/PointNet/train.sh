@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets \
+--dataroot /home/ericlab/ \
 --dataset_model ishiyama_1000.hdf5 \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint \
 --resolution 1024 \

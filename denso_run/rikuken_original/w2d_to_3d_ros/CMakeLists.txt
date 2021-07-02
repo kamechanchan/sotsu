@@ -48,6 +48,7 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+#[[
 add_executable(colord_cloud src/colord_cloud.cpp)
 target_link_libraries(colord_cloud
   ${catkin_LIBRARIES}
@@ -61,4 +62,4 @@ target_link_libraries(message_publish
 add_executable(another_message_publish src/anothre_message_publish.cpp)
 target_link_libraries(another_message_publish
   ${catkin_LIBRARIES}
-)
+)]]
