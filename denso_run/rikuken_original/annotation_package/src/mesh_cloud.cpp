@@ -28,12 +28,6 @@ MeshCloud::MeshCloud(ros::NodeHandle &nh, std::string object_name, std::string m
     frame_set();
     stl_file_set();
     this->transformMesh();
-   /* for (int i = 0; i < parts_clouds_.size(); i++) {
-        mesh_point_pcl_ += parts_clouds_[i];
-    }
-    pcl::PointCloud<pcl::PointXYZ>::Ptr mesh_point_ptr_pcl(
-                new pcl::PointCloud<pcl::PointXYZ>(mesh_point_pcl_));
-    this->downSample(mesh_point_ptr_pcl, downsampled_mesh_ptr_pcl_);*/
     mesh_point_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(mesh_topic_name_, 1);
 }
 
@@ -143,7 +137,7 @@ void MeshCloud::publishCloud()
 {
     pcl::toROSMsg(*downsampled_mesh_ptr_pcl_, mesh_cloud_ros_);
     mesh_cloud_ros_.header.stamp = ros::Time::now();
-    mesh_cloud_ros_.header.frame_id = object_name_;
+    mesh_cloud_ros_.header.frame_id = "world";
     mesh_point_pub_.publish(mesh_cloud_ros_);
     std::cout << "========================" << std::endl;
 

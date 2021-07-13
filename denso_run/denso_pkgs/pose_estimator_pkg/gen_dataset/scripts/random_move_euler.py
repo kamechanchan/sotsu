@@ -3,6 +3,7 @@
 import sys
 import random
 import rospy
+from rospy.timer import TimerEvent
 import tf
 from tf.transformations import quaternion_from_euler
 from math import *
@@ -72,10 +73,12 @@ class RandomMoveEuler(object):
         self.pos_.pose.orientation.w = quat[3]
 
         self.set_model_state_pub_.publish(self.pos_)
+        rospy.set_param('time_start', time())
         return True
 
     def random_state_make(self):
         self.record_ok = rospy.get_param("/" + self.object_name + "/record_cloud/is_ok", False)
+        print(self.record_ok)
         if self.record_ok:
             self.pos_.pose.position.x = random.uniform(-0.2, 0.2)
             self.pos_.pose.position.y = random.uniform(-0.2, 0.2)
@@ -95,8 +98,10 @@ class RandomMoveEuler(object):
 
             rospy.set_param("/" + self.object_name + "/record_cloud/is_ok", False)
             rospy.set_param("/" + self.object_name + "/receive_cloud/is_ok", True)
+            rospy.set_param('time_start', time())
         else:
             self.set_model_state_pub_.publish(self.pos_)
+        rospy.set_param("/" + self.object_name + "/receive_cloud/is_ok", True)
 
         return True
 
@@ -125,7 +130,7 @@ def main():
     while not random_state_maker.isReadyMove():
         rospy.logwarn("Not ready model ...")
 
-    rate = rospy.Rate(2)
+    rate = rospy.Rate(10)
     while not rospy.is_shutdown():
         if not random_state_maker.random_state_make():
             rospy.logwarn("Failed to move object !!")

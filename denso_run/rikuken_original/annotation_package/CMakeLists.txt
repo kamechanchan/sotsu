@@ -12,10 +12,14 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   tf_conversions
   message_filters
+  color_cloud_bridge
 )
 
 find_package(VTK REQUIRED)
 find_package(PCL REQUIRED)
+
+
+
 catkin_package(
   INCLUDE_DIRS include
 #  LIBRARIES annotation_package
@@ -61,6 +65,24 @@ target_link_libraries(mesh_cloud_bara_publisher
 
 add_executable(nearest_search_bara src/nearest_search.cpp src/nearest_search_bara_node.cpp)
 target_link_libraries(nearest_search_bara
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(color_cloud_save src/color_cloud_save.cpp)
+target_link_libraries(color_cloud_save
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(pcl_baikai src/pcl_baikai.cpp)
+target_link_libraries(pcl_baikai
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(cloud_save_2 src/cloud_save_2.cpp)
+target_link_libraries(cloud_save_2
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )

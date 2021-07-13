@@ -15,14 +15,27 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   sensor_msgs
   tf
+  message_filters
+  message_generation
+  std_msgs
+)
+add_message_files(
+  FILES
+  shinya.msg 
+  hayasa.msg
+)
+generate_messages(
+  DEPENDENCIES
+  std_msgs
 )
 
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES w2d_to_3d_ros
-#  CATKIN_DEPENDS cv_bridge image_geometry image_transport pcl_ros roscpp sensor_msgs tf
+  CATKIN_DEPENDS cv_bridge image_geometry image_transport pcl_ros roscpp sensor_msgs tf message_filters message_runtime std_msgs
 #  DEPENDS system_lib
 )
+
 
 ###########
 ## Build ##
@@ -34,8 +47,18 @@ include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
 )
-
+#[[
 add_executable(colord_cloud src/colord_cloud.cpp)
 target_link_libraries(colord_cloud
   ${catkin_LIBRARIES}
 )
+
+add_executable(message_publish src/message_publish.cpp)
+target_link_libraries(message_publish
+  ${catkin_LIBRARIES}
+)
+
+add_executable(another_message_publish src/anothre_message_publish.cpp)
+target_link_libraries(another_message_publish
+  ${catkin_LIBRARIES}
+)]]
