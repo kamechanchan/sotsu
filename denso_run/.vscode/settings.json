@@ -70,6 +70,25 @@
         "typeindex": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "bit": "cpp"
-    }
+        "bit": "cpp",
+        "forward_list": "cpp",
+        "valarray": "cpp"
+    },
+    "python.autoComplete.extraPaths": [
+        "/home/ericlab/ros_package/denso_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer"
+    ],
+    "python.analysis.extraPaths": [
+        "/home/ericlab/ros_package/denso_ws/devel/lib/python3/dist-packages",
+        "/opt/ros/noetic/lib/python3/dist-packages",
+        "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer",
+
+        "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/utils",
+        "/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original",
+        "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/gen_dataset/scripts",
+        "/home/ericlab/ros_package/denso_ws/devel/lib/python3/dist-packages/color_cloud_bridge/msg/"
+
+
+    ]
 }

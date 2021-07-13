@@ -7,10 +7,11 @@ from os import listdir
 import numpy as np
 
 class Base_Loader(object):
-    def __init__(self, dir_name, dataset_model, dataset_size):
+    def __init__(self, dir_name, dataset_model, dataset_size, dataset_number):
         self.dir = dir_name
         self.dataset_model = dataset_model
         self.dataset_size = dataset_size
+        self.dataset_number = dataset_number
         self.x_data = []
         self.y_data = []
         self.dataset = []
@@ -37,8 +38,16 @@ class Base_Loader(object):
     def find_h5py_filenames(self, path_to_dir, suffix=".hdf5"):
         filenames = listdir(path_to_dir)
         file_list = [filename for filename in filenames if filename.endswith(suffix)]
-        file_name = [f for f in file_list if self.dataset_model in f]
-        if len(file_name) == 1:
+        file_name = []
+        for i in range(self.dataset_number):
+            for f in file_list:
+                #print(self.dataset_model[i])
+                if self.dataset_model[i] in f: #dataset_model==dataset
+                    file_name.append(f)
+        
+        #print(file_name)
+
+        if len(file_name) == self.dataset_number:
             return file_name
         else:
             print("Error, Cloud not load h5py data file!! or detect multi hdf5 file !!")

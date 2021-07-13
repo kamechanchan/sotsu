@@ -70,6 +70,9 @@ private:
             extract.setInputCloud(cloud_filtered_pcl_ptr->makeShared());
             extract.setIndices(inliers);
 
+            extract.setNegative(false);
+            extract.filter(*cloud_clusters_pcl_ptr);
+
             sensor_msgs::PointCloud2 cloud_cluster_ros;
             pcl::toROSMsg(*cloud_clusters_pcl_ptr, cloud_cluster_ros);
             cloud_cluster_ros.header.frame_id = "base_link";
@@ -80,7 +83,7 @@ private:
     }
 
 protected:
-    static const int CLUSTER_NUM = 3;
+    static const int CLUSTER_NUM = 5;
     ros::NodeHandle nh_;
     std::vector<ros::Publisher> pcl_pubs_;
     std::vector<sensor_msgs::PointCloud2> cloud_clusters_ros_;

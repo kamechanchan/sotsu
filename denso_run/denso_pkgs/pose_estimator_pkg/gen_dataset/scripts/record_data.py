@@ -19,6 +19,8 @@ from tqdm import tqdm
 from tf_sync import TfMessageFilter
 import message_filters
 from utils import util
+import pose_estimator_srvs
+from pose_estimator_srvs.srv import range1, range1Request, range1Response
 
 
 
@@ -36,23 +38,37 @@ class RecordData(object):
         self.bar.set_description("Progress rate")
         self.package_path_ = rospack.get_path("gen_dataset")
         self.save_file_path = rospy.get_param("~save_directory", "/home/ericlab/")
-        self.file = rospy.get_param("~save_filename", "dataset_20000")
+        self.angle_range = rospy.get_param("~angle_range", 2)
 
         self.pcd_sub_ = message_filters.Subscriber("/cloud_without_segmented", PointCloud2)
         self.sync_sub_ = message_filters.ApproximateTimeSynchronizer([self.pcd_sub_], 10, 0.01)
         self.ts_ = TfMessageFilter(self.sync_sub_, self.sensor_parent_frame_, self.object_name_, queue_size=100)
         self.init_hdf5(self.save_file_path)
         self.pcd = None
+        rospy.set_param("/shori_1", 0)
+        rospy.set_param("/shori_2", 0)
+        rospy.set_param("/shori_3", 0)
+        rospy.set_param("/shori_4", 0)
 
     def init_hdf5(self, file_path):
         util.mkdir(file_path)
-        file_path = file_path + self.file + "_" + self.object_name_ + "_" + str(self.num_dataset) + ".hdf5"
+        file_path = file_path + "/" + self.object_name_ + "_size_" + str(self.num_dataset) + "_range_pi_" + str(self.angle_range) +".hdf5"
         self.hdf5_file_ = h5py.File(file_path, 'w')
         self.all_file_path = file_path
 
     def callback(self, point_cloud, trans_rot):
+        get_shori_3 = rospy.get_param("/shori_3")
+        get_shori_3 = get_shori_3 + 1
+        print("my_callback_tf_pc is " + str(get_shori_3))
+        get_shori_4 = rospy.get_param("/shori_4")
+        print("signal_message_kakuin" + str(get_shori_4))
+        get_shori_2 = rospy.get_param("/shori_1")
+        print("input_callblack_kakunin" + str(get_shori_2))
+        rospy.set_param("/shori_3", get_shori_3)
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
+        
         if self.receive_ok:
+            
             rospy.set_param("/" + self.object_name_ + "/receive_cloud/is_ok", False)
             rospy.set_param("/" + self.object_name_ +  "/record_cloud/is_ok", False)
             pc = ros_numpy.numpify(point_cloud)
@@ -66,12 +82,12 @@ class RecordData(object):
             translation = np.array(trans_rot[0])
             rotation = np.array(trans_rot[1])
             #if true:
-                #f = open('/home/tsuchidashinya/dataset_pose.txt', 'w')
+                #f = open('/home/ericlabshinya/dataset_pose.txt', 'w')
                 #f.writelines(str(translation))
                 #f.writelines(str(rotation))
                 #f.close()
                 #new_pcd = pcl.PointCloud(np.array(pcd, np.float32))
-                #pcl.save(new_pcd, "/home/tsuchidashinya/random_1.pcd")
+                #pcl.save(new_pcd, "/home/ericlabshinya/random_1.pcd")
 
             pose = np.concatenate([translation, rotation])
             self.savePCDandPose(pcd, pose)
