@@ -4,6 +4,8 @@
     <group if="$(eval object_name=='HV8')">
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
             <arg name="world_name" value="$(find tf_publish)/world/HV8.world"/>
+            <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
+            
         </include>
     </group>
     <group if="$(eval object_name=='HV7')">
@@ -19,6 +21,16 @@
     <group if="$(eval object_name=='t_pipe')">
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
             <arg name="world_name" value="$(find tf_publish)/world/t_pipe.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='HV8_barazumi')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV8_barazumi.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='sekai')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/sekai.world"/>
         </include>
     </group>
 

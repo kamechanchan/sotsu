@@ -162,7 +162,7 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
   std::cout << count << std::endl;
   if (tf_flag_ == true && pub_flag_)
   {
-    //pcl::io::savePCDFile("/home/tsuchidashinya/nigeru.pcd", colored_points_);
+    //pcl::io::savePCDFile("/home/ericlabshinya/nigeru.pcd", colored_points_);
     ROS_INFO("%zu", colored_points_.size());
     ROS_INFO("convert_pointcloud_color finished!!");
   }

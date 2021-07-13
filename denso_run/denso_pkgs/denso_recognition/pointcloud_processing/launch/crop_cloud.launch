@@ -1,13 +1,25 @@
 <launch>
 
   <arg name="loop_rate" default="60" />
-  <arg name="crop_x_min" default="0.1" />
+  <!--arg name="crop_x_min" default="0" />
+  <arg name="crop_x_max" default="1.5" />
+  <arg name="crop_y_min" default="-1.0" />
+  <arg name="crop_y_max" default="1" />
+  <arg name="crop_z_min" default="0.2" />
+  <arg name="crop_z_max" default="0.8" /-->
+  <arg name="crop_x_min" default="-3" />
+  <arg name="crop_x_max" default="3" />
+  <arg name="crop_y_min" default="-3" />
+  <arg name="crop_y_max" default="3" />
+  <arg name="crop_z_min" default="-3" />
+  <arg name="crop_z_max" default="3" />
+  <!--arg name="crop_x_min" default="-3" />
   <arg name="crop_x_max" default="1.0" />
   <arg name="crop_y_min" default="-1.0" />
-  <arg name="crop_y_max" default="0.1" />
-  <arg name="crop_z_min" default="0.3" />
-  <arg name="crop_z_max" default="1" />
-  <arg name="crop_pc_src" default="/photoneo_center/pointcloud" />
+  <arg name="crop_y_max" default="0.2" />
+  <arg name="crop_z_min" default="0" />
+  <arg name="crop_z_max" default="0.8" /-->
+  <arg name="crop_pc_src" default="/photoneo_center/sensor/points" />
   <arg name="crop_pc_dst" default="/cropped_cloud" />
   <arg name="use_rgb" default="false" />
   <arg name="crop_frame_id" default="world" />

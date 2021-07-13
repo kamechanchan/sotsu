@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<launch>
+    <!--arg name="sensor_topic_name" default="/cloud_without_segmented"/-->
+    <arg name="sensor_topic_name" default="/photoneo_center/sensor/points"/>
+    
+    <arg name="output_topic_name" default="extract_pc"/>
+    <arg name="mesh_topic_name" default="/mesh_cloud_publisher"/>
+    <arg name="LEAF_SIZE" default="0.0003f"/>
+    <arg name="radius" default="1000"/>
+    <arg name="num_of_nearest_points" default="8"/>
+    <arg name="red" default="0"/>
+    <arg name="blue" default="0"/>
+    <arg name="green" default="255"/>
+    
+    
+    <node name="nearest_search" pkg="annotation_package" type="nearest_search"  output="screen" respawn="false" respawn_delay="0">
+        <param name="sensor_topic_name" value="$(arg sensor_topic_name)"/>
+        <param name="output_topic_name" value="$(arg output_topic_name)"/>
+        <param name="mesh_topic_name" value="$(arg mesh_topic_name)"/>
+        <param name="LEAF_SIZE" value="$(arg LEAF_SIZE)"/>
+        <param name="radius" value="$(arg radius)"/>
+        <param name="num_of_nearest_points" value="$(arg num_of_nearest_points)"/>
+        <param name="red" value="$(arg red)"/>
+        <param name="blue" value="$(arg blue)"/>
+        <param name="green" value="$(arg green)"/>
+    </node>
+
+</launch>

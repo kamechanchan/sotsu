@@ -17,7 +17,7 @@ class RecordDate(object):
         self.num_dataset = rospy.get_param("~num_dataset", 100)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
-        self.save_file_path = rospy.get_param("~save_file_path", "/home/tsuchidashinya/first.hdf5")
+        self.save_file_path = rospy.get_param("~save_file_path", "/home/ericlabshinya/first.hdf5")
         self.hdf5_file = h5py.File(self.save_file_path, 'w')
         
 

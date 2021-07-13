@@ -31,7 +31,7 @@ void TopPartExtractor::publish(void)
 
 void TopPartExtractor::updatePointCloud(const sensor_msgs::PointCloud2ConstPtr& cloud_msg)
 {
-  // woeldと点群のframe_id間のTFが取得できるまで繰り返す
+  // worldと点群のframe_id間のTFが取得できるまで繰り返す
   while (true)
   {
     try

@@ -4,6 +4,7 @@
 /usr/local/include/bayesopt/bayesopt.hpp
 /usr/local/include/bayesopt/parameters.h
 /usr/local/include/bayesopt/parameters.hpp
+
 /usr/local/include/nlopt.hpp
 /usr/local/include/nlopt.f
 /usr/local/include/nlopt.h
