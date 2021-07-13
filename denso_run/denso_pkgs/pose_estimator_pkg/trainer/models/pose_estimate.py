@@ -25,6 +25,8 @@ class EstimatorModel:
         self.device = torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
         self.is_train = self.opt.is_train
         self.instance_number = opt.instance_number
+        print("opt_phase is " + str(self.opt.phase))
+        print("process + " + str(self.process_swich))
 
         self.optimizer = None
         self.x_data  = None

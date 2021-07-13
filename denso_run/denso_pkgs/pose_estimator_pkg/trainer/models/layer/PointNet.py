@@ -84,16 +84,34 @@ class STN3d(nn.Module):
 
 
     def forward(self, x):
+        print("87")
         batchsize = x.size()[0]
+        print("89")
         x = F.relu(self.bn1(self.conv1(x)))
+        print("91")
         x = F.relu(self.bn2(self.conv2(x)))
+        print("93")
         x = F.relu(self.bn3(self.conv3(x)))
+        print("95")
         x = torch.max(x, 2, keepdim=True)[0]
+        print("97")
         x = x.view(-1, 1024)
+        print("99")
+        print(x.shape)
+        #x = self.fc1(x)
+        #print(x.shape)
+        print("1010")
+        #x = self.bn4(x)
 
-        x = F.relu(self.bn4(self.fc1(x)))
-        x = F.relu(self.bn5(self.fc2(x)))
+        #print("fff")
+        #x = F.relu(self.bn4(self.fc1(x)))
+        x = F.relu(self.fc1(x))
+        print("102")
+        #x = F.relu(self.bn5(self.fc2(x)))
+        x = F.relu(self.fc2(x))
+        print("104")
         x = self.fc3(x)
+        print("quatrenion" + str(self.quaternion))
 
         if self.quaternion:
             iden = Variable(torch.FloatTensor([1, 0, 0, 0]))
@@ -140,9 +158,12 @@ class STNkd(nn.Module):
         x = F.relu(self.bn3(self.conv3(x)))
         x = torch.max(x, 2, keepdim=True)[0]
         x = x.view(-1, 1024)
+        print("fffff")
 
-        x = F.relu(self.bn4(self.fc1(x)))
-        x = F.relu(self.bn5(self.fc2(x)))
+        #x = F.relu(self.bn4(self.fc1(x)))
+        x = F.relu(self.fc1(x))
+        #x = F.relu(self.bn5(self.fc2(x)))
+        x = F.relu(self.fc2(x))
         x = self.fc3(x)
 
         iden = Variable(torch.from_numpy(np.eye(self.k).flatten().astype(np.float32))).view(1,self.k*self.k).repeat(batchsize,1)
@@ -168,18 +189,30 @@ class PointNet_feat_segmentation(nn.Module):
             self.fstn = STNkd(k=64)
 
     def forward(self, x):
+        print("171")
         n_pts = x.size()[2] #getting number of point_cloud (dataset structure: batch_size ch point_cloud)
+        print("173")
         trans = self.stn(x) #T-Net
+        print("175")
         x = x.transpose(2, 1) #transpose for matrix multiplication
+        print("177")
         x = torch.bmm(x, trans) #matrix multiplication 
+        print("179")
         x = x.transpose(2, 1)
+        print("181")
         x = F.relu(self.bn1(self.conv1(x)))
+        print("self_transform" + str(self.feature_transform))
 
         if self.feature_transform:
+            print("204")
             trans_feat = self.fstn(x)
+            print("205")
             x = x.transpose(2,1)
+            print("207")
             x = torch.bmm(x, trans_feat)
+            print("209")
             x = x.transpose(2,1)
+            print("211")
         else:
             trans_feat = None
 

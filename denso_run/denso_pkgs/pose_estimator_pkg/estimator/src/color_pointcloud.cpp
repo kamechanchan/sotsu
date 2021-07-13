@@ -10,6 +10,7 @@ ros::NodeHandle *pnh;
 std::string dummy_topic_name;
 std::string publish_topic_name;
 std::string instance_topic_name;
+std::string frame_id_;
 
 ros::Publisher dummy_pub;
 ros::Publisher instance_pub;
@@ -67,6 +68,7 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
         }
         cloud.push_back(color);
     }
+    cloud.header.frame_id = frame_id_;
     sensor_msgs::PointCloud2 ros_msg;
     pcl::toROSMsg(cloud, ros_msg);
     instance_pub.publish(ros_msg);
@@ -79,6 +81,7 @@ int main(int argc, char** argv)
     pnh = new ros::NodeHandle("~");
     pnh->getParam("dummy_topic_name", dummy_topic_name);
     pnh->getParam("instance_topic_name", instance_topic_name);
+    pnh->getParam("frame_id", frame_id_);
     instance_pub = nh.advertise<sensor_msgs::PointCloud2>(instance_topic_name, 10);
     ros::Subscriber sub;
     sub = nh.subscribe(dummy_topic_name, 10, callback);
