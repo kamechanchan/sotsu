@@ -7,9 +7,6 @@
 #include <pcl/search/kdtree.h>
 #include <pcl/segmentation/extract_clusters.h>
 #include <pcl_ros/point_cloud.h>
-#include <message_filters/subscriber.h>
-#include <message_filters/synchronizer.h>
-#include <message_filters/sync_policies/approximate_time.h>
 #include <sensor_msgs/PointCloud2.h>
 
 namespace nearest_point_extractor
@@ -17,38 +14,16 @@ namespace nearest_point_extractor
     class NearestPointExtractor
     {
     public:
-        NearestPointExtractor(ros::NodeHandle &nh);
+        NearestPointExtractor(ros::NodeHandle &nh, int num);
         void publish();
         void InputCallback(const sensor_msgs::PointCloud2ConstPtr&);
-        void callback_1(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_2(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_3(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_4(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_5(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_6(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_7(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_8(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_9(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_10(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_11(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_12(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_13(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_14(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_15(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_16(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_17(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_18(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_19(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_20(sensor_msgs::PointCloud2ConstPtr&);
-        void callback_21(sensor_msgs::PointCloud2ConstPtr&);
-        void downsampleCloud(pcl::PointCloud<pcl::PointXYZ>::Ptr input_cloud);
+        void mesh_callback(const sensor_msgs::PointCloud2ConstPtr&, int);
+        
+
         void param_register(std::string, std::string, std::string, int);
-        void color_decide(unsigned char, unsigned char, unsigned char);
         void exect();
         void sensor_input(sensor_msgs::PointCloud2);
-        void read_cloud(pcl::PointCloud<pcl::PointXYZRGB>);
-        pcl::PointCloud<pcl::PointXYZRGB> write_cloud();
-        pcl::PointCloud<pcl::PointXYZRGB>::Ptr extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, pcl::PointCloud<pcl::PointXYZ> mesh_cloud, double radius);
+        pcl::PointCloud<pcl::PointXYZRGB>::Ptr extract_cloud();
         template <typename T>
         void print_parameter(T para)
         {
@@ -59,7 +34,9 @@ namespace nearest_point_extractor
         std::string frame_id_;
         std::vector<int> cloud_index_;
         pcl::PointCloud<pcl::PointXYZ>::Ptr sensor_cloud_;
+        pcl::PointCloud<pcl::PointXYZ>::Ptr sensor_nukitori_cloud_;
         pcl::PointCloud<pcl::PointXYZ>::Ptr mesh_cloud_;
+        std::vector<pcl::PointCloud<pcl::PointXYZ>*> mesh_clouds_;
     private:
         ros::NodeHandle nh_;
         ros::NodeHandle *pnh_;
@@ -85,7 +62,7 @@ namespace nearest_point_extractor
         ros::Subscriber mesh_sub_18_;
         ros::Subscriber mesh_sub_19_;
         ros::Subscriber mesh_sub_20_;
-        ros::Subscriber mesh_sub_21_;
+        ros::Subscriber mesh_sub_0_;
 
         tf::StampedTransform transform_;
         tf::TransformListener listener_;
@@ -95,12 +72,11 @@ namespace nearest_point_extractor
         float LEAF_SIZE;
         int num_of_nearest_points_;
         bool flag_;
+        int the_number_of_object_;
         std::string mesh_base_topic_name_;
         std::string sensor_topic_name_;
         std::string output_topic_name_;
-        int red_;
-        int blue_;
-        int green_;
+        std::vector<std::vector<int>> color;
         double radius;
 
     };

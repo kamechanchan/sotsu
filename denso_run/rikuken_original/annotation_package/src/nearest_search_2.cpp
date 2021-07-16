@@ -51,7 +51,7 @@ namespace nearest_point_extractor
     {
 
         cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(output_topic_name_, 10);
-        cloud_sub
+        cloud_sub_ = nh_.subscribe(mesh_topic_name_, 10, NearestPointExtractor::InputCallback, this);
 
     }
 
@@ -72,28 +72,8 @@ namespace nearest_point_extractor
         cloud_pub_.publish(cloud_msg);
     }
 
-    void NearestPointExtractor::InputCallback(const sensor_msgs::PointCloud2ConstPtr &sensor_pc_msgs,
-                                            const sensor_msgs::PointCloud2ConstPtr &mesh_pc_msgs)
-    {
-        while (true)
-        {
-            try
-            {
-                listener_.lookupTransform("world", sensor_pc_msgs->header.frame_id, ros::Time(0), transform_);
-                ROS_INFO_ONCE("I got a transfomr");
-                break;
-            }
-            catch (tf::TransformException ex)
-            {
-                ROS_ERROR("%s", ex.what());
-                ros::Duration(1.0).sleep();
-            }
-        }
-        sensor_msgs::PointCloud2 msg_transformed;
-        print_parameter(sensor_pc_msgs->header.frame_id);
-        print_parameter(mesh_pc_msgs->header.frame_id);
-        pcl_ros::transformPointCloud("world", transform_, *sensor_pc_msgs, msg_transformed);
-        pcl::fromROSMsg(msg_transformed, *sensor_cloud_);
+    void NearestPointExtractor::InputCallback(const sensor_msgs::PointCloud2ConstPtr &mesh_pc_msgs)
+    {   
         pcl::fromROSMsg(*mesh_pc_msgs, *mesh_cloud_);
         flag_ = true;
     }
@@ -178,5 +158,9 @@ namespace nearest_point_extractor
     pcl::PointCloud<pcl::PointXYZRGB> NearestPointExtractor::write_cloud()
     {
         return writing_cloud;
+    }
+    void NearestPointExtractor::sensor_input(sensor_msgs::PointCloud2 msg)
+    {
+        pcl::fromROSMsg(msg, *sensor_cloud_);
     }
 }
