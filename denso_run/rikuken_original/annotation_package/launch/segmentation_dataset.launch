@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="filepath" default="/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset"/>
+    <arg name="filepath" default="/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/"/>
     <arg name="num_dataset" default="10"/>
     
 

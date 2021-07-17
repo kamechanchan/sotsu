@@ -19,6 +19,7 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
 {
     pcl::PointCloud<pcl::PointXYZRGB> cloud;
     ROS_INFO_STREAM("get msg");
+    ROS_INFO_STREAM("cloud size is " << msg->x.size());
     for (int i = 0; i < msg->x.size(); i++) {
         pcl::PointXYZRGB color;
         color.x = msg->x[i];
