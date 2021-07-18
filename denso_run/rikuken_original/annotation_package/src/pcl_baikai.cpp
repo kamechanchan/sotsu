@@ -59,6 +59,9 @@ void callback(sensor_msgs::PointCloud2ConstPtr msg)
         if (r_p == 255 && b_p == 100 && g_p == 255) {
             dummy.instance.push_back(6);
         }
+        else {
+            dummy.instance.push_back(7);
+        }
     }
 
     for (int i = 0; i < 10; i++) {

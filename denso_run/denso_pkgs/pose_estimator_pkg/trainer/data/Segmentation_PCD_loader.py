@@ -17,6 +17,8 @@ class Segmentation_PCD_Loader(PCD_Loader):
         for i in range(self.dataset_number):
             path = self.find_h5py_filenames(self.dir)[i] #get file_name
             dir_path = self.dir+"/"+path #get path
+            print("*******************start*********************")
+            print(dir_path)
             self.hdf5_file = h5py.File(dir_path, "r")
 
             print("Start loading datasets !!")

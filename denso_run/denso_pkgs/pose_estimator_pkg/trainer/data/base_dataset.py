@@ -24,7 +24,7 @@ class BaseDataset(data.Dataset):
         self.len_size = 0
         self.dataset_number = opt.dataset_number
         self.hdf5_data = None
-        
+
         for i in range(self.dataset_number):
             self.len_size = self.len_size + self.size[i]
 

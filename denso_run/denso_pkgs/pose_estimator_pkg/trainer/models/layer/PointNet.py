@@ -84,34 +84,17 @@ class STN3d(nn.Module):
 
 
     def forward(self, x):
-        print("87")
         batchsize = x.size()[0]
-        print("89")
         x = F.relu(self.bn1(self.conv1(x)))
-        print("91")
         x = F.relu(self.bn2(self.conv2(x)))
-        print("93")
         x = F.relu(self.bn3(self.conv3(x)))
-        print("95")
         x = torch.max(x, 2, keepdim=True)[0]
-        print("97")
         x = x.view(-1, 1024)
-        print("99")
-        print(x.shape)
-        #x = self.fc1(x)
-        #print(x.shape)
-        print("1010")
-        #x = self.bn4(x)
-
-        #print("fff")
         #x = F.relu(self.bn4(self.fc1(x)))
         x = F.relu(self.fc1(x))
-        print("102")
         #x = F.relu(self.bn5(self.fc2(x)))
         x = F.relu(self.fc2(x))
-        print("104")
         x = self.fc3(x)
-        print("quatrenion" + str(self.quaternion))
 
         if self.quaternion:
             iden = Variable(torch.FloatTensor([1, 0, 0, 0]))
