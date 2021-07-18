@@ -85,8 +85,8 @@ class STN3d(nn.Module):
 
     def forward(self, x):
         batchsize = x.size()[0]
-        print("x.shape",x.shape)
         x = F.relu(self.bn1(self.conv1(x)))
+        print("x.shape",x)
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))
         x = torch.max(x, 2, keepdim=True)[0]
