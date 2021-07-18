@@ -177,15 +177,15 @@ class PointNet_feat_segmentation(nn.Module):
         # print(x)
         n_pts = x.size()[2] #getting number of point_cloud (dataset structure: batch_size ch point_cloud)
         # print("173")
-        trans = self.stn(x) #T-Net
+        # trans = self.stn(x) #T-Net
         # print(trans)
         # print("175")
-        x = x.transpose(2, 1) #transpose for matrix multiplication
+        # x = x.transpose(2, 1) #transpose for matrix multiplication
         # print("177")
-        x = torch.bmm(x, trans) #matrix multiplication 
+        # x = torch.bmm(x, trans) #matrix multiplication 
         # print("179")
         # print(x)
-        x = x.transpose(2, 1)
+        # x = x.transpose(2, 1)
         # print("181")
         x = F.relu(self.bn1(self.conv1(x)))
         # print("self_transform" + str(self.feature_transform))
