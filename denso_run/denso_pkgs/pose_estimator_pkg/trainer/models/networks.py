@@ -22,7 +22,6 @@ def define_network(opt):
             net = PointNet_Pose(3, 9)
     elif process_swich == "object_segment":
         if arch == "JSIS3D":
-            print("jsjsj")
             net = JSIS3D(opt.embedded_size)
 
     return init_net(net, gpu_ids)
@@ -130,17 +129,18 @@ class JSIS3D(nn.Module):
         self.dropout = nn.Dropout(0.3)
 
     def forward(self, x):
-        print("133")
-        print(x.shape)
+        # print("133")
+        # print(x)
         x = self.pointnet_global_feat(x)
-        print("135")
+        # print("135")
+        # print(x)
         x = self.relu(self.bn1(self.conv1(x)))
-        print("137")
+        # print("137")
         x = self.relu(self.bn2(self.conv2(x)))
-        print("139")
+        # print("139")
         x = self.relu(self.bn3(self.conv3(x)))
-        print("141")
+        # print("141")
         x = self.last_conv(x)
-        print("143")
+        # print("143")
         x = x.transpose(2,1).contiguous() #memory clean for view
         return x

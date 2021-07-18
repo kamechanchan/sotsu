@@ -59,6 +59,8 @@ if __name__ == '__main__':
             total_steps += opt.batch_size * opt.gpu_num
             epoch_iter += opt.batch_size * opt.gpu_num
 
+            # print("***data****")
+            # print(data)
             model.set_input(data)
             t_loss = model.train_step()
             train_loss += t_loss

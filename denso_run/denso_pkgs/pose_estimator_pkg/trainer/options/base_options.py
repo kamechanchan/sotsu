@@ -43,7 +43,7 @@ class BaseOptions:
         self.parser.add_argument('--embedded_size', type=int, default=32)
         self.parser.add_argument('--delta_d', type=float, default=1.5)
         self.parser.add_argument('--delta_v', type=float, default=0.5)
-        self.parser.add_argument('--instance_number', type=int, default=7)
+        self.parser.add_argument('--instance_number', type=int, default=8)
         self.parser.add_argument('--checkpoints_process_swich',type=str,default='raugh_recognition')
 
         self.initialized = True

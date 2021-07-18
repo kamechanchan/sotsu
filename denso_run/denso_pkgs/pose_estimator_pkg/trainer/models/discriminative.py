@@ -21,6 +21,14 @@ class DiscriminativeLoss(nn.Module):
         L_d = self._distance(centroids, size)
         L_r = self._regularization(centroids, size)
         loss = self.alpha * L_v + self.beta * L_d + self.gamma * L_r
+        # print("***********start***************")
+        # print("embedded",embedded)
+        # print("masks",masks)
+        # print("size",size)
+        # print("centroids",centroids)
+        # print("L_v",L_v)
+        # print("L_d",L_d)
+        # print("L_r",L_r)
         return loss
 
     def _centroids(self, embedded, masks, size):
