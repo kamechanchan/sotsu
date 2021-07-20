@@ -87,8 +87,8 @@ int main(int argc, char** argv)
         }*/
        // ROS_INFO_STREAM("nokori size is " << nokori_cloud.size());
       //  all_cloud += nokori_cloud;
-        nokori_cloud.header.frame_id = loader_[0]->frame_id_;
-        pcl::toROSMsg(nokori_cloud, all_msgs);
+        all_cloud.header.frame_id = loader_[0]->frame_id_;
+        pcl::toROSMsg(all_cloud, all_msgs);
         cloud_pub.publish(all_msgs);
         all_cloud.clear();
         index_all_cloud.clear();

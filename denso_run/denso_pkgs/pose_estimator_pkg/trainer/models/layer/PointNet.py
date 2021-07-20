@@ -86,11 +86,12 @@ class STN3d(nn.Module):
     def forward(self, x):
         batchsize = x.size()[0]
         x = F.relu(self.bn1(self.conv1(x)))
-        print(x)
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))
         x = torch.max(x, 2, keepdim=True)[0]
         x = x.view(-1, 1024)
+        # print("********************************************")
+        # print(x.shape)
         x = F.relu(self.bn4(self.fc1(x)))
         # x = F.relu(self.fc1(x))
         x = F.relu(self.bn5(self.fc2(x)))
@@ -177,15 +178,15 @@ class PointNet_feat_segmentation(nn.Module):
         # print(x)
         n_pts = x.size()[2] #getting number of point_cloud (dataset structure: batch_size ch point_cloud)
         # print("173")
-        # trans = self.stn(x) #T-Net
+        trans = self.stn(x) #T-Net
         # print(trans)
         # print("175")
-        # x = x.transpose(2, 1) #transpose for matrix multiplication
+        x = x.transpose(2, 1) #transpose for matrix multiplication
         # print("177")
-        # x = torch.bmm(x, trans) #matrix multiplication 
+        x = torch.bmm(x, trans) #matrix multiplication 
         # print("179")
         # print(x)
-        # x = x.transpose(2, 1)
+        x = x.transpose(2, 1)
         # print("181")
         x = F.relu(self.bn1(self.conv1(x)))
         # print("self_transform" + str(self.feature_transform))

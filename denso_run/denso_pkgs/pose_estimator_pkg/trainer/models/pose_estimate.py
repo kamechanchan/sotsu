@@ -90,6 +90,8 @@ class EstimatorModel:
             self.loss = self.criterion(pred, self.y_data)
         elif self.process_swich == "object_segment":
             self.loss = self.criterion(pred, self.y_data, self.instance_number)
+            # print("loss")
+            # print(self.loss)
         self.loss.backward()
         self.optimizer.step()
         return self.loss.item() * self.x_data.size(0)

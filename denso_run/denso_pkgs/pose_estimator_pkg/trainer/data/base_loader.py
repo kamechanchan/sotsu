@@ -39,12 +39,12 @@ class Base_Loader(object):
         filenames = listdir(path_to_dir)
         file_list = [filename for filename in filenames if filename.endswith(suffix)]
         file_name = []
-        print("*****************start*******************")
-        print(path_to_dir)
+        # print("*****************start*******************")
+        # print(path_to_dir)
         for i in range(self.dataset_number):
             for f in file_list:
-                print("dataset_mode")
-                print(self.dataset_model[i])
+                # print("dataset_mode")
+                # print(self.dataset_model[i])
                 if self.dataset_model[i] in f: #dataset_model==dataset
                     file_name.append(f)
         

@@ -114,7 +114,7 @@ class JSIS3D(nn.Module):
         super(JSIS3D, self).__init__()
         self.embedded_size = embedded_size
         
-        self.pointnet_global_feat = PointNet_feat_segmentation(global_feat = False,feature_transform = True)
+        self.pointnet_global_feat = PointNet_feat_segmentation(global_feat = False,feature_transform = False)
         self.conv1 = nn.Conv1d(1088, 512, 1)
         self.conv2 = nn.Conv1d(512, 256, 1)
         self.conv3 = nn.Conv1d(256, 128, 1)

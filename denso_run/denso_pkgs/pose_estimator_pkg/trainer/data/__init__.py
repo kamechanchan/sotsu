@@ -14,8 +14,8 @@ def TrainValDataset(opt):
         print("Error!! ")
         sys.exit(1)
 
-    print(dataset.size)
-    print(dataset)
+    # print(dataset.size)
+    # print(dataset)
     n_samples = len(dataset)
     train_size = int(n_samples * 0.95)
 
@@ -25,9 +25,9 @@ def TrainValDataset(opt):
     subset1 = Subset(dataset, subset1_indices) #set train_data and index(対応付け)
     subset2 = Subset(dataset, subset2_indices)
 
-    print("dataset_dataset")
-    print(type(subset1))
-    print(type(subset2))
+    # print("dataset_dataset")
+    # print(type(subset1))
+    # print(type(subset2))
     
     return subset1, subset2
 
