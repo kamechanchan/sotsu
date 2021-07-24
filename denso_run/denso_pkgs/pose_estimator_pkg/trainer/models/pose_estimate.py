@@ -1,6 +1,7 @@
 #! /bin/env python2
 # -*- coding: utf-8 -*-
 
+from numpy.core.fromnumeric import size
 import torch
 import numpy as np
 from . import networks
@@ -24,7 +25,7 @@ class EstimatorModel:
         self.gpu_ids = opt.gpu_ids
         self.device = torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
         self.is_train = self.opt.is_train
-        self.instance_number = opt.instance_number
+        self.instance_number_manual = opt.instance_number-1
         print("opt_phase is " + str(self.opt.phase))
         print("process + " + str(self.process_swich))
 
@@ -58,19 +59,68 @@ class EstimatorModel:
     def set_input(self, data):
         if self.opt.phase == "train":
             x_data = torch.from_numpy(data["x_data"].astype(np.float32))
-            y_data = torch.from_numpy(data["y_data"].astype(np.float32)) 
-        
+            y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+            # self.instance_number = torch.from_numpy(data["sizes"].astype(np.int32))
+            x_data = x_data.transpose(2, 1)
+            # if self.process_swich == "raugh_recognition":
+            #     x_data = x_data.transpose(2, 1)
+            # elif self.process_swich == "object_segment":
+            #     x_data = x_data.transpose(2, 1)
 
-            if self.process_swich == "raugh_recognition":
-                x_data = x_data.transpose(2, 1)
-            elif self.process_swich == "object_segment":
-                x_data = x_data.transpose(2, 1)
+            # print("datadata")
+            # print(x_data.type)
+            # print(y_data.type)
+            # print(instance_number.type)
 
             self.x_data, self.y_data = x_data.to(self.device), y_data.to(self.device)
 
         elif self.opt.phase == "test":
             x_data = torch.from_numpy(data)
             x_data = x_data.float()
+
+            if self.process_swich == "raugh_recognition":
+                #x_data = self.get_centroid(x_data)
+                x_data = x_data.transpose(2, 1)
+            elif self.process_swich == "object_segment":
+                x_data = x_data.transpose(2, 1)
+
+            self.x_data = x_data.to(self.device)
+
+
+    def set_input_segmentation(self, data):
+        x_data = data["x_data"]
+        y_data = data["y_data"]
+        sizes = data["sizes"]
+        if self.opt.phase == "train":
+            # x_data = np.array(meta_x)
+            # y_data = np.array(meta_y)
+            x_data = torch.from_numpy(x_data.astype(np.float32))
+            y_data = torch.from_numpy(y_data.astype(np.float32))
+            sizes = torch.from_numpy(sizes.astype(np.int32))
+            # self.instance_number = torch.from_numpy(data["sizes"].astype(np.int32))
+            
+            x_data = x_data.transpose(2, 1)
+            # y_data = np.array(y_data)
+            # if self.process_swich == "raugh_recognition":
+            #     x_data = x_data.transpose(2, 1)
+            # elif self.process_swich == "object_segment":
+            #     x_data = x_data.transpose(2, 1)
+
+            # print("datadata")
+            # print(x_data.type)
+            # print(y_data.type)
+            # print(instance_number.type)
+
+            self.x_data, self.y_data, self.sizes = x_data.to(self.device), y_data.to(self.device), sizes.to(self.device)
+            # self.x_data = x_data.to(self.device)
+            # self.y_data = y_data
+            # self.y_data = [ann.to(self.device) for ann in y_data]
+            # print(type(y_data))
+
+        elif self.opt.phase == "test":
+            # x_data = np.array(meta_x)
+            x_data = torch.from_numpy(x_data)
+            # x_data = x_data.float()
 
             if self.process_swich == "raugh_recognition":
                 #x_data = self.get_centroid(x_data)
@@ -89,7 +139,11 @@ class EstimatorModel:
         if self.process_swich == "raugh_recognition":
             self.loss = self.criterion(pred, self.y_data)
         elif self.process_swich == "object_segment":
-            self.loss = self.criterion(pred, self.y_data, self.instance_number)
+            # self.loss = self.criterion(pred, self.y_data, self.instance_number_manual)
+            # self.loss = self.criterion(pred, self.y_data, np.shape(self.y_data)[2])
+            self.loss = self.criterion(pred, self.y_data, self.sizes)
+            # print("data")
+            # print(self.y_data.shape[2])
             # print("loss")
             # print(self.loss)
         self.loss.backward()
@@ -103,7 +157,9 @@ class EstimatorModel:
         if self.process_swich == "raugh_recognition":
             self.loss = self.criterion(pred, self.y_data)
         elif self.process_swich == "object_segment":
-            self.loss = self.criterion(pred, self.y_data, self.instance_number)
+            # self.loss = self.criterion(pred, self.y_data, self.instance_number_manual)
+            # self.loss = self.criterion(pred, self.y_data, self.y_data.shape[2])
+            self.loss = self.criterion(pred, self.y_data, self.sizes)
         return self.loss.item() * self.x_data.size(0)
 
 

@@ -1,6 +1,6 @@
 import torch.utils.data
 from torch.utils.data.dataset import Subset
-from data.base_dataset import collate_fn
+from data.base_dataset import collate_fn, collate_fn_original
 import sys
 
 def TrainValDataset(opt):
@@ -37,12 +37,24 @@ class TrainDataLoader:
         self.opt = opt
         self.dataset= dataset
         self.batch_size = opt.batch_size * opt.gpu_num
-        self.dataloader = torch.utils.data.DataLoader(
-                self.dataset,
-                batch_size=self.batch_size,
-                shuffle=True,
-                num_workers=int(opt.num_threads),
-                collate_fn=collate_fn)
+        
+        if self.opt.dataset_mode == "pose_estimation":
+            self.dataloader = torch.utils.data.DataLoader(
+                    self.dataset,
+                    batch_size=self.batch_size,
+                    shuffle=True,
+                    num_workers=int(opt.num_threads),
+                    collate_fn=collate_fn)
+        elif self.opt.dataset_mode == "instance_segmentation":
+            self.dataloader = torch.utils.data.DataLoader(
+                    self.dataset,
+                    batch_size=self.batch_size,
+                    shuffle=True,
+                    num_workers=int(opt.num_threads),
+                    collate_fn=collate_fn)
+        else :
+            print("opt.dataset_mode problem")
+            sys.exit(1)
 
         self.len_size = 0
         for i in range(self.opt.dataset_number):
@@ -64,12 +76,24 @@ class ValDataLoader:
         self.opt = opt
         self.dataset= dataset
         self.batch_size = opt.batch_size * opt.gpu_num
-        self.dataloader = torch.utils.data.DataLoader(
-                self.dataset,
-                self.batch_size,
-                shuffle=False,
-                num_workers=int(opt.num_threads),
-                collate_fn=collate_fn)
+
+        if self.opt.dataset_mode == "pose_estimation":
+                self.dataloader = torch.utils.data.DataLoader(
+                        self.dataset,
+                        batch_size=self.batch_size,
+                        shuffle=False,
+                        num_workers=int(opt.num_threads),
+                        collate_fn=collate_fn)
+        elif self.opt.dataset_mode == "instance_segmentation":
+            self.dataloader = torch.utils.data.DataLoader(
+                    self.dataset,
+                    batch_size=self.batch_size,
+                    shuffle=False,
+                    num_workers=int(opt.num_threads),
+                    collate_fn=collate_fn)
+        else :
+            print("opt.dataset_mode problem")
+            sys.exit(1)
 
         self.len_size = 0
         for i in range(self.opt.dataset_number):

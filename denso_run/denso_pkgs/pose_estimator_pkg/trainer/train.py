@@ -59,7 +59,7 @@ if __name__ == '__main__':
             total_steps += opt.batch_size * opt.gpu_num
             epoch_iter += opt.batch_size * opt.gpu_num
 
-            print("***data****")
+            # print("***data****")
             # print(data)
             model.set_input(data)
             t_loss = model.train_step()
@@ -68,6 +68,7 @@ if __name__ == '__main__':
             count = count + 1
             plot_x.append(count)
             # print("********************GOAL*************************")
+            # break
 
             if total_steps % opt.print_freq == 0:
                 t = (time.time() - iter_start_time / opt.batch_size)
@@ -78,7 +79,7 @@ if __name__ == '__main__':
                 model.save_network("latest")
 
             iter_data_time = time.time()
-
+        # break
         if epoch % opt.save_epoch_freq == 0:
             print("saving the model at the end of epoch %d, iter %d" % (epoch, total_steps))
             model.save_network("latest")
