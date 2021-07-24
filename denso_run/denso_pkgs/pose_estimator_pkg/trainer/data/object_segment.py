@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 import os
 import sys
+
+from traitlets.traitlets import Instance
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 import torch
@@ -23,13 +25,17 @@ class Segmentation_Data(BaseDataset):
         self.hdf5_data.load_hdf5()
 
     def __getitem__(self, index):
+        # meta_x = []
+        # meta_y = []
         meta = {}
         #try:
         if self.arch == "JSIS3D":
-            x_data, y_data = self.hdf5_data.get_pcd_data(index)
+            x_data, y_data, sizes = self.hdf5_data.get_pcd_data(index)
+            # meta_x.append(x_data)
+            # meta_y.append(y_data)
             meta["x_data"] = x_data
             meta["y_data"] = y_data
-            #meta["sizes"] = sizes
+            meta["sizes"] = sizes
             return meta
         """
         except:

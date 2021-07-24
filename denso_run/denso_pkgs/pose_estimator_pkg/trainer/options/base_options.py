@@ -43,7 +43,7 @@ class BaseOptions:
         self.parser.add_argument('--embedded_size', type=int, default=32)
         self.parser.add_argument('--delta_d', type=float, default=1.5)
         self.parser.add_argument('--delta_v', type=float, default=0.5)
-        self.parser.add_argument('--instance_number', type=int, default=7)
+        self.parser.add_argument('--instance_number', type=int, default=8)
         self.parser.add_argument('--checkpoints_process_swich',type=str,default='raugh_recognition')
 
         self.initialized = True
@@ -55,13 +55,16 @@ class BaseOptions:
         self.opt, unknown = self.parser.parse_known_args()
         str_ids = self.opt.gpu_ids.split(',')
         self.opt.gpu_ids = []
-        
+
         self.concat_dataset_model = '+'.join(self.opt.dataset_model)
 
         for str_id in str_ids:
             id = int(str_id)
+            # print("*************************************")
             if id>= 0:
                 self.opt.gpu_ids.append(id)
+                # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                # print(self.opt.gpu_ids)
 
         if len(self.opt.gpu_ids) > 0:
             torch.cuda.set_device(self.opt.gpu_ids[0])
@@ -74,7 +77,7 @@ class BaseOptions:
 
         if self.opt.local_export_folder:
             self.opt.local_export_folder = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_process_swich, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model, self.opt.local_export_folder)
-            util.mkdir(self.opt.export_folder)    
+            util.mkdir(self.opt.export_folder)
 
         if self.opt.is_train:
             print("---------------Options-------------")
@@ -99,6 +102,6 @@ class BaseOptions:
                 opt_file.write("------------Options------------\n")
                 for k, v in sorted(args.items()):
                     opt_file.write('%s: %s\n' % (str(k), str(v)))
-                opt_file.write("-------------End---------------\n")    
+                opt_file.write("-------------End---------------\n")
 
         return self.opt

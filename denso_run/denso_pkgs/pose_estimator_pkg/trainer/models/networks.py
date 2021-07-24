@@ -114,7 +114,7 @@ class JSIS3D(nn.Module):
         super(JSIS3D, self).__init__()
         self.embedded_size = embedded_size
         
-        self.pointnet_global_feat = PointNet_feat_segmentation(global_feat = False,feature_transform = True)
+        self.pointnet_global_feat = PointNet_feat_segmentation(global_feat = False,feature_transform = False)
         self.conv1 = nn.Conv1d(1088, 512, 1)
         self.conv2 = nn.Conv1d(512, 256, 1)
         self.conv3 = nn.Conv1d(256, 128, 1)
@@ -129,10 +129,18 @@ class JSIS3D(nn.Module):
         self.dropout = nn.Dropout(0.3)
 
     def forward(self, x):
+        # print("133")
+        # print(x)
         x = self.pointnet_global_feat(x)
+        # print("135")
+        # print(x)
         x = self.relu(self.bn1(self.conv1(x)))
+        # print("137")
         x = self.relu(self.bn2(self.conv2(x)))
+        # print("139")
         x = self.relu(self.bn3(self.conv3(x)))
+        # print("141")
         x = self.last_conv(x)
+        # print("143")
         x = x.transpose(2,1).contiguous() #memory clean for view
         return x

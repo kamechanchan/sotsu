@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets \
---dataset_model HV6_size_20000_range_pi_1.hdf5 \
+--dataroot /home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset \
+--dataset_model tsuchida_1000.hdf5 \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint \
 --resolution 1024 \
 --phase train \
---name raugh_recognition \
---dataset_mode pose_estimation \
+--dataset_mode instance_segmentation \
 --batch_size 8 \
 --num_epoch 200 \
 --max_dataset_size 20000 \

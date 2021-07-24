@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="object_name" default="HV8" />
+  <arg name="icpRefine" default="False" />
+  <arg name="arch" default="JSIS3D" />
+  <arg name="process_swich" default="object_segment" />
+  <arg name="resolution" default="50" />
+  <arg name="load_path" default="/home/ericlab/DENSO_results/object_segment/ishiyama/JSIS3D/ishiyama_1000.hdf5/latest_net.pth"/>
+    <node name="estimator_server" pkg="estimator" type="estimator_server.py" output="screen" >
+        <param name="object_name" value="$(arg object_name)" />
+        <param name="process_swich" value="$(arg process_swich)" />
+        <param name="arch" value="$(arg arch)" />
+        <param name="resolution" value="$(arg resolution)" />
+        <param name="load_path" value="$(arg load_path)"/>
+    </node>
+</launch>
