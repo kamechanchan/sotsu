@@ -92,10 +92,10 @@ class STN3d(nn.Module):
         x = x.view(-1, 1024)
         # print("********************************************")
         # print(x.shape)
-        x = F.relu(self.bn4(self.fc1(x)))
-        # x = F.relu(self.fc1(x))
-        x = F.relu(self.bn5(self.fc2(x)))
-        # x = F.relu(self.fc2(x))
+        # x = F.relu(self.bn4(self.fc1(x)))
+        x = F.relu(self.fc1(x))
+        # x = F.relu(self.bn5(self.fc2(x)))
+        x = F.relu(self.fc2(x))
         x = self.fc3(x)
 
         if self.quaternion:

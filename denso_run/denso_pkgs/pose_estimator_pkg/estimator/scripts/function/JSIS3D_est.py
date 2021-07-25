@@ -20,11 +20,15 @@ def pose_prediction(opt, data):
     x = np.reshape(np.array(data), (col, row))[np.newaxis, :, :]
     print("shpae" + str(x.shape))
     y_pre = estimation(opt, x)
+    print("y_data")
+    print(y_pre[0].shape)
     y = np.squeeze(y_pre[0])
     est_time = y_pre[1]
-    y = KMeans(n_clusters=7).fit_predict(y)
+    y = KMeans(n_clusters=8).fit_predict(y)
+    print("KMEAns_kme*****************")
+    print(y)
     msg_out = out_segmentation()
-    for i in range(1024):
+    for i in range(8092):
         msg_out.x.append(x[0][i][0])
         msg_out.y.append(x[0][i][1])
         msg_out.z.append(x[0][i][2])

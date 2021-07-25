@@ -8,13 +8,13 @@ import numpy as np
 import pcl.pcl_visualization
 import open3d
 
-path = "/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/init.hdf5"
+path = "/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/tsuchida/kandou_10000.hdf5"
 #path = "/home/ericlab/OneDrive/DENSO/raugh_recognition/datasets/tsuchida/HV6_size_20000_range_pi_1.hdf5"
 #path = util_rikuken.find_hdf5_File("/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset", "init.hdf5")
 hdf5_file = h5py.File(path, "r")
 ff = open('/home/ericlab/tameshi_pcd/subara.txt', "w")
 for i in range(1):
-    pcl_data = hdf5_file["data_" + str(i + 5)]['pcl'][()]
+    pcl_data = hdf5_file["data_" + str(i + 5)]['Points'][()]
     list_1 = pcl_data.tolist()
     print(path)
     print(pcl_data)
