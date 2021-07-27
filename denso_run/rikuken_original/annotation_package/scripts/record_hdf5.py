@@ -24,6 +24,7 @@ class record_file(object):
         self.directorypath = rospy.get_param("~directorypath", "/home/ericlab/ishiyama_tanomu.hdf5")
         self.filepath = rospy.get_param("~filepath", "instance")
         self.sub_topic_name = rospy.get_param("~sub_topic_name", "dummy_cloud")
+        self.data_number = rospy.get_param("~data_number", 3)
         self.num_dataset = rospy.get_param("~num_dataset", 5)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
@@ -45,7 +46,7 @@ class record_file(object):
         util_rikuken.mkdir(self.directorypath)
         dt_now = datetime.datetime.now()
         self.all_file_path = self.directorypath + self.filepath + "_"
-        time_str = str(dt_now.hour) + "_" + str(dt_now.minute)
+        time_str = str(dt_now.month) + "_" + str(dt_now.day) + str(self.num_dataset) + "_" + str(self.data_number)
         self.all_file_path = self.all_file_path + time_str + ".hdf5"
         self.hdf5_file = h5py.File(self.all_file_path, "w")
     '''
@@ -103,7 +104,7 @@ class record_file(object):
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()
             msg_size = len(msg.x)
-            self.all_file_path = self.all_file_path + "_" + str(msg_size) + "_" + str(self.num_dataset)
+            # self.all_file_path = self.all_file_path + "_" + str(msg_size) + "_" + str(self.num_dataset)
             # print(msg_size)
             # print(len(msg.x))
             # print(len(msg.instance))
