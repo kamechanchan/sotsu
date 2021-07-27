@@ -9,6 +9,7 @@ class Semantic_Loss(torch.nn.Module):
     def forward(self, pred, target, trans_feat):
         print("gks")
         print(target.shape)
+        print(pred.shape)
         loss = F.nll_loss(pred, target)
         mat_diff_loss = self.feature_transform_reguliarzer(trans_feat)
         total_loss = loss + mat_diff_loss * self.mat_diff_loss_scale
