@@ -25,12 +25,16 @@ class Segmentation_Data(BaseDataset):
     def __getitem__(self, index):
         meta = {}
         #try:
-        if self.arch == "JSIS3D":
-            x_data, y_data = self.hdf5_data.get_pcd_data(index)
-            meta["x_data"] = x_data
-            meta["y_data"] = y_data
-            #meta["sizes"] = sizes
-            return meta
+        # if self.arch == "JSIS3D":
+        x_data, y_data = self.hdf5_data.get_pcd_data(index)
+        # print("x_data")
+        # print(x_data)
+        # print("y_data")
+        # print(y_data)
+        meta["x_data"] = x_data
+        meta["y_data"] = y_data
+        #meta["sizes"] = sizes
+        return meta
         """
         except:
             print("pose_estimate_data(Segmentation_Data).py: Error! Cloud not load hdf5_data")

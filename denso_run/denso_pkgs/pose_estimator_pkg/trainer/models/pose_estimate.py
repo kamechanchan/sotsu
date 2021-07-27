@@ -82,12 +82,18 @@ class EstimatorModel:
     def train_step(self):
         self.net.train()
         self.optimizer.zero_grad()
-        pred = self.net(self.x_data)
+        # pred = self.net(self.x_data)
 
         if self.process_swich == "raugh_recognition":
+            pred = self.net(self.x_data)
             self.loss = self.criterion(pred, self.y_data)
         elif self.process_swich == "object_segment":
-            self.loss = self.criterion(pred, self.y_data, self.instance_number)
+            if self.arch == "JSIS3D":
+                pred = self.net(self.x_data)
+                self.loss = self.criterion(pred, self.y_data, self.instance_number)
+            elif self.arch == "PointNet_Segmentation":
+                pred, trans_feat = self.net(self.x_data)
+                self.loss == self.criterion(pred, self.y_data, trans_feat)
         self.loss.backward()
         self.optimizer.step()
         return self.loss.item() * self.x_data.size(0)

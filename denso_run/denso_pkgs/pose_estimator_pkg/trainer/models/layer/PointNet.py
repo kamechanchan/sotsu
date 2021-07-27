@@ -193,3 +193,45 @@ class PointNet_feat_segmentation(nn.Module):
         else:
             x = x.view(-1, 1024, 1).repeat(1, 1, n_pts) #set number of point_cloud for cat (********)
             return torch.cat([x, pointfeat], 1) #convoluted point_cloud(concat final_encoded_data and data_passed_T-net (purpose:add ch_data)) and first T-net second T-Net
+
+class PointNet_feat_SemanticSegmentation(nn.Module):
+    def __init__(self, global_feat = False, feature_transform = True):
+        super(PointNet_feat_SemanticSegmentation, self).__init__()
+        self.stn = STN3d()
+        self.conv1 = torch.nn.Conv1d(3, 64, 1)
+        self.conv2 = torch.nn.Conv1d(64, 128, 1)
+        self.conv3 = torch.nn.Conv1d(128, 1024, 1)
+        self.bn1 = nn.BatchNorm1d(64)
+        self.bn2 = nn.BatchNorm1d(128)
+        self.bn3 = nn.BatchNorm1d(1024)
+        self.global_feat = global_feat
+        self.feature_transform = feature_transform
+        if self.feature_transform:
+            self.fstn = STNkd(k=64)
+
+    def forward(self, x):
+        n_pts = x.size()[2] #getting number of point_cloud (dataset structure: batch_size ch point_cloud)
+        trans = self.stn(x) #T-Net
+        x = x.transpose(2, 1) #transpose for matrix multiplication
+        x = torch.bmm(x, trans) #matrix multiplication 
+        x = x.transpose(2, 1)
+        x = F.relu(self.bn1(self.conv1(x)))
+
+        if self.feature_transform:
+            trans_feat = self.fstn(x)
+            x = x.transpose(2,1)
+            x = torch.bmm(x, trans_feat)
+            x = x.transpose(2,1)
+        else:
+            trans_feat = None
+
+        pointfeat = x
+        x = F.relu(self.bn2(self.conv2(x)))
+        x = self.bn3(self.conv3(x))
+        x = torch.max(x, 2, keepdim=True)[0] #getting max data of each ch  (※:[0] is role for getting maxed data([1] is index))
+        x = x.view(-1, 1024)
+        if self.global_feat:
+            return x, trans, trans_feat
+        else:
+            x = x.view(-1, 1024, 1).repeat(1, 1, n_pts) #set number of point_cloud for cat (********)
+            return torch.cat([x, pointfeat], 1), trans, trans_feat #convoluted point_cloud(concat final_encoded_data and data_passed_T-net (purpose:add ch_data)) and first T-net second T-Net
