@@ -24,7 +24,7 @@ def pose_prediction(opt, data):
     est_time = y_pre[1]
     y = KMeans(n_clusters=7).fit_predict(y)
     msg_out = out_segmentation()
-    for i in range(1024):
+    for i in range(4096):
         msg_out.x.append(x[0][i][0])
         msg_out.y.append(x[0][i][1])
         msg_out.z.append(x[0][i][2])
