@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="filepath" default="instance_try"/>
+    <arg name="filepath" default="instance_tsuchida"/>
     <arg name="sub_topic_name" default="dummy_cloud"/>
     
     <arg name="num_dataset" default="1000"/>

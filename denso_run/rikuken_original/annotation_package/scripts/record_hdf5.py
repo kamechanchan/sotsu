@@ -46,7 +46,7 @@ class record_file(object):
         util_rikuken.mkdir(self.directorypath)
         dt_now = datetime.datetime.now()
         self.all_file_path = self.directorypath + self.filepath + "_"
-        time_str = str(dt_now.month) + "_" + str(dt_now.day) + str(self.num_dataset) + "_" + str(self.data_number)
+        time_str = str(dt_now.month) + "_" + str(dt_now.day) + "_" +  str(self.num_dataset) + "_" + str(self.data_number)
         self.all_file_path = self.all_file_path + time_str + ".hdf5"
         self.hdf5_file = h5py.File(self.all_file_path, "w")
     '''
