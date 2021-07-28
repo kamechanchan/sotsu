@@ -27,6 +27,7 @@ void callback(sensor_msgs::PointCloud2ConstPtr msg)
     //pcl::io::savePCDFile("/home/ericlab/dummy_cloud/hab.pcd", cloud);
     color_cloud_bridge::dummy_pcl dummy;
     int r_p, g_p, b_p;
+    std::vector<int> count(8);
     for (int i = 0; i < cloud.points.size(); i++) {
         r_p = static_cast<int>(cloud.points[i].r);
         g_p = static_cast<int>(cloud.points[i].g);
@@ -40,24 +41,39 @@ void callback(sensor_msgs::PointCloud2ConstPtr msg)
         dummy.b.push_back(b_p);
         if (r_p == 255 && b_p == 0 && g_p == 0) {
             dummy.instance.push_back(0);
+            count[0]++;
         }
         if (r_p == 0 && b_p == 255 && g_p == 0) {
             dummy.instance.push_back(1);
+            count[1]++;
         }
         if (r_p == 0 && b_p == 0 && g_p == 255) {
             dummy.instance.push_back(2);
+            count[2]++;
         }
         if (r_p == 255 && b_p == 255 && g_p == 0) {
             dummy.instance.push_back(3);
+            count[3]++;
         }
         if (r_p == 0 && b_p == 255 && g_p == 255) {
             dummy.instance.push_back(4);
+            count[4]++;
         }
         if (r_p == 255 && b_p == 0 && g_p == 255) {
             dummy.instance.push_back(5);
+            count[5]++;
         }
+        // if (r_p == 255 && b_p == 255 && g_p == 100) {
+        //     dummy.instance.push_back(6);
+        //     count[6]++;
+        // }
         if (r_p == 255 && b_p == 100 && g_p == 255) {
             dummy.instance.push_back(6);
+            count[6]++;
+        }
+        if (r_p == 255 && b_p == 255 && g_p == 255) {
+            dummy.instance.push_back(7);
+            count[7]++;
         }
     }
 
@@ -75,6 +91,9 @@ void callback(sensor_msgs::PointCloud2ConstPtr msg)
     dummy.z.clear();
     dummy.rgb.clear();
     ROS_INFO_STREAM("finish");
+    for (int i = 0; i < 8; i++) {
+        ROS_INFO_STREAM(std::to_string(i) << ":  " << std::to_string(count[i]));
+    }
 }
 
 int main(int argc, char** argv)

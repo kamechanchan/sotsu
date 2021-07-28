@@ -43,7 +43,7 @@ class DnnNode():
         self.opt.batch_size = rospy.get_param("~batch_size", 30)
         self.arch = rospy.get_param("~arch", "JSIS3D")
         self.opt.arch = self.arch
-        self.opt.resolution = rospy.get_param("~resolution", 4096)
+        self.opt.resolution = rospy.get_param("~resolution", 8092)
         self.opt.num_threads = rospy.get_param("~num_threads", 8)
         self.opt.gpu_id = rospy.get_param("~gpu_id", "1")
         self.package_path = rospack.get_path("estimator")
