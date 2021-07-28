@@ -32,6 +32,7 @@ class Segmentation_PCD_Loader(PCD_Loader):
         x_data = original_data[:,:3]
         
         y_data = original_data[:,3]
+        # print(y_data.dtype)
         # instance_segmentation
         # pre_mask_data = original_data[:,3]
         # pre_mask_data = pre_mask_data.astype(np.int64)

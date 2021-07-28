@@ -25,6 +25,7 @@ class EstimatorModel:
         self.device = torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
         self.is_train = self.opt.is_train
         self.instance_number = opt.instance_number
+        self.dataset_mode = opt.dataset_mode
 
         self.optimizer = None
         self.x_data  = None
@@ -55,13 +56,17 @@ class EstimatorModel:
 
     def set_input(self, data):
         if self.opt.phase == "train":
-            x_data = torch.from_numpy(data["x_data"].astype(np.float32))
-            y_data = torch.from_numpy(data["y_data"].astype(np.float32)) 
+            x_data = torch.from_numpy(data["x_data"].astype(np.float32)) 
         
 
-            if self.process_swich == "raugh_recognition":
+            if self.dataset_mode == "pose_estimation":
+                y_data = torch.from_numpy(data["y_data"].astype(np.float32))
                 x_data = x_data.transpose(2, 1)
-            elif self.process_swich == "object_segment":
+            elif self.dataset_mode == "instance_segmentation":
+                y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+                x_data = x_data.transpose(2, 1)
+            elif self.dataset_mode == "semantic_segmentation":
+                y_data = torch.from_numpy(data["y_data"].astype(np.int64))
                 x_data = x_data.transpose(2, 1)
 
             self.x_data, self.y_data = x_data.to(self.device), y_data.to(self.device)
@@ -93,7 +98,9 @@ class EstimatorModel:
                 self.loss = self.criterion(pred, self.y_data, self.instance_number)
             elif self.arch == "PointNet_Segmentation":
                 pred, trans_feat = self.net(self.x_data)
-                self.loss == self.criterion(pred, self.y_data, trans_feat)
+                # print("train")
+                # print(type(pred))
+                self.loss = self.criterion(pred, self.y_data, trans_feat)
         self.loss.backward()
         self.optimizer.step()
         return self.loss.item() * self.x_data.size(0)
@@ -101,11 +108,18 @@ class EstimatorModel:
 
     def val_step(self):
         self.net.eval()
-        pred = self.net(self.x_data)
         if self.process_swich == "raugh_recognition":
+            pred = self.net(self.x_data)
             self.loss = self.criterion(pred, self.y_data)
         elif self.process_swich == "object_segment":
-            self.loss = self.criterion(pred, self.y_data, self.instance_number)
+            if self.arch == "JSIS3D":
+                pred = self.net(self.x_data)
+                self.loss = self.criterion(pred, self.y_data, self.instance_number)
+            if self.arch == "PointNet_Segmentation":
+                pred, trans_feat = self.net(self.x_data)
+                # print("test")
+                # print(type(pred))
+                self.loss = self.criterion(pred, self.y_data, trans_feat)
         return self.loss.item() * self.x_data.size(0)
 
 
