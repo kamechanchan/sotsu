@@ -90,9 +90,12 @@ class STN3d(nn.Module):
         x = F.relu(self.bn3(self.conv3(x)))
         x = torch.max(x, 2, keepdim=True)[0]
         x = x.view(-1, 1024)
-
-        x = F.relu(self.bn4(self.fc1(x)))
-        x = F.relu(self.bn5(self.fc2(x)))
+        # print("********************************************")
+        # print(x.shape)
+        # x = F.relu(self.bn4(self.fc1(x)))
+        x = F.relu(self.fc1(x))
+        # x = F.relu(self.bn5(self.fc2(x)))
+        x = F.relu(self.fc2(x))
         x = self.fc3(x)
 
         if self.quaternion:
@@ -140,9 +143,12 @@ class STNkd(nn.Module):
         x = F.relu(self.bn3(self.conv3(x)))
         x = torch.max(x, 2, keepdim=True)[0]
         x = x.view(-1, 1024)
+        # print("fffff")
 
-        x = F.relu(self.bn4(self.fc1(x)))
-        x = F.relu(self.bn5(self.fc2(x)))
+        #x = F.relu(self.bn4(self.fc1(x)))
+        x = F.relu(self.fc1(x))
+        #x = F.relu(self.bn5(self.fc2(x)))
+        x = F.relu(self.fc2(x))
         x = self.fc3(x)
 
         iden = Variable(torch.from_numpy(np.eye(self.k).flatten().astype(np.float32))).view(1,self.k*self.k).repeat(batchsize,1)
@@ -168,18 +174,33 @@ class PointNet_feat_segmentation(nn.Module):
             self.fstn = STNkd(k=64)
 
     def forward(self, x):
+        # print("171")
+        # print(x)
         n_pts = x.size()[2] #getting number of point_cloud (dataset structure: batch_size ch point_cloud)
+        # print("173")
         trans = self.stn(x) #T-Net
+        # print(trans)
+        # print("175")
         x = x.transpose(2, 1) #transpose for matrix multiplication
+        # print("177")
         x = torch.bmm(x, trans) #matrix multiplication 
+        # print("179")
+        # print(x)
         x = x.transpose(2, 1)
+        # print("181")
         x = F.relu(self.bn1(self.conv1(x)))
+        # print("self_transform" + str(self.feature_transform))
 
         if self.feature_transform:
+            # print("204")
             trans_feat = self.fstn(x)
+            # print("205")
             x = x.transpose(2,1)
+            # print("207")
             x = torch.bmm(x, trans_feat)
+            # print("209")
             x = x.transpose(2,1)
+            # print("211")
         else:
             trans_feat = None
 
@@ -188,8 +209,10 @@ class PointNet_feat_segmentation(nn.Module):
         x = self.bn3(self.conv3(x))
         x = torch.max(x, 2, keepdim=True)[0] #getting max data of each ch  (※:[0] is role for getting maxed data([1] is index))
         x = x.view(-1, 1024)
+
         if self.global_feat:
             return x, trans, trans_feat
         else:
             x = x.view(-1, 1024, 1).repeat(1, 1, n_pts) #set number of point_cloud for cat (********)
             return torch.cat([x, pointfeat], 1) #convoluted point_cloud(concat final_encoded_data and data_passed_T-net (purpose:add ch_data)) and first T-net second T-Net
+

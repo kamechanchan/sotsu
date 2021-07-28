@@ -18,12 +18,14 @@ class record_file(object):
     def __init__(self):
         rospack = rospkg.RosPack()
         self.package_path = rospack.get_path("annotation_package")
-        self.filepath = rospy.get_param("~filepath", "/home/ericlab/ishiyama_tanomu.hdf5")
+        self.directorypath = rospy.get_param("~directorypath", "/home/ericlab/ishiyama_tanomu.hdf5")
+        self.filepath = rospy.get_param("~filepath", "ishiyama_1000.hdf5")
+        self.sub_topic_name = rospy.get_param("~sub_topic_name", "dummy_cloud")
         self.num_dataset = rospy.get_param("~num_dataset", 5)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         #cloud_sub = rospy.Subscriber("all_cloud", PointCloud2, self.callback)
-        cloud_sub = rospy.Subscriber("dummy_cloud", dummy_pcl, self.callback)
+        cloud_sub = rospy.Subscriber(self.sub_topic_name, dummy_pcl, self.callback)
         rospy.set_param("/is_move/ok", True)
         self.init_file()
         self.num_ = 1
@@ -31,8 +33,8 @@ class record_file(object):
         
 
     def init_file(self):
-        util_rikuken.mkdir(self.filepath)
-        self.all_file_path = self.filepath + "/ishiyama_1000.hdf5"
+        util_rikuken.mkdir(self.directorypath)
+        self.all_file_path = self.directorypath + self.filepath
         self.hdf5_file = h5py.File(self.all_file_path, "w")
     '''
     def callback(self, cloud):
@@ -70,7 +72,9 @@ class record_file(object):
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()
             msg_size = len(msg.x)
-            #print(msg_size)
+            # print(msg_size)
+            # print(len(msg.x))
+            # print(len(msg.instance))
            
             np_points = np.zeros((msg_size, 3), dtype=np.float32)
             np_masks = np.zeros((msg_size, 1), dtype=np.float32)

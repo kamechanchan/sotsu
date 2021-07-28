@@ -26,6 +26,24 @@ def run_test(opt, dataset):
         val_loss += loss
     return val_loss
 
+
+def run_segmentation_test(opt, dataset):
+
+    opt.serial_batches = True
+    val_loss = 0.0
+    model = create_model(opt)
+
+    for i, data in enumerate(dataset):
+        time_sta = time.time()
+
+        model.set_input_segmentation(data)
+        loss = model.val_step()
+        time_end = time.time()
+
+        val_loss += loss
+    return val_loss
+
+
 def estimation(model, data):
 
     time_sta = time.time()
