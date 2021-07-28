@@ -49,18 +49,21 @@ class DnnNode():
         self.package_path = rospack.get_path("estimator")
         self.opt.checkpoints_dir = rospy.get_param("~load_path", "/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth")
         self.instance_pub = rospy.Publisher("instance_pub", out_segmentation, queue_size=10)
+        self.time_file = open(rospack.get_path("estimator") + '/tensai.txt', 'w')
 
         self.model = create_model(self.opt)
         self.opt.is_train = False
 
         self.output_pos_num = 3
         self.output_ori_num = 9
+        self.loop  = 0
         
 
     def run_service(self):
         service = rospy.Service("pose_estimation", PoseEstimate, self.callback)
 
     def callback(self, req):
+        self.start_callback = time.time()
         t0 = time.time()
         res = PoseEstimateResponse()
         msg_iro = out_segmentation()
@@ -91,6 +94,10 @@ class DnnNode():
         res.trans.transform.rotation = est_pose.pose.orientation
         res.trans.header.stamp = rospy.Time.now()
         res.stamp = est_time
+        call_finish = time.time()
+        
+        self.loop = self.loop + 1
+        self.time_file.write(str(self.loop) + "ループ目の処理時間は    　                : " + str(call_finish - self.start_callback) + '秒\n\n\n')
 
         return res
 
