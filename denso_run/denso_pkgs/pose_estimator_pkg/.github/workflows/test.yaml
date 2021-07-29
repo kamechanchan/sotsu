@@ -1,0 +1,25 @@
+name: Test
+
+on:
+  #実行するタイミング
+  pull_request:
+    types: [closed]
+    branches:
+      - master
+
+
+jobs:
+  build_docker:
+    runs-on: ubuntu-latest
+    container:
+      image: ubuntu:kinetic
+    steps:
+    - uses: ros-tooling/setup-ros@0.0.25
+      with:
+        required-ros-distributions: kinetic
+    - run: "source /opt/ros/kinetic/setup.bash && rosnode --help"
+    - uses: actions/checkout@v2
+    - run: catkin build
+
+
+

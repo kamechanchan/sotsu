@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="src_frame_name" default="world"/>
+    <arg name="object_name" default="HV8"/>
+    <node pkg="tf_publish" type="model_tf_publisher" name="model_tf_broadcaster">
+        <param name="src_frame_name" value="$(arg src_frame_name)"/>
+        <param name="object_name" value="$(arg object_name)"/>
+    </node>
+    
+    
+
+</launch>
