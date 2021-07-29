@@ -37,15 +37,11 @@ def collate_fn(batch):
     # print("JJHHJHLKJKH")
     # print(batch)
     keys = batch[0].keys()
-<<<<<<< HEAD
     # print("dadata")
     # print(keys)
     # for d in batch:
     #     print("dat")
     #     print(d)
-=======
-    # print(keys)
->>>>>>> 085e21b6061a7fe9c0f41abe02d571c6a294b3eb
     for key in keys:
         # for d in batch:
         #     print("da")

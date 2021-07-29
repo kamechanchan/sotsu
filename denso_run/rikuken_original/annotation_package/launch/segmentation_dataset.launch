@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="filepath" default="kandou_6000.hdf5"/>
+    <arg name="filepath" default="first_100.hdf5"/>
     <arg name="sub_topic_name" default="dummy_cloud"/>
     
     <arg name="num_dataset" default="10"/>

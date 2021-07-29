@@ -22,6 +22,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --serial_batches False \
 --verbose_plot True \
 --lr 0.0001 \
+--is_train True \
 --checkpoints_human_swich ishiyama \
 --checkpoints_process_swich object_segment \
 --dataroot_swich tsuchida \

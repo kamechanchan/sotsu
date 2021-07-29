@@ -47,8 +47,11 @@ def run_segmentation_test(opt, dataset):
 def estimation(model, data):
 
     time_sta = time.time()
+    print("mijika")
     model.set_input(data)
+    print("eieik")
     pred = model.test_step()
+    print("eiiek")
     time_end = time.time()
 
     return pred, (time_end - time_sta)

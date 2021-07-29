@@ -172,8 +172,15 @@ class EstimatorModel:
 
 
     def test_step(self):
-        pred = self.net(self.x_data)
-        pred = pred.to('cpu').detach().numpy().copy()
+        pred, trans = self.net(self.x_data)
+        print("output")
+        print(pred.shape)
+        # for i in pred:
+        #     ppi = i
+        # pred = ppi.to('cpu').detach().numpy().copy()
+        pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+        print(pred.shape)
+        # pred = pred.to('cpu').detach().numpy().copy()
         return pred
 
 
