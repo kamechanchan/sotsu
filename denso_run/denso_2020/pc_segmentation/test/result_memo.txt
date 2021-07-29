@@ -1,0 +1,65 @@
+evaluateSegbyIoU(0.000801949f, 0.0870592f, 0.0f, 0.36686f, 0.14321f, 0.464037f, 0.317611f)
+
+result data
+
+========================================================================
+Seg-No.8 --> Ref-No.1|   TP: 10391points, FP: 2868points, FN: 1534
+Seg-No.12 --> Ref-No.6|   TP: 8963points, FP: 0points, FN: 2343
+Seg-No.1 --> Ref-No.3|   TP: 6194points, FP: 5104points, FN: 823
+Seg-No.4 --> Ref-No.4|   TP: 5360points, FP: 0points, FN: 795
+Seg-No.5 --> Ref-No.2|   TP: 4995points, FP: 115points, FN: 3000
+Seg-No.13 --> Ref-No.11|   TP: 4251points, FP: 14points, FN: 760
+Seg-No.1 --> Ref-No.9|   TP: 3399points, FP: 7899points, FN: 421
+Seg-No.1 --> Ref-No.5|   TP: 2144points, FP: 9154points, FN: 4515
+Seg-No.11 --> Ref-No.14|   TP: 1900points, FP: 0points, FN: 1501
+Seg-No.8 --> Ref-No.2|   TP: 1764points, FP: 11495points, FN: 6231
+Seg-No.8 --> Ref-No.16|   TP: 1696points, FP: 11563points, FN: 1474
+Seg-No.3 --> Ref-No.5|   TP: 1550points, FP: 0points, FN: 5109
+Seg-No.9 --> Ref-No.16|   TP: 1203points, FP: 761points, FN: 1967
+Seg-No.9 --> Ref-No.14|   TP: 832points, FP: 1132points, FN: 2569
+Seg-No.1 --> Ref-No.20|   TP: 252points, FP: 11046points, FN: 320
+Seg-No.5 --> Ref-No.1|   TP: 82points, FP: 5028points, FN: 11843
+Seg-No.9 --> Ref-No.2|   TP: 38points, FP: 1926points, FN: 7957
+Seg-No.8 --> Ref-No.3|   TP: 30points, FP: 13229points, FN: 6987
+Seg-No.5 --> Ref-No.4|   TP: 15points, FP: 5095points, FN: 6140
+========================================================================
+
+
+========================================================================
+Seg-No.8 --> Ref-No.1|   TP: 10391points, FP: 2868points, FN: 1534
+Seg-No.12 --> Ref-No.6|   TP: 8963points, FP: 0points, FN: 2343
+Seg-No.1 --> Ref-No.3|   TP: 6194points, FP: 5104points, FN: 823
+Seg-No.4 --> Ref-No.4|   TP: 5360points, FP: 0points, FN: 795
+Seg-No.5 --> Ref-No.2|   TP: 4995points, FP: 115points, FN: 3000
+Seg-No.13 --> Ref-No.11|   TP: 4251points, FP: 14points, FN: 760
+Seg-No.11 --> Ref-No.14|   TP: 1900points, FP: 0points, FN: 1501
+Seg-No.3 --> Ref-No.5|   TP: 1550points, FP: 0points, FN: 5109
+Seg-No.9 --> Ref-No.16|   TP: 1203points, FP: 761points, FN: 1967
+========================================================================
+
+
+success segmentation parameter list
+-------------
+0.000802847
+0.102486
+0
+0.81297
+0.904885
+0.396356
+0.68371
+-------------
+0.000521146
+0.0856555
+0
+0.392431
+0.362354
+0.0439183
+0.971675
+------------
+0.000894813
+0.102434
+0
+0.554451
+0.417007
+0.39938
+0.171175

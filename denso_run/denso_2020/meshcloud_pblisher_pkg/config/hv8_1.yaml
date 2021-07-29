@@ -1,0 +1,14 @@
+meshes:
+  - name: HV8_00
+    base_frame: world
+    mesh_pkg: bayes_pose
+    path_from_pkg_to_mesh: model/meshes/STL
+    mesh_name: N_HV8.stl
+    x: 0.4
+    y: 0.005
+    z: 0.00
+    qx: 0.430106
+    qy: -0.1162768
+    qz: -0.3680189
+    qw: -0.8161193
+    # rpy[deg] = 150,-100,120
