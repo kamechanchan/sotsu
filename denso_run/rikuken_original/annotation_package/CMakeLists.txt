@@ -93,3 +93,9 @@ target_link_libraries(nearest_search_bara_3
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )
+
+add_executable(pcl_2_ba src/pcl_2_ba.cpp)
+target_link_libraries(pcl_2_ba
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
