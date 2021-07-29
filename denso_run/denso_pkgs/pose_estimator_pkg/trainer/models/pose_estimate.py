@@ -7,6 +7,7 @@ import numpy as np
 from . import networks
 from os.path import join
 from utils.util import print_network
+import pcl
 
 
 class EstimatorModel:
@@ -179,7 +180,6 @@ class EstimatorModel:
         #     ppi = i
         # pred = ppi.to('cpu').detach().numpy().copy()
         pred = pred.contiguous().cpu().data.max(2)[1].numpy()
-        print(pred.shape)
         # pred = pred.to('cpu').detach().numpy().copy()
         return pred
 
@@ -221,4 +221,26 @@ class EstimatorModel:
             self.net.cuda(self.gpu_ids[0])
         else:
             torch.save(self.net.cpu().state_dict(), save_path)
+
+    def progress_save_pcd(self,epoch):
+        pred, trans = self.net(self.x_data)
+        print("output")
+        print(pred)
+        # for i in pred:
+        #     ppi = i
+        # pred = ppi.to('cpu').detach().numpy().copy()
+        # pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+        print("pred")
+        print(pred)
+
+        for i in range(pred.shape[0]):
+            for j in range(pred.shape[1]):
+                pred = pred[i].contiguous().cpu().data.max(2)[1].numpy()
+                f = open("/home/ericlab/pcl_visu/progress_output/"+"result"+str(epoch)+"_"+str(i)+".txt", 'a')
+                f.write(str(pred[i,j])+"\n")
+
+        # pcl_visu = pcl.PointCloud(pred)
+        # pcl.save(pcl_visu, "/home/ericlab/pcl_visu/progress_output/"+"result"+str(epoch)+".pcd")
+        # pred = pred.to('cpu').detach().numpy().copy()
+        return pred
 

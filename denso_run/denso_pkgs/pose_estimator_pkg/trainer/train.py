@@ -84,7 +84,7 @@ if __name__ == '__main__':
             print("saving the model at the end of epoch %d, iter %d" % (epoch, total_steps))
             model.save_network("latest")
             model.save_network(epoch)
-
+            model.progress_save_pcd(epoch)
 
         if epoch % opt.run_test_freq == 0:
             val_loss = run_test(opt_v, val_dataset)
