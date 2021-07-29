@@ -20,6 +20,8 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
     pcl::PointCloud<pcl::PointXYZRGB> cloud;
     ROS_INFO_STREAM("get msg");
     ROS_INFO_STREAM("cloud size is " << msg->x.size());
+    int color_0 = 0;
+    int color_1 = 0;
     for (int i = 0; i < msg->x.size(); i++) {
         pcl::PointXYZRGB color;
         color.x = msg->x[i];
@@ -30,12 +32,14 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
             color.r = 255;
             color.g = 0;
             color.b = 0;
+            color_0++;
         }
         else if (msg->instance[i] == 1)
         {
             color.r = 0;
             color.g = 255;
             color.b = 0;
+            color_1++;
         }
         else if (msg->instance[i] == 2)
         {
@@ -73,6 +77,7 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
     sensor_msgs::PointCloud2 ros_msg;
     pcl::toROSMsg(cloud, ros_msg);
     instance_pub.publish(ros_msg);
+    ROS_INFO_STREAM("instance 0: " << color_0 << "  1: " << color_1);
 }
 
 int main(int argc, char** argv)

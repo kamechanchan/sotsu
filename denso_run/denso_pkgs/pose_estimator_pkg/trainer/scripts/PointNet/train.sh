@@ -1,16 +1,16 @@
 #!/usr/bin/env bash
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets/ \
---dataset_model HV6_size_20000_range_pi_1.hdf5 \
---dataset_mode pose_estimation \
---checkpoints_dir /home/ericlab/OneDrive/DENSO/pose_estimate/checkpoint \
+--dataroot /home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset \
+--dataset_model kandou_6000.hdf5 \
+--checkpoints_dir /home/ericlab/OneDrive/DENSO/ \
 --resolution 1024 \
 --phase train \
---process_swich raugh_recognition \
---batch_size 8 \
+--process_swich object_segment \
+--dataset_mode instance_segmentation \
+--batch_size 2 \
 --num_epoch 200 \
---max_dataset_size 20000 \
+--max_dataset_size 6000 \
 --arch JSIS3D \
 --print_freq 10 \
 --save_latest_freq 20000 \

@@ -28,6 +28,8 @@ class EstimatorModel:
         self.instance_number_manual = opt.instance_number-1
         print("opt_phase is " + str(self.opt.phase))
         print("process + " + str(self.process_swich))
+        self.instance_number = opt.instance_number
+        self.dataset_mode = opt.dataset_mode
 
         self.optimizer = None
         self.x_data  = None
@@ -58,19 +60,18 @@ class EstimatorModel:
 
     def set_input(self, data):
         if self.opt.phase == "train":
-            x_data = torch.from_numpy(data["x_data"].astype(np.float32))
-            y_data = torch.from_numpy(data["y_data"].astype(np.float32))
-            # self.instance_number = torch.from_numpy(data["sizes"].astype(np.int32))
-            x_data = x_data.transpose(2, 1)
-            # if self.process_swich == "raugh_recognition":
-            #     x_data = x_data.transpose(2, 1)
-            # elif self.process_swich == "object_segment":
-            #     x_data = x_data.transpose(2, 1)
+            x_data = torch.from_numpy(data["x_data"].astype(np.float32)) 
+        
 
-            # print("datadata")
-            # print(x_data.type)
-            # print(y_data.type)
-            # print(instance_number.type)
+            if self.dataset_mode == "pose_estimation":
+                y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+                x_data = x_data.transpose(2, 1)
+            elif self.dataset_mode == "instance_segmentation":
+                y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+                x_data = x_data.transpose(2, 1)
+            elif self.dataset_mode == "semantic_segmentation":
+                y_data = torch.from_numpy(data["y_data"].astype(np.int64))
+                x_data = x_data.transpose(2, 1)
 
             self.x_data, self.y_data = x_data.to(self.device), y_data.to(self.device)
 
@@ -134,18 +135,20 @@ class EstimatorModel:
     def train_step(self):
         self.net.train()
         self.optimizer.zero_grad()
-        pred = self.net(self.x_data)
+        # pred = self.net(self.x_data)
 
         if self.process_swich == "raugh_recognition":
+            pred = self.net(self.x_data)
             self.loss = self.criterion(pred, self.y_data)
         elif self.process_swich == "object_segment":
-            # self.loss = self.criterion(pred, self.y_data, self.instance_number_manual)
-            # self.loss = self.criterion(pred, self.y_data, np.shape(self.y_data)[2])
-            self.loss = self.criterion(pred, self.y_data, self.sizes)
-            # print("data")
-            # print(self.y_data.shape[2])
-            # print("loss")
-            # print(self.loss)
+            if self.arch == "JSIS3D":
+                pred = self.net(self.x_data)
+                self.loss = self.criterion(pred, self.y_data, self.instance_number)
+            elif self.arch == "PointNet_Segmentation":
+                pred, trans_feat = self.net(self.x_data)
+                # print("train")
+                # print(type(pred))
+                self.loss = self.criterion(pred, self.y_data, trans_feat)
         self.loss.backward()
         self.optimizer.step()
         return self.loss.item() * self.x_data.size(0)
@@ -153,19 +156,31 @@ class EstimatorModel:
 
     def val_step(self):
         self.net.eval()
-        pred = self.net(self.x_data)
         if self.process_swich == "raugh_recognition":
+            pred = self.net(self.x_data)
             self.loss = self.criterion(pred, self.y_data)
         elif self.process_swich == "object_segment":
-            # self.loss = self.criterion(pred, self.y_data, self.instance_number_manual)
-            # self.loss = self.criterion(pred, self.y_data, self.y_data.shape[2])
-            self.loss = self.criterion(pred, self.y_data, self.sizes)
+            if self.arch == "JSIS3D":
+                pred = self.net(self.x_data)
+                self.loss = self.criterion(pred, self.y_data, self.instance_number)
+            if self.arch == "PointNet_Segmentation":
+                pred, trans_feat = self.net(self.x_data)
+                # print("test")
+                # print(type(pred))
+                self.loss = self.criterion(pred, self.y_data, trans_feat)
         return self.loss.item() * self.x_data.size(0)
 
 
     def test_step(self):
-        pred = self.net(self.x_data)
-        pred = pred.to('cpu').detach().numpy().copy()
+        pred, trans = self.net(self.x_data)
+        print("output")
+        print(pred.shape)
+        # for i in pred:
+        #     ppi = i
+        # pred = ppi.to('cpu').detach().numpy().copy()
+        pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+        print(pred.shape)
+        # pred = pred.to('cpu').detach().numpy().copy()
         return pred
 
 

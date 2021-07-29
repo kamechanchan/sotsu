@@ -67,6 +67,10 @@ void callback(sensor_msgs::PointCloud2ConstPtr msg)
             dummy.instance.push_back(6);
             count[6]++;
         }
+        // if (r_p == 255 && b_p == 100 && g_p == 255) {
+        //     dummy.instance.push_back(6);
+        //     count[6]++;
+        // }
         if (r_p == 255 && b_p == 255 && g_p == 255) {
             dummy.instance.push_back(7);
             count[7]++;
