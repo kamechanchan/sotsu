@@ -36,6 +36,7 @@ class Segmentation_PCD_Loader(PCD_Loader):
         print(pcd_data)
         original_data, pcd_offset = getNormalizedPcd_seg(pcd_data, 8192)
         x_data = original_data[:,:3]
+<<<<<<< HEAD
         print("x_data")
         print(x_data)
         pre_mask_data = original_data[:,3]
@@ -156,6 +157,19 @@ class Segmentation_PCD_Loader(PCD_Loader):
         #     print(instance_choice[0])
         #     print(instance_choice[1])
         #     print(instance_choice[2])
+=======
+        
+        y_data = original_data[:,3]
+        # print(y_data.dtype)
+        # instance_segmentation
+        # pre_mask_data = original_data[:,3]
+        # pre_mask_data = pre_mask_data.astype(np.int64)
+        # y_data = np.zeros((original_data.shape[0], self.instance_number), dtype=np.float32)
+        # #print(type(pre_mask_data[1]))
+        # #print(original_data.shape[0])
+        # #print(y_data.shape)
+        # y_data[np.arange(original_data.shape[0]), pre_mask_data[:]] = 1
+>>>>>>> 085e21b6061a7fe9c0f41abe02d571c6a294b3eb
 
         # cnt_a = 0
         # cnt_b = 0

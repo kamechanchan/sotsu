@@ -16,7 +16,7 @@ class BaseOptions:
 
     def initialize(self):
         self.parser.add_argument('--main_directory',type=str,default=__file__)
-        self.parser.add_argument('--dataset_mode', choices={"instance_segmentation", "pose_estimation"}, default='pose_estimation')
+        self.parser.add_argument('--dataset_mode', choices={"instance_segmentation", "pose_estimation","semantic_segmentation"}, default='pose_estimation')
         self.parser.add_argument('--dataset_model', nargs=self.dataset_number, type=str, default='HV8')
         self.parser.add_argument('--max_dataset_size', nargs=self.dataset_number, type=int, default=float("inf"), help='Maximum num of samples per epoch')
         self.parser.add_argument('--process_swich', type=str, choices={"raugh_recognition", "object_segment"}, default="debug")
@@ -45,6 +45,7 @@ class BaseOptions:
         self.parser.add_argument('--delta_v', type=float, default=0.5)
         self.parser.add_argument('--instance_number', type=int, default=8)
         self.parser.add_argument('--checkpoints_process_swich',type=str,default='raugh_recognition')
+        self.parser.add_argument('--semantic_number',type=int,default=2)
 
         self.initialized = True
 

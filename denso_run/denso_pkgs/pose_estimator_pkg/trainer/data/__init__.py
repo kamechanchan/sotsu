@@ -10,6 +10,9 @@ def TrainValDataset(opt):
     elif opt.dataset_mode == "instance_segmentation":
         from data.object_segment import Segmentation_Data
         dataset = Segmentation_Data(opt)
+    elif opt.dataset_mode == "semantic_segmentation":
+        from data.object_segment import Segmentation_Data
+        dataset = Segmentation_Data(opt)
     else:
         print("Error!! ")
         sys.exit(1)
