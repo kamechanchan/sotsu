@@ -100,7 +100,7 @@ class PoseEstNode():
         self.time_file.write("点群が入力されてopen3dへ変換するまでの時間は : " + str(self.open3d_time - self.start_callback) + '秒\n')
 
         if self.arch == "PointNet_Pose":
-            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, 8092)
+            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, 1024)
             norma = time.time()
             self.time_file.write("getNormalizedPcdの処理時間は  　　　    　: " + str(norma - self.open3d_time) + '秒\n')
             self.input_data.input_cloud = Float32MultiArray(data=np.array(normalized_pcd).flatten())

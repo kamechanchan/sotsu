@@ -22,7 +22,7 @@ while not rospy.is_shutdown():
     for i in range(1):
         # ff = open('/home/ericlab/tameshi_pcd/subara.txt', "w")
         poc_t = out_segmentation()
-        index = 100
+        index = 4
         pcl_data = hdf5_file["data_" + str(index)]['Points'][()]
         instance_data = hdf5_file["data_" + str(index)]['masks'][()]
         print(type(pcl_data))
