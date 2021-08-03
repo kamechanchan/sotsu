@@ -33,6 +33,11 @@
             <arg name="world_name" value="$(find tf_publish)/world/sekai.world"/>
         </include>
     </group>
+    <group if="$(eval object_name=='sekai_1')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/sekai_1.world"/>
+        </include>
+    </group>
 
     
     <!--node name="setup_commands" pkg="timed_roslaunch" type="timed_roslaunch.sh" args="3 gen_dataset setup_commands.launch" output="screen" /-->

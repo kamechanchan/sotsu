@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="filepath" default="semantic_6000.hdf5"/>
+    <arg name="filepath" default="instance_try.hdf5"/>
     <arg name="sub_topic_name" default="dummy_cloud"/>
     
-    <arg name="num_dataset" default="6000"/>
-    <arg name="directorypath" default="/home/ericlab/ros_package/denso_2_ws/src/denso_branch/denso_run/rikuken_original/annotation_package/dataset/"/>
+    <arg name="num_dataset" default="10"/>
+    <arg name="directorypath" default="/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/"/>
     
     
 

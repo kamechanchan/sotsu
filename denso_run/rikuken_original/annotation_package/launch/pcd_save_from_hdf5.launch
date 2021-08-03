@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <launch>
+    <arg name="index" default="2"/>
+    
+    <arg name="path" default="/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/tsuchida/semantic_1000_0729.hdf5"/>
+    
     <node pkg="annotation_package" type="pcd_sava_from_hdf5.py" name="pcd_sava_from_hdf5" output="screen">
-        
+        <param name="index" value="$(arg index)"/>
+        <param name="path" value="$(arg path)"/>
     </node>
 </launch>

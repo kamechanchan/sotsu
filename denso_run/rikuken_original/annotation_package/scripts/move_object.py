@@ -15,7 +15,7 @@ class annotation_environment(object):
     def object_move(self, name):
         loop = rospy.Rate(20)
         com = 0
-        while com < 1:
+        while com < 2:
             com = com + 1
             pose_list = []
             for i in range(7):
@@ -23,7 +23,7 @@ class annotation_environment(object):
                 pose_data.model_name =  name + '_' + str(i)
                 pose_data.pose.position.x = random.uniform(-0.12, 0.12)
                 pose_data.pose.position.y = random.uniform(-0.12, 0.12)
-                pose_data.pose.position.z = i*0.1
+                pose_data.pose.position.z = i*0.03
                 roll = random.uniform(-0.5, 0.5)
                 pitch = random.uniform(-0.5, 0.5)
                 yaw = random.uniform(-3.14, 3.14)

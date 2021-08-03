@@ -173,14 +173,14 @@ class EstimatorModel:
 
 
     def test_step(self):
-        pred, trans = self.net(self.x_data)
+        pred = self.net(self.x_data)
         print("output")
         print(pred.shape)
         # for i in pred:
         #     ppi = i
         # pred = ppi.to('cpu').detach().numpy().copy()
-        pred = pred.contiguous().cpu().data.max(2)[1].numpy()
-        # pred = pred.to('cpu').detach().numpy().copy()
+        # pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+        pred = pred.to('cpu').detach().numpy().copy()
         return pred
 
 
@@ -235,7 +235,7 @@ class EstimatorModel:
 
         for i in range(pred.shape[0]):
             for j in range(pred.shape[1]):
-                pred = pred[i].contiguous().cpu().data.max(2)[1].numpy()
+                pred = pred.contiguous().cpu().data.max(2)[1].numpy()
                 f = open("/home/ericlab/pcl_visu/progress_output/"+"result"+str(epoch)+"_"+str(i)+".txt", 'a')
                 f.write(str(pred[i,j])+"\n")
 

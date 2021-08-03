@@ -68,7 +68,7 @@ class record_file(object):
         #print("size is " + str(len(msg.x)))
         if record_ok:
             self.matu += 1
-        if self.matu >= 5:
+        if self.matu >= 4:
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()
             msg_size = len(msg.x)
