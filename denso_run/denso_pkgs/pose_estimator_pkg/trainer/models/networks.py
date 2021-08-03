@@ -23,6 +23,7 @@ def define_network(opt):
     if process_swich == "raugh_recognition":
         if arch == "PointNet_Pose":
             net = PointNet_Pose(3, 9)
+            print("iidesune")
     elif process_swich == "object_segment":
         if arch == "JSIS3D":
             net = JSIS3D(opt.embedded_size)
@@ -47,6 +48,9 @@ class PointNet_Pose(nn.Module):
         super(PointNet_Pose, self).__init__()
         self.out_num_pos = out_num_pos
         self.out_num_rot = out_num_rot
+        # print("num_pos")
+        # print(self.out_num_pos)
+        # print(self.out_num_rot)
 
         self.pointnet_vanila_global_feat = PointNet_global_feat(num_points=1024)
         self.fc_pos1 = nn.Linear(1024, 512)
@@ -66,17 +70,23 @@ class PointNet_Pose(nn.Module):
         self.dropout = nn.Dropout(0.3)
 
     def forward(self, normalized_points):
+        print("forword")
+        print(normalized_points.shape)
         global_feat = self.pointnet_vanila_global_feat(normalized_points)
         
         h1 = self.relu(self.fc_pos1(global_feat))
         h1 = self.relu(self.fc_pos2(h1))
         h1 = self.relu(self.fc_pos3(h1))
         h1 = self.fc_pos(h1)
+        print("h1")
+        print(h1.shape)
 
         h2 = self.relu(self.fc_rot1(global_feat))
         h2 = self.relu(self.fc_rot2(h2))
         h2 = self.relu(self.fc_rot3(h2))
         h2 = self.fc_rot(h2)
+        print("h1")
+        print(h2.shape)
 
         y = torch.cat([h1, h2], axis=1)
         return y
