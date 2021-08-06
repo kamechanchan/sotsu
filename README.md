@@ -88,6 +88,31 @@ roslaunch annotation_package dummy_cloud_pub_instance.launch
 ```
 roslaunch annotation_package segmentation_dataset.launch 
 ```
+### 推論
+```
+roslaunch tf_publish spawn_object.launch object_name:=sekai
+
+roslaunch tf_publish bara_model_tf.launch 
+
+roslaunch cloud_practice planar_segmentation.launch 
+
+roslaunch estimator server.launch
+
+roslaunch estimator client.launch
+
+roslaunch estimator color_get.launch
+```
+
+### データセットの中身を見る
+```
+roslaunch annotation_package pcd_save_from_hdf5.launch path:=(hdf5ファイルのパス) index:=(データセットのインデックス)
+
+roslaunch annotation_package cloud_save_2.launch
+
+~/ros_package/denso_ws/src/denso_run/denso_2020/pc_segmentation/build/colored_cloud_view /home/ericlab/dummy_cloud/pcd_save.pcd
+```
+
+
 
 echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${HOME}/ros_package/denso_ws/src/denso_run/rikuken_original/tf_publish/models" >> ~/.bashrc
 ```

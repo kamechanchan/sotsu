@@ -174,16 +174,6 @@ class EstimatorModel:
 
 
     def test_step(self):
-<<<<<<< HEAD
-        pred = self.net(self.x_data)
-        print("output")
-        print(pred.shape)
-        # for i in pred:
-        #     ppi = i
-        # pred = ppi.to('cpu').detach().numpy().copy()
-        # pred = pred.contiguous().cpu().data.max(2)[1].numpy()
-        pred = pred.to('cpu').detach().numpy().copy()
-=======
         if self.process_swich == "raugh_recognition":
             pred = self.net(self.x_data)
             # print("p")
@@ -208,7 +198,6 @@ class EstimatorModel:
                 
 
         
->>>>>>> 6f3d7368e49d7dca3b13a971d2f0923aa25730d0
         return pred
 
 
