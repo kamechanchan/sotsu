@@ -11,7 +11,7 @@ class annotation_environment(object):
         cont = 0
         self.model_state_pub = rospy.Publisher('/gazebo/set_model_state', ModelState, queue_size=1)
         self.execute()
-            
+
     def object_move(self, name):
         loop = rospy.Rate(20)
         com = 0
