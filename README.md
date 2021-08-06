@@ -62,6 +62,32 @@ roslaunch annotation_package nearest_search_bara.launch
 
 ```
 
+### segmentation dataset get
 ```
+roslaunch tf_publish spawn_object.launch object_name:=sekai
+
+roslaunch tf_publish bara_model_tf.launch 
+
+roslaunch cloud_practice planar_segmentation.launch 
+
+roslaunch annotation_package mesh_cloud_bara_publish.launch
+
+roslaunch annotation_package nearest_search_bara_3.launch
+
+```
+##### semantic
+```
+roslaunch annotation_package dummy_cloud_pub_semaintic.launch
+
+```
+##### instance
+```
+roslaunch annotation_package dummy_cloud_pub_instance.launch
+```
+##### 実行
+```
+roslaunch annotation_package segmentation_dataset.launch 
+```
+
 echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${HOME}/ros_package/denso_ws/src/denso_run/rikuken_original/tf_publish/models" >> ~/.bashrc
 ```
