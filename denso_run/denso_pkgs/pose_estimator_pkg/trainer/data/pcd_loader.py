@@ -32,9 +32,9 @@ class PCD_Loader(Base_Loader):
                 self.x_data.append(pcl_data)
                 self.y_data.append(pose_data)
 
-    def get_pcd_data(self, index):
+    def get_pcd_data(self, index, resolution):
         pcd_data = self.x_data[index]
-        x_data, pcd_offset = getNormalizedPcd(pcd_data, 1024)
+        x_data, pcd_offset = getNormalizedPcd(pcd_data, resolution)
         y_data = self.y_data[index]
         y_pos = y_data[0:3] - pcd_offset
         y_rot = y_data[3:]

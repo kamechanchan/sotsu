@@ -20,9 +20,10 @@ class EstimatorModel:
         self.concat_dataset_model = '+'.join(self.opt.dataset_model)
         self.arch = opt.arch
         self.checkpoints_human_swich = opt.checkpoints_human_swich
-        self.checkpoints_process_swich = opt.checkpoints_process_swich
-        self.save_dir = join(self.checkpoints_dir, self.checkpoints_process_swich, self.checkpoints_human_swich, self.arch, self.concat_dataset_model)
-        self.local_save_dir=join(self.local_checkpoints_dir, self.checkpoints_process_swich, self.checkpoints_human_swich, self.arch, self.concat_dataset_model)
+        # self.checkpoints_process_swich = opt.checkpoints_process_swich
+        self.dataset_mode = opt.dataset_mode
+        self.save_dir = join(self.checkpoints_dir, self.dataset_mode, self.checkpoints_human_swich, self.arch, self.concat_dataset_model)
+        self.local_save_dir=join(self.local_checkpoints_dir, self.dataset_mode, self.checkpoints_human_swich, self.arch, self.concat_dataset_model)
         self.gpu_ids = opt.gpu_ids
         self.device = torch.device('cuda:{}'.format(self.gpu_ids[0])) if self.gpu_ids else torch.device('cpu')
         self.is_train = self.opt.is_train
@@ -186,17 +187,14 @@ class EstimatorModel:
                 pred = pred.to('cpu').detach().numpy().copy()
             if self.arch == "PointNet_Segmentation":
                 pred, trans = self.net(self.x_data)
-                print("output")
-                print(pred.shape)
+                # print("output")
+                # print(pred.shape)
                 # for i in pred:
                 #     ppi = i
                 # pred = ppi.to('cpu').detach().numpy().copy()
                 pred = pred.contiguous().cpu().data.max(2)[1].numpy()
-                print(pred.shape)
+                # print(pred.shape)
                 # pred = pred.to('cpu').detach().numpy().copy()
-                
-
-        
         return pred
 
 
@@ -240,3 +238,24 @@ class EstimatorModel:
         else:
             torch.save(self.net.cpu().state_dict(), save_path)
 
+    def progress_save_pcd(self, opt, epoch):
+        pred, trans = self.net(self.x_data)
+        print("output")
+        print(pred)
+        # for i in pred:
+        #     ppi = i
+        # pred = ppi.to('cpu').detach().numpy().copy()
+        # pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+        print("pred")
+        print(pred)
+
+        for i in range(pred.shape[0]):
+            for j in range(pred.shape[1]):
+                pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+                f = open("/home/ericlab/pcl_visu/progress_output/"+"result"+str(epoch)+"_"+str(i)+".txt", 'a')
+                f.write(str(pred[i,j])+"\n")
+
+        # pcl_visu = pcl.PointCloud(pred)
+        # pcl.save(pcl_visu, "/home/ericlab/pcl_visu/progress_output/"+"result"+str(epoch)+".pcd")
+        # pred = pred.to('cpu').detach().numpy().copy()
+        return pred

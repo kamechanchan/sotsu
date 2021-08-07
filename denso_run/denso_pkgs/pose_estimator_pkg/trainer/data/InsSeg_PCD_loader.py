@@ -12,9 +12,9 @@ import h5py
 import pcl
 
 
-class Segmentation_PCD_Loader(PCD_Loader):
+class InsSeg_PCD_Loader(PCD_Loader):
     def __init__(self, dir_name, dataset_model, dataset_size, dataset_number, instance_number):
-        super(Segmentation_PCD_Loader, self).__init__(dir_name, dataset_model, dataset_size, dataset_number)
+        super(InsSeg_PCD_Loader, self).__init__(dir_name, dataset_model, dataset_size, dataset_number)
         self.instance_number = instance_number
 
     def load_hdf5(self):
@@ -32,30 +32,29 @@ class Segmentation_PCD_Loader(PCD_Loader):
                 prepare_data = np.hstack([pcl_data, mask_data])
                 self.x_data.append(prepare_data)
 
-    def get_pcd_data(self, index):
+    def get_pcd_data(self, index, resolution):
         pcd_data = self.x_data[index]
         print("pcd_data")
         # print(pcd_data)
-        original_data, pcd_offset = getNormalizedPcd_seg(pcd_data, 8192)
+        original_data, pcd_offset = getNormalizedPcd_seg(pcd_data, resolution)
         x_data = original_data[:,:3]
-        
         y_data = original_data[:,3]
 
-        print("y_data")
-        print(type(x_data))
-        pcl_visu = pcl.PointCloud(x_data)
-        pcl.save(pcl_visu, "/home/ericlab/pcl_visu/"+"result"+str(index)+".pcd")
+        # print("y_data")
+        # print(type(x_data))
+        # pcl_visu = pcl.PointCloud(x_data)
+        # pcl.save(pcl_visu, "/home/ericlab/pcl_visu/"+"result"+str(index)+".pcd")
 
         # print(y_data.shape)
         # print(y_data.dtype)
         # instance_segmentation
-        # pre_mask_data = original_data[:,3]
-        # pre_mask_data = pre_mask_data.astype(np.int64)
-        # y_data = np.zeros((original_data.shape[0], self.instance_number), dtype=np.float32)
-        # #print(type(pre_mask_data[1]))
-        # #print(original_data.shape[0])
-        # #print(y_data.shape)
-        # y_data[np.arange(original_data.shape[0]), pre_mask_data[:]] = 1
+        pre_mask_data = original_data[:,3]
+        pre_mask_data = pre_mask_data.astype(np.int64)
+        y_data = np.zeros((original_data.shape[0], self.instance_number), dtype=np.float32)
+        #print(type(pre_mask_data[1]))
+        #print(original_data.shape[0])
+        #print(y_data.shape)
+        y_data[np.arange(original_data.shape[0]), pre_mask_data[:]] = 1
 
         # cnt_a = 0
         # cnt_b = 0

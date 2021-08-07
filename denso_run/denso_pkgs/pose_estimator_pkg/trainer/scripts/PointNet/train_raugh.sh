@@ -3,8 +3,8 @@
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets/ \
 --dataset_model dataset_20000.hdf5 \
---checkpoints_dir /home/ericlab/OneDrive/DENSO/ \
---resolution 1024 \
+--checkpoints_dir /home/ericlab/OneDrive/DENSO/August \
+--resolution 2048 \
 --phase train \
 --process_swich raugh_recognition \
 --dataset_mode pose_estimation \
@@ -25,7 +25,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --is_train train \
 --dataroot_swich front \
 --checkpoints_human_swich tsuchida \
---local_checkpoints_dir /home/ericlab/DENSO_results/pose_estimate/checkpoint \
+--local_checkpoints_dir /home/ericlab/DENSO_results/August \
 --tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
 --tensorboardX_results_directory_switch tsuchida/0725_raugh \
 --instance_number 8
