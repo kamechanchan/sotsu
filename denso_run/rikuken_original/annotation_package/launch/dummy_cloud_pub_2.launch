@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="sensor_topic_name" default="all_cloud"/>
+    <arg name="publish_topic_name" default="dummy_cloud"/>
+    
+    <node pkg="annotation_package" type="pcl_2_ba" name="pcl_2_ba" output="screen">
+        <param name="sensor_topic_name" value="$(arg sensor_topic_name)"/>
+        <param name="publish_topic_name" value="$(arg publish_topic_name)"/>
+    </node>
+</launch>

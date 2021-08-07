@@ -34,6 +34,8 @@ class BaseDataset(data.Dataset):
 def collate_fn(batch):
     meta = {}
     #print(np.array(batch))
+    # print("JJHHJHLKJKH")
+    # print(batch)
     keys = batch[0].keys()
     # print("dadata")
     # print(keys)

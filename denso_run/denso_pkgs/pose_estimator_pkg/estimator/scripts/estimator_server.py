@@ -68,6 +68,7 @@ class DnnNode():
         res = PoseEstimateResponse()
         msg_iro = out_segmentation()
         print(self.arch)
+        print("hai")
 
         if  self.arch == "PointNet_Pose":
             data = req.input_cloud.data
@@ -82,6 +83,14 @@ class DnnNode():
         elif self.arch == "JSIS3D":
             data = req.input_cloud.data
             segme, est_time = f.predict_pose(self.model, data, "JSIS3D")
+            res.success = True
+            self.instance_pub.publish(segme)
+            print("pubish")
+
+        elif self.arch == "PointNet_Segmentation":
+            print("ithi")
+            data = req.input_cloud.data
+            segme, est_time = f.predict_pose(self.model, data, "PointNet_Segmentation")
             res.success = True
             self.instance_pub.publish(segme)
             print("pubish")
