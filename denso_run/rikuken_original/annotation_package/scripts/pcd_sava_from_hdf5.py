@@ -13,7 +13,7 @@ import rospy
 rospy.init_node("init")
 pub = rospy.Publisher("otameshi_topic", out_segmentation, queue_size=10)
 index = rospy.get_param("~index", 2)
-path = rospy.get_param("~path", "/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/tsuchida/semantic_1000_0729.hdf5")
+path = rospy.get_param("~path", "/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/instance_try_8_6_23_39.hdf5")
 
 #path = "/home/ericlab/OneDrive/DENSO/raugh_recognition/datasets/tsuchida/HV6_size_20000_range_pi_1.hdf5"
 #path = util_rikuken.find_hdf5_File("/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset", "init.hdf5")
@@ -24,7 +24,7 @@ while not rospy.is_shutdown():
     for i in range(1):
         # ff = open('/home/ericlab/tameshi_pcd/subara.txt', "w")
         poc_t = out_segmentation()
-        index = 4
+        # index = 4
         pcl_data = hdf5_file["data_" + str(index)]['Points'][()]
         instance_data = hdf5_file["data_" + str(index)]['masks'][()]
         print(type(pcl_data))

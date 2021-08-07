@@ -62,6 +62,10 @@ namespace nearest_point_extractor
         ros::Subscriber mesh_sub_18_;
         ros::Subscriber mesh_sub_19_;
         ros::Subscriber mesh_sub_20_;
+        ros::Subscriber mesh_sub_21_;
+        ros::Subscriber mesh_sub_22_;
+        ros::Subscriber mesh_sub_23_;
+        ros::Subscriber mesh_sub_24_;
         ros::Subscriber mesh_sub_0_;
 
         tf::StampedTransform transform_;

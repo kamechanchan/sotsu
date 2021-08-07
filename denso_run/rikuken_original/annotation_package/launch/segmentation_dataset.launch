@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-    <arg name="filepath" default="instance_try.hdf5"/>
+    <arg name="filepath" default="instance_try"/>
     <arg name="sub_topic_name" default="dummy_cloud"/>
     
     <arg name="num_dataset" default="10"/>
@@ -9,7 +9,7 @@
     
     
 
-    <node pkg="annotation_package" type="move_object.py" name="move_object">
+    <node pkg="annotation_package" type="move_object.py" name="move_object" output="screen">
     </node>
 
     <node pkg="annotation_package" type="record_hdf5.py" name="record_hdf5" output="screen">

@@ -38,6 +38,43 @@ namespace nearest_point_extractor
         color.push_back(v6);
         std::vector<int> v7{255, 100, 255};
         color.push_back(v7);
+        std::vector<int> v8{100, 255, 255};
+        color.push_back(v8);
+        std::vector<int> v9{255, 255, 100};
+        color.push_back(v9);
+        std::vector<int> v10{100, 100, 255};
+        color.push_back(v10);
+        std::vector<int> v11{255, 100, 100};
+        color.push_back(v11);
+        std::vector<int> v12{100, 255, 100};
+        color.push_back(v12);
+        std::vector<int> v13{150, 100, 255};
+        color.push_back(v13);
+        std::vector<int> v14{100, 150, 255};
+        color.push_back(v14);
+        std::vector<int> v15{255, 100, 150};
+        color.push_back(v15);
+        std::vector<int> v16{255, 150, 100};
+        color.push_back(v16);
+        std::vector<int> v17{100, 255, 150};
+        color.push_back(v17);
+        std::vector<int> v18{150, 255, 100};
+        color.push_back(v18);
+        std::vector<int> v19{100, 150, 0};
+        color.push_back(v19);
+        std::vector<int> v20{150, 100, 0};
+        color.push_back(v20);
+        std::vector<int> v21{150, 0, 100};
+        color.push_back(v21);
+        std::vector<int> v22{100, 0, 150};
+        color.push_back(v22);
+        std::vector<int> v23{0, 100, 150};
+        color.push_back(v23);
+        std::vector<int> v24{0, 150, 100};
+        color.push_back(v24);
+        std::vector<int> v25{255, 150, 150};
+        color.push_back(v25);
+       
        
         
     }
@@ -72,6 +109,21 @@ namespace nearest_point_extractor
         mesh_sub_8_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_8", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 8));
         mesh_sub_9_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_9", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 9));
         mesh_sub_10_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_10", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 10));
+        mesh_sub_11_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_11", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 11));
+        mesh_sub_12_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_12", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 12));
+        mesh_sub_13_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_13", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 13));
+        mesh_sub_14_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_14", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 14));
+        mesh_sub_15_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_15", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 15));
+        mesh_sub_16_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_16", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 16));
+        mesh_sub_17_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_17", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 17));
+        mesh_sub_18_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_18", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 18));
+        mesh_sub_19_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_19", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 19));
+        mesh_sub_20_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_20", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 20));
+        mesh_sub_21_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_21", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 21));
+        mesh_sub_22_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_22", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 22));
+        mesh_sub_23_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_23", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 23));
+        mesh_sub_24_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_24", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 24));
+
     }
 
     void NearestPointExtractor::publish(void)
