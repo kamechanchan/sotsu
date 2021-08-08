@@ -33,6 +33,8 @@ class DiscriminativeLoss(nn.Module):
     def _centroids(self, embedded, masks, size):
         batch_size = embedded.size(0)
         embedding_size = embedded.size(2)
+        # print("masks")
+        # print(masks.shape)
         K = masks.size(2)
         # print("kkkkkkkk")
         #print(embedded.shape)
@@ -45,7 +47,8 @@ class DiscriminativeLoss(nn.Module):
         x = x * masks
         centroids = []
         for i in range(batch_size):
-            n = size[i]
+            # n = size[i]
+            n = size
             # print("nnnnnnnnnnnnn")
             # print(n)
             # print(x[i,:,:n].sum(0))
@@ -77,7 +80,8 @@ class DiscriminativeLoss(nn.Module):
         var = var * masks
         loss = 0.0
         for i in range(batch_size):
-            n = size[i]
+            # n = size[i]
+            n = size
             loss += torch.sum(var[i,:,:n]) / torch.sum(masks[i,:,:n])
         loss /= batch_size
         return loss
@@ -86,7 +90,8 @@ class DiscriminativeLoss(nn.Module):
         batch_size = centroids.size(0)
         loss = 0.0
         for i in range(batch_size):
-            n = size[i]
+            # n = size[i]
+            n = size
             if n <= 1: continue
             mu = centroids[i, :n, :]
             mu_a = mu.unsqueeze(1).expand(-1, n, -1)
@@ -105,7 +110,8 @@ class DiscriminativeLoss(nn.Module):
         batch_size = centroids.size(0)
         loss = 0.0
         for i in range(batch_size):
-            n = size[i]
+            # n = size[i]
+            n = size
             mu = centroids[i, :n, :]
             norm = torch.norm(mu, 2, dim=1)
             loss += torch.mean(norm)

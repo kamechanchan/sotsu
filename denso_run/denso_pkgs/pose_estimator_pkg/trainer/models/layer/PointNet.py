@@ -45,7 +45,7 @@ class PointNet_global_feat(nn.Module):
         self.conv1 = torch.nn.Conv1d(3, 128, 1)
         self.conv2 = torch.nn.Conv1d(128, 256, 1)
         self.conv3 = torch.nn.Conv1d(256, self.num_points, 1)
-        self.max_pool = nn.MaxPool1d(self.num_points)
+        # self.max_pool = nn.MaxPool1d(self.num_points)
 
         self.bn1 = nn.BatchNorm1d(128)
         self.bn2 = nn.BatchNorm1d(256)
@@ -55,7 +55,11 @@ class PointNet_global_feat(nn.Module):
         x = F.relu(self.bn1(self.conv1(x)))
         x = F.relu(self.bn2(self.conv2(x)))
         x = F.relu(self.bn3(self.conv3(x)))
-        x = self.max_pool(x)
+        # print("net:")
+        # print(x.shape)
+        x = torch.max(x, 2, keepdim=True)[0] #getting max data of each ch  (※:[0] is role for getting maxed data([1] is index))
+        # print(x.shape)
+        # x = self.max_pool(x)
         x = x.view(-1, 1024)
 
         return x
@@ -207,7 +211,11 @@ class PointNet_feat_segmentation(nn.Module):
         pointfeat = x
         x = F.relu(self.bn2(self.conv2(x)))
         x = self.bn3(self.conv3(x))
+        # print("net:")
+        # print(x.shape)
         x = torch.max(x, 2, keepdim=True)[0] #getting max data of each ch  (※:[0] is role for getting maxed data([1] is index))
+        # print("net:")
+        # print(x.shape)
         x = x.view(-1, 1024)
 
         if self.global_feat:
@@ -250,7 +258,10 @@ class PointNet_feat_SemanticSegmentation(nn.Module):
         pointfeat = x
         x = F.relu(self.bn2(self.conv2(x)))
         x = self.bn3(self.conv3(x))
+        # print("net:")
+        # print(x.shape)
         x = torch.max(x, 2, keepdim=True)[0] #getting max data of each ch  (※:[0] is role for getting maxed data([1] is index))
+        # print(x.shape)
         x = x.view(-1, 1024)
         if self.global_feat:
             return x, trans, trans_feat

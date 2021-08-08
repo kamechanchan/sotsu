@@ -1,20 +1,20 @@
 #!/usr/bin/env bash
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset \
---dataset_model kandou_6000.hdf5 \
---checkpoints_dir /home/ericlab/OneDrive/DENSO/ \
---resolution 1024 \
+--dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets/ \
+--dataset_model dataset_20000.hdf5 \
+--checkpoints_dir /home/ericlab/OneDrive/DENSO/August \
+--resolution 2048 \
 --phase train \
---process_swich object_segment \
---dataset_mode instance_segmentation \
+--process_swich raugh_recognition \
+--dataset_mode pose_estimation \
 --batch_size 2 \
 --num_epoch 200 \
---max_dataset_size 6000 \
---arch JSIS3D \
+--max_dataset_size 20000 \
+--arch PointNet_Pose \
 --print_freq 10 \
 --save_latest_freq 20000 \
---save_epoch_freq 5 \
+--save_epoch_freq 1 \
 --run_test_freq 1 \
 --gpu_ids 0 \
 --gpu_num 1 \
@@ -23,9 +23,9 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --verbose_plot True \
 --lr 0.0001 \
 --is_train train \
---dataroot_swich tsuchida \
+--dataroot_swich front \
 --checkpoints_human_swich tsuchida \
---local_checkpoints_dir /home/ericlab/DENSO_results/pose_estimate/checkpoint \
+--local_checkpoints_dir /home/ericlab/DENSO_results/August \
 --tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
 --tensorboardX_results_directory_switch tsuchida/0725_raugh \
 --instance_number 8

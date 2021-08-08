@@ -26,6 +26,19 @@ def run_test(opt, dataset):
         val_loss += loss
     return val_loss
 
+def run_progress_savetest(opt, dataset, epoch):
+    opt.serial_batches = True
+    val_loss = 0.0
+    model = create_model(opt)
+
+    for i, data in enumerate(dataset):
+        time_sta = time.time()
+
+        model.set_input(data)
+        model.progress_save_pcd(opt, epoch, i)
+        time_end = time.time()
+
+    return
 
 def run_segmentation_test(opt, dataset):
 
