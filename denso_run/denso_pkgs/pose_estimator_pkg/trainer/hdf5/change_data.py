@@ -38,7 +38,7 @@ with h5py.File('/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_origina
         pcl_data = f["data_" + str(n + 1)]['Points'][()]
         mask_data = f["data_" + str(n + 1)]['masks'][()]
         # print(mask_data.shape)
-        # print(n)
+        print(n)
         prepare_data = np.hstack([pcl_data, mask_data])
         original_data, pcd_offset = getNormalizedPcd_seg(prepare_data, resolution)
         original_data = np.array(original_data)
@@ -57,3 +57,13 @@ with h5py.File('/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_origina
         x_data.append(final_data)
 x_data = np.array(x_data)
 print(x_data.shape)
+
+with h5py.File('/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/tsuchida/instance_changed_1526.hdf5', 'w') as file:
+    for i in range(dataset_number):
+        file.create_group('data_' + str(i))
+        # for j in range(resolution_second):
+        pre_data = x_data[i, :, 3]
+        mask_data = np.array(pre_data)
+        mask_data = mask_data[:,np.newaxis]
+        file['data_' + str(i)].create_dataset('Points', data=x_data[i, :, :3])
+        file['data_' + str(i)].create_dataset('masks', data=mask_data)
