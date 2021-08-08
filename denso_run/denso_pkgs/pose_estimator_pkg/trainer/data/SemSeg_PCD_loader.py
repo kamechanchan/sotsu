@@ -10,12 +10,16 @@ import numpy as np
 from cloud_util import *
 import h5py
 import pcl
+from utils import util
 
 
 class SemSeg_PCD_Loader(PCD_Loader):
-    def __init__(self, dir_name, dataset_model, dataset_size, dataset_number, instance_number):
-        super(SemSeg_PCD_Loader, self).__init__(dir_name, dataset_model, dataset_size, dataset_number)
-        self.instance_number = instance_number
+    def __init__(self, dir_name, dataset_model, dataset_size, dataset_number, opt):
+        super(SemSeg_PCD_Loader, self).__init__(dir_name, dataset_model, dataset_size, dataset_number, opt)
+        self.instance_number = opt.instance_number
+        self.dataset_mode = opt.dataset_mode
+        # self.dataset_model = dataset_model
+        self.concat_dataset_model = '+'.join(dataset_model)
 
     def load_hdf5(self):
         for i in range(self.dataset_number):
@@ -34,7 +38,7 @@ class SemSeg_PCD_Loader(PCD_Loader):
 
     def get_pcd_data(self, index, resolution):
         pcd_data = self.x_data[index]
-        print("pcd_data")
+        # print("pcd_data")
         # print(pcd_data)
         original_data, pcd_offset = getNormalizedPcd_seg(pcd_data, resolution)
         x_data = original_data[:,:3]
@@ -42,8 +46,10 @@ class SemSeg_PCD_Loader(PCD_Loader):
 
         # print("y_data")
         # print(type(x_data))
-        # pcl_visu = pcl.PointCloud(x_data)
-        # pcl.save(pcl_visu, "/home/ericlab/pcl_visu/"+"result"+str(index)+".pcd")
+        pcl_visu = pcl.PointCloud(x_data)
+        pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/train_input/"+self.dataset_mode+"/"+self.concat_dataset_model
+        util.mkdir(pcd_dir)
+        pcl.save(pcl_visu, pcd_dir+"/result"+str(index)+".pcd")
 
         # print(y_data.shape)
         # print(y_data.dtype)

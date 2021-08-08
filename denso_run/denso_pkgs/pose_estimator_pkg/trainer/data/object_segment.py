@@ -25,9 +25,9 @@ class Segmentation_Data(BaseDataset):
         self.instance_number = opt.instance_number
         self.resolution = opt.resolution
         if opt.dataset_mode == "semantic_segmentation":
-            self.hdf5_data = SemSeg_PCD_Loader(self.dataroot, self.dataset_model, self.size, self.dataset_number, self.instance_number)
+            self.hdf5_data = SemSeg_PCD_Loader(self.dataroot, self.dataset_model, self.size, self.dataset_number, opt)
         elif opt.dataset_mode == "instance_segmentation":
-            self.hdf5_data = InsSeg_PCD_Loader(self.dataroot, self.dataset_model, self.size, self.dataset_number, self.instance_number)
+            self.hdf5_data = InsSeg_PCD_Loader(self.dataroot, self.dataset_model, self.size, self.dataset_number, opt)
         self.hdf5_data.load_hdf5()
 
     def __getitem__(self, index):

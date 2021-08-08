@@ -19,7 +19,7 @@ class PoseData(BaseDataset):
     def __init__(self, opt):
         BaseDataset.__init__(self, opt)
         self.resolution = opt.resolution
-        self.hdf5_data = PCD_Loader(self.dataroot, self.dataset_model, self.size, self.dataset_number)
+        self.hdf5_data = PCD_Loader(self.dataroot, self.dataset_model, self.size, self.dataset_number, opt)
         # self.hdf5_data = Voxel_Loader(self.dir, self.dataset_model, self.size)
         # self.hdf5_data.init_param(1, self.resolution)
         self.hdf5_data.load_hdf5()

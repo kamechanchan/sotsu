@@ -23,7 +23,7 @@ def define_network(opt):
     if process_swich == "raugh_recognition":
         if arch == "PointNet_Pose":
             net = PointNet_Pose(3, 9)
-            print("iidesune")
+            # print("iidesune")
     elif process_swich == "object_segment":
         if arch == "JSIS3D":
             net = JSIS3D(opt.embedded_size)

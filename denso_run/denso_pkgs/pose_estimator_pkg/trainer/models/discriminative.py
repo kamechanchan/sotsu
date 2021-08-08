@@ -39,7 +39,7 @@ class DiscriminativeLoss(nn.Module):
         # print("kkkkkkkk")
         #print(embedded.shape)
         #print(size.shape)
-        print(masks.shape)
+        # print(masks.shape)
         x = embedded.unsqueeze(2).expand(-1, -1, K, -1)
         masks = masks.unsqueeze(3)
         #print(x.shape)
