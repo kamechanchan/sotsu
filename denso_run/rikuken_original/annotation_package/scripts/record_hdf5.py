@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 import os, sys
+
+from numpy.core.arrayprint import dtype_is_implied
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from util_rikuken import util_rikuken
 import h5py
@@ -20,7 +22,7 @@ class record_file(object):
         rospack = rospkg.RosPack()
         self.package_path = rospack.get_path("annotation_package")
         self.directorypath = rospy.get_param("~directorypath", "/home/ericlab/ishiyama_tanomu.hdf5")
-        self.filepath = rospy.get_param("~filepath", "ishiyama_1000")
+        self.filepath = rospy.get_param("~filepath", "instance")
         self.sub_topic_name = rospy.get_param("~sub_topic_name", "dummy_cloud")
         self.num_dataset = rospy.get_param("~num_dataset", 5)
         self.bar = tqdm(total=self.num_dataset)
@@ -36,14 +38,14 @@ class record_file(object):
         self.first_count = 0
         self.ugokasu = False
         self.ugokasu_count = 0
-        
-        
+
+
 
     def init_file(self):
         util_rikuken.mkdir(self.directorypath)
         dt_now = datetime.datetime.now()
         self.all_file_path = self.directorypath + self.filepath + "_"
-        time_str = str(dt_now.month) + "_" + str(dt_now.day) + "_" + str(dt_now.hour) + "_" + str(dt_now.minute)
+        time_str = str(dt_now.hour) + "_" + str(dt_now.minute)
         self.all_file_path = self.all_file_path + time_str + ".hdf5"
         self.hdf5_file = h5py.File(self.all_file_path, "w")
     '''
@@ -101,6 +103,7 @@ class record_file(object):
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()
             msg_size = len(msg.x)
+            self.all_file_path = self.all_file_path + "_" + str(msg_size) + "_" + str(self.num_dataset)
             # print(msg_size)
             # print(len(msg.x))
             # print(len(msg.instance))
