@@ -2,10 +2,15 @@
 <launch>
     <arg name="object_name" default="HV8" />
   <arg name="icpRefine" default="False" />
-  <arg name="arch" default="PointNet_Segmentation" />
+  <arg name="arch" default="JSIS3D" />
   <arg name="process_swich" default="object_segment" />
+<<<<<<< HEAD
   <arg name="resolution" default="50" />
   <arg name="load_path" default="/home/ericlab/DENSO_results/object_segment/ishiyama/PointNet_Segmentation/semantic_1000_0729.hdf5/latest_net.pth"/>
+=======
+  <arg name="resolution" default="8192" />
+  <arg name="load_path" default="/home/ericlab/DENSO_results/object_segment/ishiyama/PointNet_Segmentation/semantic_6000.hdf5/latest_net.pth"/>
+>>>>>>> 65070ae647cb43cc4dc937efc0b1b19f8e53b305
   <node name="random_move" pkg="gen_dataset" type="random_move_euler.py">
     <param name="object_name" value="$(arg object_name)" />
   </node>
