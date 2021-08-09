@@ -126,8 +126,20 @@ int main(int argc, char** argv)
             cv::Point2d converted_uv(uv.x + rgb_image.cols / 2, uv.y + rgb_image.rows / 2);
             cv::Vec3b rgb = rgb_image.at<cv::Vec3b>(converted_uv.y, converted_uv.x);
             pcl::PointXYZRGB buffer_point;
-            double rgb_ave = (rgb[0] + rgb[1] + rgb[2])  / 3.0;
-
+            double rgb_ave = (rgb[0] + rgb[1] + rgb[2]) / 3.0;
+            if (rgb_ave < upper_val) {
+                continue;
+            }
+            if (rgb_ave > lower_val) {
+                continue;
+            }
+            buffer_point.x = pt->x;
+            buffer_point.y = pt->y;
+            buffer_point.z = pt->z;
+            buffer_point.r = rgb[0];
+            buffer_point.g = rgb[1];
+            buffer_point.b = rgb[2];
+            colored_pointcloud.push_back(buffer_point);
         }
     }
 
