@@ -16,7 +16,7 @@ class BaseOptions:
 
     def initialize(self):
         self.parser.add_argument('--main_directory',type=str,default=__file__)
-        self.parser.add_argument('--dataset_mode', choices={"instance_segmentation", "pose_estimation"}, default='pose_estimation')
+        self.parser.add_argument('--dataset_mode', choices={"instance_segmentation", "pose_estimation","semantic_segmentation"}, default='pose_estimation')
         self.parser.add_argument('--dataset_model', nargs=self.dataset_number, type=str, default='HV8')
         self.parser.add_argument('--max_dataset_size', nargs=self.dataset_number, type=int, default=float("inf"), help='Maximum num of samples per epoch')
         self.parser.add_argument('--process_swich', type=str, choices={"raugh_recognition", "object_segment"}, default="debug")
@@ -43,8 +43,9 @@ class BaseOptions:
         self.parser.add_argument('--embedded_size', type=int, default=32)
         self.parser.add_argument('--delta_d', type=float, default=1.5)
         self.parser.add_argument('--delta_v', type=float, default=0.5)
-        self.parser.add_argument('--instance_number', type=int, default=7)
-        self.parser.add_argument('--checkpoints_process_swich',type=str,default='raugh_recognition')
+        self.parser.add_argument('--instance_number', type=int, default=8)
+        # self.parser.add_argument('--checkpoints_process_swich',type=str,default='raugh_recognition')
+        self.parser.add_argument('--semantic_number',type=int,default=2)
 
         self.initialized = True
 
@@ -55,13 +56,16 @@ class BaseOptions:
         self.opt, unknown = self.parser.parse_known_args()
         str_ids = self.opt.gpu_ids.split(',')
         self.opt.gpu_ids = []
-        
+
         self.concat_dataset_model = '+'.join(self.opt.dataset_model)
 
         for str_id in str_ids:
             id = int(str_id)
+            # print("*************************************")
             if id>= 0:
                 self.opt.gpu_ids.append(id)
+                # print("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+                # print(self.opt.gpu_ids)
 
         if len(self.opt.gpu_ids) > 0:
             torch.cuda.set_device(self.opt.gpu_ids[0])
@@ -69,12 +73,12 @@ class BaseOptions:
         args = vars(self.opt)
 
         if self.opt.export_folder:
-            self.opt.export_folder = os.path.join(self.opt.checkpoints_dir, self.opt.checkpoints_process_swich, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model, self.opt.export_folder)
+            self.opt.export_folder = os.path.join(self.opt.checkpoints_dir, self.opt.dataset_mode, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model, self.opt.export_folder)
             util.mkdir(self.opt.export_folder)
 
         if self.opt.local_export_folder:
-            self.opt.local_export_folder = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_process_swich, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model, self.opt.local_export_folder)
-            util.mkdir(self.opt.export_folder)    
+            self.opt.local_export_folder = os.path.join(self.opt.local_checkpoints_dir, self.opt.dataset_mode, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model, self.opt.local_export_folder)
+            util.mkdir(self.opt.export_folder)
 
         if self.opt.is_train:
             print("---------------Options-------------")
@@ -82,8 +86,8 @@ class BaseOptions:
                 print('%s: %s' % (str(k), str(v)))
             print("---------------End-------------")
 
-            expr_dir = os.path.join(self.opt.checkpoints_dir, self.opt.checkpoints_process_swich, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model)
-            local_expr_dir = os.path.join(self.opt.local_checkpoints_dir, self.opt.checkpoints_process_swich, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model)
+            expr_dir = os.path.join(self.opt.checkpoints_dir, self.opt.dataset_mode, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model)
+            local_expr_dir = os.path.join(self.opt.local_checkpoints_dir, self.opt.dataset_mode, self.opt.checkpoints_human_swich, self.opt.arch, self.concat_dataset_model)
             util.mkdir(expr_dir)
             util.mkdir(local_expr_dir)
 
@@ -99,6 +103,6 @@ class BaseOptions:
                 opt_file.write("------------Options------------\n")
                 for k, v in sorted(args.items()):
                     opt_file.write('%s: %s\n' % (str(k), str(v)))
-                opt_file.write("-------------End---------------\n")    
+                opt_file.write("-------------End---------------\n")
 
         return self.opt

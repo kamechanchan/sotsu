@@ -43,7 +43,7 @@ class DnnNode():
         self.opt.batch_size = rospy.get_param("~batch_size", 30)
         self.arch = rospy.get_param("~arch", "JSIS3D")
         self.opt.arch = self.arch
-        self.opt.resolution = rospy.get_param("~resolution", 1024)
+        self.opt.resolution = rospy.get_param("~resolution", 8092)
         self.opt.num_threads = rospy.get_param("~num_threads", 8)
         self.opt.gpu_id = rospy.get_param("~gpu_id", "1")
         self.package_path = rospack.get_path("estimator")
@@ -65,6 +65,7 @@ class DnnNode():
         res = PoseEstimateResponse()
         msg_iro = out_segmentation()
         print(self.arch)
+        print("hai")
 
         if  self.arch == "PointNet_Pose":
             data = req.input_cloud.data
@@ -79,6 +80,14 @@ class DnnNode():
         elif self.arch == "JSIS3D":
             data = req.input_cloud.data
             segme, est_time = f.predict_pose(self.model, data, "JSIS3D")
+            res.success = True
+            self.instance_pub.publish(segme)
+            print("pubish")
+
+        elif self.arch == "PointNet_Segmentation":
+            print("ithi")
+            data = req.input_cloud.data
+            segme, est_time = f.predict_pose(self.model, data, "PointNet_Segmentation")
             res.success = True
             self.instance_pub.publish(segme)
             print("pubish")
