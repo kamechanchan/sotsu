@@ -64,17 +64,6 @@ class InsSeg_PCD_Loader(PCD_Loader):
 
         # cnt_a = 0
         # cnt_b = 0
-        # for i in range(8192):
-        #     if y_data[i] == 0:
-        #         cnt_a+=1
-        #     elif y_data[i] == 1:
-        #         cnt_b+=1
-        # print("0:"+str(cnt_a))
-        # print("1:"+str(cnt_b))
-
-
-        # cnt_a = 0
-        # cnt_b = 0
         # cnt_c = 0
         # cnt_d = 0
         # cnt_e = 0

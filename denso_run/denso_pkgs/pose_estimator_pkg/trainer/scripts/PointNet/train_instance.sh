@@ -10,7 +10,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --process_swich object_segment \
 --batch_size 2 \
 --num_epoch 100 \
---max_dataset_size 1000 \
+--max_dataset_size 1526 \
 --arch JSIS3D \
 --print_freq 10 \
 --save_latest_freq 20000 \
