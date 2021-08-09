@@ -13,7 +13,7 @@ int main(int argc, char** argv)
     for (int i = 0; i < the_number_of_object; i++) {
         loader_.push_back(new mesh_cloud::MeshCloud(nh, object_name + "_" + std::to_string(i), "meshcloud_" + std::to_string(i)));
     }
-    ros::Rate loop(1.0);
+    ros::Rate loop(10);
     while (ros::ok())
     {
         for (int i = 0; i < the_number_of_object; i++) {

@@ -24,6 +24,8 @@ def pose_prediction(opt, data):
     print(y_pre[0].shape)
     y = np.squeeze(y_pre[0])
     est_time = y_pre[1]
+    print("YYYYYYYYYYYYYY")
+    print(y.shape)
     y = KMeans(n_clusters=8).fit_predict(y)
     print("KMEAns_kme*****************")
     print(y)

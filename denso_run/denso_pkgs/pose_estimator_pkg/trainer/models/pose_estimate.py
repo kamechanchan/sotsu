@@ -4,9 +4,11 @@
 from numpy.core.fromnumeric import size
 import torch
 import numpy as np
+# from torch._C import R
 from . import networks
 from os.path import join
 from utils.util import print_network
+import pcl
 
 
 class EstimatorModel:
@@ -172,15 +174,30 @@ class EstimatorModel:
 
 
     def test_step(self):
-        pred, trans = self.net(self.x_data)
-        print("output")
-        print(pred.shape)
-        # for i in pred:
-        #     ppi = i
-        # pred = ppi.to('cpu').detach().numpy().copy()
-        pred = pred.contiguous().cpu().data.max(2)[1].numpy()
-        print(pred.shape)
-        # pred = pred.to('cpu').detach().numpy().copy()
+        if self.process_swich == "raugh_recognition":
+            pred = self.net(self.x_data)
+            # print("p")
+            # print(pred.shape)
+            pred = pred.to('cpu').detach().numpy().copy()
+            # print("pred")
+            # print(pred.shape)
+        elif self.process_swich == "object_segment":
+            if self.arch == "JSIS3D":
+                pred = self.net(self.x_data)
+                pred = pred.to('cpu').detach().numpy().copy()
+            if self.arch == "PointNet_Segmentation":
+                pred, trans = self.net(self.x_data)
+                print("output")
+                print(pred.shape)
+                # for i in pred:
+                #     ppi = i
+                # pred = ppi.to('cpu').detach().numpy().copy()
+                pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+                print(pred.shape)
+                # pred = pred.to('cpu').detach().numpy().copy()
+                
+
+        
         return pred
 
 
@@ -199,6 +216,8 @@ class EstimatorModel:
         net.load_state_dict(state_dict,strict=False)
 
     def load_network_estimator(self, which_epoch):
+        # print("load_state_patg")
+        # print(self.net)
         save_filename = self.checkpoints_dir
         load_path = save_filename
         net = self.net
@@ -221,4 +240,26 @@ class EstimatorModel:
             self.net.cuda(self.gpu_ids[0])
         else:
             torch.save(self.net.cpu().state_dict(), save_path)
+
+    def progress_save_pcd(self,epoch):
+        pred, trans = self.net(self.x_data)
+        print("output")
+        print(pred)
+        # for i in pred:
+        #     ppi = i
+        # pred = ppi.to('cpu').detach().numpy().copy()
+        # pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+        print("pred")
+        print(pred)
+
+        for i in range(pred.shape[0]):
+            for j in range(pred.shape[1]):
+                pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+                f = open("/home/ericlab/pcl_visu/progress_output/"+"result"+str(epoch)+"_"+str(i)+".txt", 'a')
+                f.write(str(pred[i,j])+"\n")
+
+        # pcl_visu = pcl.PointCloud(pred)
+        # pcl.save(pcl_visu, "/home/ericlab/pcl_visu/progress_output/"+"result"+str(epoch)+".pcd")
+        # pred = pred.to('cpu').detach().numpy().copy()
+        return pred
 

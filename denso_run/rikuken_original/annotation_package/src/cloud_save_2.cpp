@@ -77,44 +77,135 @@ int main(int argc, char** argv)
         // xyzrgb.rgb = dum_pcl.rgb[i];
         if (out_pcl.instance[i] == 0) {
             xyzrgb.r = 255;
+            xyzrgb.b = 0;
             xyzrgb.g = 0;
-            xyzrgb.b  =0;
         }
         else if (out_pcl.instance[i] == 1) {
             xyzrgb.r = 0;
-            xyzrgb.g = 255;
-            xyzrgb.b  =0;
+            xyzrgb.b = 255;
+            xyzrgb.g = 0;
         }
         else if (out_pcl.instance[i] == 2) {
             xyzrgb.r = 0;
-            xyzrgb.g = 0;
-            xyzrgb.b  =255;
+            xyzrgb.b = 0;
+            xyzrgb.g = 255;
         }
         else if (out_pcl.instance[i] == 3) {
             xyzrgb.r = 255;
-            xyzrgb.g = 255;
-            xyzrgb.b  =0;
+            xyzrgb.b = 255;
+            xyzrgb.g = 0;
         }
         else if (out_pcl.instance[i] == 4) {
             xyzrgb.r = 0;
+            xyzrgb.b = 255;
             xyzrgb.g = 255;
-            xyzrgb.b  =255;
-        }
+        } 
         else if (out_pcl.instance[i] == 5) {
             xyzrgb.r = 255;
-            xyzrgb.g = 0;
-            xyzrgb.b  =255;
+            xyzrgb.b = 0;
+            xyzrgb.g = 255;
         }
         else if (out_pcl.instance[i] == 6) {
-            xyzrgb.r = 100;
+            xyzrgb.r = 255;
+            xyzrgb.b = 100;
             xyzrgb.g = 255;
-            xyzrgb.b  =10;
+        }
+        else if (out_pcl.instance[i] == 7) {
+            xyzrgb.r = 100;
+            xyzrgb.b = 255;
+            xyzrgb.g = 255;
+        }
+        else if (out_pcl.instance[i] == 8) {
+            xyzrgb.r = 255;
+            xyzrgb.b = 255;
+            xyzrgb.g = 100;
+        }
+        else if (out_pcl.instance[i] == 9) {
+            xyzrgb.r = 100;
+            xyzrgb.b = 100;
+            xyzrgb.g = 255;
+        }
+        else if (out_pcl.instance[i] == 10) {
+            xyzrgb.r = 255;
+            xyzrgb.b = 100;
+            xyzrgb.g = 100;
+        }
+        else if (out_pcl.instance[i] == 11) {
+            xyzrgb.r = 100;
+            xyzrgb.b = 255;
+            xyzrgb.g = 100;
+        }
+        else if (out_pcl.instance[i] == 12) {
+            xyzrgb.r = 150;
+            xyzrgb.b = 100;
+            xyzrgb.g = 255;
+        }
+        else if (out_pcl.instance[i] == 13) {
+            xyzrgb.r = 100;
+            xyzrgb.b = 150;
+            xyzrgb.g = 255;
+        }
+        else if (out_pcl.instance[i] == 14) {
+            xyzrgb.r = 255;
+            xyzrgb.b = 100;
+            xyzrgb.g = 150;
+        }
+        else if (out_pcl.instance[i] == 15) {
+            xyzrgb.r = 255;
+            xyzrgb.b = 150;
+            xyzrgb.g = 100;
+        }
+        else if (out_pcl.instance[i] == 16) {
+            xyzrgb.r = 100;
+            xyzrgb.b = 255;
+            xyzrgb.g = 150;
+        }
+        else if (out_pcl.instance[i] == 17) {
+            xyzrgb.r = 150;
+            xyzrgb.b = 255;
+            xyzrgb.g = 100;
+        }
+        else if (out_pcl.instance[i] == 18) {
+            xyzrgb.r = 100;
+            xyzrgb.b = 150;
+            xyzrgb.g = 0;
+        }
+        else if (out_pcl.instance[i] == 19) {
+            xyzrgb.r = 150;
+            xyzrgb.b = 100;
+            xyzrgb.g = 0;
+        }
+        else if (out_pcl.instance[i] == 20) {
+            xyzrgb.r = 150;
+            xyzrgb.b = 0;
+            xyzrgb.g = 100;
+        }
+        else if (out_pcl.instance[i] == 21) {
+            xyzrgb.r = 100;
+            xyzrgb.b = 0;
+            xyzrgb.g = 150;
+        }
+        else if (out_pcl.instance[i] == 22) {
+            xyzrgb.r = 0;
+            xyzrgb.b = 100;
+            xyzrgb.g = 150;
+        }
+        else if (out_pcl.instance[i] == 23) {
+            xyzrgb.r = 0;
+            xyzrgb.b = 150;
+            xyzrgb.g = 100;
+        }
+        else if (out_pcl.instance[i] == 24) {
+            xyzrgb.r = 255;
+            xyzrgb.b = 150;
+            xyzrgb.g = 150;
         }
         else {
             xyzrgb.r = 255;
-            xyzrgb.g = 255;
-            xyzrgb.b  =255;
+            xyzrgb.b = 255;
+            xyzrgb.g  =255;
         }
+        
         cloud.push_back(xyzrgb);
     }
     ROS_INFO_STREAM("start save");

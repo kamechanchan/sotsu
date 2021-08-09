@@ -3,9 +3,9 @@
   <arg name="object_name" default="HV8" />
   <arg name="icpRefine" default="False" />
   <arg name="arch" default="PointNet_Pose" />
-  <arg name="process_swich" default="PointNet" />
+  <arg name="process_swich" default="raugh_recognition" />
   <arg name="resolution" default="50" />
-  <arg name="load_path" default="/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/tsuchida/PointNet/HV8_size_20000_range_pi_3.hdf5/latest_net.pth"/>
+  <arg name="load_path" default="/home/ericlab/MEGA/latest_net.pth"/>
   <node name="random_move" pkg="gen_dataset" type="random_move_euler.py">
     <param name="object_name" value="$(arg object_name)" />
   </node>

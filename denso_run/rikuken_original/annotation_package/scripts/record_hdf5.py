@@ -11,6 +11,7 @@ import ros_numpy
 import numpy as np
 import pcl
 from color_cloud_bridge.msg import dummy_pcl
+import datetime
 
 
 
@@ -19,7 +20,7 @@ class record_file(object):
         rospack = rospkg.RosPack()
         self.package_path = rospack.get_path("annotation_package")
         self.directorypath = rospy.get_param("~directorypath", "/home/ericlab/ishiyama_tanomu.hdf5")
-        self.filepath = rospy.get_param("~filepath", "ishiyama_1000.hdf5")
+        self.filepath = rospy.get_param("~filepath", "ishiyama_1000")
         self.sub_topic_name = rospy.get_param("~sub_topic_name", "dummy_cloud")
         self.num_dataset = rospy.get_param("~num_dataset", 5)
         self.bar = tqdm(total=self.num_dataset)
@@ -27,14 +28,23 @@ class record_file(object):
         #cloud_sub = rospy.Subscriber("all_cloud", PointCloud2, self.callback)
         cloud_sub = rospy.Subscriber(self.sub_topic_name, dummy_pcl, self.callback)
         rospy.set_param("/is_move/ok", True)
+        rospy.set_param("/is_record/ok", False)
         self.init_file()
         self.num_ = 1
         self.matu = 0
+        self.first = True
+        self.first_count = 0
+        self.ugokasu = False
+        self.ugokasu_count = 0
+        
         
 
     def init_file(self):
         util_rikuken.mkdir(self.directorypath)
-        self.all_file_path = self.directorypath + self.filepath
+        dt_now = datetime.datetime.now()
+        self.all_file_path = self.directorypath + self.filepath + "_"
+        time_str = str(dt_now.month) + "_" + str(dt_now.day) + "_" + str(dt_now.hour) + "_" + str(dt_now.minute)
+        self.all_file_path = self.all_file_path + time_str + ".hdf5"
         self.hdf5_file = h5py.File(self.all_file_path, "w")
     '''
     def callback(self, cloud):
@@ -64,11 +74,30 @@ class record_file(object):
     '''
 
     def callback(self, msg):
+        if self.ugokasu:
+            self.ugokasu_count = self.ugokasu_count + 1
+            if self.ugokasu_count >= 4:
+                rospy.set_param("/is_move/ok", True)
+                rospy.set_param("/is_record/ok", False)
+                self.ugokasu_count = 0
+                self.ugokasu = False
+            return
+
         record_ok = rospy.get_param("/is_record/ok", False)    
+        move_rate = rospy.Rate(1)
+        # if self.first:
+        #     if self.first_count <= 2:
+        #         pass
+        #     else:
+        #         self.first = False
+        #     self.first_count = self.first_count + 1
+        #     return 
         #print("size is " + str(len(msg.x)))
         if record_ok:
             self.matu += 1
-        if self.matu >= 5:
+            # print(self.matu)
+        if self.matu >= 7:
+            
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()
             msg_size = len(msg.x)
@@ -93,8 +122,15 @@ class record_file(object):
             np_points[:, 3] = np.resize(msg.rgb, msg_size)
             '''
             self.savePCD(np_points, np_masks)
-            rospy.set_param("/is_move/ok", True)
-            rospy.set_param("/is_record/ok", False)
+            self.ugokasu = True
+            # matu_loop = rospy.Rate(2)
+            # count = 0
+            # while count <= 0:
+            #     matu_loop.sleep()
+            #     count = count + 1
+
+            
+            
             self.matu = 0
 
             
@@ -104,7 +140,7 @@ class record_file(object):
             rospy.signal_shutdown('finish')
             os._exit(10)
         else:
-            
+            # print("data_" + str(self.num_))
             data_g = self.hdf5_file.create_group("data_" + str(self.num_))
             data_g.create_dataset("Points", data=cloud, compression="lzf")
             data_g.create_dataset("masks", data=masks, compression="lzf")

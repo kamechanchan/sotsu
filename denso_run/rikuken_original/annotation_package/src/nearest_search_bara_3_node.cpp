@@ -28,7 +28,7 @@ int main(int argc, char** argv)
     loader_.param_register(sensor_topic, mesh_base_topic, output_topic, num_of_nearest_points);
     loader_.exect();
 
-    ros::Rate loop(1);
+    ros::Rate loop(10);
     while (ros::ok())
     {
         loader_.publish();

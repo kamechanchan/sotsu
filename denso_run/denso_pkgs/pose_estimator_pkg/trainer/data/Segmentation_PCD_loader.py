@@ -34,17 +34,17 @@ class Segmentation_PCD_Loader(PCD_Loader):
 
     def get_pcd_data(self, index):
         pcd_data = self.x_data[index]
-        print("pcd_data")
+        # print("pcd_data")
         # print(pcd_data)
         original_data, pcd_offset = getNormalizedPcd_seg(pcd_data, 8192)
         x_data = original_data[:,:3]
         
         y_data = original_data[:,3]
 
-        print("y_data")
-        print(type(x_data))
+        # print("y_data")
+        # print(type(x_data))
         pcl_visu = pcl.PointCloud(x_data)
-        pcl.save(pcl_visu, "/home/ericlab/pcl_visu/"+"result"+str(index)+".pcd")
+        pcl.save(pcl_visu, "/home/ericlab/pcl_visu/train_input/"+"result"+str(index)+".pcd")
 
         # print(y_data.shape)
         # print(y_data.dtype)
