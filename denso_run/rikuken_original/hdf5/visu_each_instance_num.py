@@ -23,7 +23,7 @@ def getNormalizedPcd_seg(np_cloud, resolution):
 
 # change here by using dataset
 instance_number = 26
-dataset_number = 1526
+dataset_number = 2000
 resolution = 1024
 
 cnt_list = [0]*instance_number

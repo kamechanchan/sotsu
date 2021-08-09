@@ -62,7 +62,7 @@ class PoseEstNode():
         self.icp_flag = rospy.get_param("~icpRefine", False)
         self.arch = rospy.get_param("~arch", "PointNet_Pose")
         self.opt.arch = self.arch
-        self.resolution = rospy.get_param("~resolution", 50)
+        self.resolution = rospy.get_param("~resolution", 8192)
         self.opt.resolution = self.resolution
         self.tf = tf2_ros.TransformBroadcaster()
         self.sub = rospy.Subscriber(self.sub_topic_name, PointCloud2, self.callback)
@@ -100,7 +100,7 @@ class PoseEstNode():
         self.time_file.write("点群が入力されてopen3dへ変換するまでの時間は : " + str(self.open3d_time - self.start_callback) + '秒\n')
 
         if self.arch == "PointNet_Pose":
-            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, 1024)
+            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, self.resolution)
             norma = time.time()
             self.time_file.write("getNormalizedPcdの処理時間は  　　　    　: " + str(norma - self.open3d_time) + '秒\n')
             self.input_data.input_cloud = Float32MultiArray(data=np.array(normalized_pcd).flatten())
@@ -124,14 +124,14 @@ class PoseEstNode():
             preprocess_time = time.time() - start_time
             self.input_data.input_voxel.voxel_array = Int32MultiArray(data=np.asarray(voxel).flatten())
         elif self.arch == "JSIS3D":
-            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, 8092)
+            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, self.resolution)
             #norma = time.time()
             #self.time_file.write("getNormalizedPcdの処理時間は  　　　    　: " + str(norma - self.open3d_time) + '秒\n')
             self.input_data.input_cloud = Float32MultiArray(data=np.array(normalized_pcd).flatten())
             #np_cloud = np.asarray(self.o3d_data.points)
             #self.input_data.input_cloud = Float32MultiArray(data=np.array(np_cloud).flatten())
         elif self.arch == "PointNet_Segmentation":
-            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, 8092)
+            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, self.resolution)
             #norma = time.time()
             #self.time_file.write("getNormalizedPcdの処理時間は  　　　    　: " + str(norma - self.open3d_time) + '秒\n')
             self.input_data.input_cloud = Float32MultiArray(data=np.array(normalized_pcd).flatten())

@@ -19,6 +19,6 @@ with h5py.File('/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_origina
     #     # if cnt == 5000:
     #     print(i)
     #         # cnt =0
-    # f.visititems(PrintonlyDataset)
-    f.visit(PrintAllObjects)
+    f.visititems(PrintonlyDataset)
+    # f.visit(PrintAllObjects)
 
