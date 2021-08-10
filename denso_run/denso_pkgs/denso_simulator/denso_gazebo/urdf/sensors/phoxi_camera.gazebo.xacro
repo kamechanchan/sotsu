@@ -15,7 +15,8 @@
         <camera>
           <horizontal_fov>${84.1*M_PI/180.0}</horizontal_fov>
           <image>
-            <format>L8</format>
+            <!-- <format>L8</format> -->
+            <format>R8G8B8</format>
             <width>2064</width>
             <height>1544</height>
           </image>
@@ -62,8 +63,10 @@
           <pose>${camera_x} ${camera_y} ${camera_z} 0 0 ${camera_yaw}</pose>
           <horizontal_fov>${84.1*M_PI/180.0}</horizontal_fov>
           <image>
-            <format>L8</format>
+            <!-- <format>L8</format> -->
+            <format>R8G8B8</format>
             <width>752</width>
+            <!-- <width>640</width> -->
             <height>480</height>
           </image>
           <clip>
@@ -80,7 +83,10 @@
           <cameraName>${sensor_link_name}/camera</cameraName>
           <alwaysOn>true</alwaysOn>
           <updateRate>30</updateRate>
+          <!-- <updateRate>0.0</updateRate> -->
+
           <imageTopicName>image_color</imageTopicName>
+          <cameraInfoTopicName>camera_info</cameraInfoTopicName>
           <frameName>${sensor_link_name}_camera_frame</frameName>
           <baseline>0.1</baseline>
           <distortion_k1>-0.11862627596824302</distortion_k1>
@@ -88,8 +94,15 @@
           <distortion_k3>0.0</distortion_k3>
           <distortion_t1>0.0012978747886444077</distortion_t1>
           <distortion_t2>-0.002273816413316873</distortion_t2>
-          <focalLength>2293.3324879074394</focalLength>
-          <hackBaseline>0.0</hackBaseline>
+          <!-- <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2> -->
+          <focalLength>2293.3324879074394</focalLength> 
+          <!-- <hackBaseline>0.0</hackBaseline> -->
+          <hackBaseline>0.07</hackBaseline>
+
           <Cx>1041.4935095434566</Cx>
           <Cy>857.6330096952366</Cy>
           <pointCloudCutoff>0.05</pointCloudCutoff>

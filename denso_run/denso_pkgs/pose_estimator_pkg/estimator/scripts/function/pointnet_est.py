@@ -2,6 +2,7 @@
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../trainer'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../utils'))
 
 import numpy as np
 from options.test_options import TestOptions
@@ -10,11 +11,15 @@ from scipy.spatial.transform import Rotation
 from geometry_msgs.msg import PoseStamped
 
 
-def pose_prediction(opt, data):
-    n_data = len(data)
-    row = 3
-    col = n_data // row
-    x = np.reshape(np.array(data), (col, row))[np.newaxis, :, :]
+def pose_prediction(opt, data, arg):
+    if arg == "PointNet":
+        n_data = len(data)
+        row = 3
+        col = n_data // row
+        x = np.reshape(np.array(data), (col, row))[np.newaxis, :, :]
+    elif arg == "integ_PointNet":
+        x = getNormalizedPcd(data, 1024)
+
     y_pre = estimation(opt, x)
     y = np.squeeze(y_pre[0])
     est_time = y_pre[1]

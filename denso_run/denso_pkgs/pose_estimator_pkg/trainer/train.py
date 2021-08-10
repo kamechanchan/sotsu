@@ -1,4 +1,3 @@
-
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import sys, os
@@ -84,7 +83,7 @@ if __name__ == '__main__':
             print("saving the model at the end of epoch %d, iter %d" % (epoch, total_steps))
             model.save_network("latest")
             model.save_network(epoch)
-            # model.progress_save_pcd(epoch)
+            run_progress_savetest(opt, val_dataset, epoch)
 
         if epoch % opt.run_test_freq == 0:
             val_loss = run_test(opt_v, val_dataset)
@@ -98,7 +97,7 @@ if __name__ == '__main__':
         writer.close()
     plt.plot(plot_x, loss_plot_y)
     plt.grid()
-    plot_file = opt.checkpoints_dir + "/" + opt.checkpoints_process_swich + opt.checkpoints_human_swich + "/" + opt.arch + "/" + opt.dataset_model + "/loss_plot.png"
+    plot_file = opt.checkpoints_dir + "/" + opt.dataset_mode + opt.checkpoints_human_swich + "/" + opt.arch + "/" + opt.dataset_model + "/loss_plot.png"
     plt.savefig(plot_file)
     print(plot_file)
     

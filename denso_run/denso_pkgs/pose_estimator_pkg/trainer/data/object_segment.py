@@ -15,13 +15,19 @@ from options.train_options import TrainOptions
 from data.base_dataset import BaseDataset
 from pcd_loader import PCD_Loader
 from voxel_loader import Voxel_Loader
-from Segmentation_PCD_loader import Segmentation_PCD_Loader
+from SemSeg_PCD_loader import SemSeg_PCD_Loader
+from InsSeg_PCD_loader import InsSeg_PCD_Loader
+
 
 class Segmentation_Data(BaseDataset):
     def __init__(self, opt):
         BaseDataset.__init__(self, opt)
         self.instance_number = opt.instance_number
-        self.hdf5_data = Segmentation_PCD_Loader(self.dataroot, self.dataset_model, self.size, self.dataset_number, self.instance_number)
+        self.resolution = opt.resolution
+        if opt.dataset_mode == "semantic_segmentation":
+            self.hdf5_data = SemSeg_PCD_Loader(self.dataroot, self.dataset_model, self.size, self.dataset_number, opt)
+        elif opt.dataset_mode == "instance_segmentation":
+            self.hdf5_data = InsSeg_PCD_Loader(self.dataroot, self.dataset_model, self.size, self.dataset_number, opt)
         self.hdf5_data.load_hdf5()
 
     def __getitem__(self, index):
@@ -30,7 +36,7 @@ class Segmentation_Data(BaseDataset):
         meta = {}
         #try:
         # if self.arch == "JSIS3D":
-        x_data, y_data = self.hdf5_data.get_pcd_data(index)
+        x_data, y_data = self.hdf5_data.get_pcd_data(index, self.resolution)
         # print("x_data")
         # print(x_data)
         # print("y_data")

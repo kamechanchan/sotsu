@@ -3,7 +3,7 @@ arch: PointNet_Pose
 batch_size: 8
 checkpoints_dir: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/weights
 checkpoints_human_swich: ishiyama
-checkpoints_process_swich: raugh_recognition
+dataset_mode: raugh_recognition
 dataroot_swich: front
 dataset_mode: pose_estimation
 dataset_model: HV8

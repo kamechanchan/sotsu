@@ -13,7 +13,7 @@ from sklearn.cluster import KMeans
 from color_cloud_bridge.msg import out_segmentation
 
 
-def pose_prediction(opt, data):
+def pose_prediction(opt, data, resolution):
     n_data = len(data)
     row = 3
     col = n_data // row
@@ -26,7 +26,7 @@ def pose_prediction(opt, data):
     print(y.shape)
     est_time = y_pre[1]
     msg_out = out_segmentation()
-    for i in range(8092):
+    for i in range(resolution):
         msg_out.x.append(x[0][i][0])
         msg_out.y.append(x[0][i][1])
         msg_out.z.append(x[0][i][2])

@@ -6,7 +6,6 @@
     "python.analysis.extraPaths": [
         "/home/ericlab/ros_package/denso_ws/devel/lib/python3/dist-packages",
         "/opt/ros/noetic/lib/python3/dist-packages"
-<<<<<<< HEAD
     ],
     "files.associations": {
         "cctype": "cpp",
@@ -83,7 +82,4 @@
         "valarray": "cpp",
         "variant": "cpp"
     }
-=======
-    ]
->>>>>>> 085e21b6061a7fe9c0f41abe02d571c6a294b3eb
 }

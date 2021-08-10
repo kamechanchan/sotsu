@@ -88,6 +88,7 @@ roslaunch annotation_package dummy_cloud_pub_instance.launch
 ```
 roslaunch annotation_package segmentation_dataset.launch 
 ```
+
 ### 推論
 ```
 roslaunch tf_publish spawn_object.launch object_name:=sekai
@@ -101,6 +102,11 @@ roslaunch estimator server.launch
 roslaunch estimator client.launch
 
 roslaunch estimator color_get.launch
+```
+##### semantic and instance switch_method
+```
+server.launch arch:=PointNet_Segmentation (semantic)
+server.launch arch:=JSIS3D (instance)
 ```
 
 ### データセットの中身を見る
