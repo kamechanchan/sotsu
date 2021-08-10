@@ -44,7 +44,7 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 include_directories(
-# include
+  include
   ${catkin_INCLUDE_DIRS}
 )
 
@@ -61,5 +61,10 @@ target_link_libraries(message_publish
 
 add_executable(another_message_publish src/anothre_message_publish.cpp)
 target_link_libraries(another_message_publish
+  ${catkin_LIBRARIES}
+)
+
+add_executable(colored_pointcloud src/colored_pointcloud.cpp src/colored_pointcloud_node.cpp)
+target_link_libraries(colored_pointcloud
   ${catkin_LIBRARIES}
 )
