@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot name="t_pipe_v0" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="t_pipe">
+    <visual>
+      <geometry>
+        <mesh filename="package://denso_descriptions/object_description/meshes/STL/t_pipe.stl" scale="0.01 0.01 0.01"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://denso_descriptions/object_description/meshes/DAE/t_pipe.dae"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.05" />
+      <inertia ixx="0.002" ixy="0.0" ixz="0.0"
+              iyy="0.002" iyz="0.0"
+              izz="0.0" />
+    </inertial>
+  </link>
+</robot>

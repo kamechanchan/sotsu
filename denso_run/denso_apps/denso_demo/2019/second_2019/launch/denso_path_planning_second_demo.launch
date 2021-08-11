@@ -1,0 +1,13 @@
+<launch>
+    <arg name="target_value" default="default" />
+
+    <include file="$(find jacobi_planning)/launch/scene_publish.launch" />
+    <!--include file="$(find denso_bringup)/launch/vs087_bringup/vs087_with_tercero_bringup.launch"-->
+        <!--arg name="planner" value="multi" /-->
+        <!--arg name="sim" value="false" /-->
+        <!--arg name="ip_address" value="192.168.1.22" /-->
+    <!--/include-->
+    <include file="$(find jacobi_planning)/launch/generate_opt_path.launch" >
+        <arg name="target_value" value="$(arg target_value)" />
+    </include>
+</launch>
