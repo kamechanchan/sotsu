@@ -16,6 +16,7 @@
           <horizontal_fov>${84.1*M_PI/180.0}</horizontal_fov>
           <image>
             <!-- <format>L8</format> -->
+            <!-- fdfd -->
             <format>R8G8B8</format>
             <width>2064</width>
             <height>1544</height>
