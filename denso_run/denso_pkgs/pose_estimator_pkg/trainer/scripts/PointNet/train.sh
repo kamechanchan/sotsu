@@ -2,12 +2,12 @@
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets \
---dataset_model HV8_size_80000_range_pi_1.hdf5 \
+--dataset_model ishiyama_1000.hdf5 \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint \
 --resolution 1024 \
 --phase train \
---name PointNet \
---dataset_mode pose_estimation \
+--process_swich object_segment \
+--dataset_mode instance_segmentation \
 --batch_size 8 \
 --num_epoch 200 \
 --max_dataset_size 80000 \
@@ -22,8 +22,8 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --serial_batches False \
 --verbose_plot True \
 --lr 0.0001 \
---checkpoints_swich hatena \
+--checkpoints_swich hasire \
 --dataroot_swich tsuchida \
 --local_checkpoints_dir /home/ericlab/DENSO_results/raugh_recognition/checkpoint \
 --tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
---tensorboardX_results_directory_switch tsuchida/0518 \
+--tensorboardX_results_directory_switch tsuchida/0526 \

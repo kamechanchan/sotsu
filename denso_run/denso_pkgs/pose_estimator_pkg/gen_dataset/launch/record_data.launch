@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
- 
+
 
   <arg name="num_dataset" default="20000" />
 
@@ -22,6 +22,7 @@
   <node name="random_move" pkg="gen_dataset" type="random_move_euler.py">
     <param name="object_name" value="$(arg object_name)"/>
     <param name="angle_range" value="$(arg angle_range)"/>
+    <param name="save_histgram_directory" value="$(arg save_histgram_directory)"/>
   </node>
   <node pkg="gen_dataset" type="record_data.py" name="record_data" output="screen" >
     <param name="sensor_parent_frame" value="$(arg sensor_parent_frame)" />
@@ -31,12 +32,13 @@
     <param name="save_directory" value="$(arg save_directory)"/>
     <param name="save_histgram_directory" value="$(arg save_histgram_directory"/>
     <param name="angle_range" value="$(arg angle_range)"/>
+
   </node>
   <node name="image_view" pkg="image_view" type="image_view" respawn="false" output="screen">
     <remap from="image" to="/photoneo_center/camera/image_color"/>
     <param name="autosize" value="true" />
   </node>
-  
-  
- 
+
+
+
 </launch>

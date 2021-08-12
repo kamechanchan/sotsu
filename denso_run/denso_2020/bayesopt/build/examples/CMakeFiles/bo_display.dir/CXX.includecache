@@ -134,23 +134,23 @@ typeinfo
 boost/numeric/ublas/vector.hpp
 -
 
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/bo_display.cpp
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/bo_display.cpp
 testfunctions.hpp
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/testfunctions.hpp
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/testfunctions.hpp
 displaygp.hpp
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/displaygp.hpp
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/displaygp.hpp
 
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/displaygp.cpp
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/displaygp.cpp
 displaygp.hpp
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/displaygp.hpp
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/displaygp.hpp
 dataset.hpp
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/dataset.hpp
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/dataset.hpp
 prob_distribution.hpp
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/prob_distribution.hpp
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/prob_distribution.hpp
 
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/displaygp.hpp
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/displaygp.hpp
 bayesopt/bayesopt.hpp
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/bayesopt/bayesopt.hpp
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/bayesopt/bayesopt.hpp
 matplotpp.h
-/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/matplotpp.h
+/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/utils/matplotpp.h
 

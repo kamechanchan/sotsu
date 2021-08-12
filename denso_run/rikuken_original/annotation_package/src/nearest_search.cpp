@@ -49,6 +49,7 @@ namespace nearest_point_extractor
     /*Refecence the publisher and subscriber*/
     void NearestPointExtractor::exect()
     {
+
         cloud_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(output_topic_name_, 10);
         sensor_cloud_sub_ = new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh_, sensor_topic_name_, 10);
         mesh_cloud_sub_ = new message_filters::Subscriber<sensor_msgs::PointCloud2>(nh_, mesh_topic_name_, 10);
@@ -79,7 +80,7 @@ namespace nearest_point_extractor
     {
         while (true)
         {
-            try 
+            try
             {
                 listener_.lookupTransform("world", sensor_pc_msgs->header.frame_id, ros::Time(0), transform_);
                 ROS_INFO_ONCE("I got a transfomr");
@@ -131,11 +132,11 @@ namespace nearest_point_extractor
                     part_of_extract.b = blue_;
                     out_cloud->push_back(part_of_extract);
                 }
-                
+
             }
             pointIndices.clear();
             squaredDistances.clear();
-        }  
+        }
         ROS_INFO_STREAM("point:size :" << point_size);
         ROS_INFO_STREAM("c2c_distance: " << c2c_distance);
         ROS_INFO_STREAM("c2c_distance(mean): " << c2c_distance / point_size);

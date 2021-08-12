@@ -19,8 +19,7 @@ public:
         statFilter.setMeanK(10);
         statFilter.setStddevMulThresh(0.2);
         statFilter.filter(cloud_filtered_pcl);
-
-        pcl::toROSMsg(cloud_filtered_pcl, cloud_filtered_ros_); 
+        pcl::toROSMsg(cloud_filtered_pcl, cloud_filtered_ros_);
     }
     void publish()
     {
