@@ -58,6 +58,7 @@ private:
   double lower_val_;
   bool pub_flag_;
   bool tf_flag_;
+  sensor_msgs::PointCloud2 ros_msg;
 };
 }  // colored_pointCloud
 

@@ -12,9 +12,9 @@ using colored_pointcloud::ColoredPointCloud;
 ColoredPointCloud::ColoredPointCloud(ros::NodeHandle& nh)
   : nh_(nh)
   , it_(nh)
-  , img_tran_sub_(it_, "/image", 10)
-  , caminfo_sub_(nh, "/camera_info", 10)
-  , pc_sub_(nh, "/input_pointcloud", 10)
+  , img_tran_sub_(it_, "/photoneo_center/sensor/image_color", 10)
+  , caminfo_sub_(nh, "/photoneo_center/sensor/camera_info", 10)
+  , pc_sub_(nh, "/cloud_without_segmented", 10)
   , sensor_sync_(sensor_sync_subs_(10), img_tran_sub_, caminfo_sub_, pc_sub_)
 {
   ROS_INFO("Colored Pointcloud's constractor start");
@@ -93,6 +93,9 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
   ROS_INFO("Transform-pointcloud.....");
   pcl_ros::transformPointCloud(*cloud, *trans_cloud, tf);
   ROS_INFO("CV_BRIDGE");
+  std::cout << "[" << cinfo->K[0] << " " << cinfo->K[1] << " " << cinfo->K[2] << "]" << std::endl;
+  std::cout << "[" << cinfo->K[3] << " " << cinfo->K[4] << " " << cinfo->K[5] << "]" << std::endl;
+  std::cout << "[" << cinfo->K[6] << " " << cinfo->K[7] << " " << cinfo->K[8] << "]" << std::endl;
   cv_bridge::CvImageConstPtr cv_img_ptr;
   // cv::Mat buffer_image;
   try
@@ -118,9 +121,12 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
   int count = 0;
   double debug_x = 0;
   double debug_y = 0;
+  ROS_INFO_STREAM("size: " << trans_cloud->points.size());
   for (pcl::PointCloud<pcl::PointXYZ>::iterator pt = trans_cloud->points.begin(); pt < trans_cloud->points.end(); pt++)
   {
     count++;
+    // if (count % 100 == 0)
+    //   ROS_INFO_STREAM(count);
     if (pt->z < 0)
     {
       ROS_INFO("passed point");
@@ -131,11 +137,14 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
     uv = cam_model.project3dToPixel(pt_cv);
     debug_x += uv.x;
     debug_y += uv.y;
+    // ROS_INFO_STREAM("uv.x: " << uv.x << "  uv.y: " << uv.y);
+    // ROS_INFO_STREAM("image_col / 2: " << rgb_image.cols / 2 << "   image_rows / 2: " << rgb_image.rows / 2);
+
 
     if (uv.x > (-rgb_image.cols / 2) && uv.x < (rgb_image.cols / 2) && uv.y > (-rgb_image.rows / 2) &&
         uv.y < (rgb_image.rows / 2))
     {
-      std::cout << "ttuuka!!" << std::endl;
+      // std::cout << "ttuuka!!" << std::endl;
       cv::Point2d converted_uv(uv.x + rgb_image.cols / 2, uv.y + rgb_image.rows / 2);
       cv::Vec3b rgb = rgb_image.at<cv::Vec3b>(converted_uv.y, converted_uv.x);
       pcl::PointXYZRGB buffer_point;
@@ -153,13 +162,16 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
       buffer_point.g = rgb[1];
       buffer_point.b = rgb[2];
       colored_points_.push_back(buffer_point);
+      ROS_INFO_STREAM("YES!!!!");
     }
-    std::cout << "tuuka??" << std::endl;
+    
+    // std::cout << "tuuka??" << std::endl;
   }
-  std::cout << "average uv.x: " << debug_x / count << std::endl;
-  std::cout << "average uv.y: " << debug_y / count << std::endl;
+  // std::cout << "average uv.x: " << debug_x / count << std::endl;
+  // std::cout << "average uv.y: " << debug_y / count << std::endl;
+  ROS_INFO_STREAM("tuuka");
   pub_flag_ = true;
-  std::cout << count << std::endl;
+  // std::cout << count << std::endl;
   if (tf_flag_ == true && pub_flag_)
   {
     //pcl::io::savePCDFile("/home/ericlabshinya/nigeru.pcd", colored_points_);
@@ -170,11 +182,14 @@ void ColoredPointCloud::colorConvert(const sensor_msgs::Image::ConstPtr image,
 
 void ColoredPointCloud::publish(void)
 {
+  ROS_INFO_STREAM("pub_frag_: " << pub_flag_);
   if (pub_flag_)
   {
     auto msg = colored_points_.makeShared();
     msg->header.frame_id = target_frame_.c_str();
     pcl_conversions::toPCL(ros::Time::now(), msg->header.stamp);
+    ROS_INFO_STREAM("ros_msgs size: " << msg->size());
+    pcl::toROSMsg(*msg, ros_msg);
     pub_.publish(msg);
   }
 }
