@@ -64,7 +64,7 @@ roslaunch annotation_package nearest_search_bara.launch
 
 ### segmentation dataset get
 ```
-roslaunch tf_publish spawn_object.launch object_name:=sekai
+roslaunch tf_publish spawn_object.launch object_name:=sekai_small_box_and_50
 
 roslaunch tf_publish bara_model_tf.launch 
 
