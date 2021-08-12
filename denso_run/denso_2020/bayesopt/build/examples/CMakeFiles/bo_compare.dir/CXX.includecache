@@ -58,9 +58,9 @@ bayesopt/bayesopt.hpp
 specialtypes.hpp
 ../utils/specialtypes.hpp
 
-/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/bo_compare.cpp
+/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/bo_compare.cpp
 testfunctions.hpp
-/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/testfunctions.hpp
+/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/testfunctions.hpp
 ctime
 -
 fstream

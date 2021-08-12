@@ -94,13 +94,13 @@ bayesopt/bayesopt.hpp
 specialtypes.hpp
 ../utils/specialtypes.hpp
 
-/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/bo_camelback.cpp
+/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/bo_camelback.cpp
 testfunctions.hpp
-/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/testfunctions.hpp
+/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/testfunctions.hpp
 ctime
 -
 fstream
 -
 param_loader.hpp
-/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/param_loader.hpp
+/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/examples/param_loader.hpp
 
