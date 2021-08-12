@@ -21,5 +21,3 @@
         <param name="data_number" value="$(arg data_number)"/>
     </node>
 </launch>
-
-<!-- fafdafadf -->
