@@ -64,6 +64,10 @@ class EstimatorModel:
     def set_input(self, data):
         if self.opt.phase == "train":
             x_data = torch.from_numpy(data["x_data"].astype(np.float32)) 
+<<<<<<< HEAD
+=======
+        
+>>>>>>> semantic
 
             if self.dataset_mode == "pose_estimation":
                 y_data = torch.from_numpy(data["y_data"].astype(np.float32))
