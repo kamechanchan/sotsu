@@ -103,7 +103,7 @@ class record_file(object):
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()
             msg_size = len(msg.x)
-            self.all_file_path = self.all_file_path + "_" + str(msg_size) + "_" + str(self.num_dataset)
+            # self.all_file_path = self.all_file_path + "_" + str(msg_size) + "_" + str(self.num_dataset)
             # print(msg_size)
             # print(len(msg.x))
             # print(len(msg.instance))
