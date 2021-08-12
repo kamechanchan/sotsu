@@ -1,4 +1,4 @@
-# Install script for directory: /home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt
+# Install script for directory: /home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -38,17 +38,17 @@ if(NOT DEFINED CMAKE_CROSSCOMPILING)
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/build/lib/libbayesopt.a")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/build/lib/libbayesopt.a")
 endif()
 
 if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/include/bayesopt")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/include" TYPE DIRECTORY FILES "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/include/bayesopt")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
-  include("/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/build/nlopt2/cmake_install.cmake")
-  include("/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/build/examples/cmake_install.cmake")
+  include("/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/build/nlopt2/cmake_install.cmake")
+  include("/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/build/examples/cmake_install.cmake")
 
 endif()
 
@@ -60,5 +60,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/tsuchida/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_2020/bayesopt/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

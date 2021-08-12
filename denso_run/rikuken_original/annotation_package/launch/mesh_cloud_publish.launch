@@ -5,7 +5,7 @@
     <arg name="RETRY_COUNT_LIMIT" default="100"/>
     <arg name="DURATION_TIME" default="1"/>
     <arg name="OBJECT_QUANTITY" default="1"/>
-    <arg name="mesh_path" default="$(find annotation_package)/mesh/HV6.stl"/>
+    <arg name="mesh_path" default="$(find annotation_package)/mesh/HV8.stl"/>
     <arg name="object_name" default="world"/>
     <arg name="mesh_topic_name" default="mesh_cloud_publisher"/>
     

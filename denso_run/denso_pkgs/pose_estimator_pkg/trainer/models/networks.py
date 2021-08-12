@@ -1,8 +1,11 @@
 from .discriminative import DiscriminativeLoss
+from .semantic_loss import Semantic_Loss
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from .layer.PointNet import *
+import torch.nn.functional as F
+
 
 def init_net(net, gpu_ids):
     if len(gpu_ids) > 0:
@@ -17,15 +20,15 @@ def define_network(opt):
     process_swich = opt.process_swich
     gpu_ids = opt.gpu_ids
 
-    print(arch)
-    print(process_swich)
-
     if process_swich == "raugh_recognition":
         if arch == "PointNet_Pose":
             net = PointNet_Pose(3, 9)
+            # print("iidesune")
     elif process_swich == "object_segment":
         if arch == "JSIS3D":
             net = JSIS3D(opt.embedded_size)
+        elif arch == "PointNet_Segmentation":
+            net = PointNet_Semantic_Segmentation(opt.semantic_number)
 
     return init_net(net, gpu_ids)
 
@@ -35,7 +38,8 @@ def define_loss(opt):
         loss = nn.MSELoss()
     elif opt.dataset_mode == "instance_segmentation":
         loss = DiscriminativeLoss(delta_d = opt.delta_d, delta_v = opt.delta_v)
-        
+    elif opt.dataset_mode == "semantic_segmentation":
+        loss = Semantic_Loss()
     return loss
 
 
@@ -44,6 +48,9 @@ class PointNet_Pose(nn.Module):
         super(PointNet_Pose, self).__init__()
         self.out_num_pos = out_num_pos
         self.out_num_rot = out_num_rot
+        # print("num_pos")
+        # print(self.out_num_pos)
+        # print(self.out_num_rot)
 
         self.pointnet_vanila_global_feat = PointNet_global_feat(num_points=1024)
         self.fc_pos1 = nn.Linear(1024, 512)
@@ -63,17 +70,23 @@ class PointNet_Pose(nn.Module):
         self.dropout = nn.Dropout(0.3)
 
     def forward(self, normalized_points):
+        # print("forword")
+        # print(normalized_points.shape)
         global_feat = self.pointnet_vanila_global_feat(normalized_points)
         
         h1 = self.relu(self.fc_pos1(global_feat))
         h1 = self.relu(self.fc_pos2(h1))
         h1 = self.relu(self.fc_pos3(h1))
         h1 = self.fc_pos(h1)
+        # print("h1")
+        # print(h1.shape)
 
         h2 = self.relu(self.fc_rot1(global_feat))
         h2 = self.relu(self.fc_rot2(h2))
         h2 = self.relu(self.fc_rot3(h2))
         h2 = self.fc_rot(h2)
+        # print("h1")
+        # print(h2.shape)
 
         y = torch.cat([h1, h2], axis=1)
         return y
@@ -84,7 +97,7 @@ class PointNet_Semantic_Segmentation(nn.Module):
         super(PointNet_Semantic_Segmentation, self).__init__()
         self.num_class=num_class
         
-        self.pointnet_global_feat = PointNet_feat_segmentation(grobal_feat = False,feature_transform = True)
+        self.pointnet_global_feat = PointNet_feat_SemanticSegmentation(global_feat = False, feature_transform = True)
         self.conv1 = nn.Conv1d(1088, 512, 1)
         self.conv2 = nn.Conv1d(512, 256, 1)
         self.conv3 = nn.Conv1d(256, 128, 1)
@@ -95,7 +108,7 @@ class PointNet_Semantic_Segmentation(nn.Module):
         self.bn3 = nn.BatchNorm1d(128)
         
         self.relu = nn.ReLU()
-        self.soft_max=nn.LogSoftmax()
+        # self.soft_max = F.log_softmax()
         self.dropout = nn.Dropout(0.3)
 
     def forward(self, x):
@@ -107,7 +120,7 @@ class PointNet_Semantic_Segmentation(nn.Module):
         x = self.relu(self.bn3(self.conv3(x)))
         x = self.last_conv(x)
         x = x.transpose(2,1).contiguous() #memory clean for view
-        x = self.soft_max(x.view(-1,self.num_class), dim=-1)
+        x = F.log_softmax(x.view(-1,self.num_class), dim=-1)
         x = x.view(batchsize, pc_pts, self.num_class)
         return x, trans_feat
 
@@ -117,7 +130,7 @@ class JSIS3D(nn.Module):
         super(JSIS3D, self).__init__()
         self.embedded_size = embedded_size
         
-        self.pointnet_global_feat = PointNet_feat_segmentation(global_feat = False,feature_transform = True)
+        self.pointnet_global_feat = PointNet_feat_segmentation(global_feat = False,feature_transform = False)
         self.conv1 = nn.Conv1d(1088, 512, 1)
         self.conv2 = nn.Conv1d(512, 256, 1)
         self.conv3 = nn.Conv1d(256, 128, 1)
@@ -132,10 +145,18 @@ class JSIS3D(nn.Module):
         self.dropout = nn.Dropout(0.3)
 
     def forward(self, x):
+        # print("133")
+        # print(x)
         x = self.pointnet_global_feat(x)
+        # print("135")
+        # print(x)
         x = self.relu(self.bn1(self.conv1(x)))
+        # print("137")
         x = self.relu(self.bn2(self.conv2(x)))
+        # print("139")
         x = self.relu(self.bn3(self.conv3(x)))
+        # print("141")
         x = self.last_conv(x)
+        # print("143")
         x = x.transpose(2,1).contiguous() #memory clean for view
         return x

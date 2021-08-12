@@ -42,3 +42,9 @@ target_link_libraries(cloud_express
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )
+
+add_executable(cloud_sonomama src/cloud_sonomama.cpp)
+target_link_libraries(cloud_sonomama
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)

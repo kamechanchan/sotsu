@@ -124,12 +124,19 @@ namespace nearest_point_extractor
                     part_of_extract.x = sensor_cloud.points[pointIndices[j]].x;
                     part_of_extract.y = sensor_cloud.points[pointIndices[j]].y;
                     part_of_extract.z = sensor_cloud.points[pointIndices[j]].z;
+                    //writing_cloud.points[pointIndices[j]].x = sensor_cloud.points[pointIndices[j]].x;
+                   // writing_cloud.points[pointIndices[j]].y = sensor_cloud.points[pointIndices[j]].y;
+                    //writing_cloud.points[pointIndices[j]].z = sensor_cloud.points[pointIndices[j]].z;
+
                     /*part_of_extract.x = mesh.x;
                     part_of_extract.y = mesh.y;
                     part_of_extract.z = mesh.z;*/
                     part_of_extract.r = red_;
                     part_of_extract.g = green_;
                     part_of_extract.b = blue_;
+                   //writing_cloud.points[pointIndices[j]].r = red_;
+                    //writing_cloud.points[pointIndices[j]].g = green_;
+                   // writing_cloud.points[pointIndices[j]].b = blue_;
                     out_cloud->push_back(part_of_extract);
                 }
 
@@ -164,5 +171,15 @@ namespace nearest_point_extractor
             squaredDistances.clear();
         }*/
         return out_cloud;
+    }
+
+    void NearestPointExtractor::read_cloud(pcl::PointCloud<pcl::PointXYZRGB> cloud)
+    {
+        writing_cloud = cloud;
+    }
+
+    pcl::PointCloud<pcl::PointXYZRGB> NearestPointExtractor::write_cloud()
+    {
+        return writing_cloud;
     }
 }

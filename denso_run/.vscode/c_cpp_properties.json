@@ -24,7 +24,9 @@
                 "${workspaceFolder}/denso_2020/meshcloud_pblisher_pkg/include",
                 "${workspaceFolder}/rikuken_original/annotation_package/include",
                 "${workspaceFolder}/rikuken_original/tf_publish/include/tf_publish",
-                "${workspaceFolder}/../../devel/include"
+                "${workspaceFolder}/../../devel/include",
+                "${workspaceFolder}/rikuken_original/w2d_to_3d_ros/include"
+
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

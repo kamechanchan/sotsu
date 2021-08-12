@@ -11,12 +11,15 @@ from cloud_util import *
 import time
 import h5py
 import random
-
+from utils import util
 
 
 class PCD_Loader(Base_Loader):
-    def __init__(self, dir_name, dataset_model, dataset_size, dataset_number):
+    def __init__(self, dir_name, dataset_model, dataset_size, dataset_number, opt):
         super(PCD_Loader, self).__init__(dir_name, dataset_model, dataset_size, dataset_number)
+        self.dataset_mode = opt.dataset_mode
+        # self.dataset_model = dataset_model
+        self.concat_dataset_model = '+'.join(dataset_model)
 
     def load_hdf5(self):
         for i in range(self.dataset_number):
@@ -32,13 +35,17 @@ class PCD_Loader(Base_Loader):
                 self.x_data.append(pcl_data)
                 self.y_data.append(pose_data)
 
-    def get_pcd_data(self, index):
+    def get_pcd_data(self, index, resolution):
         pcd_data = self.x_data[index]
-        x_data, pcd_offset = getNormalizedPcd(pcd_data, 1024)
+        x_data, pcd_offset = getNormalizedPcd(pcd_data, resolution)
         y_data = self.y_data[index]
         y_pos = y_data[0:3] - pcd_offset
         y_rot = y_data[3:]
         y_data = np.concatenate([y_pos, y_rot])
+        pcl_visu = pcl.PointCloud(x_data)
+        pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/train_input/"+self.dataset_mode+"/"+self.concat_dataset_model
+        util.mkdir(pcd_dir)
+        pcl.save(pcl_visu, pcd_dir+"/result"+str(index)+".pcd")
 
         return x_data, y_data
 

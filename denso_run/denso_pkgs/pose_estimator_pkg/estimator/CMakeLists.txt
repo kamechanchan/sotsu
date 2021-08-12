@@ -6,7 +6,10 @@ add_compile_options(-std=c++14)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  color_cloud_bridge
 )
+find_package(VTK REQUIRED)
+find_package(PCL REQUIRED)
 
 
 catkin_package(
@@ -24,6 +27,13 @@ include_directories(
   ${catkin_INCLUDE_DIRS}
 )
 
+add_executable(color_pointcloud src/color_pointcloud.cpp)
+target_link_libraries(color_pointcloud
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+  ${VTK_LIBRARIES}
+
+)
 
 ###########
 # Install #

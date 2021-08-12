@@ -1,4 +1,3 @@
-
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 import sys, os
@@ -59,12 +58,16 @@ if __name__ == '__main__':
             total_steps += opt.batch_size * opt.gpu_num
             epoch_iter += opt.batch_size * opt.gpu_num
 
+            # print("***data****")
+            # print(data)
             model.set_input(data)
             t_loss = model.train_step()
             train_loss += t_loss
             loss_plot_y.append(t_loss)
             count = count + 1
             plot_x.append(count)
+            # print("********************GOAL*************************")
+            # break
 
             if total_steps % opt.print_freq == 0:
                 t = (time.time() - iter_start_time / opt.batch_size)
@@ -75,12 +78,12 @@ if __name__ == '__main__':
                 model.save_network("latest")
 
             iter_data_time = time.time()
-
+        # break
         if epoch % opt.save_epoch_freq == 0:
             print("saving the model at the end of epoch %d, iter %d" % (epoch, total_steps))
             model.save_network("latest")
             model.save_network(epoch)
-
+            run_progress_savetest(opt, val_dataset, epoch)
 
         if epoch % opt.run_test_freq == 0:
             val_loss = run_test(opt_v, val_dataset)
@@ -94,7 +97,7 @@ if __name__ == '__main__':
         writer.close()
     plt.plot(plot_x, loss_plot_y)
     plt.grid()
-    plot_file = opt.checkpoints_dir + "/" + opt.checkpoints_process_swich + opt.checkpoints_human_swich + "/" + opt.arch + "/" + opt.dataset_model + "/loss_plot.png"
+    plot_file = opt.checkpoints_dir + "/" + opt.dataset_mode + opt.checkpoints_human_swich + "/" + opt.arch + "/" + opt.dataset_model + "/loss_plot.png"
     plt.savefig(plot_file)
     print(plot_file)
     

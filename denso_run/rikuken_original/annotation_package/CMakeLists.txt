@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(annotation_package)
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++14)
 find_package(catkin REQUIRED COMPONENTS
   pcl_conversions
   pcl_msgs
@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
 
 find_package(VTK REQUIRED)
 find_package(PCL REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system)
 
 
 
@@ -83,6 +84,18 @@ target_link_libraries(pcl_baikai
 
 add_executable(cloud_save_2 src/cloud_save_2.cpp)
 target_link_libraries(cloud_save_2
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(nearest_search_bara_3 src/nearest_search_3.cpp src/nearest_search_bara_3_node.cpp)
+target_link_libraries(nearest_search_bara_3
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(pcl_2_ba src/pcl_2_ba.cpp)
+target_link_libraries(pcl_2_ba
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )

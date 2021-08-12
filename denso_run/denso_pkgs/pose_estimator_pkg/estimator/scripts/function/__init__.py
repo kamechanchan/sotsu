@@ -9,6 +9,8 @@ from geometry_msgs.msg import TransformStamped
 from pointnet_est import pose_prediction as pp1
 from voxel_est import pose_prediction as pp2
 from JSIS3D_est import pose_prediction as pp3
+from PointNet_Semantic_Seg_est import pose_prediction as pp4
+from color_cloud_bridge.msg import out_segmentation
 
 def num2ros_transform(pos, ori):
     trans = TransformStamped()
@@ -21,9 +23,13 @@ def num2ros_transform(pos, ori):
     trans.transform.rotation.w = ori[3]
     return trans
 
-def predict_pose(model, data, arg):
+def predict_pose(model, data, resolution, arg):
     if arg == "PointNet":
-        y, est_time = pp1(model, data)
+        y, est_time = pp1(model, data, arg)
+        return y, est_time
+    
+    if arg == "integ_PointNet":
+        y, est_time = pp1(model, data, arg)
         return y, est_time
 
     elif arg == "C3D_Voxel":
@@ -31,9 +37,17 @@ def predict_pose(model, data, arg):
         return y, est_time
     
     elif arg == "JSIS3D":
-        y, est_time = pp3(model, data)
-        return y, est_time
+        segment_out, est_time = pp3(model, data, resolution, arg)
+        return segment_out, est_time
     
+    elif arg == "segment_by_JSIS3D":
+        segment_out, est_time, raugh_data = pp3(model, data, resolution, arg)
+        return segment_out, est_time, raugh_data
+
+    elif arg == "PointNet_Segmentation":
+        segment_out, est_time = pp4(model, data, resolution)
+        return segment_out, est_time
+
     else:
         print("Cloud not predict DNN arch. __init_.py Error!")
 
