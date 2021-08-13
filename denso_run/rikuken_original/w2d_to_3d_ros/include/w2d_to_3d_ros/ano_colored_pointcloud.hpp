@@ -30,6 +30,7 @@ private:
     ros::NodeHandle nh_;
     ros::NodeHandle *pnh_;
     std::string source_frame_, target_frame_;
+    std::string world_frame_;
     std::vector<std::string> target_frames_;
     std::string camera_topic_name_, image_topic_name_;
     tf2_ros::TransformListener *lister_;
