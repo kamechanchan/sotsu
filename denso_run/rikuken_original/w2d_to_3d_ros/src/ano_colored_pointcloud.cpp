@@ -1,6 +1,7 @@
 #include <w2d_to_3d_ros/ano_colored_pointcloud.hpp>
 #include <mutex>
 
+
 std::mutex m;
 Annotation_yolo::Annotation_yolo(ros::NodeHandle &nh) :
     nh_(nh),
@@ -11,6 +12,8 @@ Annotation_yolo::Annotation_yolo(ros::NodeHandle &nh) :
     buffer_ = new tf2_ros::Buffer();
     lister_ = new tf2_ros::TransformListener(*buffer_);
     parameter_set();
+    
+    
     
     // ROS_INFO_STREAM("wataru");
 }
@@ -30,7 +33,7 @@ void Annotation_yolo::parameter_set()
     pnh_->getParam("filebasename", filebasename_);
     pnh_->getParam("work_count", work_count_);
     pnh_->getParam("model_name", model_name_);
-    pnh_->getParam("world_frame", world);
+    pnh_->getParam("world_frame", world_frame_);
     paramter_set_bara(model_name_, work_count_);
     camera_sub_ = new message_filters::Subscriber<sensor_msgs::CameraInfo>(nh_, camera_topic_name_, 10);
     image_sub_ = new message_filters::Subscriber<sensor_msgs::Image>(nh_, image_topic_name_, 10);
@@ -46,10 +49,15 @@ void Annotation_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, se
     // geometry_msgs::TransformStamped transform;
     // tf_get(source_frame_, target_frame_, transform);
     // box_get(cinfo, image1, transform, draw_image_);
+    geometry_msgs::TransformStamped trans_source;
+    tf2::Quaternion q1;
+    tf2::convert(trans_source.transform.rotation, q1);
+    
+    tf_get(world_frame_, source_frame_, trans_source);
     std::vector<geometry_msgs::TransformStamped> transforms;
     for (int i = 0; i < work_count_; i++) {
         geometry_msgs::TransformStamped trans;
-        tf_get(world, target_frames_[i], trans);
+        tf_get(world_frame_, target_frames_[i], trans);
         transforms.push_back(trans);
     }
     box_get(cinfo, image1, transforms, draw_image_, work_count_);
@@ -70,6 +78,8 @@ void Annotation_yolo::tf_get(std::string source_frame, std::string target_frame,
     try
     {
         trans = buffer_->lookupTransform(target_frame, source_frame, ros::Time(0));
+        
+        
         ROS_INFO_ONCE("I got a transfomr");
     }
     catch (tf2::TransformException &e)
