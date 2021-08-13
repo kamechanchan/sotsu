@@ -30,6 +30,7 @@ void Annotation_yolo::parameter_set()
     pnh_->getParam("filebasename", filebasename_);
     pnh_->getParam("work_count", work_count_);
     pnh_->getParam("model_name", model_name_);
+    pnh_->getParam("world_frame", world);
     paramter_set_bara(model_name_, work_count_);
     camera_sub_ = new message_filters::Subscriber<sensor_msgs::CameraInfo>(nh_, camera_topic_name_, 10);
     image_sub_ = new message_filters::Subscriber<sensor_msgs::Image>(nh_, image_topic_name_, 10);
@@ -48,7 +49,7 @@ void Annotation_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, se
     std::vector<geometry_msgs::TransformStamped> transforms;
     for (int i = 0; i < work_count_; i++) {
         geometry_msgs::TransformStamped trans;
-        tf_get(source_frame_, target_frames_[i], trans);
+        tf_get(world, target_frames_[i], trans);
         transforms.push_back(trans);
     }
     box_get(cinfo, image1, transforms, draw_image_, work_count_);
@@ -147,8 +148,8 @@ void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image 
     int aida = 100;
 
     for (int i = 0; i < work_count; i++) {
-        float x = trans_s[i].transform.translation.x;
-        float y = trans_s[i].transform.translation.y;
+        float x = trans_s[i].transform.translation.y;
+        float y = trans_s[i].transform.translation.x;
         float z = trans_s[i].transform.translation.z;
         cv::Point3d pt_cv(y, x, z), pt_cv_x1(y - radious_, x - radious_, z), pt_cv_x2(y + radious_, x + radious_, z);
         cv::Point2d uv, uv_x1, uv_x2;
