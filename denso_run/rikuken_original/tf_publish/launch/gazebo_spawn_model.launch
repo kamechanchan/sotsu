@@ -1,50 +1,8 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="object_name" default="HV8"/>
-    <group if="$(eval object_name=='HV8')">
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/HV8.world"/>
-            <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
-            
-        </include>
-    </group>
-    <group if="$(eval object_name=='HV7')">
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/HV7.world"/>
-        </include>
-    </group>
-    <group if="$(eval object_name=='HV6')">
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/HV6.world"/>
-        </include>
-    </group>
-    <group if="$(eval object_name=='t_pipe')">
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/t_pipe.world"/>
-        </include>
-    </group>
-    <group if="$(eval object_name=='HV8_barazumi')">
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/HV8_barazumi.world"/>
-        </include>
-    </group>
-    <group if="$(eval object_name=='sekai')">
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/sekai.world"/>
-        </include>
-    </group>
-    <group if="$(eval object_name=='sekai_1')">
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/sekai_1.world"/>
-        </include>
-    </group>
-    <group if="$(eval object_name=='sekai_small_box_and_50')">
-        <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/sekai_small_box_kai.world"/>
-        </include>
-    </group>
-
     
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <!--node name="setup_commands" pkg="timed_roslaunch" type="timed_roslaunch.sh" args="3 gen_dataset setup_commands.launch" output="screen" /-->
     <arg name="use_sensor_type" default="phoxi_camera"/>
     <arg name="gui" default="true"/>

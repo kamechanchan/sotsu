@@ -58,6 +58,4 @@ private:
     std::string paramter_output_file_path;
     double f_scale_, cx_scale_, cy_scale_;
     double fx, fy, tx, ty, cx, cy;
-
-
 };
