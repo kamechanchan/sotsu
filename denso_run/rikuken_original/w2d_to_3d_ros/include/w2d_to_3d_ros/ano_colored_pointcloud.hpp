@@ -42,7 +42,7 @@ private:
     double fx_, fy_, tx_, ty_, cx_, cy_;
     float radious_;
     bool write_is_ok_;
-    std::string save_dir_name_, filebasename_, model_name_;
+    std::string image_dir_name_, filebasename_, model_name_, label_dir_name_, boxes_dir_name_;
     int save_count_;
     int work_count_;
 
