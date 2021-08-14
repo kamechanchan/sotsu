@@ -227,7 +227,7 @@ void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image 
         uv.y < (rgb_image.rows / scale))
         {
             cv::circle(draw_img, cv::Point(uv.x, uv.y), 10, cv::Scalar(0, 0, 255), 3, 1);
-            cv::rectangle(draw_img, cv::Point(uv_x1.x, uv_x1.y), cv::Point(uv_x2.x, uv_x2.y), cv::Scalar(255, 0, 0), 4);
+            cv::rectangle(draw_img, cv::Point(uv_x1.x, uv_x1.y), cv::Point(uv_x2.x, uv_x2.y), cv::Scalar(0, 255, 0), 4);
         }
 
     }
@@ -243,8 +243,8 @@ cv::Point2d Annotation_yolo::project3d_to_pixel(cv::Point3d xyz, sensor_msgs::Ca
     fy_ = cinfo_msg.K[4] * f_scale_;
     ty_ = cinfo_msg.K[3];
     cy_ = cinfo_msg.K[5] * cy_scale_;
-    uv_rect.x = (fx_ * -xyz.x + tx_) / xyz.z + cx_;
-    uv_rect.y = (fy_ * xyz.y + ty_) / xyz.z + cy_;
+    uv_rect.x = (fx_ * xyz.x + tx_) / xyz.z + cx_;
+    uv_rect.y = (fy_ * -xyz.y + ty_) / xyz.z + cy_;
     return uv_rect;
 }
 
@@ -272,9 +272,9 @@ void Annotation_yolo::rotation_convert(geometry_msgs::TransformStamped source_tf
         // double x = target_tfs[i].transform.translation.x - source_trans.x;
         // double y = target_tfs[i].transform.translation.y - source_trans.y;
         // double z = target_tfs[i].transform.translation.z - source_trans.z;
-        double x = target_after.x() - source_trans.x;
-        double y = target_after.y() - source_trans.y;
-        double z = target_after.z() - source_trans.z;
+        double x = -target_after.x() - source_trans.x;
+        double y = -target_after.y() - source_trans.y;
+        double z = -target_after.z() - source_trans.z;
         tf2::Quaternion q_before(x, y, z, 0);
         // tf2::Quaternion q_after = q_rot * q_before * q_rot.inverse();
         tf2::Quaternion q_after = q_rot.inverse() * q_before * q_rot;
