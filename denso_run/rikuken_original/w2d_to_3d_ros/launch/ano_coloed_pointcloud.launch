@@ -8,7 +8,7 @@
     <arg name="cx_scale" default="0.99"/>
     <arg name="cy_scale" default="0.9"/>
     <arg name="radious" default="0.05"/>
-    <arg name="save_dir_name" default="/home/tsuchida/yolo_annotation/image"/>
+    <arg name="save_dir_name" default="/home/ericlab/yolo_annotation/image"/>
     <arg name="filebasename" default="tsuchida"/>
     <arg name="work_count" default="6"/>
     <arg name="model_name" default="HV8"/>
