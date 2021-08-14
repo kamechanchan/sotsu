@@ -19,6 +19,8 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   std_msgs
   tf2_ros
+  tf2_geometry_msgs
+  tf2
 )
 add_message_files(
   FILES
@@ -33,7 +35,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES w2d_to_3d_ros
-  CATKIN_DEPENDS cv_bridge image_geometry image_transport pcl_ros roscpp sensor_msgs tf message_filters message_runtime std_msgs tf2_ros
+  CATKIN_DEPENDS cv_bridge image_geometry image_transport pcl_ros roscpp sensor_msgs tf message_filters message_runtime std_msgs tf2_ros tf2_geometry_msgs tf2
 #  DEPENDS system_lib
 )
 
@@ -72,5 +74,10 @@ target_link_libraries(colored_pointcloud
 
 add_executable(ano_colored_pointcloud src/ano_colored_pointcloud.cpp src/ano_colored_pointcloud_node.cpp)
 target_link_libraries(ano_colored_pointcloud
+  ${catkin_LIBRARIES}
+)
+
+add_executable(angle_trans src/angle_transform.cpp)
+target_link_libraries(angle_trans
   ${catkin_LIBRARIES}
 )

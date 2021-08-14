@@ -12,6 +12,8 @@
     <arg name="filebasename" default="tsuchida"/>
     <arg name="work_count" default="6"/>
     <arg name="model_name" default="HV8"/>
+    <arg name="world_frame" default="world"/>
+    
     
     
     
@@ -35,5 +37,6 @@
         <param name="filebasename" value="$(arg filebasename)"/>
         <param name="work_count" value="$(arg work_count)"/>
         <param name="model_name" value="$(arg model_name)"/>
+        <param name="world_frame" value="$(arg world_frame)"/>
     </node>
 </launch>
