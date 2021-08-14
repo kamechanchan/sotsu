@@ -10,6 +10,7 @@
 #include <message_filters/synchronizer.h>
 #include <message_filters/sync_policies/approximate_time.h>
 #include <geometry_msgs/TransformStamped.h>
+#include <fstream>
 
 class Annotation_yolo
 {
@@ -21,10 +22,12 @@ public:
     void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, geometry_msgs::TransformStamped, cv::Mat&);
     void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, std::vector<geometry_msgs::TransformStamped>, cv::Mat&, int);
     void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, std::vector<cv::Point3d>, cv::Mat&, int);
+    void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, std::vector<cv::Point3d>, cv::Mat&, std::vector<std::vector<cv::Point2d>>&);
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::CameraInfo, sensor_msgs::Image> Sync_Sub_type;
     cv::Point2d project3d_to_pixel(cv::Point3d, sensor_msgs::CameraInfo);
     void paramter_set_bara(std::string, int);
     void rotation_convert(geometry_msgs::TransformStamped, std::vector<geometry_msgs::TransformStamped>, std::vector<cv::Point3d>&);
+    void get_original_image(sensor_msgs::Image, cv::Mat&);
 private:
     message_filters::Synchronizer<Sync_Sub_type> *sensor_sync_;
     message_filters::Subscriber<sensor_msgs::CameraInfo> *camera_sub_;
@@ -45,5 +48,6 @@ private:
     std::string image_dir_name_, filebasename_, model_name_, label_dir_name_, boxes_dir_name_;
     int save_count_;
     int work_count_;
+    int the_number_of_data;
 
 };
