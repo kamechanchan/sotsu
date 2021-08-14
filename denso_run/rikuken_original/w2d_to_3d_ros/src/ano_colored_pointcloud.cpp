@@ -32,11 +32,12 @@ void Annotation_yolo::parameter_set()
     pnh_->getParam("cx_scale", cx_scale_);
     pnh_->getParam("cy_scale", cy_scale_);
     pnh_->getParam("radious", radious_);
-    pnh_->getParam("save_dir_name", save_dir_name_);
+    pnh_->getParam("image_dir_name", image_dir_name_);
     pnh_->getParam("filebasename", filebasename_);
     pnh_->getParam("work_count", work_count_);
     pnh_->getParam("model_name", model_name_);
     pnh_->getParam("world_frame", world_frame_);
+    pnh_->
     paramter_set_bara(model_name_, work_count_);
     camera_sub_ = new message_filters::Subscriber<sensor_msgs::CameraInfo>(nh_, camera_topic_name_, 10);
     image_sub_ = new message_filters::Subscriber<sensor_msgs::Image>(nh_, image_topic_name_, 10);
