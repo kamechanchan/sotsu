@@ -58,7 +58,7 @@ class SemSeg_PCD_Loader(PCD_Loader):
                 cnt_a+=1
             elif y_data[i] == 1:
                 cnt_b+=1
-        print("0:"+str(cnt_a))
-        print("1:"+str(cnt_b))
+        # print("0:"+str(cnt_a))
+        # print("1:"+str(cnt_b))
 
         return x_data, y_data

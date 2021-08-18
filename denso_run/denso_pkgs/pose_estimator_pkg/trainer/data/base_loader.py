@@ -44,7 +44,7 @@ class Base_Loader(object):
         for i in range(self.dataset_number):
             for f in file_list:
                 # print("dataset_mode")
-                # print(self.dataset_model[i])
+                # print(self.dataset_model)
                 if self.dataset_model[i] in f: #dataset_model==dataset
                     file_name.append(f)
         
@@ -54,6 +54,7 @@ class Base_Loader(object):
             return file_name
         else:
             print("Error")
+            print(file_name)
             print(len(file_name))
             print(path_to_dir)
             print("Error, Cloud not load h5py data file!! or detect multi hdf5 file !!")

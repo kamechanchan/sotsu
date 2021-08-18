@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset \
+--dataroot /home/ericlab/hdf5_data/ \
 --dataset_model semantic_changed_1526.hdf5 \
 --dataset_mode semantic_segmentation \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/August \

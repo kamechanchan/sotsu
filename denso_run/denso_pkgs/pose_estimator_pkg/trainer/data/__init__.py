@@ -1,3 +1,4 @@
+from os import PRIO_USER
 import torch.utils.data
 from torch.utils.data.dataset import Subset
 from data.base_dataset import collate_fn, collate_fn_original
@@ -35,11 +36,35 @@ def TrainValDataset(opt):
     return subset1, subset2
 
 
+def EstimateDataset(opt):
+    if opt.dataset_mode == "pose_estimation":
+        from data.pose_estimate_data import PoseData
+        dataset = PoseData(opt)
+    elif opt.dataset_mode == "instance_segmentation":
+        from data.object_segment import Segmentation_Data
+        dataset = Segmentation_Data(opt)
+    elif opt.dataset_mode == "semantic_segmentation":
+        from data.object_segment import Segmentation_Data
+        dataset = Segmentation_Data(opt)
+    else:
+        print("Error!! ")
+        sys.exit(1)
+
+    n_samples = len(dataset)
+    subset_indices = list(range(0,n_samples))
+    subset = Subset(dataset, subset_indices)
+    
+    return subset
+
+
 class TrainDataLoader:
     def __init__(self, dataset, opt):
         self.opt = opt
         self.dataset= dataset
         self.batch_size = opt.batch_size * opt.gpu_num
+        # print("ishiyama")
+        # print(opt.batch_size)
+        # print(opt.gpu_num)
         
         # if self.opt.dataset_mode == "pose_estimation":
         self.dataloader = torch.utils.data.DataLoader(
@@ -79,6 +104,10 @@ class ValDataLoader:
         self.opt = opt
         self.dataset= dataset
         self.batch_size = opt.batch_size * opt.gpu_num
+        # print("ishiyama")
+        # print(opt.batch_size)
+        # print(opt.gpu_num)
+        # print(self.batch_size)
 
         # if self.opt.dataset_mode == "pose_estimation":
         self.dataloader = torch.utils.data.DataLoader(

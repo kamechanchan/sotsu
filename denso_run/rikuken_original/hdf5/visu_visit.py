@@ -12,7 +12,7 @@ def PrintAllObjects(name):
 
 cnt = 0
 c = 1
-with h5py.File('/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/instance_tsuchida_10000_8_7_5_12.hdf5', mode="r") as f:
+with h5py.File('/home/ericlab/hdf5_data/tsuchida/semantic_1000_0729.hdf5', mode="r") as f:
     # for i in f["data_1"].values():
     #     # cnt +=1
     #     # c += 1

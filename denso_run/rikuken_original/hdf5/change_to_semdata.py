@@ -27,14 +27,26 @@ instance_number = 26
 dataset_number = 1526
 resolution = 40000
 resolution_second = 10000
+dataset_name_in = "instance_tsuchida_8_11_1000_1.hdf5"
+
+data_root = "/home/ericlab/hdf5_data/"
+data_switch_in = "original_25/"
+data_path_in = data_root + data_switch_in + dataset_name_in
+data_switch_out = "semantic/"
+dataset_name_out = "semantic_changed_" + dataset_name_in
+data_path_out = data_root + data_switch_out + dataset_name_out
+
+print("")
+print("data_path_in:" + data_path_in)
+print("data_path_out:" + data_path_out)
 
 cnt_list = [0]*instance_number
 print(len(cnt_list))
 
 c = 1
 x_data = []
-with h5py.File('/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/instance_tsuchida_10000_8_7_5_12.hdf5', mode="r") as f:
-    for n in range(1526):
+with h5py.File(data_path_in, mode="r") as f:
+    for n in range(dataset_number):
         pcl_data = f["data_" + str(n + 1)]['Points'][()]
         mask_data = f["data_" + str(n + 1)]['masks'][()]
         # print(mask_data.shape)
@@ -62,7 +74,7 @@ with h5py.File('/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_origina
 x_data = np.array(x_data)
 print(x_data.shape)
 
-with h5py.File('/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/tsuchida/semantic_changed_1526.hdf5', 'w') as file:
+with h5py.File(data_path_out, 'w') as file:
     for i in range(dataset_number):
         file.create_group('data_' + str(i+1))
         # for j in range(resolution_second):

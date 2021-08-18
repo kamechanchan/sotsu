@@ -90,6 +90,19 @@ class EstimatorModel:
 
             self.x_data = x_data.to(self.device)
 
+    def set_input_acc(self, data):
+        x_data = torch.from_numpy(data["x_data"].astype(np.float32)) 
+        if self.dataset_mode == "pose_estimation":
+            y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+            x_data = x_data.transpose(2, 1)
+        elif self.dataset_mode == "instance_segmentation":
+            y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+            x_data = x_data.transpose(2, 1)
+        elif self.dataset_mode == "semantic_segmentation":
+            y_data = torch.from_numpy(data["y_data"].astype(np.int64))
+            x_data = x_data.transpose(2, 1)
+
+        self.x_data, self.y_data = x_data.to(self.device), y_data.to(self.device)
 
     def set_input_segmentation(self, data):
         x_data = data["x_data"]
@@ -175,6 +188,31 @@ class EstimatorModel:
 
 
     def test_step(self):
+        if self.process_swich == "raugh_recognition":
+            pred = self.net(self.x_data)
+            # print("p")
+            # print(pred.shape)
+            pred = pred.to('cpu').detach().numpy().copy()
+            # print("pred")
+            # print(pred.shape)
+        elif self.process_swich == "object_segment":
+            if self.arch == "JSIS3D":
+                pred = self.net(self.x_data)
+                pred = pred.to('cpu').detach().numpy().copy()
+            if self.arch == "PointNet_Segmentation":
+                pred, trans = self.net(self.x_data)
+                # print("output")
+                # print(pred.shape)
+                # for i in pred:
+                #     ppi = i
+                # pred = ppi.to('cpu').detach().numpy().copy()
+                pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+                # print(pred.shape)
+                # pred = pred.to('cpu').detach().numpy().copy()
+        return pred
+
+
+    def acc_step(self):
         if self.process_swich == "raugh_recognition":
             pred = self.net(self.x_data)
             # print("p")
