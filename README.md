@@ -109,6 +109,18 @@ server.launch arch:=PointNet_Segmentation (semantic)
 server.launch arch:=JSIS3D (instance)
 ```
 
+### セグメンテーションの推論(精度算出フォーマット)
+```
+roslaunch tf_publish spawn_object.launch object_name:=1
+
+roslaunch estimator color_get.launch
+```
+##### semantic and instance switch_launch_file
+```
+roslaunch estimator Acc_SemSeg.launch (semantic)
+roslaunch estimator Acc_InsSeg.launch (instance)
+```
+
 ### データセットの中身を見る
 ```
 roslaunch annotation_package pcd_save_from_hdf5.launch path:=(hdf5ファイルのパス) index:=(データセットのインデックス)
