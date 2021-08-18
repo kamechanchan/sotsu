@@ -112,6 +112,8 @@ def estimation_acc(model, data, resolution, dataset_mode, instance_number):
         sys.exit(1)
     # print("************pred_new***********")
     # print(np.array(pred_new).shape)
+    print("tamo")
+    print(x_data.shape)
     time_end = time.time()
     for i in range(x_data.shape[0]):
         for j in range(resolution):

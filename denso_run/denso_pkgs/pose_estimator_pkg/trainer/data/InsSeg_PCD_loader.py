@@ -47,12 +47,13 @@ class InsSeg_PCD_Loader(PCD_Loader):
         # print("majikatsuchidasan")
 
         if self.is_trian == True:
-            print("godtsuchida")
+            # print("godtsuchida")
             # print(type(x_data))
-            pcl_visu = pcl.PointCloud(x_data)
-            pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/train_input/"+self.dataset_mode+"/"+self.concat_dataset_model
-            util.mkdir(pcd_dir)
-            pcl.save(pcl_visu, pcd_dir+"/result"+str(index)+".pcd")
+            
+            # pcl_visu = pcl.PointCloud(x_data)
+            # pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/train_input/"+self.dataset_mode+"/"+self.concat_dataset_model
+            # util.mkdir(pcd_dir)
+            # pcl.save(pcl_visu, pcd_dir+"/result"+str(index)+".pcd")
 
             # print(y_data.shape)
             # print(y_data.dtype)
@@ -64,6 +65,16 @@ class InsSeg_PCD_Loader(PCD_Loader):
             #print(original_data.shape[0])
             #print(y_data.shape)
             y_data[np.arange(original_data.shape[0]), pre_mask_data[:]] = 1
+            # print(y_data.shape[1])
+            # for i in range(1000):
+            #     for j in range(30):
+            #         print(i)
+            # cnt_list = [0] * y_data.shape[1]
+            # for i in range(resolution):
+            #     for j in range(y_data.shape[1]):
+            #         if original_data[i,3] == j:
+            #             cnt_list[j] += 1
+            # print(y_data.shape)
 
             # cnt_a = 0
             # cnt_b = 0

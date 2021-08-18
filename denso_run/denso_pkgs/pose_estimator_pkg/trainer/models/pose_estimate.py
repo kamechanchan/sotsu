@@ -9,6 +9,7 @@ from . import networks
 from os.path import join
 from utils.util import print_network
 from utils import util
+import h5py
 
 
 class EstimatorModel:
@@ -167,7 +168,8 @@ class EstimatorModel:
                 self.loss = self.criterion(pred, self.y_data, trans_feat)
         self.loss.backward()
         self.optimizer.step()
-        return self.loss.item() * self.x_data.size(0)
+        # return self.loss.item() * self.x_data.size(0)
+        return self.loss.item()
 
 
     def val_step(self):
@@ -184,7 +186,8 @@ class EstimatorModel:
                 # print("test")
                 # print(type(pred))
                 self.loss = self.criterion(pred, self.y_data, trans_feat)
-        return self.loss.item() * self.x_data.size(0)
+        # return self.loss.item() * self.x_data.size(0)
+        return self.loss.item()
 
 
     def test_step(self):
@@ -295,14 +298,22 @@ class EstimatorModel:
         self.concat_dataset_model = '+'.join(opt.dataset_model)
         pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/progress_output/"+opt.dataset_mode+"/"+self.concat_dataset_model+"/"+str(epoch)
         util.mkdir(pcd_dir)
-        f = open(pcd_dir+"/result"+str(index)+".txt", 'a')
-        print("pred")
-        print(pred.shape)
-        print(pred)
-        f.write(str(pred))
+        result_h5 = h5py.File(pcd_dir + "/result" + str(epoch) + ".hdf5", "a")
+        data = result_h5.create_group("data_" + str(index))
+        data.create_dataset("Points", data=self.x_data, compression="lzf")
+        data.create_dataset("est", data=pred, compression="lzf")
+        data.create_dataset("ground_truth", data=self.y_data, compression="lzf")
+        result_h5.flush()
+       
+        # f = open(pcd_dir+"/result"+str(index)+".txt", 'a')
+        # print("pred")
+        # print(pred.shape)
+        # print(pred)
+        # f.write(str(pred))
         # print("output")
         # print(pred.shape)
         # print(type(pred))
+        
         # for i in pred:
         #     ppi = i
         # pred = ppi.to('cpu').detach().numpy().copy()
