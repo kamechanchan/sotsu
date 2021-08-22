@@ -1,0 +1,55 @@
+<launch>
+  <!-- Override robot_name argument -->
+  <arg name="robot_name" default="cobotta" />
+  <arg name="robot_options" default="cobotta_with_cobotta_gripper" />
+
+  <arg name="use_custom_ros_control" default="false" />
+
+  <!-- Robot description argument -->
+  <arg name="robot_description" value="$(arg robot_name)_description" />
+
+  <include file="$(find denso_gazebo)/launch/cobotta/cobotta_room.launch">
+  </include>
+
+  <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
+  <arg name="model" value="$(find denso_gazebo)/urdf/$(arg robot_name)/$(arg robot_options).gazebo.xacro"/>
+  <param name="robot_description" type="str" command="$(find xacro)/xacro --inorder $(arg model) use_custom_ros_control:=$(arg use_custom_ros_control)"/>
+
+  <arg name="gui" default="true"/>
+  <param name="use_gui" value="$(arg gui)"/>
+
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -x 5 -y 0 -z 0.72 -Y -1.57075 -model $(arg robot_name)" />
+
+  <param name="beer_sdf" textfile="$(find denso_gazebo)/sdf/beer/model-1_4.sdf" />
+  <param name="coke_can_sdf" textfile="$(find denso_gazebo)/sdf/coke_can/model-1_4.sdf"/>
+  <param name="plastic_cup_sdf" textfile="$(find denso_gazebo)/sdf/plastic_cup/model.sdf" />
+  <node name="$(anon spawn2)" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-sdf -param coke_can_sdf -model coke_model -x 5.1 -y -0.35 -z 0.68" />
+  <node name="$(anon spawn3)" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-sdf -param beer_sdf -model beer_model -x 4.9 -y -0.35 -z 0.63" />
+  <!--node name="$(anon spawn4)" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args="-sdf -param plastic_cup_sdf -model cup_model -x 0.28 -y -0.12 -z 1.015" /-->
+
+  <group if="$(arg use_custom_ros_control)">
+    <include ns="/$(arg robot_name)" file="$(find denso_gazebo_control)/config/$(arg robot_name)/$(arg robot_options)/$(arg robot_options).launch.xml" />
+  </group>
+
+  <rosparam file="$(find denso_gazebo)/config/$(arg robot_name)/$(arg robot_options)_control_sim.yaml" command="load" />
+  <rosparam ns="/$(arg robot_name)" command="load" file="$(find denso_gazebo_control)/config/$(arg robot_name)/$(arg robot_options)/$(arg robot_options)_joint_limit.yaml" />
+  <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false" output="screen"
+	ns="/$(arg robot_name)" args="joint_state_controller arm_controller gripper_controller" />
+
+  <!-- robot_state_publisher -->
+  <node name="robot_state_publisher" pkg="robot_state_publisher"
+  type="robot_state_publisher" respawn="false" output="screen">
+    <remap from="/joint_states" to="/$(arg robot_name)/joint_states" />
+  </node>
+
+  <!-- joint_state_publisher -->
+  <arg name="robot_joint_states" default="[/$(arg robot_name)/joint_states]"/>
+  <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+    <param name="/use_gui" value="False"/>
+    <rosparam param="/source_list" subst_value="True">$(arg robot_joint_states)</rosparam>
+  </node>
+
+</launch>

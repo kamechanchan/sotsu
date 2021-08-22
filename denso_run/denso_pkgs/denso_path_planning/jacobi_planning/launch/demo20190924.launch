@@ -1,0 +1,10 @@
+<launch>
+  <include file="$(find jacobi_planning)/launch/scene_publish.launch" />
+
+  <include file="$(find denso_bringup)/launch/vs087_bringup/vs087_with_tercero_bringup.launch">
+    <arg name="planner" value="multi" />
+  </include>
+
+  <node name="demo_september" pkg="jacobi_planning" type="demo_september" output="screen" >
+  </node>
+</launch>

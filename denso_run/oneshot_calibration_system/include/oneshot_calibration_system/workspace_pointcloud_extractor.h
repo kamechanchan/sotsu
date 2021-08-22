@@ -1,0 +1,56 @@
+#ifndef WORKSPACE_POINTCLOUD_EXTRACTOR_H
+#define WORKSPACE_POINTCLOUD_EXTRACTOR_H
+
+#include <geometry_msgs/TransformStamped.h>
+#include <ros/ros.h>
+#include <tf/tf.h>
+#include <tf2_ros/transform_broadcaster.h>
+#include <tf2_ros/transform_listener.h>
+#include <pcl_ros/point_cloud.h>
+#include <pcl_ros/transforms.h>
+
+namespace workspace_pointcloud_extractor
+{
+class WorkspacePointCloudExtractor
+{
+public:
+  WorkspacePointCloudExtractor(ros::NodeHandle& nh, ros::NodeHandle& n);
+  void publishPointCloud(void);
+  void extractPointCloud(const sensor_msgs::PointCloud2::ConstPtr phoxi_point);
+  void tflistener(std::string target_frame, std::string source_frame);
+  bool discriminatePoint(pcl::PointXYZ target_point);
+
+public:
+  pcl::PointCloud<pcl::PointXYZ> extracted_points_;
+
+private:
+  void updateARTransform(void);
+  void defineWorkSpace(void);
+
+private:
+  ros::NodeHandle nh_;
+  ros::Subscriber point_sub_;
+  std::string target_frame_;
+  std::string source_frame_;
+  XmlRpc::XmlRpcValue ar_indices_;
+  std::vector<std::string> ar_link_name_vector_;
+  ros::Publisher extracted_pc_pub_;
+  std::vector<tf::StampedTransform> ar_tf_vector_;
+  std::vector<std::vector<double> > origin_vector_;
+  tf::TransformListener tf_listener_;
+  tf::TransformListener tf_listener__;
+  tf::StampedTransform transform_;
+  float ar_height_;
+  float reserve_area_;
+};
+struct ExtractorParam
+{
+  static const float DURATION_TIME;
+  static const int START_TIME;
+  static const int PUBLISHER_QUEUE_SIZE;
+  static const int SUBSCRIBER_QUEUE_SIZE;
+  static const int LOOP_RATE_TIME;
+};
+}  // namespace workspace_pointcloud_extractor
+
+#endif  // WORKSPACE_POINTCLOUD_EXTRACTOR_H

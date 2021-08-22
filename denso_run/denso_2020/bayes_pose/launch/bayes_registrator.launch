@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="object_frame_name" default="HV6_00" />
+  <arg name="loop_rate" default="5" />
+  <arg name="compared_pc_topic_name" default="/cropped_cloud" />
+  <arg name="reference_pc_topic_name" default="/mesh_cloud_id_0" />
+  <arg name="registrated_pc_topic_name" default="/registrated_cloud" />
+
+  <node name="bayes_registrator" pkg="bayes_pose" type="bayes_registrator" output="screen">
+    <param name="object_frame_name" value="$(arg object_frame_name)" />
+    <param name="loop_rate" value="$(arg loop_rate)" />
+    <param name="compared_pc_topic_name" value="$(arg compared_pc_topic_name)" />
+    <param name="reference_pc_topic_name" value="$(arg reference_pc_topic_name)" />
+    <param name="registrated_pc_topic_name" value="$(arg registrated_pc_topic_name)" />
+  </node>
+
+</launch>

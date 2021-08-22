@@ -1,0 +1,19 @@
+meshes:
+  - name: T_PIPE_00
+    base_frame: world
+    mesh_pkg: bayes_pose
+    path_from_pkg_to_mesh: model/meshes/STL
+    mesh_name: t_pipe.stl
+    x: 0.508
+    # x: 0.50
+    # y: 0.05
+    y: -0.005
+    # x: 0.0
+    # y: 0.0
+    z: 0.01
+    qx: 0.0
+    qy: 0.0
+    qz: 0.0
+    qw: 1.0
+    # qz: 0.0499792
+    # qw: 0.9987503
