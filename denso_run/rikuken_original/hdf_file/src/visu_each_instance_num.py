@@ -32,7 +32,7 @@ print(len(cnt_list))
 cnt = 0
 c = 1
 x_data = []
-with h5py.File('/home/ericlab/hdf5_data/tsuchida/instance_tsuchida_10000_8_7_5_12.hdf5', mode="r") as f:
+with h5py.File('/home/ericlab/hdf5_data/original_25/instance_tsuchida_8_18_1000_1.hdf5', mode="r") as f:
     for n in range(dataset_number):
         pcl_data = f["data_" + str(n + 1)]['Points'][()]
         mask_data = f["data_" + str(n + 1)]['masks'][()]

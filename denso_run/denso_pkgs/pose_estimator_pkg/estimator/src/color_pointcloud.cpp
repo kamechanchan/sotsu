@@ -74,21 +74,21 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
         }
         else if (msg->instance[i] == 6)
         {
-            color.r = 255;
-            color.g = 255;
-            color.b = 255;
+            color.r = 30;
+            color.g = 100;
+            color.b = 200;
         }
         else if (msg->instance[i] == 7)
         {
-            color.r = 0;
+            color.r = 200;
             color.g = 0;
-            color.b = 0;
+            color.b = 200;
         }
         else if (msg->instance[i] == 8)
         {
-            color.r = 150;
+            color.r = 200;
             color.g = 150;
-            color.b = 150;
+            color.b = 0;
         }
         else if (msg->instance[i] == 9)
         {

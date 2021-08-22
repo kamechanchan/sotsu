@@ -75,7 +75,7 @@ class DnnNode():
         self.start_callback = time.time()
         t0 = time.time()
         msg_iro = out_segmentation()
-        timer = rospy.Rate(1)
+        timer = rospy.Rate(50)
         print(self.arch)
 
         total = np.zeros(self.opt.batch_size)

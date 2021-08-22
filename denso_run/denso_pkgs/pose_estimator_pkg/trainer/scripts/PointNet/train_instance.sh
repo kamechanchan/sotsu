@@ -27,5 +27,5 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --checkpoints_human_swich ishiyama \
 --local_checkpoints_dir /home/ericlab/DENSO_results/August \
 --tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
---tensorboardX_results_directory_switch tsuchida/0817_original \
+--tensorboardX_results_directory_switch tsuchida/0818_beta=2.0 \
 --instance_number 25

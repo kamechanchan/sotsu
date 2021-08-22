@@ -24,10 +24,10 @@ def getNormalizedPcd_seg(np_cloud, resolution):
 
 # change here by using dataset
 instance_number = 26
-dataset_number = 500
+dataset_number = 722
 resolution = 40000
 resolution_second = 10000
-dataset_name_in = "instance_tsuchida_8_12_500_1.hdf5"
+dataset_name_in = "instance_tsuchida_8_18_722_1.hdf5"
 
 data_root = "/home/ericlab/hdf5_data/"
 data_switch_in = "original_25/"
