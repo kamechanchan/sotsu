@@ -119,7 +119,7 @@ def estimation_acc(model, data, resolution, dataset_mode, instance_number):
         for j in range(resolution):
             msg_out.x.append(x_data[i][j][0])
             msg_out.y.append(x_data[i][j][1])
-            msg_out.z.append(x_data[i][j][2])
+            msg_out.z.append(-x_data[i][j][2])
             msg_out.instance.append(pred_new[i][j])
 
     return msg_out, (time_end - time_sta), pred_new

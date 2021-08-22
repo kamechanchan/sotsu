@@ -12,7 +12,7 @@ class BaseOptions:
     def __init__(self):
         self.parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
         self.initialized = False
-        self.dataset_number = 3
+        self.dataset_number = 1
 
     def initialize(self):
         self.parser.add_argument('--main_directory',type=str,default=__file__)
