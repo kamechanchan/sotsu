@@ -12,22 +12,28 @@
 #include <geometry_msgs/TransformStamped.h>
 #include <fstream>
 
-class Annotation_yolo
+class Exec_yolo
 {
 public:
-    Annotation_yolo(ros::NodeHandle&);
+    Exec_yolo(ros::NodeHandle&);
     void tf_get(std::string, std::string, geometry_msgs::TransformStamped&);
     void InputCallback(sensor_msgs::CameraInfoConstPtr, sensor_msgs::ImageConstPtr);
     void parameter_set();
-    void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, geometry_msgs::TransformStamped, cv::Mat&);
-    void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, std::vector<geometry_msgs::TransformStamped>, cv::Mat&, int);
-    void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, std::vector<cv::Point3d>, cv::Mat&, int);
     void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, std::vector<cv::Point3d>, cv::Mat&, std::vector<std::vector<cv::Point2d>>&);
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::CameraInfo, sensor_msgs::Image> Sync_Sub_type;
     cv::Point2d project3d_to_pixel(cv::Point3d, sensor_msgs::CameraInfo);
     void paramter_set_bara(std::string, int);
     void rotation_convert(geometry_msgs::TransformStamped, std::vector<geometry_msgs::TransformStamped>, std::vector<cv::Point3d>&);
     void get_original_image(sensor_msgs::Image, cv::Mat&);
+    template <typename T>
+    void get_one_message(T &final_message, std::string message_name, ros::NodeHandle nh, int timespan)
+    {
+        boost::shared_ptr<const T> share;
+        share = ros::topic::waitForMessage<T>(message_name, nh, ros::Duration(timespan));
+        if (share != NULL) {
+            final_message = *share;
+        }
+    }
 private:
     message_filters::Synchronizer<Sync_Sub_type> *sensor_sync_;
     message_filters::Subscriber<sensor_msgs::CameraInfo> *camera_sub_;
@@ -38,8 +44,8 @@ private:
     std::string world_frame_;
     std::vector<std::string> target_frames_;
     std::string camera_topic_name_, image_topic_name_;
-    tf2_ros::TransformListener *lister_;
-    tf2_ros::Buffer *buffer_;
+    tf2_ros::TransformListener lister_;
+    tf2_ros::Buffer buffer_;
     cv::Mat draw_image_;
     double f_scale_, cx_scale_, cy_scale_;
     double fx_, fy_, tx_, ty_, cx_, cy_;

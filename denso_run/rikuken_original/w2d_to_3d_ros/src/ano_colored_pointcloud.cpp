@@ -10,7 +10,8 @@ Annotation_yolo::Annotation_yolo(ros::NodeHandle &nh) :
     nh_(nh),
     radious_(0.05),
     save_count_(0),
-    work_count_(0)
+    work_count_(0),
+    pnh_("~")
 {
     buffer_ = new tf2_ros::Buffer();
     lister_ = new tf2_ros::TransformListener(*buffer_);
@@ -23,23 +24,22 @@ Annotation_yolo::Annotation_yolo(ros::NodeHandle &nh) :
 
 void Annotation_yolo::parameter_set()
 {
-    pnh_ = new ros::NodeHandle("~");
-    pnh_->getParam("camera_topic_name", camera_topic_name_);
-    pnh_->getParam("image_topic_name", image_topic_name_);
-    pnh_->getParam("source_frame", source_frame_);
-    pnh_->getParam("target_frame", target_frame_);
-    pnh_->getParam("f_scale", f_scale_);
-    pnh_->getParam("cx_scale", cx_scale_);
-    pnh_->getParam("cy_scale", cy_scale_);
-    pnh_->getParam("radious", radious_);
-    pnh_->getParam("image_dir_name", image_dir_name_);
-    pnh_->getParam("filebasename", filebasename_);
-    pnh_->getParam("work_count", work_count_);
-    pnh_->getParam("model_name", model_name_);
-    pnh_->getParam("world_frame", world_frame_);
-    pnh_->getParam("label_dir_name", label_dir_name_);
-    pnh_->getParam("boxes_dir_name", boxes_dir_name_);
-    pnh_->getParam("the_number_of_data", the_number_of_data);
+    pnh_.getParam("camera_topic_name", camera_topic_name_);
+    pnh_.getParam("image_topic_name", image_topic_name_);
+    pnh_.getParam("source_frame", source_frame_);
+    pnh_.getParam("target_frame", target_frame_);
+    pnh_.getParam("f_scale", f_scale_);
+    pnh_.getParam("cx_scale", cx_scale_);
+    pnh_.getParam("cy_scale", cy_scale_);
+    pnh_.getParam("radious", radious_);
+    pnh_.getParam("image_dir_name", image_dir_name_);
+    pnh_.getParam("filebasename", filebasename_);
+    pnh_.getParam("work_count", work_count_);
+    pnh_.getParam("model_name", model_name_);
+    pnh_.getParam("world_frame", world_frame_);
+    pnh_.getParam("label_dir_name", label_dir_name_);
+    pnh_.getParam("boxes_dir_name", boxes_dir_name_);
+    pnh_.getParam("the_number_of_data", the_number_of_data);
     paramter_set_bara(model_name_, work_count_);
     camera_sub_ = new message_filters::Subscriber<sensor_msgs::CameraInfo>(nh_, camera_topic_name_, 10);
     image_sub_ = new message_filters::Subscriber<sensor_msgs::Image>(nh_, image_topic_name_, 10);

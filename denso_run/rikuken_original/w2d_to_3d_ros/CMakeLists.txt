@@ -52,7 +52,7 @@ include_directories(
 )
 
 
-)
+
 
 add_executable(colored_pointcloud src/colored_pointcloud.cpp src/colored_pointcloud_node.cpp)
 target_link_libraries(colored_pointcloud
