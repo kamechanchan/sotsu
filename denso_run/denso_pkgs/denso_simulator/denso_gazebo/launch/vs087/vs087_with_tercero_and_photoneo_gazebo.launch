@@ -1,7 +1,9 @@
 <launch>
   <!-- Override robot_name argument -->
   <arg name="robot_name" default="vs087" />
-  <arg name="robot_options" default="vs087_with_tercero_and_photoneo" />
+  <!-- <arg name="robot_options" default="vs087_with_tercero_and_photoneo" /> -->
+  <arg name="robot_options" default="vs087_and_photoneo" />
+
   <arg name="fix_robot_options" default="vs087_with_tercero" />
 
   <arg name="use_custom_ros_control" default="false" />
@@ -18,8 +20,11 @@
   </include>
 
   <!-- Load the URDF, SRDF and other .yaml configuration files on the param server -->
-  <arg name="model" value="$(find denso_gazebo)/urdf/$(arg robot_name)/$(arg robot_options).gazebo.xacro"/>
-  <param name="robot_description" type="str" command="$(find xacro)/xacro --inorder $(arg model) use_custom_ros_control:=$(arg use_custom_ros_control) angle_tolerance:=$(arg angle_tolerance)"/>
+  <!-- <arg name="model" value="$(find denso_gazebo)/urdf/$(arg robot_name)/$(arg robot_options).gazebo.xacro"/> -->
+  <arg name="model" value="$(find denso_gazebo)/urdf/$(arg robot_name)/vs087_and_photoneo.gazebo.xacro"/>
+
+  <!-- <param name="robot_description" type="str" command="$(find xacro)/xacro --><!--inorder $(arg model) use_custom_ros_control:=$(arg use_custom_ros_control) angle_tolerance:=$(arg angle_tolerance)"/> -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model)"/>
 
   <arg name="gui" default="true"/>
   <param name="use_gui" value="$(arg gui)"/>
