@@ -1,6 +1,9 @@
 #pragma once
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/CameraInfo.h>
+#include <sensor_msgs/PointCloud2.h>
+#include <pcl_ros/point_cloud.h>
+#include <pcl_ros/transforms.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/buffer.h>
 #include <cv_bridge/cv_bridge.h>
@@ -34,14 +37,28 @@ public:
             final_message = *share;
         }
     }
+    void write_instance(std::vector<std::vector<cv::Point2d>>, std::vector<std::vector<int>> &);
+    template <class T>
+    void swap(T &yes, T &we)
+    {
+        T t = yes;
+        yes = we;
+        we = t;
+    }
+
+    void hurui(pcl::PointCloud<pcl::PointXYZ>, std::vector<std::vector<int>>, cv::Mat, sensor_msgs::CameraInfo, pcl::PointCloud<pcl::PointXYZRGB>);
+
 private:
     message_filters::Synchronizer<Sync_Sub_type> *sensor_sync_;
     message_filters::Subscriber<sensor_msgs::CameraInfo> *camera_sub_;
     message_filters::Subscriber<sensor_msgs::Image> *image_sub_;
+    std::vector<std::vector<int>> image_instance_;
     ros::NodeHandle nh_;
     ros::NodeHandle pnh_;
     std::string source_frame_, target_frame_;
     std::string world_frame_;
+    std::string inputcloud_topic_name_;
+    std::string output_topic_name_;
     std::vector<std::string> target_frames_;
     std::string camera_topic_name_, image_topic_name_;
     tf2_ros::TransformListener lister_;
@@ -55,5 +72,4 @@ private:
     int save_count_;
     int work_count_;
     int the_number_of_data;
-
 };
