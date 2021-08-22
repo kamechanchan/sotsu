@@ -100,5 +100,3 @@ if __name__ == '__main__':
     plot_file = opt.checkpoints_dir + "/" + opt.dataset_mode + opt.checkpoints_human_swich + "/" + opt.arch + "/" + opt.dataset_model + "/loss_plot.png"
     plt.savefig(plot_file)
     print(plot_file)
-    
-

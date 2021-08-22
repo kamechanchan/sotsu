@@ -23,10 +23,10 @@ class DiscriminativeLoss(nn.Module):
         self.delta_v = delta_v
 
     def forward(self, embedded, masks, size):
-        centroids = self._centroids(embedded, masks, size)
-        L_v = self._variance(embedded, masks, centroids, size)
-        L_d = self._distance(centroids, size)
-        L_r = self._regularization(centroids, size)
+        centroids, size_ex = self._centroids(embedded, masks, size)
+        L_v = self._variance(embedded, masks, centroids, size_ex)
+        L_d = self._distance(centroids, size_ex)
+        L_r = self._regularization(centroids, size_ex)
         loss = self.alpha * L_v + self.beta * L_d + self.gamma * L_r
         return loss
 
@@ -46,6 +46,7 @@ class DiscriminativeLoss(nn.Module):
         #print(masks.shape)
         x = x * masks
         centroids = []
+        size_ex = [size] * batch_size
         for i in range(batch_size):
             # n = size[i]
             n = size
@@ -54,15 +55,33 @@ class DiscriminativeLoss(nn.Module):
             # print(x[i,:,:n].sum(0))
             # print(masks[i,:,:n].sum(0))
             mu = x[i,:,:n].sum(0) / masks[i,:,:n].sum(0)
-            if K > n:
-                m = int(K - n)
-                filled = torch.zeros(m, embedding_size)
-                filled = filled.to(embedded.device)
-                mu = torch.cat([mu, filled], dim=0)
+            # print(mu.size())
+
+            mask_delete = masks[i,:,:n].sum(0)
+            cnt = 0
+            for j in range(n):
+                if mask_delete[j] == 0:
+                    # print(mu)
+                    # mu[j, :] = 0
+                    mu = mu.to("cpu").detach().numpy().copy()
+                    mu = np.delete(mu, j, 0)
+                    mu = torch.from_numpy(mu.astype(np.float32)).clone()
+                    filled = torch.zeros(1, embedding_size)
+                    filled = filled.to(mu.device)
+                    mu = torch.cat([mu, filled], dim=0)
+                    mu = mu.to(embedded.device)
+                    cnt += 1
+                    # print(mu)
+            size_ex[i] = size_ex[i] - cnt
+            # if K > n:
+            #     m = int(K - n)
+            #     filled = torch.zeros(m, embedding_size)
+            #     filled = filled.to(embedded.device)
+            #     mu = torch.cat([mu, filled], dim=0)
             # print(mu)
             centroids.append(mu)
         centroids = torch.stack(centroids)
-        return centroids
+        return centroids, size_ex
 
     def _variance(self, embedded, masks, centroids, size):
         batch_size = embedded.size(0)
@@ -80,8 +99,8 @@ class DiscriminativeLoss(nn.Module):
         var = var * masks
         loss = 0.0
         for i in range(batch_size):
-            # n = size[i]
-            n = size
+            n = size[i]
+            # n = size
             loss += torch.sum(var[i,:,:n]) / torch.sum(masks[i,:,:n])
         loss /= batch_size
         return loss
@@ -90,8 +109,8 @@ class DiscriminativeLoss(nn.Module):
         batch_size = centroids.size(0)
         loss = 0.0
         for i in range(batch_size):
-            # n = size[i]
-            n = size
+            n = size[i]
+            # n = size
             if n <= 1: continue
             mu = centroids[i, :n, :]
             mu_a = mu.unsqueeze(1).expand(-1, n, -1)
@@ -110,8 +129,8 @@ class DiscriminativeLoss(nn.Module):
         batch_size = centroids.size(0)
         loss = 0.0
         for i in range(batch_size):
-            # n = size[i]
-            n = size
+            n = size[i]
+            # n = size
             mu = centroids[i, :n, :]
             norm = torch.norm(mu, 2, dim=1)
             loss += torch.mean(norm)

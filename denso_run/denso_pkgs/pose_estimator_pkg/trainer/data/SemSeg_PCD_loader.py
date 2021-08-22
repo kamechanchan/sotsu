@@ -46,10 +46,11 @@ class SemSeg_PCD_Loader(PCD_Loader):
 
         # print("y_data")
         # print(type(x_data))
-        pcl_visu = pcl.PointCloud(x_data)
-        pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/train_input/"+self.dataset_mode+"/"+self.concat_dataset_model
-        util.mkdir(pcd_dir)
-        pcl.save(pcl_visu, pcd_dir+"/result"+str(index)+".pcd")
+
+        # pcl_visu = pcl.PointCloud(x_data)
+        # pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/train_input/"+self.dataset_mode+"/"+self.concat_dataset_model
+        # util.mkdir(pcd_dir)
+        # pcl.save(pcl_visu, pcd_dir+"/result"+str(index)+".pcd")
 
         cnt_a = 0
         cnt_b = 0
@@ -58,7 +59,7 @@ class SemSeg_PCD_Loader(PCD_Loader):
                 cnt_a+=1
             elif y_data[i] == 1:
                 cnt_b+=1
-        print("0:"+str(cnt_a))
-        print("1:"+str(cnt_b))
+        # print("0:"+str(cnt_a))
+        # print("1:"+str(cnt_b))
 
         return x_data, y_data
