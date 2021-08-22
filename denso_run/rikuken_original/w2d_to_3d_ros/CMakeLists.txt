@@ -58,11 +58,14 @@ target_link_libraries(colord_cloud
 )
 
 add_executable(message_publish src/message_publish.cpp)
+add_dependencies(message_publish ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(message_publish
   ${catkin_LIBRARIES}
 )
 
 add_executable(another_message_publish src/anothre_message_publish.cpp)
+add_dependencies(another_message_publish ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
 target_link_libraries(another_message_publish
   ${catkin_LIBRARIES}
 )
