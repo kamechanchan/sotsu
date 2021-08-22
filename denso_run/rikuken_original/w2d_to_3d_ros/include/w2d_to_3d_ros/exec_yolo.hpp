@@ -25,6 +25,7 @@ public:
     void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, std::vector<cv::Point3d>, cv::Mat&, std::vector<std::vector<cv::Point2d>>&);
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::CameraInfo, sensor_msgs::Image> Sync_Sub_type;
     cv::Point2d project3d_to_pixel(cv::Point3d, sensor_msgs::CameraInfo);
+    cv::Point2d project3d_to_pixel_origin(cv::Point3d, sensor_msgs::CameraInfo);
     void paramter_set_bara(std::string, int);
     void rotation_convert(geometry_msgs::TransformStamped, std::vector<geometry_msgs::TransformStamped>, std::vector<cv::Point3d>&);
     void get_original_image(sensor_msgs::Image, cv::Mat&);
@@ -46,7 +47,7 @@ public:
         we = t;
     }
 
-    void hurui(pcl::PointCloud<pcl::PointXYZ>, std::vector<std::vector<int>>, cv::Mat, sensor_msgs::CameraInfo, pcl::PointCloud<pcl::PointXYZRGB>);
+    void hurui(pcl::PointCloud<pcl::PointXYZ>, std::vector<std::vector<int>>, sensor_msgs::Image, sensor_msgs::CameraInfo, pcl::PointCloud<pcl::PointXYZRGB>&);
 
 private:
     message_filters::Synchronizer<Sync_Sub_type> *sensor_sync_;
@@ -56,6 +57,7 @@ private:
     ros::NodeHandle nh_;
     ros::NodeHandle pnh_;
     std::string source_frame_, target_frame_;
+    ros::Publisher output_pub_;
     std::string world_frame_;
     std::string inputcloud_topic_name_;
     std::string output_topic_name_;
@@ -64,6 +66,7 @@ private:
     tf2_ros::TransformListener lister_;
     tf2_ros::Buffer buffer_;
     cv::Mat draw_image_;
+    sensor_msgs::PointCloud2 output_cloud_msgs_;
     double f_scale_, cx_scale_, cy_scale_;
     double fx_, fy_, tx_, ty_, cx_, cy_;
     float radious_;

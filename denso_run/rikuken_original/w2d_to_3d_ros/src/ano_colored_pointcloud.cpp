@@ -287,6 +287,8 @@ void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image 
         uv_x1 = project3d_to_pixel(pt_cv_x1, cinfo);
         uv_x2 = project3d_to_pixel(pt_cv_x2, cinfo);
         double scale = 1;
+        ROS_INFO_STREAM(uv.x << "  " << uv.y << "   imgasize" << rgb_image.cols << "  " << rgb_image.rows);
+
         if (uv.x > (-rgb_image.cols / scale) && uv.x < (rgb_image.cols / scale) && uv.y > (-rgb_image.rows / scale) &&
         uv.y < (rgb_image.rows / scale))
         {
@@ -302,9 +304,9 @@ void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image 
             // ROS_INFO_STREAM("new.x: " << new_x1.x << " x1.y: " << new_x1.y << "    x2.x: " << new_x2.x << " x2.y: " << new_x2.y);
             uv_points.push_back(uv_s);
         }
-        
-
     }
+    std::cout << "uv_points size " << uv_points.size() << std::endl;
+    
 }
 
 cv::Point2d Annotation_yolo::project3d_to_pixel(cv::Point3d xyz, sensor_msgs::CameraInfo cinfo_msg)
