@@ -4,7 +4,6 @@
 
 #define PI 3.141592
 
-
 std::mutex m;
 Exec_yolo::Exec_yolo(ros::NodeHandle &nh) :
     nh_(nh),
@@ -14,7 +13,6 @@ Exec_yolo::Exec_yolo(ros::NodeHandle &nh) :
     pnh_("~"),
     buffer_(),
     lister_(buffer_)
-
 {
     parameter_set();
 }
@@ -37,6 +35,8 @@ void Exec_yolo::parameter_set()
     pnh_.getParam("label_dir_name", label_dir_name_);
     pnh_.getParam("boxes_dir_name", boxes_dir_name_);
     pnh_.getParam("the_number_of_data", the_number_of_data);
+    pnh_.getParam("inputcloud_topic_name", inputcloud_topic_name_);
+    pnh_.getParam("output_topic_name", output_topic_name_);
     paramter_set_bara(model_name_, work_count_);
     camera_sub_ = new message_filters::Subscriber<sensor_msgs::CameraInfo>(nh_, camera_topic_name_, 10);
     image_sub_ = new message_filters::Subscriber<sensor_msgs::Image>(nh_, image_topic_name_, 10);
@@ -53,12 +53,13 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
     std::lock_guard<std::mutex> lock(m);
     sensor_msgs::CameraInfo cinfo = *cam_msgs;
     sensor_msgs::Image image1 = *image_msgs;
-    // geometry_msgs::TransformStamped transform;
-    // tf_get(source_frame_, target_frame_, transform);
-    // box_get(cinfo, image1, transform, draw_image_);
+    pcl::PointCloud<pcl::PointXYZ> trans_cloud;
+    sensor_msgs::PointCloud2 cloud_msgs;
+    get_one_message(cloud_msgs, inputcloud_topic_name_, nh_, 10);
+    pcl::fromROSMsg(cloud_msgs, trans_cloud);
+    
     geometry_msgs::TransformStamped trans_source;
-    // tf2::Quaternion q1;
-    // tf2::convert(trans_source.transform.rotation, q1);
+  
     
     tf_get(world_frame_, source_frame_, trans_source);
     std::vector<geometry_msgs::TransformStamped> transforms;
@@ -67,39 +68,42 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
         tf_get(world_frame_, target_frames_[i], trans);
         transforms.push_back(trans);
     }
-    // for (int i = 0; i < transforms.size(); i++) {
-    //     geometry_msgs::Vector3 trans = transforms[i].transform.translation;
-    //     geometry_msgs::Quaternion quat = transforms[i].transform.rotation;
-    // }
-    // box_get(cinfo, image1, transforms, draw_image_, work_count_);
+    
     std::vector<cv::Point3d> point_3d;
     rotation_convert(trans_source, transforms, point_3d);
     std::vector<std::vector<cv::Point2d>> uv_points;
     box_get(cinfo, image1, point_3d, draw_image_, uv_points);
-    // box_get(cinfo, image1, point_3d, draw_image_, work_count_);
+    for (int i = 0; i < draw_image_.rows; i++) {
+        std::vector<int> iim;
+        for (int j = 0; j < draw_image_.cols; j++) {
+            iim.push_back(0);
+        }
+        image_instance_.push_back(iim);
+    }
+    write_instance(uv_points, image_instance_);
     cv::imshow("windoue", draw_image_);
     cv::waitKey(10);
     // nh_.getParam("write_is_ok", write_is_ok_);
-    // // ROS_INFO_STREAM("write_is_osk: " << bool(write_is_ok_));
+    // ROS_INFO_STREAM("write_is_osk: " << bool(write_is_ok_));
     
-    // if (write_is_ok_ && save_count_ < the_number_of_data) {
-    //     ROS_INFO_STREAM("process rate: " << save_count_ + 1 << "/" << the_number_of_data);
-    //     nh_.setParam("write_is_ok", false);
-    //     std::string img_path = image_dir_name_ + "/" + filebasename_ + "_" + std::to_string(save_count_) + ".jpg";
-    //     cv::Mat origin_img;
-    //     get_original_image(image1, origin_img);
-    //     cv::imwrite(img_path, origin_img);
-    //     std::string box_path = boxes_dir_name_ + "/" + filebasename_ + "_" + std::to_string(save_count_) + ".jpg";
-    //     cv::imwrite(box_path, draw_image_);
-    //     std::string label_path = label_dir_name_ + "/" + filebasename_ + "_" + std::to_string(save_count_) + ".txt";
-    //     std::ofstream file(label_path);
-    //     for (int i = 0; i < uv_points.size(); i++) {
-    //         file << model_name_ << " " << uv_points[i][0].x << " " << uv_points[i][0].y << " " << uv_points[i][1].x << " " << uv_points[i][1].y << std::endl;
-    //     }
-    //     file.close();
-    //     save_count_++;
-    //     nh_.setParam("move_is_ok", true);
-    // }
+    if (write_is_ok_ && save_count_ < the_number_of_data) {
+        ROS_INFO_STREAM("process rate: " << save_count_ + 1 << "/" << the_number_of_data);
+        nh_.setParam("write_is_ok", false);
+        std::string img_path = image_dir_name_ + "/" + filebasename_ + "_" + std::to_string(save_count_) + ".jpg";
+        cv::Mat origin_img;
+        get_original_image(image1, origin_img);
+        cv::imwrite(img_path, origin_img);
+        std::string box_path = boxes_dir_name_ + "/" + filebasename_ + "_" + std::to_string(save_count_) + ".jpg";
+        cv::imwrite(box_path, draw_image_);
+        std::string label_path = label_dir_name_ + "/" + filebasename_ + "_" + std::to_string(save_count_) + ".txt";
+        std::ofstream file(label_path);
+        for (int i = 0; i < uv_points.size(); i++) {
+            file << model_name_ << " " << uv_points[i][0].x << " " << uv_points[i][0].y << " " << uv_points[i][1].x << " " << uv_points[i][1].y << std::endl;
+        }
+        file.close();
+        save_count_++;
+        nh_.setParam("move_is_ok", true);
+    }
 }
 
 void Exec_yolo::tf_get(std::string source_frame, std::string target_frame, geometry_msgs::TransformStamped &trans)
@@ -117,10 +121,7 @@ void Exec_yolo::tf_get(std::string source_frame, std::string target_frame, geome
         ros::Duration(1.0).sleep();
         return;
     }
-    
-    
 }
-
 
 void Exec_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image image, std::vector<cv::Point3d> trans_s, cv::Mat &draw_img, std::vector<std::vector<cv::Point2d>> &uv_points)
 {
@@ -169,8 +170,6 @@ void Exec_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image image,
             // ROS_INFO_STREAM("new.x: " << new_x1.x << " x1.y: " << new_x1.y << "    x2.x: " << new_x2.x << " x2.y: " << new_x2.y);
             uv_points.push_back(uv_s);
         }
-        
-
     }
 }
 
@@ -236,7 +235,34 @@ void Exec_yolo::get_original_image(sensor_msgs::Image image1, cv::Mat &original_
     catch (cv_bridge::Exception &e)
     {
         ROS_ERROR("cv_bridge execption %s", e.what());
-        // return;
     }
     original_img = cv_img_ptr->image;
 }
+
+void Exec_yolo::write_instance(std::vector<std::vector<cv::Point2d>> point_2d, std::vector<std::vector<int>> &instance)
+{
+    for (int i = 0; i < point_2d.size(); i++) {
+        // double x1 = point_2d[i][0].x;
+        // double x2 = point_2d[i][1].x;
+        // double y1 = point_2d[i][0].y;
+        // double y2 = point_2d[i][1].y;
+        int x1 = static_cast<int>(point_2d[i][0].x);
+        int x2 = static_cast<int>(point_2d[i][1].x);
+        int y1 = static_cast<int>(point_2d[i][0].y);
+        int y2 = static_cast<int>(point_2d[i][1].y);
+        if (x1 > x2) {
+            swap(x1, x2);
+        }
+        if (y1 > y2) {
+            swap(y1, y2);
+        }
+        for (int k = y1; k <= y2; k++) 
+        {
+            for (int l = x1; l <= x2; l++) {
+                instance[k][l] = 1;
+            }
+        }
+
+    }
+}
+

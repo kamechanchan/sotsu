@@ -73,10 +73,6 @@ void Colored_PointCloud::colored_get(sensor_msgs::CameraInfo cinfo, sensor_msgs:
     cv::cvtColor(cv_image, rgb_image, cv::COLOR_BGR2RGB);
     draw_image = cv_image;
 
-    // image_geometry::PinholeCameraModel cam_model;
-    // cam_model.fromCameraInfo(cinfo);
-    // ROS_INFO_STREAM("cam_model tf: " << cam_model.tfFrame());
-
     colored_point.clear();
     int count = 0;
     int aida = 100;
@@ -95,46 +91,19 @@ void Colored_PointCloud::colored_get(sensor_msgs::CameraInfo cinfo, sensor_msgs:
         cv::Point2d uv;
         // uv = cam_model.project3dToPixel(pt_cv);
         uv = project3d_to_pixel(pt_cv, cinfo);
-        // *ofs << "fx: " << cam_model.fx() << "  fy: " << cam_model.fy();
-        // *ofs << "   Tx: " << cam_model.Tx() << "  Ty: " << cam_model.Ty();
-        // *ofs << "   cx: " << cam_model.cx() << "  cy: " << cam_model.cy() << std::endl;
-        // *ofs << "fx: " << fx << "  fy: " << fy;
-        // *ofs << "   Tx: " << tx << "  Ty: " << ty;
-        // *ofs << "   cx: " << cx << "  cy: " << cy << std::endl;
-
         
-        // ROS_INFO_STREAM("uv.x: " << uv.x << "  uv.y: " << uv.y);
-        // ROS_INFO_STREAM("image_col / 2: " << rgb_image.cols / 2 << "   image_rows / 2: " << rgb_image.rows / 2);
         debug_x += uv.x;
         debug_y += uv.y;
-        // if (count % aida == 0) {
-        //     ROS_INFO_STREAM("uv.x: " << uv.x << "  uv.y: " << uv.y);
-        //     ROS_INFO_STREAM("image_col / 2: " << rgb_image.cols / 2 << "   image_rows / 2: " << rgb_image.rows / 2);
-        // }
         double scale = 1;
         if (uv.x > (-rgb_image.cols / scale) && uv.x < (rgb_image.cols / scale) && uv.y > (-rgb_image.rows / scale) &&
         uv.y < (rgb_image.rows / scale))
         {
-            // ROS_INFO_STREAM("tuuka!!");
-            // cv::Point2d converted_uv(uv.x + rgb_image.cols / 2, uv.y + rgb_image.rows / 2);
-            // ROS_INFO_STREAM("x: " << pt->x << "  y: " << pt->y << "  z: " << pt->z);
-            // ROS_INFO_STREAM("uv.x: " << uv.x << "  uv.y: " << uv.y);
-            // ROS_INFO_STREAM("image_col / 2: " << rgb_image.cols / 2 << "   image_rows / 2: " << rgb_image.rows / 2);
-            // cv::Vec3b rgb = rgb_image.at<cv::Vec3b>(converted_uv.y, converted_uv.x);
             cv::Vec3d rgb = rgb_image.at<cv::Vec3b>(uv.y, uv.x);
-            // cv::Vec3d rgb = rgb_image.at<cv::Vec3b>(uv.x, uv.y);
             cv::circle(draw_image, cv::Point(uv.x, uv.y), 1, cv::Scalar(0, 0, 255), 1, 1);
             
             cv::resize(draw_image, draw_image, draw_image.size(), 0.25, 0.25);
             pcl::PointXYZRGB buffer_point;
-            // ROS_INFO_STREAM("red: " << rgb[0] <<"  blue: " << rgb[1] << "   green: " << rgb[2]);
             double rgb_ave = (rgb[0] + rgb[1] + rgb[2]) / 3.0;
-            // if (rgb_ave < upper_val) {
-            //     continue;
-            // }
-            // if (rgb_ave > lower_val) {
-            //     continue;
-            // }
             buffer_point.x = pt->x;
             buffer_point.y = pt->y;
             buffer_point.z = pt->z;
