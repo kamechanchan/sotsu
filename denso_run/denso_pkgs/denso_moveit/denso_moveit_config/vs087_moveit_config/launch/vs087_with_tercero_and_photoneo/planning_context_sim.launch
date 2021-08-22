@@ -7,7 +7,9 @@
 
   <!-- The name of robot which is loaded from URDF -->
   <arg name="robot_name" default="vs087"/>
-  <arg name="robot_options" default="vs087_with_tercero_and_photoneo"/>
+  <!-- <arg name="robot_options" default="vs087_with_tercero_and_photoneo"/> -->
+  <arg name="robot_options" default="vs087_and_photoneo"/>
+
 
   <!-- Load universal robot description format (URDF) -->
   <arg name="model" value="$(find denso_gazebo)/urdf/$(arg robot_name)/$(arg robot_options).gazebo.xacro"/>
