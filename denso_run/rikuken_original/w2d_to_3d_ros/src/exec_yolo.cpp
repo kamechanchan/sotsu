@@ -50,16 +50,23 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
     pcl::PointCloud<pcl::PointXYZ> trans_cloud;
     pcl::PointCloud<pcl::PointXYZRGB> color_cloud;
     sensor_msgs::PointCloud2 cloud_msgs;
-    get_one_message(cloud_msgs, inputcloud_topic_name_, nh_, 10);
+    
     // ROS_INFO_STREAM("message1 come");
 
-    pcl::fromROSMsg(cloud_msgs, trans_cloud);
+    
     
     geometry_msgs::TransformStamped trans_source;
     cv::Mat ori_img;
     
     tf_get(world_frame_, source_frame_, trans_source);
     // ROS_INFO_STREAM("message2 come");
+    ros::WallTime start_w = ros::WallTime::now();
+    get_one_message(cloud_msgs, inputcloud_topic_name_, nh_, 10);
+    pcl::fromROSMsg(cloud_msgs, trans_cloud);
+    ros::WallTime totyu_w = ros::WallTime::now();
+    ros::WallDuration take_totyuu_time_w = totyu_w - start_w;
+    ROS_INFO_STREAM("totyuu time: " << take_totyuu_time_w.toSec());
+
     std::vector<geometry_msgs::TransformStamped> transforms;
     for (int i = 0; i < work_count_; i++) {
         geometry_msgs::TransformStamped trans;
@@ -89,12 +96,18 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
     // ROS_INFO_STREAM("message7 come");
 
     hurui(trans_cloud, image_instance_, image1, cinfo, color_cloud);
+    ros::WallTime end_w = ros::WallTime::now();
+    ros::WallDuration time_2 = end_w - totyu_w;
+    ROS_INFO_STREAM("2 time: " << time_2.toSec());
+    ros::WallDuration take_time_w = end_w - start_w;
+    ROS_INFO_STREAM("finaltime: " << take_time_w.toSec());
+    ROS_INFO_STREAM("");
     // ROS_INFO_STREAM("message8 come");
     pcl::toROSMsg(color_cloud, output_cloud_msgs_);
     output_cloud_msgs_.header.frame_id = cloud_msgs.header.frame_id;
     output_pub_.publish(output_cloud_msgs_);
-    cv::imshow("windoue", draw_image_);
-    cv::waitKey(10);
+    // cv::imshow("windoue", draw_image_);
+    // cv::waitKey(10);
     
 }
 
@@ -136,7 +149,7 @@ void Exec_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image image,
     
     int count = 0;
     int aida = 100;
-    std::cout << "trans s size " << trans_s.size() << std::endl;
+    // std::cout << "trans s size " << trans_s.size() << std::endl;
     for (int i = 0; i < trans_s.size(); i++) {
         double x = trans_s[i].x;
         double y = trans_s[i].y;
@@ -245,7 +258,7 @@ void Exec_yolo::get_original_image(sensor_msgs::Image image1, cv::Mat &original_
 
 void Exec_yolo::write_instance(std::vector<std::vector<cv::Point2d>> point_2d, std::vector<std::vector<int>> &instance)
 {
-    std::cout << "pointsize " << point_2d.size() << std::endl;
+    // std::cout << "pointsize " << point_2d.size() << std::endl;
     for (int i = 0; i < point_2d.size(); i++) {
         int x1 = static_cast<int>(point_2d[i][0].x);
         int x2 = static_cast<int>(point_2d[i][1].x);
@@ -258,7 +271,7 @@ void Exec_yolo::write_instance(std::vector<std::vector<cv::Point2d>> point_2d, s
             swap(y1, y2);
         }
         int count = 0;
-        std::cout << x1 << " " << x2 << " " << y1 << " " << y2 << std::endl;
+        // std::cout << x1 << " " << x2 << " " << y1 << " " << y2 << std::endl;
         for (int k = y1; k <= y2; k++) 
         {
             for (int l = x1; l <= x2; l++) {

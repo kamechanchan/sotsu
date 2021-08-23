@@ -72,4 +72,4 @@ target_link_libraries(angle_trans
 add_executable(exec_yolo src/exec_yolo.cpp src/exec_yolo_node.cpp)
 target_link_libraries(exec_yolo
   ${catkin_LIBRARIES}
-)]]
+)
