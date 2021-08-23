@@ -27,6 +27,13 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
         color.x = msg->x[i];
         color.y = msg->y[i];
         color.z = msg->z[i];
+        // for (int j = 0; j < 25; j++){
+        //     if (msg->instance[i] == j){
+        //         color.r = 255 / j+1;
+        //         color.g = 10.2 * j+1;
+        //         color.b = 255 / j+1;
+        //     }
+        // }
         if (msg->instance[i] == 0)
         {
             color.r = 255;
@@ -67,8 +74,116 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
         }
         else if (msg->instance[i] == 6)
         {
+            color.r = 255;
+            color.g = 255;
+            color.b = 255;
+        }
+        else if (msg->instance[i] == 7)
+        {
+            color.r = 0;
+            color.g = 0;
+            color.b = 0;
+        }
+        else if (msg->instance[i] == 8)
+        {
+            color.r = 150;
+            color.g = 150;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 9)
+        {
+            color.r = 75;
+            color.g = 75;
+            color.b = 75;
+        }
+        else if (msg->instance[i] == 10)
+        {
             color.r = 50;
-            color.g = 149;
+            color.g = 0;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 11)
+        {
+            color.r = 100;
+            color.g = 0;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 12)
+        {
+            color.r = 150;
+            color.g = 0;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 13)
+        {
+            color.r = 200;
+            color.g = 0;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 14)
+        {
+            color.r = 255;
+            color.g = 0;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 15)
+        {
+            color.r = 0;
+            color.g = 50;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 16)
+        {
+            color.r = 0;
+            color.g = 100;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 17)
+        {
+            color.r = 0;
+            color.g = 150;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 18)
+        {
+            color.r = 0;
+            color.g = 200;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 19)
+        {
+            color.r = 0;
+            color.g = 255;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 20)
+        {
+            color.r = 150;
+            color.g = 0;
+            color.b = 50;
+        }
+        else if (msg->instance[i] == 21)
+        {
+            color.r = 150;
+            color.g = 0;
+            color.b = 100;
+        }
+        else if (msg->instance[i] == 22)
+        {
+            color.r = 150;
+            color.g = 0;
+            color.b = 150;
+        }
+        else if (msg->instance[i] == 23)
+        {
+            color.r = 150;
+            color.g = 0;
+            color.b = 200;
+        }
+        else if (msg->instance[i] == 24)
+        {
+            color.r = 150;
+            color.g = 0;
             color.b = 255;
         }
         cloud.push_back(color);

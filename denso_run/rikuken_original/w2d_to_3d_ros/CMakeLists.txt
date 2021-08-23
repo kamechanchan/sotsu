@@ -52,7 +52,27 @@ include_directories(
 )
 
 
+<<<<<<< HEAD
 
+=======
+add_executable(colord_cloud src/colord_cloud.cpp)
+target_link_libraries(colord_cloud
+  ${catkin_LIBRARIES}
+)
+
+add_executable(message_publish src/message_publish.cpp)
+add_dependencies(message_publish ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(message_publish
+  ${catkin_LIBRARIES}
+)
+
+add_executable(another_message_publish src/anothre_message_publish.cpp)
+add_dependencies(another_message_publish ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+
+target_link_libraries(another_message_publish
+  ${catkin_LIBRARIES}
+)
+>>>>>>> 3af7658b84b43b96ad4b8ec7f97446f81bd3fdac
 
 add_executable(colored_pointcloud src/colored_pointcloud.cpp src/colored_pointcloud_node.cpp)
 target_link_libraries(colored_pointcloud

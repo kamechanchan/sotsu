@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="x" default="1.3"/>
+    <arg name="y" default="0.27"/>
+    <arg name="z" default="1.3"/>
+    <arg name="roll" default="-2.3"/>
+    <arg name="pitch" default="0.1"/>
+    <arg name="yaw" default="1.70"/>
+    <arg name="parent_frame" default="world"/>
+    <arg name="child_frame" default="photoneo_center_optical_frame"/>
+    <node pkg="calibration_3d" type="static_tf_broadcaster" name="static_tf_broadcaster">
+        <param name="x" value="$(arg x)"/>
+        <param name="y" value="$(arg y)"/>
+        <param name="z" value="$(arg z)"/>
+        <param name="roll" value="$(arg roll)"/>
+        <param name="pitch" value="$(arg pitch)"/>
+        <param name="yaw" value="$(arg yaw)"/>
+        <param name="parent_frame" value="$(arg parent_frame)"/>
+        <param name="child_frame" value="$(arg child_frame)"/>
+    </node>
+</launch>
