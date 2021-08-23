@@ -10,8 +10,6 @@ from math import *
 from gazebo_msgs.msg import *
 import tf2_ros
 from time import *
-from pose_estimator_srvs.srv import PoseEstimate
-from pose_estimator_srvs.srv import range1, range1Request, range1Response
 
 
 class RandomMoveEuler(object):
@@ -21,15 +19,15 @@ class RandomMoveEuler(object):
         self.tf_buffer_ = tf2_ros.Buffer()
         self.tf_listener_ = tf2_ros.TransformListener(self.tf_buffer_)
         self.sensor_parent_frame_ = rospy.get_param("~sensor_parent_frame", "world")
-        self.pos_.model_name = rospy.get_param("~object_name", "HV8")
-        self.object_name = rospy.get_param("~object_name", "HV8")
+        self.pos_.model_name = rospy.get_param("~object_name", "HV8_0")
+        self.object_name = rospy.get_param("~object_name", "HV8_0")
         self.init_x = rospy.get_param("~init_x", 0)
         self.receive_ok = rospy.set_param("/" + self.object_name + "/receive_cloud/is_ok", False)
         self.record_ok = rospy.set_param("/" + self.object_name + "/record_cloud/is_ok", False)
+        self.angle_range = rospy.get_param("~angle_range", 2)
         self.list_for_histgram = [[[],[],[],[],[],[]] for i in range(10)]
         self.save_histgram_dictory=rospy.get_param("~save_histgram_directory", "/home/ericlab")
         
-        self.angle_range = rospy.get_param("~angle_range", 2)
         
     def isReadyMove(self):
         try:

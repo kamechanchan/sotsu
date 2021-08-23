@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os, sys, copy
+from numpy.lib.twodim_base import mask_indices
 from open3d import *
 import numpy as np
 from ctypes import *
@@ -230,6 +231,74 @@ def getNormalizedPcd(np_cloud, resolution):
     """ 
     pcd_offset = np.expand_dims(np.mean(np_cloud, axis=0), 0)
     pcd_data = np_cloud - pcd_offset  #original
+    #pcd_data = np.asarray(np_cloud)  #improve
+    choice_index = np.arange(pcd_data.shape[0])
+    choice = np.random.choice(choice_index, resolution)
+    normalized_pcd = pcd_data[choice, :]
+    #new_pcd = pcl.PointCloud(np.array(normalized_pcd, np.float32))
+    #pcl.save(new_pcd, "/home/ericlab/random_original.pcd")
+    #pcl.save(new_pcd, '/home/ericlab/random_improve.pcd')
+    return normalized_pcd, pcd_offset[0]
+
+def getNormalizedPcd_seg(np_cloud, resolution):
+    # print("*********pcl******************")
+    # cloud_start=pcl.PointCloud(cloud_data[:,:3])
+    # pre_cloud = cloud_start.make_voxel_grid_filter()
+    # pcl.VoxelGridFilter.set_leaf_size(pre_cloud, 0.0035, 0.0035, 0.0035)
+    # cloud_filter=pcl.VoxelGridFilter.filter(pre_cloud)
+    # np_cloud=np.array(cloud_filter)
+    
+    # cnt_a = 0
+    # cnt_b = 0
+    # cnt_c = 0
+    # cnt_d = 0
+    # cnt_e = 0
+    # cnt_f = 0
+    # cnt_g = 0
+    # cnt_l = 0
+    # for i in range(300000) :
+    #     if np_cloud[i,0] == 1:
+    #         cnt_a+=1
+    #     elif np_cloud[i,1] == 1:
+    #         cnt_b+=1
+    #     elif np_cloud[i,2] == 1:
+    #         cnt_c+=1
+    #     elif np_cloud[i,3] == 1:
+    #         cnt_d+=1
+    #     elif np_cloud[i,4] == 1:
+    #         cnt_e+=1
+    #     elif np_cloud[i,5] == 1:
+    #         cnt_f+=1
+    #     elif np_cloud[i,6] == 1:
+    #         cnt_g+=1
+    #     elif np_cloud[i,7] == 1:
+    #         cnt_l+=1
+    # print("******************cnt********************")        
+    # print("cnt_a")
+    # print(cnt_a)
+    # print("cnt_b")
+    # print(cnt_b)
+    # print("cnt_c")
+    # print(cnt_c)
+    # print("cnt_d")
+    # print(cnt_d)
+    # print("cnt_e")
+    # print(cnt_e)
+    # print("cnt_f")
+    # print(cnt_f)
+    # print("cnt_g")
+    # print(cnt_g)
+    # print("cnt_l")
+    # print(cnt_l)
+
+    pcd_offset = np.expand_dims(np.mean(np_cloud[:,:3], axis=0), 0)
+    pre_pcd_data = np_cloud[:,:3] - pcd_offset  #original
+    # pcd_offset = np.expand_dims(np.mean(np_cloud, axis=0), 0)
+    # pre_pcd_data = np_cloud - pcd_offset  #original
+    mask_data = np_cloud[:,3]
+    # mask_data = cloud_data[:,3]
+    mask_data = np.expand_dims(mask_data, 1)
+    pcd_data = np.hstack([pre_pcd_data, mask_data])
     #pcd_data = np.asarray(np_cloud)  #improve
     choice_index = np.arange(pcd_data.shape[0])
     choice = np.random.choice(choice_index, resolution)

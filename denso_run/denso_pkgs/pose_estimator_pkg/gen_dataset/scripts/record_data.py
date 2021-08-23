@@ -59,9 +59,14 @@ class RecordData(object):
     def callback(self, point_cloud, trans_rot):
         get_shori_3 = rospy.get_param("/shori_3")
         get_shori_3 = get_shori_3 + 1
-        #print("my_callback_tf_pc is " + str(get_shori_3))
+        print("my_callback_tf_pc is " + str(get_shori_3))
+        get_shori_4 = rospy.get_param("/shori_4")
+        print("signal_message_kakuin" + str(get_shori_4))
+        get_shori_2 = rospy.get_param("/shori_1")
+        print("input_callblack_kakunin" + str(get_shori_2))
         rospy.set_param("/shori_3", get_shori_3)
         self.receive_ok = rospy.get_param("/" + self.object_name_ + "/receive_cloud/is_ok")
+        
         if self.receive_ok:
             
             rospy.set_param("/" + self.object_name_ + "/receive_cloud/is_ok", False)

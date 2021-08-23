@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-  <arg name="target_frame_name" default="world"/>
+  <arg name="target_frame_name" default="photoneo_center_optical_frame"/>
   <arg name="source_frame_name" default="/world"/>
   <arg name="upper_color_filter_mode" default="true"/>
   <arg name="lower_color_filter_mode" default="false"/>

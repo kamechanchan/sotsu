@@ -9,6 +9,7 @@ project(color_cloud_bridge)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED
     message_generation
+    sensor_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -48,6 +49,8 @@ find_package(catkin REQUIRED
 add_message_files(
    FILES
    dummy_pcl.msg
+   sensor_and_index.msg
+   out_segmentation.msg
    #Message2.msg
  )
 
@@ -68,6 +71,7 @@ add_message_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
    DEPENDENCIES
+   sensor_msgs
      # Or other packages containing msgs
 )
 
@@ -103,7 +107,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES color_cloud_bridge
-  CATKIN_DEPENDS message_runtime
+  CATKIN_DEPENDS message_runtime sensor_msgs
 #  DEPENDS system_lib
 )
 
