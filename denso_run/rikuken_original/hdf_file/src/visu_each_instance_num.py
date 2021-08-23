@@ -32,10 +32,10 @@ print(len(cnt_list))
 cnt = 0
 c = 1
 x_data = []
-with h5py.File('/home/ericlab/hdf5_data/original_25/instance_tsuchida_8_18_1000_1.hdf5', mode="r") as f:
+with h5py.File('/home/ericlab/DENSO_results/August/pcl_visu/progress_output/instance_segmentation/instance_changed_8_7_1526.hdf5+instance_changed_instance_tsuchida_8_12_500_1.hdf5+instance_changedinstance_tsuchida_8_11_1000_1.hdf5/5/result5.hdf5', mode="r") as f:
     for n in range(dataset_number):
         pcl_data = f["data_" + str(n + 1)]['Points'][()]
-        mask_data = f["data_" + str(n + 1)]['masks'][()]
+        mask_data = f["data_" + str(n + 1)]['ground_truth'][()]
         # print(mask_data.shape)
         print(n)
         prepare_data = np.hstack([pcl_data, mask_data])
