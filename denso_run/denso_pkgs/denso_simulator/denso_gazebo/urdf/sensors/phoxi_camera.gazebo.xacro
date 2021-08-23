@@ -15,9 +15,9 @@
         <camera>
           <horizontal_fov>${84.1*M_PI/180.0}</horizontal_fov>
           <image>
-            <!-- <format>L8</format> -->
+            <format>L8</format>
             <!-- fdfd -->
-            <format>R8G8B8</format>
+            <!-- <format>R8G8B8</format> -->
             <width>2064</width>
             <height>1544</height>
           </image>
@@ -64,8 +64,8 @@
           <pose>${camera_x} ${camera_y} ${camera_z} 0 0 ${camera_yaw}</pose>
           <horizontal_fov>${84.1*M_PI/180.0}</horizontal_fov>
           <image>
-            <!-- <format>L8</format> -->
-            <format>R8G8B8</format>
+            <format>L8</format>
+            <!-- <format>R8G8B8</format> -->
             <width>752</width>
             <!-- <width>640</width> -->
             <height>480</height>

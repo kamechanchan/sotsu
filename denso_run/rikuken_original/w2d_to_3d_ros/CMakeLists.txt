@@ -52,23 +52,6 @@ include_directories(
 )
 
 
-add_executable(colord_cloud src/colord_cloud.cpp)
-target_link_libraries(colord_cloud
-  ${catkin_LIBRARIES}
-)
-
-add_executable(message_publish src/message_publish.cpp)
-add_dependencies(message_publish ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-target_link_libraries(message_publish
-  ${catkin_LIBRARIES}
-)
-
-add_executable(another_message_publish src/anothre_message_publish.cpp)
-add_dependencies(another_message_publish ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-
-target_link_libraries(another_message_publish
-  ${catkin_LIBRARIES}
-)
 
 add_executable(colored_pointcloud src/colored_pointcloud.cpp src/colored_pointcloud_node.cpp)
 target_link_libraries(colored_pointcloud
@@ -82,5 +65,10 @@ target_link_libraries(ano_colored_pointcloud
 
 add_executable(angle_trans src/angle_transform.cpp)
 target_link_libraries(angle_trans
+  ${catkin_LIBRARIES}
+)
+
+add_executable(exec_yolo src/exec_yolo.cpp src/exec_yolo_node.cpp)
+target_link_libraries(exec_yolo
   ${catkin_LIBRARIES}
 )
