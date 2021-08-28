@@ -15,15 +15,15 @@ rospy.init_node("progress_result")
 print("tabunsouiukoto")
 instance_pub = rospy.Publisher("instance_pub", out_segmentation, queue_size=10)
 
-dataroot = "/home/ericlab/DENSO_results/August/pcl_visu/progress_output/instance_segmentation/instance_changed_8_7_1526.hdf5+instance_changed_instance_tsuchida_8_12_500_1.hdf5+instance_changedinstance_tsuchida_8_11_1000_1.hdf5/5/"
-dataset_name = "result5.hdf5"
+dataroot = "/home/ericlab/DENSO_results/August/pcl_visu/progress_output/semantic_segmentation/semantic_changed_8_7_1526.hdf5/1/"
+dataset_name = "result1.hdf5"
 resolution = 8192
 instance_number = 25
 
 datapath = dataroot + dataset_name
 with h5py.File(datapath, mode="r") as f:
-    in_data = f["data_1"]["Points"][()]
-    out_data = f["data_1"]["ground_truth"][()]
+    in_data = f["data_3"]["Points"][()]
+    out_data = f["data_3"]["ground_truth"][()]
     msg_out = out_segmentation()
     print(type(in_data.shape[0]))
     print(type(resolution))
@@ -33,8 +33,10 @@ with h5py.File(datapath, mode="r") as f:
     for i in range(in_data.shape[0]):
         for j in range(resolution):
             for n in range(instance_number):
-                if out_data[i, j, n] == 1:
-                    pred_new[i, j] = n+1
+                if out_data[i, j] == 1:
+                    pred_new[i, j] = 1
+                else :
+                    pred_new[i, j] = 2
 
     for i in range(in_data.shape[0]):
         print(np.array(pred_new).shape)

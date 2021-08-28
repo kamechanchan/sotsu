@@ -7,7 +7,7 @@ import numpy as np
 
 cnt = 0
 c = 1
-with h5py.File('/home/ericlab/DENSO_results/August/pcl_visu/progress_output/instance_segmentation/instance_changed_8_7_1526.hdf5+instance_changed_instance_tsuchida_8_12_500_1.hdf5+instance_changedinstance_tsuchida_8_11_1000_1.hdf5/5/result5.hdf5', mode="r") as f:
+with h5py.File('/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/kandou_6000.hdf5', mode="r") as f:
     for i in f["data_1"].values():
         # cnt +=1
         # c += 1

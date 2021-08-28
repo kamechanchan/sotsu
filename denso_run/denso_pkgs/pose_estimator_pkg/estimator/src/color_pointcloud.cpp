@@ -82,7 +82,7 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
         {
             color.r = 200;
             color.g = 0;
-            color.b = 200;
+            color.b = 100;
         }
         else if (msg->instance[i] == 8)
         {

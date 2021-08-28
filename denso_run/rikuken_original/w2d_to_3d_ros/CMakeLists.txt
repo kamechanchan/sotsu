@@ -72,3 +72,15 @@ add_executable(exec_yolo src/exec_yolo.cpp src/exec_yolo_node.cpp)
 target_link_libraries(exec_yolo
   ${catkin_LIBRARIES}
 )
+
+add_library(cloud_clustering src/cloud_clustering.cpp src/abstract_class.cpp)
+target_link_libraries(cloud_clustering
+  ${catkin_LIBRARIES}
+)
+
+add_executable(clustering_ishiyama src/clustering_ishiyama.cpp)
+target_link_libraries(clustering_ishiyama
+  ${catkin_LIBRARIES}
+  cloud_clustering
+)
+
