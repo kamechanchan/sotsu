@@ -1,6 +1,9 @@
 #pragma once
 #include <sensor_msgs/Image.h>
 #include <sensor_msgs/CameraInfo.h>
+#include <sensor_msgs/PointCloud2.h>
+#include <pcl_ros/point_cloud.h>
+#include <pcl_ros/transforms.h>
 #include <tf2_ros/transform_listener.h>
 #include <tf2_ros/buffer.h>
 #include <cv_bridge/cv_bridge.h>
@@ -22,6 +25,7 @@ public:
     void box_get(sensor_msgs::CameraInfo, sensor_msgs::Image, std::vector<cv::Point3d>, cv::Mat&, std::vector<std::vector<cv::Point2d>>&);
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::CameraInfo, sensor_msgs::Image> Sync_Sub_type;
     cv::Point2d project3d_to_pixel(cv::Point3d, sensor_msgs::CameraInfo);
+    cv::Point2d project3d_to_pixel_origin(cv::Point3d, sensor_msgs::CameraInfo);
     void paramter_set_bara(std::string, int);
     void rotation_convert(geometry_msgs::TransformStamped, std::vector<geometry_msgs::TransformStamped>, std::vector<cv::Point3d>&);
     void get_original_image(sensor_msgs::Image, cv::Mat&);
@@ -34,19 +38,35 @@ public:
             final_message = *share;
         }
     }
+    void write_instance(std::vector<std::vector<cv::Point2d>>, std::vector<std::vector<int>> &);
+    template <class T>
+    void swap(T &yes, T &we)
+    {
+        T t = yes;
+        yes = we;
+        we = t;
+    }
+
+    void hurui(pcl::PointCloud<pcl::PointXYZ>, std::vector<std::vector<int>>, sensor_msgs::Image, sensor_msgs::CameraInfo, pcl::PointCloud<pcl::PointXYZRGB>&);
+
 private:
     message_filters::Synchronizer<Sync_Sub_type> *sensor_sync_;
     message_filters::Subscriber<sensor_msgs::CameraInfo> *camera_sub_;
     message_filters::Subscriber<sensor_msgs::Image> *image_sub_;
+    std::vector<std::vector<int>> image_instance_;
     ros::NodeHandle nh_;
     ros::NodeHandle pnh_;
     std::string source_frame_, target_frame_;
+    ros::Publisher output_pub_;
     std::string world_frame_;
+    std::string inputcloud_topic_name_;
+    std::string output_topic_name_;
     std::vector<std::string> target_frames_;
     std::string camera_topic_name_, image_topic_name_;
     tf2_ros::TransformListener lister_;
     tf2_ros::Buffer buffer_;
     cv::Mat draw_image_;
+    sensor_msgs::PointCloud2 output_cloud_msgs_;
     double f_scale_, cx_scale_, cy_scale_;
     double fx_, fy_, tx_, ty_, cx_, cy_;
     float radious_;
@@ -55,5 +75,4 @@ private:
     int save_count_;
     int work_count_;
     int the_number_of_data;
-
 };
