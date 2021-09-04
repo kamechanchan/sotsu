@@ -6,6 +6,7 @@ project(arm_move)
 
 find_package(catkin REQUIRED COMPONENTS
   roscpp
+  actionlib
 )
 
 catkin_package(
@@ -28,5 +29,10 @@ include_directories(
 
 add_executable(trajectory_move src/trajctory_move.cpp)
 target_link_libraries(trajectory_move
+  ${catkin_LIBRARIES}
+)
+
+add_executable(trajectory_goal_move src/trajectory_goal_move.cpp)
+target_link_libraries(trajectory_goal_move
   ${catkin_LIBRARIES}
 )
