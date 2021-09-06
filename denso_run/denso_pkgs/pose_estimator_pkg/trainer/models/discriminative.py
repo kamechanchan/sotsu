@@ -11,7 +11,7 @@ import torch.nn as nn
 
 class DiscriminativeLoss(nn.Module):
     def __init__(self, delta_d, delta_v,
-                 alpha=10.0, beta=1.0, gamma=0.001,
+                 alpha=1.0, beta=1.0, gamma=0.001,
                  reduction='mean'):
         # TODO: Respect the reduction rule
         super(DiscriminativeLoss, self).__init__()

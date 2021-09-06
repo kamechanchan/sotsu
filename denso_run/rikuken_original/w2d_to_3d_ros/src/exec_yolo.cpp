@@ -93,6 +93,8 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
     pcl::toROSMsg(color_cloud, output_cloud_msgs_);
     output_cloud_msgs_.header.frame_id = cloud_msgs.header.frame_id;
     output_pub_.publish(output_cloud_msgs_);
+    cv::resize(draw_image_, draw_image_, cv::Size(), 0.7, 0.7);
+
     cv::imshow("windoue", draw_image_);
     cv::waitKey(10);
     

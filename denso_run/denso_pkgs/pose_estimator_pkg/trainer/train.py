@@ -78,6 +78,11 @@ if __name__ == '__main__':
                 model.save_network("latest")
 
             iter_data_time = time.time()
+
+        if epoch == opt.save_epoch_freq / 9:
+            print("saving the first progress result epoch %d, iter %d" % (epoch, total_steps))
+            run_progress_savetest(opt, val_dataset, epoch)
+
         # break
         if epoch % opt.save_epoch_freq == 0:
             print("saving the model at the end of epoch %d, iter %d" % (epoch, total_steps))
@@ -91,7 +96,9 @@ if __name__ == '__main__':
 
         if epoch % opt.run_test_freq == 0:
             train_loss /= train_dataset_size
-            val_loss /= val_dataset_size
+            train_loss *= opt.batch_size
+            val_loss = t_loss
+            # val_loss /= val_dataset_size
             print("epoch: {}, train_loss: {:.3}" ", val_loss: {:.3}".format(epoch, train_loss, val_loss))
             writer.plot_loss(epoch, train_loss, val_loss)
         writer.close()

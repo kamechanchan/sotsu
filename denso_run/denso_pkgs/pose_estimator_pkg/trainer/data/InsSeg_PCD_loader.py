@@ -50,10 +50,10 @@ class InsSeg_PCD_Loader(PCD_Loader):
             # print("godtsuchida")
             # print(type(x_data))
             
-            # pcl_visu = pcl.PointCloud(x_data)
-            # pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/train_input/"+self.dataset_mode+"/"+self.concat_dataset_model
-            # util.mkdir(pcd_dir)
-            # pcl.save(pcl_visu, pcd_dir+"/result"+str(index)+".pcd")
+            pcl_visu = pcl.PointCloud(x_data)
+            pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/train_input/"+self.dataset_mode+"/"+self.concat_dataset_model
+            util.mkdir(pcd_dir)
+            pcl.save(pcl_visu, pcd_dir+"/result"+str(index)+".pcd")
 
             # print(y_data.shape)
             # print(y_data.dtype)

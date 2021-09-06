@@ -82,6 +82,7 @@ void Annotation_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, se
     std::vector<std::vector<cv::Point2d>> uv_points;
     box_get(cinfo, image1, point_3d, draw_image_, uv_points);
     // box_get(cinfo, image1, point_3d, draw_image_, work_count_);
+    cv::resize(draw_image_, draw_image_, cv::Size(), 0.7, 0.7);
     cv::imshow("windoue", draw_image_);
     cv::waitKey(10);
     nh_.getParam("write_is_ok", write_is_ok_);
@@ -128,7 +129,7 @@ void Annotation_yolo::tf_get(std::string source_frame, std::string target_frame,
 
 void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image image, geometry_msgs::TransformStamped trans, cv::Mat &draw_img)
 {
-    ROS_INFO_STREAM("hatayu");
+    // ROS_INFO_STREAM("hatayu");
     cv_bridge::CvImageConstPtr cv_img_ptr;
     try
     {
@@ -144,9 +145,9 @@ void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image 
     cv::Mat rgb_image;
     cv::cvtColor(cv_image, rgb_image, cv::COLOR_BGR2RGB);
     draw_img = cv_image;
-    ROS_INFO_STREAM("x: " << trans.transform.translation.x);
-    ROS_INFO_STREAM("y: " << trans.transform.translation.y);
-    ROS_INFO_STREAM("z: " << trans.transform.translation.z);
+    // ROS_INFO_STREAM("x: " << trans.transform.translation.x);
+    // ROS_INFO_STREAM("y: " << trans.transform.translation.y);
+    // ROS_INFO_STREAM("z: " << trans.transform.translation.z);
     float x = trans.transform.translation.x;
     float y = trans.transform.translation.y;
     float z = trans.transform.translation.z;
@@ -156,8 +157,8 @@ void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image 
     uv = project3d_to_pixel(pt_cv, cinfo);
     uv_x1 = project3d_to_pixel(pt_cv_x1, cinfo);
     uv_x2 = project3d_to_pixel(pt_cv_x2, cinfo);
-    ROS_INFO_STREAM("uv.x: " << uv.x);
-    ROS_INFO_STREAM("uv.y: " << uv.y);
+    // ROS_INFO_STREAM("uv.x: " << uv.x);
+    // ROS_INFO_STREAM("uv.y: " << uv.y);
     double scale = 1;
     if (uv.x > (-rgb_image.cols / scale) && uv.x < (rgb_image.cols / scale) && uv.y > (-rgb_image.rows / scale) &&
     uv.y < (rgb_image.rows / scale))
@@ -171,7 +172,7 @@ void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image 
 
 void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image image, std::vector<geometry_msgs::TransformStamped> trans_s, cv::Mat &draw_img, int work_count)
 {
-    ROS_INFO_STREAM("hatayu");
+    // ROS_INFO_STREAM("hatayu");
     cv_bridge::CvImageConstPtr cv_img_ptr;
     try
     {
@@ -287,7 +288,7 @@ void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image 
         uv_x1 = project3d_to_pixel(pt_cv_x1, cinfo);
         uv_x2 = project3d_to_pixel(pt_cv_x2, cinfo);
         double scale = 1;
-        ROS_INFO_STREAM(uv.x << "  " << uv.y << "   imgasize" << rgb_image.cols << "  " << rgb_image.rows);
+        // ROS_INFO_STREAM(uv.x << "  " << uv.y << "   imgasize" << rgb_image.cols << "  " << rgb_image.rows);
 
         if (uv.x > (-rgb_image.cols / scale) && uv.x < (rgb_image.cols / scale) && uv.y > (-rgb_image.rows / scale) &&
         uv.y < (rgb_image.rows / scale))
@@ -305,7 +306,7 @@ void Annotation_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image 
             uv_points.push_back(uv_s);
         }
     }
-    std::cout << "uv_points size " << uv_points.size() << std::endl;
+    // std::cout << "uv_points size " << uv_points.size() << std::endl;
     
 }
 
