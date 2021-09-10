@@ -295,7 +295,7 @@ void Exec_yolo::write_instance(std::vector<std::vector<cv::Point2d>> point_2d, s
         for (int k = y1; k <= y2; k++) 
         {
             for (int l = x1; l <= x2; l++) {
-                instance[k][l] = 1;
+                instance[k][l] = i;
                 // std::cout << count << std::endl;
                 // count++;
             }
