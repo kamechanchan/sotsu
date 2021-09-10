@@ -26,7 +26,10 @@ class BaseDataset(data.Dataset):
         self.len_size = 0
         self.dataset_number = opt.dataset_number
         self.hdf5_data = None
-
+        # print(type(self.len_size))
+        # print(type(self.size))
+        # print(self.size)
+        # print(self.dataset_number)
         for i in range(self.dataset_number):
             self.len_size = self.len_size + self.size[i]
 

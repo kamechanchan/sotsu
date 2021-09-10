@@ -55,8 +55,7 @@ private:
             ec.setSearchMethod(tree);
             ec.setInputCloud(cloud_filtered_ptr);
             ec.extract(cluster_indices);
-            
-        
+            ROS_INFO_STREAM(cluster_indices.size());
         
     }
 
