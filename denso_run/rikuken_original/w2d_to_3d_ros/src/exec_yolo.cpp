@@ -12,7 +12,8 @@ Exec_yolo::Exec_yolo(ros::NodeHandle &nh) :
     work_count_(0),
     pnh_("~"),
     buffer_(),
-    lister_(buffer_)
+    lister_(buffer_),
+    shori_count(0)
 {
     parameter_set();
 }
@@ -44,7 +45,8 @@ void Exec_yolo::parameter_set()
 void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_msgs::ImageConstPtr image_msgs)
 {
     // ROS_INFO_STREAM("message come");
-    std::lock_guard<std::mutex> lock(m);
+    // std::lock_guard<std::mutex> lock(m);
+    shori_count = shori_count + 1;
     sensor_msgs::CameraInfo cinfo = *cam_msgs;
     sensor_msgs::Image image1 = *image_msgs;
     pcl::PointCloud<pcl::PointXYZ> trans_cloud;
@@ -52,7 +54,7 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
     sensor_msgs::PointCloud2 cloud_msgs;
     
     // ROS_INFO_STREAM("message1 come");
-
+    ROS_INFO_STREAM("tsuchida_first: " << shori_count);
     
     
     geometry_msgs::TransformStamped trans_source;
@@ -60,12 +62,21 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
     
     tf_get(world_frame_, source_frame_, trans_source);
     // ROS_INFO_STREAM("message2 come");
-    ros::WallTime start_w = ros::WallTime::now();
+    // ros::WallTime start_w = ros::WallTime::now();
+    start_w.push_back(ros::WallTime::now());
+    ROS_INFO_STREAM("tsuchida_second: " << shori_count);
+    // ROS_INFO_STREAM("start_time " << shori_count << ": " << start_w.toSec());
     get_one_message(cloud_msgs, inputcloud_topic_name_, nh_, 10);
+    ROS_INFO_STREAM("tsuchida_third: " << shori_count);
     pcl::fromROSMsg(cloud_msgs, trans_cloud);
-    ros::WallTime totyu_w = ros::WallTime::now();
-    ros::WallDuration take_totyuu_time_w = totyu_w - start_w;
+    ROS_INFO_STREAM("tsuchida_forth: " << shori_count);
+    // ros::WallTime totyu_w = ros::WallTime::now();
+    totyu_w.push_back(ros::WallTime::now());
+    int i = totyu_w.size() - 1;
+    ros::WallDuration take_totyuu_time_w = totyu_w[i] - start_w[i]; 
+    // ros::WallDuration take_totyuu_time_w = totyu_w - start_w;
     ROS_INFO_STREAM("totyuu time: " << take_totyuu_time_w.toSec());
+    ROS_INFO_STREAM("tsuchida_fifth: " << shori_count);
 
     std::vector<geometry_msgs::TransformStamped> transforms;
     for (int i = 0; i < work_count_; i++) {
@@ -74,11 +85,14 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
         transforms.push_back(trans);
     }
     // ROS_INFO_STREAM("message3 come");
-    
+    ROS_INFO_STREAM("tsuchida_six: " << shori_count);
     std::vector<cv::Point3d> point_3d;
+    ROS_INFO_STREAM("tsuchida_seven" << shori_count);
     rotation_convert(trans_source, transforms, point_3d);
     std::vector<std::vector<cv::Point2d>> uv_points;
+    ROS_INFO_STREAM("tsuchida_eight" << shori_count);
     box_get(cinfo, image1, point_3d, draw_image_, uv_points);
+    ROS_INFO_STREAM("tsuchida_nine" << shori_count);
     // ROS_INFO_STREAM("message4 come");
 
     for (int i = 0; i < draw_image_.rows; i++) {
@@ -90,22 +104,28 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
     }
     // ROS_INFO_STREAM("message5 come");
     write_instance(uv_points, image_instance_);
+    ROS_INFO_STREAM("tsuchida_ten" << shori_count);
     // ROS_INFO_STREAM("message6 come");
 
     get_original_image(image1, ori_img);
     // ROS_INFO_STREAM("message7 come");
 
     hurui(trans_cloud, image_instance_, image1, cinfo, color_cloud);
-    ros::WallTime end_w = ros::WallTime::now();
-    ros::WallDuration time_2 = end_w - totyu_w;
+    ROS_INFO_STREAM("tsuchida_eleven" << shori_count);
+    // ros::WallTime end_w = ros::WallTime::now();
+    end_w.push_back(ros::WallTime::now());
+    int j = end_w.size() - 1;
+    ros::WallDuration time_2 = end_w[j] - totyu_w[j];
     ROS_INFO_STREAM("2 time: " << time_2.toSec());
-    ros::WallDuration take_time_w = end_w - start_w;
+    ros::WallDuration take_time_w = end_w[j] - start_w[j];
     ROS_INFO_STREAM("finaltime: " << take_time_w.toSec());
     ROS_INFO_STREAM("");
     // ROS_INFO_STREAM("message8 come");
     pcl::toROSMsg(color_cloud, output_cloud_msgs_);
     output_cloud_msgs_.header.frame_id = cloud_msgs.header.frame_id;
     output_pub_.publish(output_cloud_msgs_);
+    ROS_INFO_STREAM("");
+    ROS_INFO_STREAM("");
     // cv::imshow("windoue", draw_image_);
     // cv::waitKey(10);
     

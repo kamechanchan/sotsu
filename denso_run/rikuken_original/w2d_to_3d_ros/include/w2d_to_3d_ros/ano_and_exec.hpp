@@ -15,10 +15,10 @@
 #include <geometry_msgs/TransformStamped.h>
 #include <fstream>
 
-class Exec_yolo
+class Ano_and_Exec
 {
 public:
-    Exec_yolo(ros::NodeHandle&);
+    Ano_and_Exec(ros::NodeHandle&);
     void tf_get(std::string, std::string, geometry_msgs::TransformStamped&);
     void InputCallback(sensor_msgs::CameraInfoConstPtr, sensor_msgs::ImageConstPtr);
     void parameter_set();
@@ -75,6 +75,4 @@ private:
     int save_count_;
     int work_count_;
     int the_number_of_data;
-    int shori_count;
-    std::vector<ros::WallTime> start_w, totyu_w, end_w;
 };
