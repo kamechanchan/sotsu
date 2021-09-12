@@ -34,6 +34,7 @@ void Exec_yolo::parameter_set()
     pnh_.getParam("the_number_of_data", the_number_of_data);
     pnh_.getParam("inputcloud_topic_name", inputcloud_topic_name_);
     pnh_.getParam("output_topic_name", output_topic_name_);
+    pnh_.getParam("dulation", dulation_);
     paramter_set_bara(model_name_, work_count_);
     output_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(output_topic_name_, 10);
     camera_sub_ = new message_filters::Subscriber<sensor_msgs::CameraInfo>(nh_, camera_topic_name_, 10);
@@ -143,7 +144,7 @@ void Exec_yolo::tf_get(std::string source_frame, std::string target_frame, geome
     catch (tf2::TransformException &e)
     {
         ROS_WARN_STREAM(e.what());
-        ros::Duration(1.0).sleep();
+        ros::Duration(dulation_).sleep();
         return;
     }
 }

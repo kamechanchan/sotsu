@@ -21,6 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   tf2_geometry_msgs
   tf2
+  color_cloud_bridge
 )
 add_message_files(
   FILES

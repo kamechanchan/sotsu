@@ -32,6 +32,9 @@ void Ano_and_Exec::parameter_set()
     pnh_.getParam("the_number_of_data", the_number_of_data);
     pnh_.getParam("inputcloud_topic_name", inputcloud_topic_name_);
     pnh_.getParam("output_topic_name", output_topic_name_);
+    pnh_.getParam("oculuder_topic_name", oculuder_topic_name_);
+    pnh_.getParam("timespan", timespan_);
+    pnh_.getParam("dulation", dulation_);
     paramter_set_bara(model_name_, work_count_);
     output_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(output_topic_name_, 10);
     camera_sub_ = new message_filters::Subscriber<sensor_msgs::CameraInfo>(nh_, camera_topic_name_, 10);
@@ -47,11 +50,7 @@ void Ano_and_Exec::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, senso
     pcl::PointCloud<pcl::PointXYZ> trans_cloud;
     pcl::PointCloud<pcl::PointXYZRGB> color_cloud;
     sensor_msgs::PointCloud2 cloud_msgs;
-    
-    // ROS_INFO_STREAM("message1 come");
 
-    
-    
     geometry_msgs::TransformStamped trans_source;
     cv::Mat ori_img;
     
@@ -113,14 +112,12 @@ void Ano_and_Exec::tf_get(std::string source_frame, std::string target_frame, ge
     try
     {
         trans = buffer_.lookupTransform(target_frame, source_frame, ros::Time(0));
-        
-        
         ROS_INFO_ONCE("I got a transfomr");
     }
     catch (tf2::TransformException &e)
     {
         ROS_WARN_STREAM(e.what());
-        ros::Duration(1.0).sleep();
+        ros::Duration(dulation_).sleep();
         return;
     }
 }
@@ -207,8 +204,10 @@ cv::Point2d Ano_and_Exec::project3d_to_pixel(cv::Point3d xyz, sensor_msgs::Camer
 
 void Ano_and_Exec::paramter_set_bara(std::string base_tf_frame, int work_count)
 {
-    for (int i = 0; i < work_count; i++) {
-        target_frames_.push_back(base_tf_frame + "_" + std::to_string(i));
+    color_cloud_bridge::object_kiriwake com_mes;
+    get_one_message<color_cloud_bridge::object_kiriwake>(com_mes, oculuder_topic_name_, nh_, timespan_);
+    for (int i = 0; i < com_mes.occuluder_object.size(); i++) {
+        target_frames_.push_back(com_mes.occuluder_object[i]);
     }
 }
 

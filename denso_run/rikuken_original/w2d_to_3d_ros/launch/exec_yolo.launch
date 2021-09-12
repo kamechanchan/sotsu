@@ -13,6 +13,7 @@
     <arg name="cx_scale" default="0.99"/>
     <arg name="cy_scale" default="0.9"/>
     <arg name="radious" default="0.05"/>
+    <arg name="dulation" default="0.1"/>
     
     
     
@@ -33,5 +34,6 @@
         <param name="cx_scale" value="$(arg cx_scale)"/>
         <param name="cy_scale" value="$(arg cy_scale)"/>
         <param name="radious" value="$(arg radious)"/>
+        <param name="dulation" value="$(arg dulation)"/>
     </node>
 </launch>

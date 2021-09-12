@@ -37,6 +37,7 @@ public:
         if (message != NULL) {
             final_message = *message;
         }
+        message.reset();
     }
     cv::Point2d project3d_to_pixel(cv::Point3d, sensor_msgs::CameraInfo);
 private:
