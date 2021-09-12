@@ -136,6 +136,7 @@ class annotation_environment(object):
 
 
         while com < 1:
+            print("oculuder")
             for i in self.occulution_object.occuluder_object:
                 print(i)
             

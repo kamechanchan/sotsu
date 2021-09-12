@@ -95,3 +95,8 @@ add_executable(ano_and_exec src/ano_and_exec.cpp src/ano_and_exec_node.cpp)
 target_link_libraries(ano_and_exec
   ${catkin_LIBRARIES}
 )
+
+add_executable(ano_and_exec_1 src/ano_and_exec_1.cpp src/ano_and_exec_1_node.cpp)
+target_link_libraries(ano_and_exec_1
+  ${catkin_LIBRARIES}
+)

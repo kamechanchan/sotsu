@@ -5,16 +5,18 @@ namespace nearest_point_extractor
     NearestPointExtractor::NearestPointExtractor(ros::NodeHandle &nh)
     : nh_(nh)
     , flag_(false)
-    , sensor_cloud_(new pcl::PointCloud<pcl::PointXYZ>)
-    , mesh_cloud_(new pcl::PointCloud<pcl::PointXYZ>)
     , pnh_("~")
     {
         pnh_.getParam("sensor_topic_name", sensor_topic_name_);
+        ROS_INFO_STREAM(sensor_topic_name_);
         pnh_.getParam("output_topic_name", output_topic_name_);
+        ROS_INFO_STREAM(output_topic_name_);
         pnh_.getParam("mesh_topic_name", mesh_topic_name_);
-        pnh_.getParam("LEAF_SIZE", LEAF_SIZE);
+        ROS_INFO_STREAM(mesh_topic_name_);
         pnh_.getParam("radius", radius_);
+        ROS_INFO_STREAM(radius_);
         pnh_.getParam("num_of_nearest_points", num_of_nearest_points_);
+        ROS_INFO_STREAM(num_of_nearest_points_);
         pnh_.getParam("message_timeout", timeout_);
         pnh_.getParam("background_instance", background_instance_);
         exect();
@@ -23,7 +25,9 @@ namespace nearest_point_extractor
     /*Refecence the publisher and subscriber*/
     void NearestPointExtractor::exect()
     {
-        dummy_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(output_topic_name_, 10);
+        ROS_INFO_STREAM(output_topic_name_);
+        ROS_INFO_STREAM(mesh_topic_name_);
+        dummy_pub_ = nh_.advertise<color_cloud_bridge::out_segmentation>(output_topic_name_, 10);
         mesh_topic_name_sub_ = nh_.subscribe(mesh_topic_name_, 10, &NearestPointExtractor::InputCallback, this);
     }
 
@@ -58,14 +62,15 @@ namespace nearest_point_extractor
                                                                                 std::vector<mesh_and_instance> mesh_cloud, double radisu_arg)
     {
         color_cloud_bridge::out_segmentation out_cloud;
-        for (int i = 0; i < sensor_cloud_->size(); i++) {
+        for (int i = 0; i < sensor_cloud.size(); i++) {
             out_cloud.x.push_back(sensor_cloud.points[i].x);
             out_cloud.y.push_back(sensor_cloud.points[i].y);
             out_cloud.z.push_back(sensor_cloud.points[i].z);
             out_cloud.instance.push_back(background_instance_);
         }
         pcl::search::KdTree<pcl::PointXYZ> kdtree;
-        kdtree.setInputCloud(sensor_cloud_);
+        
+        kdtree.setInputCloud(sensor_cloud.makeShared());
         std::vector<int> pointIndices, list_pointIndices;
         std::vector<float> squaredDistances;
         double c2c_distance = 0.0;
@@ -86,7 +91,7 @@ namespace nearest_point_extractor
                 squaredDistances.clear();
             }
         }
-        ROS_INFO_STREAM("sensor all size: " << sensor_cloud_->points.size());
+        // ("sensor all size: " << senROS_INFO_STREAMsor_cloud_->points.size());
         ROS_INFO_STREAM("color point size: " << list_pointIndices.size());
         list_pointIndices.clear();
         return out_cloud;

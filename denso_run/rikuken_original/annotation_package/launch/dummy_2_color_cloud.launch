@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="receive_topic_name" default="all_cloud"/>
+    <arg name="output_topic_name" default="tsuchida_cloud"/>
+    
+    <node pkg="annotation_package" type="dummy_2_color_cloud" name="dummy_2_color_cloud" output="screen">
+        <param name="receive_topic_name" value="$(arg receive_topic_name)"/>
+        <param name="output_topic_name" value="$(arg output_topic_name)"/>
+    </node>
+</launch>
