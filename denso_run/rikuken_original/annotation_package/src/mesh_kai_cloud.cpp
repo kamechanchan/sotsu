@@ -27,8 +27,8 @@ MeshCloud::MeshCloud(ros::NodeHandle &nh, std::string object_name, std::string m
     
     frame_set();
     stl_file_set();
-    this->get_tf();
-    this->transformMesh();
+    // this->get_tf();
+    // this->transformMesh();
    /* for (int i = 0; i < parts_clouds_.size(); i++) {
         mesh_point_pcl_ += parts_clouds_[i];
     }

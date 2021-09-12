@@ -11,6 +11,7 @@ find_package(catkin REQUIRED
     message_generation
     sensor_msgs
     geometry_msgs
+    std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -75,6 +76,7 @@ generate_messages(
    DEPENDENCIES
    sensor_msgs
    geometry_msgs
+   std_msgs
      # Or other packages containing msgs
 )
 

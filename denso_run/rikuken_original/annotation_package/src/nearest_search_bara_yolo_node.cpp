@@ -1,4 +1,4 @@
-#include <annotation_package/nearest_search_2.hpp>
+#include <annotation_package/nearest_search_yolo.hpp>
 #include <stdlib.h>
 #include <time.h>
 #include <list>
@@ -36,13 +36,6 @@ int main(int argc, char** argv)
     for (int i = 0; i < num_of_object; i++) {
         loader_[i]->param_register(sensor_topic, mesh_base_topic + "_" + std::to_string(i), output_topic + "_" + std::to_string(i), num_of_nearest_points);
     }
-    loader_[0]->color_decide(255, 0, 0);
-    loader_[1]->color_decide(0, 255, 0);
-    loader_[2]->color_decide(0, 0, 255);
-    loader_[3]->color_decide(255, 255, 0);
-    loader_[4]->color_decide(0, 255, 255);
-    loader_[5]->color_decide(255, 0, 255);
-    loader_[6]->color_decide(255, 100, 255);
 
     pcl::PointCloud<pcl::PointXYZRGB> all_cloud, nokori_cloud;
     std::vector<int> index_all_cloud;
@@ -76,23 +69,7 @@ int main(int argc, char** argv)
            // nokori_cloud = loader_[i]->write_cloud();
         }
         
-      /*  for (int i = 0; i < index_all_cloud.size(); i++) {
-            nokori_index.remove(index_all_cloud[i]);
-        }
-        std::cout << "kesita" << std::endl;
-        for (int i = 0; i < nokori_index.size(); i++) {
-            pcl::PointXYZRGB ten;
-            ten.x = loader_[0]->sensor_cloud_->points[i].x;
-            ten.y = loader_[0]->sensor_cloud_->points[i].y;
-            ten.z = loader_[0]->sensor_cloud_->points[i].z;
-            ten.r = 0;
-            ten.g = 0;
-            ten.b = 0;
-            nokori_cloud.push_back(ten);
-            
-        }*/
-       // ROS_INFO_STREAM("nokori size is " << nokori_cloud.size());
-      //  all_cloud += nokori_cloud;
+
         nokori_cloud.header.frame_id = loader_[0]->frame_id_;
         pcl::toROSMsg(nokori_cloud, all_msgs);
         cloud_pub.publish(all_msgs);
