@@ -21,6 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   tf2_geometry_msgs
   tf2
+  color_cloud_bridge
 )
 add_message_files(
   FILES
@@ -87,5 +88,10 @@ target_link_libraries(angle_trans
 
 add_executable(exec_yolo src/exec_yolo.cpp src/exec_yolo_node.cpp)
 target_link_libraries(exec_yolo
+  ${catkin_LIBRARIES}
+)
+
+add_executable(ano_and_exec src/ano_and_exec.cpp src/ano_and_exec_node.cpp)
+target_link_libraries(ano_and_exec
   ${catkin_LIBRARIES}
 )

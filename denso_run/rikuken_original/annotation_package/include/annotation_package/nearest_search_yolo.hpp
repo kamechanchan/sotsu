@@ -16,17 +16,17 @@
 
 namespace nearest_point_extractor
 {
+    struct mesh_and_instance {
+        pcl::PointCloud<pcl::PointXYZ> mesh_pcl_one;
+        int instance;
+    };
     class NearestPointExtractor
     {
     public:
         NearestPointExtractor(ros::NodeHandle &nh);
-        void publish();
         void InputCallback(const color_cloud_bridge::object_kiriwakeConstPtr&);
-        void param_register(std::string, std::string, std::string, int);
-        void color_decide(unsigned char, unsigned char, unsigned char);
         void exect();
-        void sensor_input(sensor_msgs::PointCloud2);
-        color_cloud_bridge::out_segmentation extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, std::vector<pcl::PointCloud<pcl::PointXYZ>> mesh_cloud, double radius);
+        color_cloud_bridge::out_segmentation extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, std::vector<mesh_and_instance> mesh_cloud, double radius);
         template <typename T>
         void print_parameter(T para)
         {
@@ -39,8 +39,9 @@ namespace nearest_point_extractor
             boost::shared_ptr<const T> share;
             share = ros::topic::waitForMessage<T>(topic_name, nh_, ros::Duration(timeout));
             if (share != NULL) {
-                msg = share;
+                msg = *share;
             }
+            share.reset();
         }
         pcl::PointCloud<pcl::PointXYZRGB> writing_cloud;
         // pcl::PointCloud<pcl::PointXYZRGB>::Ptr output_cloud_;
@@ -51,10 +52,11 @@ namespace nearest_point_extractor
         pcl::PointCloud<pcl::PointXYZ>::Ptr mesh_cloud_;
         sensor_msgs::PointCloud2 sensor_cloud_msgs_;
         std::vector<sensor_msgs::PointCloud2> mesh_clouds_msgs_;
+
     private:
         ros::NodeHandle nh_;
-        ros::NodeHandle *pnh_;
-        ros::Publisher cloud_pub_;
+        ros::NodeHandle pnh_;
+        ros::Publisher dummy_pub_;
         ros::Subscriber mesh_topic_name_sub_;
         tf::StampedTransform transform_;
         tf::TransformListener listener_;
@@ -65,7 +67,7 @@ namespace nearest_point_extractor
         std::string mesh_topic_name_;
         std::string sensor_topic_name_;
         std::string output_topic_name_;
-        
-        double radius;
+        double radius_;
+        int background_instance_;
     };
 }

@@ -94,8 +94,20 @@ target_link_libraries(nearest_search_bara_3
   ${PCL_LIBRARIES}
 )
 
+add_executable(nearest_search_bara_yolo src/nearest_search_yolo.cpp src/nearest_search_bara_yolo_node.cpp)
+target_link_libraries(nearest_search_bara_yolo
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
 add_executable(pcl_2_ba src/pcl_2_ba.cpp)
 target_link_libraries(pcl_2_ba
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(dummy_2_color_cloud src/dummy_2_color_cloud.cpp)
+target_link_libraries(dummy_2_color_cloud
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )

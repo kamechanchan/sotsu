@@ -14,6 +14,7 @@
 #include <message_filters/sync_policies/approximate_time.h>
 #include <geometry_msgs/TransformStamped.h>
 #include <fstream>
+#include <color_cloud_bridge/object_kiriwake.h>
 
 class Ano_and_Exec
 {
@@ -26,7 +27,7 @@ public:
     typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::CameraInfo, sensor_msgs::Image> Sync_Sub_type;
     cv::Point2d project3d_to_pixel(cv::Point3d, sensor_msgs::CameraInfo);
     cv::Point2d project3d_to_pixel_origin(cv::Point3d, sensor_msgs::CameraInfo);
-    void paramter_set_bara(std::string, int);
+    void paramter_set_bara();
     void rotation_convert(geometry_msgs::TransformStamped, std::vector<geometry_msgs::TransformStamped>, std::vector<cv::Point3d>&);
     void get_original_image(sensor_msgs::Image, cv::Mat&);
     template <typename T>
@@ -37,8 +38,10 @@ public:
         if (share != NULL) {
             final_message = *share;
         }
+        share.reset();
     }
     void write_instance(std::vector<std::vector<cv::Point2d>>, std::vector<std::vector<int>> &);
+    std::vector<std::vector<int>> write_instance(std::vector<std::vector<cv::Point2d>>, cv::Mat draw_IMG);
     template <class T>
     void swap(T &yes, T &we)
     {
@@ -61,6 +64,7 @@ private:
     std::string world_frame_;
     std::string inputcloud_topic_name_;
     std::string output_topic_name_;
+    std::string oculuder_topic_name_;
     std::vector<std::string> target_frames_;
     std::string camera_topic_name_, image_topic_name_;
     tf2_ros::TransformListener lister_;
@@ -69,10 +73,11 @@ private:
     sensor_msgs::PointCloud2 output_cloud_msgs_;
     double f_scale_, cx_scale_, cy_scale_;
     double fx_, fy_, tx_, ty_, cx_, cy_;
+    double dulation_;
     float radious_;
     bool write_is_ok_;
     std::string image_dir_name_, filebasename_, model_name_, label_dir_name_, boxes_dir_name_;
     int save_count_;
-    int work_count_;
     int the_number_of_data;
+    int timespan_;
 };
