@@ -43,13 +43,10 @@ namespace nearest_point_extractor
             }
             share.reset();
         }
-        pcl::PointCloud<pcl::PointXYZRGB> writing_cloud;
         // pcl::PointCloud<pcl::PointXYZRGB>::Ptr output_cloud_;
         color_cloud_bridge::out_segmentation output_cloud_;
         std::string frame_id_;
         std::vector<int> cloud_index_;
-        pcl::PointCloud<pcl::PointXYZ>::Ptr sensor_cloud_;
-        pcl::PointCloud<pcl::PointXYZ>::Ptr mesh_cloud_;
         sensor_msgs::PointCloud2 sensor_cloud_msgs_;
         std::vector<sensor_msgs::PointCloud2> mesh_clouds_msgs_;
 
@@ -60,7 +57,6 @@ namespace nearest_point_extractor
         ros::Subscriber mesh_topic_name_sub_;
         tf::StampedTransform transform_;
         tf::TransformListener listener_;
-        float LEAF_SIZE;
         int num_of_nearest_points_;
         int timeout_;
         bool flag_;
