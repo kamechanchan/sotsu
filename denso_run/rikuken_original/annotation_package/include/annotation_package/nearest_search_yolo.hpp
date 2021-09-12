@@ -26,7 +26,7 @@ namespace nearest_point_extractor
         void color_decide(unsigned char, unsigned char, unsigned char);
         void exect();
         void sensor_input(sensor_msgs::PointCloud2);
-        color_cloud_bridge::out_segmentation extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, pcl::PointCloud<pcl::PointXYZ> mesh_cloud, double radius);
+        color_cloud_bridge::out_segmentation extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, std::vector<pcl::PointCloud<pcl::PointXYZ>> mesh_cloud, double radius);
         template <typename T>
         void print_parameter(T para)
         {
@@ -65,6 +65,7 @@ namespace nearest_point_extractor
         std::string mesh_topic_name_;
         std::string sensor_topic_name_;
         std::string output_topic_name_;
+        
         double radius;
     };
 }

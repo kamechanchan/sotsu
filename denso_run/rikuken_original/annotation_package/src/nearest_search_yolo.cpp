@@ -45,7 +45,7 @@ namespace nearest_point_extractor
         if (!flag_)
             return;
         //print_parameter("extract mae");
-        output_cloud_ = extract_cloud(*sensor_cloud_, *mesh_cloud_, radius);
+        
         //print_parameter("extract go");
 
         sensor_msgs::PointCloud2 cloud_msg;
@@ -67,46 +67,57 @@ namespace nearest_point_extractor
         }
         pcl::PointCloud<pcl::PointXYZ> sensor_pcl;
         pcl::fromROSMsg(sensor_cloud_msgs_, sensor_pcl);
-        std::vector<color_cloud_bridge::out_segmentation> outputs;
+        std::vector<pcl::PointCloud<pcl::PointXYZ>> mesh_clostors;
         for (int i = 0; i < mesh_clouds_msgs_.size(); i++) {
             pcl::PointCloud<pcl::PointXYZ> mesh_pcl;
             pcl::fromROSMsg(mesh_clouds_msgs_[i], mesh_pcl);
-            color_cloud_bridge::out_segmentation out_one;
-            out_one = extract_cloud(sensor_pcl, mesh_pcl, radius);
-            outputs.push_back(out_one);
+            mesh_clostors.push_back(mesh_pcl);
         }
+        color_cloud_bridge::out_segmentation output;
+        output = extract_cloud(sensor_pcl, mesh_clostors, radius);
+
     }
 
-    color_cloud_bridge::out_segmentation NearestPointExtractor::extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud,
-                                                                                pcl::PointCloud<pcl::PointXYZ> mesh_cloud, double radisu_arg)
+    color_cloud_bridge::out_segmentation NearestPointExtractor::extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, std::vector<pcl::PointCloud<pcl::PointXYZ>> mesh_cloud, double radius)
     {
-        color_cloud_bridge::out_segmentation out_cloud;
+        pcl::PointCloud<pcl::PointXYZRGB>::Ptr out_cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
+        for (int i = 0; i < sensor_cloud_->size(); i++) {
+            pcl::PointXYZRGB part_of_extract;
+            part_of_extract.x = sensor_cloud_->points[i].x;
+            part_of_extract.y = sensor_cloud_->points[i].y;
+            part_of_extract.z = sensor_cloud_->points[i].z;
+            part_of_extract.r = 255;
+            part_of_extract.g = 255;
+            part_of_extract.b = 255;
+            out_cloud->push_back(part_of_extract);
+        }
         pcl::search::KdTree<pcl::PointXYZ> kdtree;
         kdtree.setInputCloud(sensor_cloud_);
-        std::vector<int> pointIndices;
+        std::vector<int> pointIndices, list_pointIndices;
         std::vector<float> squaredDistances;
         double c2c_distance = 0.0;
         int point_size = 0;
-        print_parameter("mesh size is " + std::to_string(mesh_cloud.points.size()));
-        for (auto mesh : mesh_cloud.points)
-        {
-            if (kdtree.nearestKSearch(mesh, num_of_nearest_points_, pointIndices, squaredDistances) > 0) {
-                c2c_distance += squaredDistances[0];
-                point_size++;
-                for (int j = 0; j < pointIndices.size(); j++) {
-                    out_cloud.x.push_back(sensor_cloud.points[pointIndices[j]].x);
-                    out_cloud.y.push_back(sensor_cloud.points[pointIndices[j]].y);
-                    out_cloud.z.push_back(sensor_cloud.points[pointIndices[j]].z);
-                    out_cloud.instance.push_back(1);
-                }
+        for (int i = 0; i < mesh_cloud.size(); i++) {
+            for (auto mesh : mesh_cloud[i].points)
+            {
+                if (kdtree.nearestKSearch(mesh, num_of_nearest_points_, pointIndices, squaredDistances) > 0) {
+                    c2c_distance += squaredDistances[0];
+                    point_size++;
+                    for (int j = 0; j < pointIndices.size(); j++) {
+                        out_cloud->points[pointIndices[j]].r = color[i][0];
+                        out_cloud->points[pointIndices[j]].g = color[i][1];
+                        out_cloud->points[pointIndices[j]].b = color[i][2];
+                        list_pointIndices.push_back(pointIndices[j]);
+                    }
 
+                }
+                pointIndices.clear();
+                squaredDistances.clear();
             }
-            pointIndices.clear();
-            squaredDistances.clear();
-        }
-        ROS_INFO_STREAM("point:size :" << point_size);
-        ROS_INFO_STREAM("c2c_distance: " << c2c_distance);
-        ROS_INFO_STREAM("c2c_distance(mean): " << c2c_distance / point_size);
+        ROS_INFO_STREAM("sensor all size: " << sensor_cloud_->points.size());
+        ROS_INFO_STREAM("color point size: " << list_pointIndices.size());
+        list_pointIndices.clear();
+            
         return out_cloud;
     }
 
