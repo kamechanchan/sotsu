@@ -36,9 +36,11 @@ namespace nearest_point_extractor
     void NearestPointExtractor::InputCallback(const color_cloud_bridge::object_kiriwakeConstPtr &std_msgs_sub)
     {   
         int size = std_msgs_sub->occuluder_mesh_topic_name.size();
+        std::cout << "tsuchida_1" << std::endl;
         get_one_message<sensor_msgs::PointCloud2>(sensor_cloud_msgs_, sensor_topic_name_, timeout_);
         for (int i = 0; i < size; i++) {
             sensor_msgs::PointCloud2 mesh_one;
+            std::cout << std_msgs_sub->occuluder_mesh_topic_name[i] << std::endl;
             get_one_message<sensor_msgs::PointCloud2>(mesh_one, std_msgs_sub->occuluder_mesh_topic_name[i], timeout_);
             mesh_clouds_msgs_.push_back(mesh_one);
         }

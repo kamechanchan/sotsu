@@ -111,3 +111,9 @@ target_link_libraries(dummy_2_color_cloud
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )
+
+add_executable(nearest_search_yolo_1 src/nearest_search_yolo_1.cpp src/nearest_search_yolo_1_node.cpp)
+target_link_libraries(nearest_search_yolo_1
+  ${catkin_LIBRARIES}
+  
+)

@@ -190,6 +190,7 @@ class annotation_environment(object):
         while com < 1:
             com = com + 1  
             for i in range(len(pose_list)):
+                self.occuluder_pub.publish(self.occulution_object)
                 self.model_state_pub.publish(pose_list[len(pose_list) - 1 - i])
                 loop.sleep()
 

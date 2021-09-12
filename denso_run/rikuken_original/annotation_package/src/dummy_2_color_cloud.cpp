@@ -12,6 +12,7 @@ std::string pcd_file_name;
 std::string receive_topic_name;
 std::string output_topic_name;
 ros::Publisher pub;
+std::string frame_id_;
 
 void callback(const color_cloud_bridge::out_segmentationConstPtr msg)
 {
@@ -160,6 +161,7 @@ void callback(const color_cloud_bridge::out_segmentationConstPtr msg)
     ROS_INFO_STREAM("finish save");
     sensor_msgs::PointCloud2 ros_msgs;
     pcl::toROSMsg(cloud, ros_msgs);
+    ros_msgs.header.frame_id = frame_id_;
     pub.publish(ros_msgs);
 }
 
@@ -172,6 +174,7 @@ int main(int argc, char** argv)
     ros::NodeHandle pnh("~");
     pnh.getParam("receive_topic_name", receive_topic_name);
     pnh.getParam("output_topic_name", output_topic_name);
+    pnh.getParam("frame_id", frame_id_);
    
     ros::Subscriber sub;
     pub = nh.advertise<sensor_msgs::PointCloud2>(output_topic_name, 10);
