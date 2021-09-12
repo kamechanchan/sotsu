@@ -40,6 +40,7 @@ public:
         share.reset();
     }
     void write_instance(std::vector<std::vector<cv::Point2d>>, std::vector<std::vector<int>> &);
+    std::vector<std::vector<int>> write_instance(std::vector<std::vector<cv::Point2d>>, cv::Mat draw_IMG);
     template <class T>
     void swap(T &yes, T &we)
     {

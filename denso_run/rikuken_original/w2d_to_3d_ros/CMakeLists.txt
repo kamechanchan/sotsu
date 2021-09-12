@@ -90,3 +90,8 @@ add_executable(exec_yolo src/exec_yolo.cpp src/exec_yolo_node.cpp)
 target_link_libraries(exec_yolo
   ${catkin_LIBRARIES}
 )
+
+add_executable(ano_and_exec src/ano_and_exec.cpp src/ano_and_exec_node.cpp)
+target_link_libraries(ano_and_exec
+  ${catkin_LIBRARIES}
+)

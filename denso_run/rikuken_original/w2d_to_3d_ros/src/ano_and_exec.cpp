@@ -8,7 +8,6 @@ Ano_and_Exec::Ano_and_Exec(ros::NodeHandle &nh) :
     nh_(nh),
     radious_(0.05),
     save_count_(0),
-    work_count_(0),
     pnh_("~"),
     buffer_(),
     lister_(buffer_)
@@ -26,7 +25,6 @@ void Ano_and_Exec::parameter_set()
     pnh_.getParam("cx_scale", cx_scale_);
     pnh_.getParam("cy_scale", cy_scale_);
     pnh_.getParam("radious", radious_);
-    pnh_.getParam("work_count", work_count_);
     pnh_.getParam("model_name", model_name_);
     pnh_.getParam("world_frame", world_frame_);
     pnh_.getParam("the_number_of_data", the_number_of_data);
@@ -35,7 +33,7 @@ void Ano_and_Exec::parameter_set()
     pnh_.getParam("oculuder_topic_name", oculuder_topic_name_);
     pnh_.getParam("timespan", timespan_);
     pnh_.getParam("dulation", dulation_);
-    paramter_set_bara(model_name_, work_count_);
+    
     output_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(output_topic_name_, 10);
     camera_sub_ = new message_filters::Subscriber<sensor_msgs::CameraInfo>(nh_, camera_topic_name_, 10);
     image_sub_ = new message_filters::Subscriber<sensor_msgs::Image>(nh_, image_topic_name_, 10);
@@ -53,7 +51,7 @@ void Ano_and_Exec::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, senso
 
     geometry_msgs::TransformStamped trans_source;
     cv::Mat ori_img;
-    
+    paramter_set_bara();
     tf_get(world_frame_, source_frame_, trans_source);
     // ROS_INFO_STREAM("message2 come");
     ros::WallTime start_w = ros::WallTime::now();
@@ -64,7 +62,7 @@ void Ano_and_Exec::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, senso
     // ROS_INFO_STREAM("totyuu time: " << take_totyuu_time_w.toSec());
 
     std::vector<geometry_msgs::TransformStamped> transforms;
-    for (int i = 0; i < work_count_; i++) {
+    for (int i = 0; i < target_frames_.size(); i++) {
         geometry_msgs::TransformStamped trans;
         tf_get(world_frame_, target_frames_[i], trans);
         transforms.push_back(trans);
@@ -85,9 +83,9 @@ void Ano_and_Exec::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, senso
         image_instance_.push_back(iim);
     }
     // ROS_INFO_STREAM("message5 come");
-    write_instance(uv_points, image_instance_);
+    // write_instance(uv_points, image_instance_);
     // ROS_INFO_STREAM("message6 come");
-
+    image_instance_ = write_instance(uv_points, draw_image_);
     get_original_image(image1, ori_img);
     // ROS_INFO_STREAM("message7 come");
 
@@ -140,6 +138,7 @@ void Ano_and_Exec::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image ima
     cv::Mat rgb_image;
     cv::cvtColor(cv_image, rgb_image, cv::COLOR_BGR2RGB);
     draw_img = cv_image;
+    cv_img_ptr.reset();
     
     int count = 0;
     int aida = 100;
@@ -171,6 +170,7 @@ void Ano_and_Exec::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image ima
             uv_points.push_back(uv_s);
         }
     }
+    
     // std::cout << "uv_points size " << uv_points.size() << std::endl;
 }
 
@@ -202,10 +202,11 @@ cv::Point2d Ano_and_Exec::project3d_to_pixel(cv::Point3d xyz, sensor_msgs::Camer
     return uv_rect;
 }
 
-void Ano_and_Exec::paramter_set_bara(std::string base_tf_frame, int work_count)
+void Ano_and_Exec::paramter_set_bara()
 {
     color_cloud_bridge::object_kiriwake com_mes;
     get_one_message<color_cloud_bridge::object_kiriwake>(com_mes, oculuder_topic_name_, nh_, timespan_);
+    std::cout << "occuluder size is " << com_mes.occuluder_object.size() << std::endl;
     for (int i = 0; i < com_mes.occuluder_object.size(); i++) {
         target_frames_.push_back(com_mes.occuluder_object[i]);
     }
@@ -267,17 +268,47 @@ void Ano_and_Exec::write_instance(std::vector<std::vector<cv::Point2d>> point_2d
             swap(y1, y2);
         }
         int count = 0;
-        // std::cout << x1 << " " << x2 << " " << y1 << " " << y2 << std::endl;
         for (int k = y1; k <= y2; k++) 
         {
             for (int l = x1; l <= x2; l++) {
                 instance[k][l] = 1;
-                // std::cout << count << std::endl;
-                // count++;
             }
         }
 
     }
+}
+
+std::vector<std::vector<int>> Ano_and_Exec::write_instance(std::vector<std::vector<cv::Point2d>> point_2d, cv::Mat img_size_img)
+{
+    std::vector<std::vector<int>> instance_img_sasyo;
+    for (int i = 0; i < img_size_img.rows; i++) {
+        std::vector<int> iim;
+        for (int j = 0; j < img_size_img.cols; j++) {
+            iim.push_back(0);
+        }
+        instance_img_sasyo.push_back(iim);
+    }
+    for (int i = 0; i < point_2d.size(); i++) {
+        int x1 = static_cast<int>(point_2d[i][0].x);
+        int x2 = static_cast<int>(point_2d[i][1].x);
+        int y1 = static_cast<int>(point_2d[i][0].y);
+        int y2 = static_cast<int>(point_2d[i][1].y);
+        if (x1 > x2) {
+            swap(x1, x2);
+        }
+        if (y1 > y2) {
+            swap(y1, y2);
+        }
+        int count = 0;
+        for (int k = y1; k <= y2; k++) 
+        {
+            for (int l = x1; l <= x2; l++) {
+                instance_img_sasyo[k][l] = 1;
+            }
+        }
+
+    }
+    return instance_img_sasyo;
 }
 
 void Ano_and_Exec::hurui(pcl::PointCloud<pcl::PointXYZ> input_pcl_cloud, std::vector<std::vector<int>> instance, sensor_msgs::Image image, sensor_msgs::CameraInfo cinfo, pcl::PointCloud<pcl::PointXYZRGB> &outcloud_pcl_cloud)

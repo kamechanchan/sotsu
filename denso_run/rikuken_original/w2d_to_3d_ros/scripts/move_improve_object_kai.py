@@ -35,6 +35,7 @@ class annotation_environment(object):
         
         self.kaisuu = 0
         self.model_name = model_name
+        self.z_coordinamte = 0
         self.occulution_object = object_kiriwake()
         
         self.occuluder_array = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
@@ -77,7 +78,7 @@ class annotation_environment(object):
            
             x = youso[i][0]
             y = youso[i][1]   
-            z = 1.1
+            z = self.z_coordinamte + 0.1
             pose_object = geometry_msgs.msg.Pose()
             pose_object.position.x = x
             pose_object.position.y = y
@@ -117,7 +118,7 @@ class annotation_environment(object):
                     y = self.occulution_object.occuluder_pose[i].position.y + y_zure
                     if limit_pose_is_ok(x, y, a_4, a_1):
                         break
-            z = 1.02
+            z = self.z_coordinamte + 0.02
             x_kako.append(x)
             y_kako.append(y)
             roll = 0
@@ -249,7 +250,7 @@ class annotation_environment(object):
     
     def execute(self):
         loop = rospy.Rate(30)
-        naibu_loop = rospy.Rate(1)
+        naibu_loop = rospy.Rate(0.5)
         not_finish = rospy.get_param("not_finish", True)
         self.home_move()
         #count = 0
@@ -283,7 +284,7 @@ class annotation_environment(object):
         pose_data.model_name = "object_box"
         pose_data.pose.position.x = 0
         pose_data.pose.position.y = 0
-        pose_data.pose.position.z = 1
+        pose_data.pose.position.z = self.z_coordinamte
         roll = 0
         pitch = 0
         yaw = 0

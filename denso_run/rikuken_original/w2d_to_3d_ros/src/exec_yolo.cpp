@@ -96,15 +96,16 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
     ROS_INFO_STREAM("tsuchida_nine" << shori_count);
     // ROS_INFO_STREAM("message4 come");
 
-    for (int i = 0; i < draw_image_.rows; i++) {
-        std::vector<int> iim;
-        for (int j = 0; j < draw_image_.cols; j++) {
-            iim.push_back(0);
-        }
-        image_instance_.push_back(iim);
-    }
+    // for (int i = 0; i < draw_image_.rows; i++) {
+    //     std::vector<int> iim;
+    //     for (int j = 0; j < draw_image_.cols; j++) {
+    //         iim.push_back(0);
+    //     }
+    //     image_instance_.push_back(iim);
+    // }
     // ROS_INFO_STREAM("message5 come");
-    write_instance(uv_points, image_instance_);
+    // write_instance(uv_points, image_instance_);
+    image_instance_ = write_instance(uv_points, draw_image_);
     ROS_INFO_STREAM("tsuchida_ten" << shori_count);
     // ROS_INFO_STREAM("message6 come");
 
@@ -127,8 +128,8 @@ void Exec_yolo::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, sensor_m
     output_pub_.publish(output_cloud_msgs_);
     ROS_INFO_STREAM("");
     ROS_INFO_STREAM("");
-    // cv::imshow("windoue", draw_image_);
-    // cv::waitKey(10);
+    cv::imshow("windoue", draw_image_);
+    cv::waitKey(10);
     
 }
 
@@ -137,13 +138,12 @@ void Exec_yolo::tf_get(std::string source_frame, std::string target_frame, geome
     try
     {
         trans = buffer_.lookupTransform(target_frame, source_frame, ros::Time(0));
-        
-        
         ROS_INFO_ONCE("I got a transfomr");
     }
     catch (tf2::TransformException &e)
     {
         ROS_WARN_STREAM(e.what());
+        buffer_.clear();
         ros::Duration(dulation_).sleep();
         return;
     }
@@ -170,7 +170,7 @@ void Exec_yolo::box_get(sensor_msgs::CameraInfo cinfo, sensor_msgs::Image image,
     
     int count = 0;
     int aida = 100;
-    // std::cout << "trans s size " << trans_s.size() << std::endl;
+    std::cout << "trans s size " << trans_s.size() << std::endl;
     for (int i = 0; i < trans_s.size(); i++) {
         double x = trans_s[i].x;
         double y = trans_s[i].y;
@@ -242,6 +242,8 @@ void Exec_yolo::rotation_convert(geometry_msgs::TransformStamped source_tf, std:
     geometry_msgs::Quaternion source_quat = source_tf.transform.rotation;
     tf2::Quaternion q_rot;
     tf2::convert(source_quat, q_rot);
+    std::cout << "rotation_convert target tf" << target_tfs.size() << std::endl;
+
     for (int i = 0; i < target_tfs.size(); i++) {
         geometry_msgs::Vector3 target_trans = target_tfs[i].transform.translation;
         geometry_msgs::Quaternion target_quat = target_tfs[i].transform.rotation;
@@ -279,7 +281,8 @@ void Exec_yolo::get_original_image(sensor_msgs::Image image1, cv::Mat &original_
 
 void Exec_yolo::write_instance(std::vector<std::vector<cv::Point2d>> point_2d, std::vector<std::vector<int>> &instance)
 {
-    // std::cout << "pointsize " << point_2d.size() << std::endl;
+    
+    std::cout << "pointsize " << point_2d.size() << std::endl;
     for (int i = 0; i < point_2d.size(); i++) {
         int x1 = static_cast<int>(point_2d[i][0].x);
         int x2 = static_cast<int>(point_2d[i][1].x);
@@ -292,17 +295,54 @@ void Exec_yolo::write_instance(std::vector<std::vector<cv::Point2d>> point_2d, s
             swap(y1, y2);
         }
         int count = 0;
-        // std::cout << x1 << " " << x2 << " " << y1 << " " << y2 << std::endl;
+        std::cout << x1 << " " << x2 << " " << y1 << " " << y2 << std::endl;
         for (int k = y1; k <= y2; k++) 
         {
             for (int l = x1; l <= x2; l++) {
-                instance[k][l] = i;
+                instance[k][l] = 1;
                 // std::cout << count << std::endl;
                 // count++;
             }
         }
 
     }
+}
+
+std::vector<std::vector<int>> Exec_yolo::write_instance(std::vector<std::vector<cv::Point2d>> point_2d, cv::Mat img_size_img)
+{
+    std::vector<std::vector<int>> instance_img_sasyo;
+    for (int i = 0; i < img_size_img.rows; i++) {
+        std::vector<int> iim;
+        for (int j = 0; j < img_size_img.cols; j++) {
+            iim.push_back(0);
+        }
+        instance_img_sasyo.push_back(iim);
+    }
+    std::cout << "pointsize " << point_2d.size() << std::endl;
+    for (int i = 0; i < point_2d.size(); i++) {
+        int x1 = static_cast<int>(point_2d[i][0].x);
+        int x2 = static_cast<int>(point_2d[i][1].x);
+        int y1 = static_cast<int>(point_2d[i][0].y);
+        int y2 = static_cast<int>(point_2d[i][1].y);
+        if (x1 > x2) {
+            swap(x1, x2);
+        }
+        if (y1 > y2) {
+            swap(y1, y2);
+        }
+        int count = 0;
+        std::cout << x1 << " " << x2 << " " << y1 << " " << y2 << std::endl;
+        for (int k = y1; k <= y2; k++) 
+        {
+            for (int l = x1; l <= x2; l++) {
+                instance_img_sasyo[k][l] = 1;
+                // std::cout << count << std::endl;
+                // count++;
+            }
+        }
+
+    }
+    return instance_img_sasyo;
 }
 
 void Exec_yolo::hurui(pcl::PointCloud<pcl::PointXYZ> input_pcl_cloud, std::vector<std::vector<int>> instance, sensor_msgs::Image image, sensor_msgs::CameraInfo cinfo, pcl::PointCloud<pcl::PointXYZRGB> &outcloud_pcl_cloud)
