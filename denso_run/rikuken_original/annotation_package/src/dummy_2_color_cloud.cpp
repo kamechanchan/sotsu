@@ -18,6 +18,7 @@ void callback(const color_cloud_bridge::out_segmentationConstPtr msg)
 {
     color_cloud_bridge::out_segmentation out_pcl = *msg;
     pcl::PointCloud<pcl::PointXYZRGB> cloud;
+    int count = 0;
     for (int i = 0; i < out_pcl.x.size(); i++) {
         pcl::PointXYZRGB xyzrgb;
         xyzrgb.x = out_pcl.x[i];
@@ -152,10 +153,12 @@ void callback(const color_cloud_bridge::out_segmentationConstPtr msg)
             xyzrgb.r = 255;
             xyzrgb.b = 255;
             xyzrgb.g  =255;
+            count++;
         }
         
         cloud.push_back(xyzrgb);
     }
+    ROS_INFO_STREAM("shiro kazu: " << count);
     ROS_INFO_STREAM("start save");
     ROS_INFO_STREAM("cloud size is " << cloud.points.size());
     ROS_INFO_STREAM("finish save");

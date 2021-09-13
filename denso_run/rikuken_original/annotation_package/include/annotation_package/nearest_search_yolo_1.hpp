@@ -24,8 +24,7 @@ namespace nearest_point_extractor
     {
     public:
         NearestPointExtractor(ros::NodeHandle &nh);
-        void publish();
-        void InputCallback(const sensor_msgs::PointCloud2ConstPtr&);
+        void InputCallback(const color_cloud_bridge::object_kiriwakeConstPtr &);
         void exect();
         void mesh_callback(const sensor_msgs::PointCloud2ConstPtr&, int);
         color_cloud_bridge::out_segmentation extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, color_cloud_bridge::object_kiriwake mes, double radius);

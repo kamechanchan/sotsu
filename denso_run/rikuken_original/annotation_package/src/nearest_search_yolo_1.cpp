@@ -6,6 +6,7 @@ namespace nearest_point_extractor
     : nh_(nh)
     , flag_(false)
     , pnh_("~")
+    , sensor_cloud_(new pcl::PointCloud<pcl::PointXYZ>)
     {
         pnh_.getParam("sensor_topic_name", sensor_topic_name_);
         pnh_.getParam("output_topic_name", output_topic_name_);
@@ -16,6 +17,9 @@ namespace nearest_point_extractor
         pnh_.getParam("background_instance", background_instance_);
         pnh_.getParam("dulation", dulation_);
         pnh_.getParam("oculuder_kiriwake_topic_name", occuluder_kiriwake_topic_name_);
+        for (int i = 0; i < 32; i++) {
+            mesh_clouds_.push_back(new pcl::PointCloud<pcl::PointXYZ>());
+        }
         exect();
     }
 
@@ -25,7 +29,7 @@ namespace nearest_point_extractor
         ROS_INFO_STREAM(output_topic_name_);
         ROS_INFO_STREAM(sensor_topic_name_);
         dummy_pub_ = nh_.advertise<color_cloud_bridge::out_segmentation>(output_topic_name_, 10);
-        mesh_topic_name_sub_ = nh_.subscribe(sensor_topic_name_, 10, &NearestPointExtractor::InputCallback, this);
+        mesh_topic_name_sub_ = nh_.subscribe(occuluder_kiriwake_topic_name_, 10, &NearestPointExtractor::InputCallback, this);
         mesh_sub_0_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_0", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 0));
         mesh_sub_1_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_1", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 1));
         mesh_sub_2_ = nh_.subscribe<sensor_msgs::PointCloud2>(mesh_base_topic_name_ + "_2", 10, boost::bind(&NearestPointExtractor::mesh_callback, this, _1, 2));
@@ -62,13 +66,14 @@ namespace nearest_point_extractor
 
 
 
-    void NearestPointExtractor::InputCallback(const sensor_msgs::PointCloud2ConstPtr &sensor_pc_msgs)
+    void NearestPointExtractor::InputCallback(const color_cloud_bridge::object_kiriwakeConstPtr &kiriwake_msgs)
     {   
-        std::cout << "tsuchida_4" << std::endl;
-        std::cout << sensor_pc_msgs->header.frame_id << std::endl;
+        sensor_msgs::PointCloud2 sensor_pc_msgs;
+        std::cout << "tsuchida_1" << std::endl;
+        get_one_message<sensor_msgs::PointCloud2>(sensor_pc_msgs, sensor_topic_name_, timeout_);
         try
         {
-            listener_.lookupTransform("world", sensor_pc_msgs->header.frame_id, ros::Time(0), transform_);
+            listener_.lookupTransform("world", sensor_pc_msgs.header.frame_id, ros::Time(0), transform_);
             ROS_INFO_ONCE("I got a transfomr");
 
         }
@@ -81,26 +86,32 @@ namespace nearest_point_extractor
         
         sensor_msgs::PointCloud2 msg_transformed;
         // print_parameter(sensor_pc_msgs->header.frame_id);
-        pcl_ros::transformPointCloud("world", transform_, *sensor_pc_msgs, msg_transformed);
+        pcl_ros::transformPointCloud("world", transform_, sensor_pc_msgs, msg_transformed);
         std::cout << "tsuchida_5" << std::endl;
         pcl::fromROSMsg(msg_transformed, *sensor_cloud_);
         std::cout << "tsuchida_6" << std::endl;
         flag_ = true;
-        
-    }
-
-    void NearestPointExtractor::publish()
-    {
-        if (!flag_)
-            return;
         color_cloud_bridge::out_segmentation output;
-        color_cloud_bridge::object_kiriwake kiri_msg;
-        get_one_message(kiri_msg, occuluder_kiriwake_topic_name_, timeout_);
-        output = extract_cloud(*sensor_cloud_, kiri_msg, radius_);
+       
+        output = extract_cloud(*sensor_cloud_, *kiriwake_msgs, radius_);
         output.header.frame_id = sensor_cloud_msgs_.header.frame_id;
         print_parameter(std::to_string(output.x.size()) + "output_point");
         dummy_pub_.publish(output);
+        
     }
+
+    // void NearestPointExtractor::publish()
+    // {
+    //     if (!flag_)
+    //         return;
+    //     color_cloud_bridge::out_segmentation output;
+    //     color_cloud_bridge::object_kiriwake kiri_msg;
+    //     get_one_message(kiri_msg, occuluder_kiriwake_topic_name_, timeout_);
+    //     output = extract_cloud(*sensor_cloud_, kiri_msg, radius_);
+    //     output.header.frame_id = sensor_cloud_msgs_.header.frame_id;
+    //     print_parameter(std::to_string(output.x.size()) + "output_point");
+    //     dummy_pub_.publish(output);
+    // }
 
     color_cloud_bridge::out_segmentation NearestPointExtractor::extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, color_cloud_bridge::object_kiriwake kiri, double radisu_arg)
     {
@@ -111,6 +122,7 @@ namespace nearest_point_extractor
             out_cloud.z.push_back(sensor_cloud.points[i].z);
             out_cloud.instance.push_back(background_instance_);
         }
+        std::cout << "input kdtree: " << sensor_cloud.size();
         pcl::search::KdTree<pcl::PointXYZ> kdtree;
         
         kdtree.setInputCloud(sensor_cloud.makeShared());
@@ -120,19 +132,23 @@ namespace nearest_point_extractor
         int point_size = 0;
         
         for (int i = 0; i < kiri.instance_numbers.size(); i++) {
+            std::cout << kiri.instance_numbers[i] << ": kazuha : ";
+            int count = 0;
             for (auto mesh : mesh_clouds_[kiri.instance_numbers[i]]->points)
             {
                 if (kdtree.nearestKSearch(mesh, num_of_nearest_points_, pointIndices, squaredDistances) > 0) {
                     c2c_distance += squaredDistances[0];
                     point_size++;
                     for (int j = 0; j < pointIndices.size(); j++) {
-                        out_cloud.instance[j] = kiri.instance_numbers[i];
+                        out_cloud.instance[pointIndices[j]] = kiri.instance_numbers[i];
                     }
 
                 }
                 pointIndices.clear();
                 squaredDistances.clear();
+                count++;
             }
+            std::cout << count << std::endl;
         }
         // ("sensor all size: " << senROS_INFO_STREAMsor_cloud_->points.size());
         ROS_INFO_STREAM("color point size: " << list_pointIndices.size());
