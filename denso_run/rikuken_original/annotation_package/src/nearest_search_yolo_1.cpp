@@ -94,6 +94,9 @@ namespace nearest_point_extractor
         color_cloud_bridge::out_segmentation output;
        
         output = extract_cloud(*sensor_cloud_, *kiriwake_msgs, radius_);
+        if (output.instance.size() == 0) {
+            return;
+        }
         output.header.frame_id = sensor_cloud_msgs_.header.frame_id;
         print_parameter(std::to_string(output.x.size()) + "output_point");
         dummy_pub_.publish(output);
@@ -124,8 +127,11 @@ namespace nearest_point_extractor
         }
         std::cout << "input kdtree: " << sensor_cloud.size();
         pcl::search::KdTree<pcl::PointXYZ> kdtree;
-        
+        if (sensor_cloud.points.size() == 0) {
+            return out_cloud;
+        }
         kdtree.setInputCloud(sensor_cloud.makeShared());
+
         std::vector<int> pointIndices, list_pointIndices;
         std::vector<float> squaredDistances;
         double c2c_distance = 0.0;
