@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="sensor_frame_id" default="photoneo_center"/>
+
+  <node name="from_sensor_frame_to_sensor_optical_frame" pkg="tf" type="static_transform_publisher" args="0.0 0.0 0.0 -1.57 0.0 -1.57 photoneo_center photoneo_center_optical_frame 50" />
+
+ <node name="from_mesh_center_to_true_hand_marker_4_center" pkg="tf" type="static_transform_publisher" args="-0.01031 0.02 -0.0225 2.04564 0.0 1.57  tercero_cover_for_mesh_center true_ar_marker_4_center 50" />
+
+  <node pkg="oneshot_calibration_system" type="hand_ar_oneshot_calibrator" name="hand_ar_oneshot_calibrator" output="screen" />
+</launch>

@@ -1,0 +1,8 @@
+# Directories
+/build
+/test/pcd/creatingPCD
+/test/pcd/segmentation_result_place
+
+#Files
+min_cut_extracted_pc.pcd
+min_cut_result.pcd

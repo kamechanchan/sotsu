@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="num_of_object" default="7"/>
+    <arg name="sensor_topic" default="/cloud_without_segmented"/>
+    <arg name="mesh_base_topic" default="meshcloud"/>
+    <arg name="output_topic_base" default="extract"/>
+    <arg name="radius" default="10000"/>
+    <arg name="num_of_nearest_points" default="10"/>
+    
+    <node name="nearest_search_bara" pkg="annotation_package" type="nearest_search_bara"  output="screen" respawn="false" respawn_delay="0">
+        <param name="num_of_object" value="$(arg num_of_object)"/>
+        <param name="sensor_topic" value="$(arg sensor_topic)"/>
+        <param name="mesh_base_topic" value="$(arg mesh_base_topic)"/>
+        <param name="output_topic_base" value="$(arg output_topic_base)"/>
+        <param name="radius" value="$(arg radius)"/>
+        <param name="num_of_nearest_points" value="$(arg num_of_nearest_points)"/>
+        
+    </node>
+
+</launch>

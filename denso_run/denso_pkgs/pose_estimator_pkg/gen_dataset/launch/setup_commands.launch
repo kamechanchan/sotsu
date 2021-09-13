@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="zero_gravity" pkg="gen_dataset" type="zero_gravity.sh" output="screen" />
+  <node name="delete_ground" pkg="gen_dataset" type="delete_ground.sh" output="screen" />
+</launch>

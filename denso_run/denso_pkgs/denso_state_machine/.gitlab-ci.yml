@@ -1,0 +1,21 @@
+image: docker:git
+services:
+  - docker:dind
+before_script:
+  - apk add --update bash coreutils tar
+  - git clone --quiet --depth 1 -b mk/add-id_rsa https://github.com/MoriKen254/industrial_ci .industrial_ci
+
+kinetic:
+  script:
+    - .industrial_ci/gitlab.sh
+  variables:
+    ROS_REPO: "ros"
+    ROS_DISTRO: "kinetic"
+    CATKIN_LINT: "true"
+    OPT_VI: "-vi"
+    ROSDEP_SKIP_KEYS: "denso_gazebo_srvs moveit_mpp"
+    UPSTREAM_WORKSPACE: "file" # Tell them to install stuff from a .rosinstall file
+    ROSINSTALL_FILENAME: ".depends.rosinstall"
+    CATKIN_LINT_ARGS: "--ignore unknown_package"
+    CATKIN_PARALLEL_JOBS: "-p1"
+    ROS_PARALLEL_JOBS: "-j1"

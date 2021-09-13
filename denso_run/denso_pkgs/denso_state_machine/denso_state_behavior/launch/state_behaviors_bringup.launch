@@ -1,0 +1,21 @@
+<launch>
+
+  <!-- Moving behavior node args -->
+  <arg name="exe_speed_rate" default="1.0" />
+
+
+  <!-- measurement behavior node args -->
+  <arg name="assemble_part_base_frame_name" default="assemble_part_base_frame" />
+
+  <!-- Execute moving behavior node -->
+  <node name="moving_behavior" pkg="denso_state_behavior" type="moving_behavior" output="screen">
+    <param name="exe_speed_rate" type="double" value="$(arg exe_speed_rate)"/>
+  </node>
+
+  <!-- Execute measurement behavior node -->
+  <node name="measurement_behavior" pkg="denso_state_behavior" type="measurement_behavior" output="screen">
+    <param name="assemble_part_base_frame_name" value="$(arg assemble_part_base_frame_name)"/>
+  </node>
+  <node name="measurement_work_point_behavior" pkg="denso_state_behavior" type="measurement_work_point_behavior" output="screen"/>
+
+</launch>

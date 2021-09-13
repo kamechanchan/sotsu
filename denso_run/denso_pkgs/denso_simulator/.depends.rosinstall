@@ -1,0 +1,32 @@
+- git:
+    local-name: denso_pkgs/denso_common
+    uri: git@github.com:Nishida-Lab/denso_common.git
+    version: kinetic-devel
+- git:
+    local-name: denso_deps/cobotta_gripper_ros_pkg
+    uri: git@github.com:Nishida-Lab/cobotta_gripper_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/iai_gripper_ros_pkg
+    uri: git@github.com:Nishida-Lab/iai_gripper_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/mhand_ros_pkg
+    uri: git@github.com:Nishida-Lab/mhand_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/robotiq_3f_ros_pkg
+    uri: git@github.com:Nishida-Lab/robotiq_3f_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/tercero_ros_pkg
+    uri: git@github.com:Nishida-Lab/tercero_ros_pkg.git
+    version: master
+- git:
+    local-name: denso_deps/general-message-pkgs
+    uri: https://github.com/JenniferBuehler/general-message-pkgs
+    version: master
+- git:
+    local-name: denso_deps/gazebo-pkgs
+    uri: https://github.com/JenniferBuehler/gazebo-pkgs
+    version: master

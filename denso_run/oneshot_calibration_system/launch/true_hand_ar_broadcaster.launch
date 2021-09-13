@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="from_mesh_center_to_true_hand_marker_4_center" pkg="tf" type="static_transform_publisher" args="-0.01031 0.02 -0.0225 2.04564 0.0 1.57  tercero_cover_for_mesh_center true_ar_marker_4_center 50" />
+
+</launch>

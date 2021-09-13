@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="pcd_dir_name" default="/home/ericlab/dummy_cloud"/>
+    <arg name="pcd_file_name" default="pcd_save.pcd"/>
+    <arg name="topic_name" default="otameshi_topic"/>
+    
+    <node pkg="annotation_package" output="screen" type="cloud_save_2" name="cloud_save_2">
+        <param name="pcd_dir_name" value="$(arg pcd_dir_name)"/>
+        <param name="pcd_file_name" value="$(arg pcd_file_name)"/>
+        <param name="topic_name" value="$(arg topic_name)"/>
+    </node>
+</launch>
