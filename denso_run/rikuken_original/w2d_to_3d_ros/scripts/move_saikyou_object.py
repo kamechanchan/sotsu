@@ -326,6 +326,7 @@ class annotation_environment(object):
 
         for i in range(random.randint(0, len(self.occulution_object.occuluder_object) - 1)):
             self.occulution_object.occuludy.append(str(self.model_name) + "_" + str(array_ocudy_2[i]))
+            self.occulution_object.occuludy_instance_number.append(array_ocudy_2[i])
 
 
 if __name__=='__main__':

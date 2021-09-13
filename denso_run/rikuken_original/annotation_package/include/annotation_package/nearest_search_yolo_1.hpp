@@ -27,7 +27,7 @@ namespace nearest_point_extractor
         void InputCallback(const color_cloud_bridge::object_kiriwakeConstPtr &);
         void exect();
         void mesh_callback(const sensor_msgs::PointCloud2ConstPtr&, int);
-        color_cloud_bridge::out_segmentation extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, color_cloud_bridge::object_kiriwake mes, double radius);
+        color_cloud_bridge::out_segmentation extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, color_cloud_bridge::object_kiriwake mes, double radius, pcl::PointCloud<pcl::PointXYZ> before_cloud);
         template <typename T>
         void print_parameter(T para)
         {
@@ -52,7 +52,7 @@ namespace nearest_point_extractor
         sensor_msgs::PointCloud2 sensor_cloud_msgs_;
         std::vector<sensor_msgs::PointCloud2> mesh_clouds_msgs_;
         std::vector<pcl::PointCloud<pcl::PointXYZ>*> mesh_clouds_;
-        pcl::PointCloud<pcl::PointXYZ>::Ptr sensor_cloud_;
+        pcl::PointCloud<pcl::PointXYZ>::Ptr sensor_cloud_, sensor_before_cloud_;
 
     private:
         ros::NodeHandle nh_;
@@ -68,6 +68,7 @@ namespace nearest_point_extractor
         std::string mesh_topic_name_;
         std::string sensor_topic_name_;
         std::string output_topic_name_;
+        std::string source_frame_;
         double radius_;
         int background_instance_;
           ros::Subscriber mesh_sub_1_;
