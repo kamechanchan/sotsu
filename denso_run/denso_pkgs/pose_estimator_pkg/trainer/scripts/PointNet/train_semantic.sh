@@ -2,7 +2,7 @@
 
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/hdf5_data/ \
---dataset_model semantic_changed_8_7_1526.hdf5 \
+--dataset_model semantic_6000.hdf5 \
 --dataset_mode semantic_segmentation \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/August \
 --resolution 8192 \
@@ -14,7 +14,7 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --arch PointNet_Segmentation \
 --print_freq 10 \
 --save_latest_freq 20000 \
---save_epoch_freq 5 \
+--save_epoch_freq 1 \
 --run_test_freq 1 \
 --gpu_ids 0 \
 --gpu_num 1 \

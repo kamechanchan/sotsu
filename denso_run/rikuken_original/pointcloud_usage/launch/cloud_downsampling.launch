@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="input_topic_name" default="/output"/>
+    <arg name="output_topic_name" default="sonomama_clouds"/>
+    <arg name="leaf_size" default="0.4"/>
+    <arg name="point_size" default="10000"/>
+    
+    
+    
+    <node pkg="pointcloud_usage" type="cloud_downsample" name="cloud_sonomama" output="screen">
+        <param name="input_topic_name" value="$(arg input_topic_name)"/>
+        <param name="output_topic_name" value="$(arg output_topic_name)"/>
+        <param name="leaf_size" value="$(arg leaf_size)"/>
+        <param name="point_size" value="$(arg point_size)"/>
+    </node>
+</launch>

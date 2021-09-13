@@ -20,7 +20,7 @@ class BaseOptions:
         self.parser.add_argument('--dataset_model', nargs=self.dataset_number, type=str, default='HV8')
         self.parser.add_argument('--max_dataset_size', nargs=self.dataset_number, type=int, default=float("inf"), help='Maximum num of samples per epoch')
         self.parser.add_argument('--process_swich', type=str, choices={"raugh_recognition", "object_segment"}, default="debug")
-        self.parser.add_argument('--batch_size', type=int, default=2)
+        self.parser.add_argument('--batch_size', type=int, default=1)
         self.parser.add_argument('--num_epoch', type=int, default=150)
         self.parser.add_argument('--arch', type=str, default="debug")
         self.parser.add_argument('--resolution', type=int, default=1024)

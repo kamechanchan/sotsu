@@ -48,3 +48,10 @@ target_link_libraries(cloud_sonomama
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )
+
+
+add_executable(cloud_downsample src/cloud_downsampling.cpp)
+target_link_libraries(cloud_downsample
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)

@@ -53,6 +53,7 @@ include_directories(
 )
 
 
+<<<<<<< HEAD
 add_executable(colord_cloud src/colord_cloud.cpp)
 target_link_libraries(colord_cloud
   ${catkin_LIBRARIES}
@@ -70,6 +71,8 @@ add_dependencies(another_message_publish ${${PROJECT_NAME}_EXPORTED_TARGETS} ${c
 target_link_libraries(another_message_publish
   ${catkin_LIBRARIES}
 )
+=======
+>>>>>>> 9198954ed02a53626243e96a7ad922b0269193f0
 
 add_executable(colored_pointcloud src/colored_pointcloud.cpp src/colored_pointcloud_node.cpp)
 target_link_libraries(colored_pointcloud
@@ -91,6 +94,7 @@ target_link_libraries(exec_yolo
   ${catkin_LIBRARIES}
 )
 
+<<<<<<< HEAD
 add_executable(ano_and_exec src/ano_and_exec.cpp src/ano_and_exec_node.cpp)
 target_link_libraries(ano_and_exec
   ${catkin_LIBRARIES}
@@ -110,3 +114,16 @@ add_executable(ano_and_exec_3 src/ano_and_exec_3.cpp src/ano_and_exec_3_node.cpp
 target_link_libraries(ano_and_exec_3
   ${catkin_LIBRARIES}
 )
+=======
+add_library(cloud_clustering src/cloud_clustering.cpp src/abstract_class.cpp)
+target_link_libraries(cloud_clustering
+  ${catkin_LIBRARIES}
+)
+
+add_executable(clustering_ishiyama src/clustering_ishiyama.cpp)
+target_link_libraries(clustering_ishiyama
+  ${catkin_LIBRARIES}
+  cloud_clustering
+)
+
+>>>>>>> 9198954ed02a53626243e96a7ad922b0269193f0

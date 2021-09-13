@@ -19,13 +19,13 @@ dataroot = "/home/ericlab/DENSO_results/August/pcl_visu/progress_output/instance
 dataset_name = "result195.hdf5"
 resolution = 8192
 instance_number = 25
-dataset_number = 50
+dataset_number = 2
 
 datapath = dataroot + dataset_name
 with h5py.File(datapath, mode="r") as f:
     for n in range(dataset_number):
         in_data = f["data_" + str(n)]["Points"][()]
-        out_data = f["data_" + str(n)]["ground_truth"][()]
+        out_data = f["data_" + str(n)]["est"][()]
         # msg_out = out_segmentation()
         pred_new = []
         print(n)

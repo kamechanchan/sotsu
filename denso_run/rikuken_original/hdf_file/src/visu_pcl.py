@@ -3,7 +3,7 @@ import pcl
 import pcl.pcl_visualization
 import numpy as np
 
-cloud0 = pcl.load("/home/ericlab/pointcloud/hakonaize270.pcd")
+cloud0 = pcl.load("/home/ericlab/data/result.pcd")
 print(cloud0)
 cloud_1 = np.array(cloud0)
 print(cloud_1.shape)

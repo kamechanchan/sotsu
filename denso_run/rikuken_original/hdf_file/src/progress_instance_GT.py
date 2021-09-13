@@ -41,7 +41,7 @@ with h5py.File(datapath, mode="r") as f:
         for j in range(resolution):
             msg_out.x.append(in_data[i][0][j])
             msg_out.y.append(in_data[i][1][j])
-            msg_out.z.append(in_data[i][2][j])
+            msg_out.z.append(-in_data[i][2][j])
             msg_out.instance.append(pred_new[i][j])
             print(type(pred_new[i][j]))
         instance_pub.publish(msg_out)
