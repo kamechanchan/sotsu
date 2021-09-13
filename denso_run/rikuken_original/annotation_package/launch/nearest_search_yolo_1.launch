@@ -6,7 +6,7 @@
     <arg name="mesh_base_topic_name" default="meshcloud"/>
     <arg name="output_topic_name" default="all_cloud"/>
     <arg name="radius" default="10000"/>
-    <arg name="num_of_nearest_points" default="3"/>
+    <arg name="num_of_nearest_points" default="8"/>
     <arg name="background_instance" default="300"/>
     <arg name="message_timeout" default="15"/>
     <arg name="dulation" default="0.1"/>

@@ -102,7 +102,11 @@ target_link_libraries(ano_and_exec_1
 )
 
 add_executable(ano_and_exec_2 src/ano_and_exec_2.cpp src/ano_and_exec_2_node.cpp)
-add_dependencies(message_publish ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(ano_and_exec_2
+  ${catkin_LIBRARIES}
+)
+
+add_executable(ano_and_exec_3 src/ano_and_exec_3.cpp src/ano_and_exec_3_node.cpp)
+target_link_libraries(ano_and_exec_3
   ${catkin_LIBRARIES}
 )
