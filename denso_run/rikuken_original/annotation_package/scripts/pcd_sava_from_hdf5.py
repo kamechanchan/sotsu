@@ -5,15 +5,15 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from util_rikuken import util_rikuken
 import pcl
 import numpy as np
-import pcl.pcl_visualization
+# import pcl.pcl_visualization
 import open3d
 from color_cloud_bridge.msg import out_segmentation
 import rospy
 
 rospy.init_node("init")
 pub = rospy.Publisher("otameshi_topic", out_segmentation, queue_size=10)
-index = rospy.get_param("~index", 2)
-path = rospy.get_param("~path", "/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset/instance_try_8_6_23_39.hdf5")
+index = rospy.get_param("~index", 1)
+path = rospy.get_param("~path", "/home/ericlab/hdf5_file/instance_tsuchida_9_13_10_4.hdf5")
 
 #path = "/home/ericlab/OneDrive/DENSO/raugh_recognition/datasets/tsuchida/HV6_size_20000_range_pi_1.hdf5"
 #path = util_rikuken.find_hdf5_File("/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset", "init.hdf5")
@@ -29,7 +29,7 @@ while not rospy.is_shutdown():
         instance_data = hdf5_file["data_" + str(index)]['masks'][()]
         print(type(pcl_data))
         print(type(instance_data))
-        print(pcl.PointCloud(pcl_data))
+        # print(pcl.PointCloud(pcl_data))
         list_1 = pcl_data.tolist()
         list_2 = instance_data.tolist()
         print(path)

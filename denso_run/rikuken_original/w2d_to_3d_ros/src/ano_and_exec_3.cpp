@@ -53,12 +53,13 @@ void Ano_and_Exec::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, senso
     geometry_msgs::TransformStamped trans_source;
     cv::Mat ori_img;
     bool kaeru;
-    nh_.getParam("record_is_ok", kaeru);
-    if (kaeru) {
-        paramter_set_bara();
-        nh_.setParam("record_is_ok", false);
+    // nh_.getParam("record_is_ok", kaeru);
+    // if (kaeru) {
+    //     paramter_set_bara();
+        // nh_.setParam("record_is_ok", false);
         // nh_.setParam("move_is_ok", true);
-    }
+    // }
+    paramter_set_bara();
     tf_get(world_frame_, source_frame_, trans_source);
     // ROS_INFO_STREAM("message2 come");
     ros::WallTime start_w = ros::WallTime::now();

@@ -112,8 +112,21 @@ target_link_libraries(dummy_2_color_cloud
   ${PCL_LIBRARIES}
 )
 
+add_executable(dummy_2_semantic src/dummy_2_semantic.cpp)
+target_link_libraries(dummy_2_semantic
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+
 add_executable(nearest_search_yolo_1 src/nearest_search_yolo_1.cpp src/nearest_search_yolo_1_node.cpp)
 target_link_libraries(nearest_search_yolo_1
   ${catkin_LIBRARIES}
   
+)
+
+add_executable(cloud_save_3 src/cloud_save_3.cpp)
+target_link_libraries(cloud_save_3
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
 )
