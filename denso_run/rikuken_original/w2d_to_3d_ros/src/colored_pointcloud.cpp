@@ -49,6 +49,7 @@ void Colored_PointCloud::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs,
     colored_get(cinfo, image, trans_cloud, colored_pointcloud_, draw_image_);
     pcl::toROSMsg(colored_pointcloud_, output_cloud_);
     output_cloud_.header.frame_id = cloud_msgs.header.frame_id;
+    cv::resize(draw_image_, draw_image_, cv::Size(), 0.4, 0.4);
     cv::imshow("draw", draw_image_);
     cv::waitKey(10);
     output_pub.publish(output_cloud_);
