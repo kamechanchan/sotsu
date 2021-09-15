@@ -21,6 +21,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf2_ros
   tf2_geometry_msgs
   tf2
+  color_cloud_bridge
 )
 add_message_files(
   FILES
@@ -73,14 +74,22 @@ target_link_libraries(exec_yolo
   ${catkin_LIBRARIES}
 )
 
-add_library(cloud_clustering src/cloud_clustering.cpp src/abstract_class.cpp)
-target_link_libraries(cloud_clustering
+add_executable(ano_and_exec src/ano_and_exec.cpp src/ano_and_exec_node.cpp)
+target_link_libraries(ano_and_exec
   ${catkin_LIBRARIES}
 )
 
-add_executable(clustering_ishiyama src/clustering_ishiyama.cpp)
-target_link_libraries(clustering_ishiyama
+add_executable(ano_and_exec_1 src/ano_and_exec_1.cpp src/ano_and_exec_1_node.cpp)
+target_link_libraries(ano_and_exec_1
   ${catkin_LIBRARIES}
-  cloud_clustering
 )
 
+add_executable(ano_and_exec_2 src/ano_and_exec_2.cpp src/ano_and_exec_2_node.cpp)
+target_link_libraries(ano_and_exec_2
+  ${catkin_LIBRARIES}
+)
+
+add_executable(ano_and_exec_3 src/ano_and_exec_3.cpp src/ano_and_exec_3_node.cpp)
+target_link_libraries(ano_and_exec_3
+  ${catkin_LIBRARIES}
+)

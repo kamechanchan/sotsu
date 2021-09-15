@@ -37,8 +37,10 @@ public:
         if (share != NULL) {
             final_message = *share;
         }
+        share.reset();
     }
     void write_instance(std::vector<std::vector<cv::Point2d>>, std::vector<std::vector<int>> &);
+    std::vector<std::vector<int>> write_instance(std::vector<std::vector<cv::Point2d>>, cv::Mat draw_IMG);
     template <class T>
     void swap(T &yes, T &we)
     {
@@ -75,4 +77,7 @@ private:
     int save_count_;
     int work_count_;
     int the_number_of_data;
+    int shori_count;
+    double dulation_;
+    std::vector<ros::WallTime> start_w, totyu_w, end_w;
 };

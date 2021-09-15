@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="input_pc_topic" default="cloud"/>
+    <arg name="input_pc_topic" default="cloud_downsampled"/>
     <arg name="distance_threshold" default="0.005"/>
     <node pkg="cloud_practice" type="cloud_loader" name="cloud_loader" />
     <node pkg="cloud_practice" type="cloud_filter" name="cloud_filter" />

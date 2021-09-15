@@ -33,6 +33,7 @@ public:
         if (share != NULL) {
             final_message = *share;
         }
+        share.reset();
     }
 private:
     message_filters::Synchronizer<Sync_Sub_type> *sensor_sync_;

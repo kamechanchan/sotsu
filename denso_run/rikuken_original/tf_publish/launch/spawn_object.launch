@@ -3,7 +3,7 @@
     <arg name="object_name" default="HV8"/>
     <group if="$(eval object_name=='HV8')">
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/HV8.world"/> -->
+            <arg name="world_name" value="$(find tf_publish)/world/real.world"/> -->
             <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
             
         </include>
@@ -63,7 +63,7 @@
     <arg name="sensor_tag" default="phoxi_camera" />
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tf_publish)/rviz/denso.rviz" required="true" />
    
-    <param name="robot_description" type="str" command="$(find xacro)/xacro --inorder $(arg sensor_model) sensor_parent_frame:=$(arg sensor_parent_frame) " />
+    <param name="robot_description" type="str" command="$(find xacro)/xacro --inorder $(arg sensor_model) sensor_parent_frame:=$(arg sensor_parent_frame)" />
     <node name="spawn_sensor_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model $(arg sensor_tag) " />
     <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" />
     <!--include file="$(find gen_dataset)/launch/gen_multi_photoneo.launch" >

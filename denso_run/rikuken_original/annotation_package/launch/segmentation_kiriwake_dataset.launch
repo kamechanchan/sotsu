@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="filepath" default="occulution_kiriwake"/>
+    <arg name="sub_topic_name" default="all_cloud"/>
+    
+    <arg name="num_dataset" default="1000"/>
+    <arg name="directorypath" default="/home/ericlab/hdf5_oculution/"/>
+    <arg name="data_number" default="1"/>
+    <!-- <arg name="move_object_switch" default="box"/> -->
+    <!-- <group if="$(eval move_object_switch=='box')">
+        <node pkg="annotation_package" type="move_object.py" name="move_object" output="screen">
+        </node>
+    </group>
+    <group if="$(eval move_object_switch=='no_box')">
+        <node pkg="annotation_package" type="move_object_nobox.py" name="move_object" output="screen">
+        </node>
+    </group> -->
+
+    <node pkg="annotation_package" type="record_hdf5_kiriwake.py" name="record_hdf5_kiriwake" output="screen">
+        <param name="filepath" value="$(arg filepath)"/>
+        <param name="num_dataset" value="$(arg num_dataset)"/>
+        <param name="directorypath" value="$(arg directorypath)"/>
+        <param name="sub_topic_name" value="$(arg sub_topic_name)"/>
+        <param name="data_number" value="$(arg data_number)"/>
+    </node>
+</launch>

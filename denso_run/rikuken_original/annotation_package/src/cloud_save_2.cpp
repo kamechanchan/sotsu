@@ -41,6 +41,7 @@ void get_one_message(std::string topic_name, int timeout, ros::NodeHandle nh,
     {
         msg = *share;
     }
+    share.reset();
 
 }
 
