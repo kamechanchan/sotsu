@@ -42,8 +42,9 @@ class DiscriminativeLoss(nn.Module):
         # print(masks.shape)
         x = embedded.unsqueeze(2).expand(-1, -1, K, -1)
         masks = masks.unsqueeze(3)
-        #print(x.shape)
-        #print(masks.shape)
+        print("**********")
+        print(x.shape)
+        print(masks.shape)
         x = x * masks
         centroids = []
         size_ex = [size] * batch_size

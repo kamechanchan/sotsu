@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+from builtins import print
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer'))
@@ -29,7 +30,7 @@ from geometry_msgs.msg import Quaternion
 from std_msgs.msg import Int32MultiArray, MultiArrayLayout, MultiArrayDimension, Float32MultiArray
 from geometry_msgs.msg import Point, Pose, PoseStamped, Vector3, Quaternion, TransformStamped
 import tf2_ros
-from tf.transformations import quaternion_from_euler, euler_from_quaternion, quaternion_from_matrix
+from tf.transformations import projection_matrix, quaternion_from_euler, euler_from_quaternion, quaternion_from_matrix
 from color_cloud_bridge.msg import out_segmentation
 
 
@@ -83,12 +84,12 @@ class DnnNode():
         fps = [[] for i in range(self.opt.batch_size)]
         est_time_all = 0
 
-        for i, data in enumerate(self.input_data):
+        for j, data in enumerate(self.input_data):
             x_data = data["x_data"]
             y_data = data["y_data"]
             segme, est_time, pred = estimation_acc(self.model, data, self.opt.resolution, self.opt.dataset_mode, self.instance_number)
             est_time_all += est_time
-            print(str(i) + ":" + str(est_time))
+            print(str(j) + ":" + str(est_time))
             self.instance_pub.publish(segme)
             timer.sleep()
 
@@ -99,6 +100,7 @@ class DnnNode():
                     indices = (pred[i, :] == gid)
                     proposals[i] += [indices]
             instances = [[] for i in range(x_data.shape[0])]
+            # print("instances:" + str(instances.shape))
             for i in range(x_data.shape[0]):
                 for gid in np.unique(y_data[i, :]):
                     indices = (y_data[i, :] == gid)
@@ -123,20 +125,22 @@ class DnnNode():
                 tps[i] += [tp]
                 fps[i] += [fp]
                 # print("tensaitensaitensai")
-                # print(np.array(tps[i]).shape)
-                # print(np.array(fps[i]).shape)
+                # print(np.array(tps).shape)
+                # print(np.array(fps))
 
         #calculation all data average acculacy
         prediction = np.zeros(self.opt.batch_size)
         recall = np.zeros(self.opt.batch_size)
         for i in range(self.opt.batch_size):
             # print("tensaininaritai")
-            # print(tps[i])
+            # print(np.array(tps[i]).shape)
             # print(fps[i])
             tp = np.concatenate(tps[i], axis=0)
             fp = np.concatenate(fps[i], axis=0)
+            # print(np.array(tp).shape)
             tp = np.sum(tp)
             fp = np.sum(fp)
+            # print(tp)
             prediction[i] = tp / (tp + fp)
             recall[i] = tp / total[i]
             # print("start")
