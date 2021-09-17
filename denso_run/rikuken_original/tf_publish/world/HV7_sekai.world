@@ -1,0 +1,1847 @@
+<sdf version='1.7'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <state world_name='default'>
+      <sim_time>900 883000000</sim_time>
+      <real_time>1716 506580621</real_time>
+      <wall_time>1630414114 169371164</wall_time>
+      <iterations>853834</iterations>
+      <model name='HV7'>
+        <pose>0.028188 -0.028155 -14298.2 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.028188 -0.028155 -14298.2 0 -0 0</pose>
+          <velocity>0 0 -529.376 0 -0 0</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -1.96 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_0'>
+        <pose>0.107011 0.054985 0.024992 0.001295 -0.000476 0.039551</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.107011 0.054985 0.024992 0.001295 -0.000476 0.039551</pose>
+          <velocity>-0.000414 0.001227 0.005795 0.552164 -0.272495 -0.102716</velocity>
+          <acceleration>2.00802 0.213014 13.1783 0.420082 -1.20981 0.044877</acceleration>
+          <wrench>0.401604 0.042603 2.63566 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_1'>
+        <pose>0.14502 0.057654 0.038839 -0.18615 0.247985 -0.535595</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.14502 0.057654 0.038839 -0.18615 0.247985 -0.535595</pose>
+          <velocity>-0.017696 -0.008188 0.004841 0.114699 0.06194 0.101909</velocity>
+          <acceleration>-14.4355 -4.05354 13.7813 -0.062895 1.414 -1.43874</acceleration>
+          <wrench>-2.88709 -0.810707 2.75626 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_10'>
+        <pose>-0.018582 0.141965 0.024998 0.00012 -0.000351 0.750207</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.018582 0.141965 0.024998 0.00012 -0.000351 0.750207</pose>
+          <velocity>-0.002411 0.003107 -0.004359 0.194395 -0.214729 -0.08495</velocity>
+          <acceleration>-2.29231 3.12089 -8.80724 2.14348 0.705963 -0.609101</acceleration>
+          <wrench>-0.458463 0.624177 -1.76145 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_11'>
+        <pose>-0.046678 0.045215 0.024995 0.000156 -0.000109 -0.507171</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.046678 0.045215 0.024995 0.000156 -0.000109 -0.507171</pose>
+          <velocity>-4.3e-05 8.6e-05 0.001263 0.091819 -0.188843 -0.002178</velocity>
+          <acceleration>1.64607 -1.81513 15.8544 -1.94548 -0.629106 -1.64368</acceleration>
+          <wrench>0.329213 -0.363027 3.17089 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_12'>
+        <pose>0.060883 -0.024837 0.04111 0.011727 -0.361921 -1.32976</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.060883 -0.024837 0.04111 0.011727 -0.361921 -1.32976</pose>
+          <velocity>0.000898 -0.001511 -0.004101 0.081355 0.095982 -0.015965</velocity>
+          <acceleration>0.653697 -2.22062 -3.47974 -2.68088 0.74863 -2.61618</acceleration>
+          <wrench>0.130739 -0.444124 -0.695947 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_13'>
+        <pose>-0.012768 -0.076543 0.024997 0.000557 -0.000342 0.948909</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.012768 -0.076543 0.024997 0.000557 -0.000342 0.948909</pose>
+          <velocity>-0.000187 6.3e-05 0.002127 0.314341 0.142751 -0.015328</velocity>
+          <acceleration>0.026815 0.753726 10.0383 2.10194 -0.892259 1.09727</acceleration>
+          <wrench>0.005363 0.150745 2.00766 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_14'>
+        <pose>-0.023444 -0.125505 0.052738 0.572905 -0.0798 0.647375</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.023444 -0.125505 0.052738 0.572905 -0.0798 0.647375</pose>
+          <velocity>-0.000584 0.006264 0.007325 0.54232 -0.353721 -0.18701</velocity>
+          <acceleration>-2.91732 12.9584 16.5364 -2.74588 -1.35198 1.87766</acceleration>
+          <wrench>-0.583465 2.59169 3.30729 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_15'>
+        <pose>-0.049067 0.138902 0.039292 0.133584 -0.19326 -0.508333</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.049067 0.138902 0.039292 0.133584 -0.19326 -0.508333</pose>
+          <velocity>-0.003712 -0.002805 -0.013931 0.309272 -0.279985 0.152557</velocity>
+          <acceleration>-7.51951 -11.4611 13.6786 -1.76611 0.296009 2.68934</acceleration>
+          <wrench>-1.5039 -2.29223 2.73572 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_16'>
+        <pose>-0.027324 0.013777 0.040256 0.307388 -0.151575 1.26846</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.027324 0.013777 0.040256 0.307388 -0.151575 1.26846</pose>
+          <velocity>0.001179 -0.003409 -0.009447 -0.268711 -0.150007 -0.21748</velocity>
+          <acceleration>-2.17653 -7.76917 -7.76299 0.348487 -0.531894 0.027953</acceleration>
+          <wrench>-0.435306 -1.55383 -1.5526 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_17'>
+        <pose>-0.094963 -0.033721 0.028568 -0.061456 0.049066 -0.156722</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.094963 -0.033721 0.028568 -0.061456 0.049066 -0.156722</pose>
+          <velocity>0.007976 0.003139 -0.008454 -0.013894 -0.039318 -0.061594</velocity>
+          <acceleration>9.85464 1.27849 -6.61088 -1.4037 0.703 -2.52904</acceleration>
+          <wrench>1.97093 0.255697 -1.32218 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_18'>
+        <pose>-0.043102 -0.103509 0.040949 0.013836 -0.357589 1.33622</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.043102 -0.103509 0.040949 0.013836 -0.357589 1.33622</pose>
+          <velocity>0.005686 0.005169 0.004967 -0.340135 0.263513 -0.034828</velocity>
+          <acceleration>3.3012 12.2454 15.1128 -1.21143 0.774935 -2.3428</acceleration>
+          <wrench>0.660239 2.44909 3.02255 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_19'>
+        <pose>-0.089777 -0.17269 0.059221 3.09545 0.580662 -0.637548</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.089777 -0.17269 0.059221 3.09545 0.580662 -0.637548</pose>
+          <velocity>-0.001201 0.00213 0.008567 -0.057505 0.00058 0.069977</velocity>
+          <acceleration>-2.56736 4.67547 2.97878 -1.26253 -1.096 0.636994</acceleration>
+          <wrench>-0.513472 0.935094 0.595757 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_2'>
+        <pose>0.146963 -0.026795 0.024991 0.000389 -0.000146 -1.21378</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.146963 -0.026795 0.024991 0.000389 -0.000146 -1.21378</pose>
+          <velocity>1e-06 -0 -0.006577 0.033926 -0.286019 1e-05</velocity>
+          <acceleration>0.002708 0.000616 -5.81844 3.10001 -0.944777 3.13595</acceleration>
+          <wrench>0.000542 0.000123 -1.16369 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_20'>
+        <pose>-0.139227 0.123466 0.024994 0.000311 -0.000303 0.283552</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.139227 0.123466 0.024994 0.000311 -0.000303 0.283552</pose>
+          <velocity>6.1e-05 2.2e-05 -0.002661 0.270852 -0.091207 0.002098</velocity>
+          <acceleration>-3.16472 -1.94765 2.70957 0.752022 1.34173 0.802384</acceleration>
+          <wrench>-0.632945 -0.389529 0.541915 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_21'>
+        <pose>-0.128019 0.085819 0.038945 -0.266284 0.162282 -2.47911</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.128019 0.085819 0.038945 -0.266284 0.162282 -2.47911</pose>
+          <velocity>0.000427 -0.003507 -0.006611 -0.010268 0.150211 0.089342</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -1.96 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_22'>
+        <pose>-0.166682 0.127768 0.049823 -0.48955 0.319421 1.41428</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.166682 0.127768 0.049823 -0.48955 0.319421 1.41428</pose>
+          <velocity>-0.001853 -0.000406 -0.00144 -0.043112 -0.145135 -0.025585</velocity>
+          <acceleration>0.963517 -0.081008 -8.83648 -1.05037 -1.39958 1.96043</acceleration>
+          <wrench>0.192703 -0.016202 -1.7673 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_23'>
+        <pose>-0.167113 -0.088869 0.025011 3.8e-05 -0.000189 -0.899478</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.167113 -0.088869 0.025011 3.8e-05 -0.000189 -0.899478</pose>
+          <velocity>-0.00252 -0.000112 -6.6e-05 -0.033769 0.236825 -0.004448</velocity>
+          <acceleration>-2.52016 -0.113714 -3.48129 0.162994 -0.896555 -1.32391</acceleration>
+          <wrench>-0.504033 -0.022743 -0.696258 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_24'>
+        <pose>-0.120904 -0.168283 0.024991 0.000668 -0.000218 -0.977854</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.120904 -0.168283 0.024991 0.000668 -0.000218 -0.977854</pose>
+          <velocity>0.000577 0.00045 0.000581 -0.038645 -0.293934 -0.01658</velocity>
+          <acceleration>0.561084 0.471375 9.58258 1.99474 0.38444 2.54916</acceleration>
+          <wrench>0.112217 0.094275 1.91652 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_3'>
+        <pose>0.09832 -0.113915 0.043039 0.095296 0.383106 1.11703</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.09832 -0.113915 0.043039 0.095296 0.383106 1.11703</pose>
+          <velocity>0.000845 -0.004998 0.004711 0.040021 -0.040004 0.04982</velocity>
+          <acceleration>-1.99479 -2.38991 15.5335 0.47096 1.18407 -0.574142</acceleration>
+          <wrench>-0.398958 -0.477983 3.1067 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_4'>
+        <pose>0.147144 -0.173159 0.025038 0.000618 -0.000477 0.560296</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.147144 -0.173159 0.025038 0.000618 -0.000477 0.560296</pose>
+          <velocity>-0.000498 0.002106 -0.000345 -0.007885 -0.038302 0.014792</velocity>
+          <acceleration>-0.587472 2.09924 -10.6781 0.810595 -0.721143 1.13107</acceleration>
+          <wrench>-0.117494 0.419849 -2.13563 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_5'>
+        <pose>0.085927 0.143874 0.025022 0.000403 -0.000184 -0.35551</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.085927 0.143874 0.025022 0.000403 -0.000184 -0.35551</pose>
+          <velocity>-2.5e-05 -0.00017 -0.005052 0.113752 0.188056 -0.002074</velocity>
+          <acceleration>0.022273 0.123252 -5.47816 -2.64512 -1.16807 -1.49652</acceleration>
+          <wrench>0.004455 0.02465 -1.09563 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_6'>
+        <pose>0.041257 0.072857 0.033012 0.109042 -0.139672 -0.495492</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.041257 0.072857 0.033012 0.109042 -0.139672 -0.495492</pose>
+          <velocity>0.000564 -0.00658 -0.006659 0.311097 0.272405 0.138574</velocity>
+          <acceleration>-0.736536 -12.5557 1.05225 2.24964 0.546062 -1.28492</acceleration>
+          <wrench>-0.147307 -2.51114 0.21045 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_7'>
+        <pose>0.07915 -0.07132 0.067285 2.29656 -0.328362 0.053508</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.07915 -0.07132 0.067285 2.29656 -0.328362 0.053508</pose>
+          <velocity>0.000701 -0.00231 0.000675 -0.127254 0.184025 0.056018</velocity>
+          <acceleration>-4.4597 0.622023 9.3955 -1.83537 0.827103 -1.30122</acceleration>
+          <wrench>-0.891941 0.124405 1.8791 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_8'>
+        <pose>0.071124 -0.123204 0.024997 0.0003 9.4e-05 0.328805</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>0.071124 -0.123204 0.024997 0.0003 9.4e-05 0.328805</pose>
+          <velocity>-0.001303 0.000751 -0.000321 0.330813 0.115786 -0.032531</velocity>
+          <acceleration>-1.56187 1.68628 10.2213 0.281796 -0.237983 -1.27207</acceleration>
+          <wrench>-0.312374 0.337256 2.04425 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV7_9'>
+        <pose>-0.006318 -0.151735 0.057056 0.776217 -0.108539 0.694929</pose>
+        <scale>1 1 1</scale>
+        <link name='HV7'>
+          <pose>-0.006318 -0.151735 0.057056 0.776217 -0.108539 0.694929</pose>
+          <velocity>-0.00774 -0.004429 -0.004519 0.092537 -0.173158 0.081587</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -1.96 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='object_box'>
+        <pose>-0.009292 -0.016374 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='object_box'>
+          <pose>-0.009292 -0.016374 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='phoxi_camera'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='photoneo_center'>
+          <pose>0 0 1 3.14159 1.57079 3.14159</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>0.358044 -1.5999 2.11436 -0 0.947643 1.98819</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <model name='phoxi_camera'>
+      <joint name='photoneo_center_joint' type='fixed'>
+        <pose relative_to='__model__'>0 0 1 3.14159 1.57079 3.14159</pose>
+        <parent>world</parent>
+        <child>photoneo_center</child>
+      </joint>
+      <link name='photoneo_center'>
+        <pose relative_to='photoneo_center_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1.1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='photoneo_center_collision'>
+          <pose>0 0 0 1.5708 -0 -3.14159</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_common/denso_descriptions/phoxi_camera_description/meshes/collision/PhoXi_L.c.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='photoneo_center_visual'>
+          <pose>0 0 0 1.5708 -0 -3.14159</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_common/denso_descriptions/phoxi_camera_description/meshes/visual/PhoXi_L.f.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Black</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <sensor name='photoneo_center_sensor' type='depth'>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <camera>
+            <horizontal_fov>1.46782</horizontal_fov>
+            <image>
+              <format>L8</format>
+              <width>2064</width>
+              <height>1544</height>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>4.5</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.005</stddev>
+            </noise>
+          </camera>
+          <plugin name='photoneo_center_sensor_controller' filename='libgazebo_ros_openni_kinect.so'>
+            <cameraName>photoneo_center/sensor</cameraName>
+            <alwaysOn>1</alwaysOn>
+            <updateRate>30</updateRate>
+            <imageTopicName>image_color</imageTopicName>
+            <depthImageTopicName>image_depth</depthImageTopicName>
+            <pointCloudTopicName>points</pointCloudTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <depthImageCameraInfoTopicName>camera_info</depthImageCameraInfoTopicName>
+            <frameName>photoneo_center_optical_frame</frameName>
+            <baseline>0.1</baseline>
+            <distortion_k1>-0.11862627596824302</distortion_k1>
+            <distortion_k2>0.1330449495758574</distortion_k2>
+            <distortion_k3>0.0</distortion_k3>
+            <distortion_t1>0.0012978747886444077</distortion_t1>
+            <distortion_t2>-0.002273816413316873</distortion_t2>
+            <focalLength>2293.3324879074394</focalLength>
+            <hackBaseline>0.0</hackBaseline>
+            <Cx>1041.4935095434566</Cx>
+            <Cy>857.6330096952366</Cy>
+            <pointCloudCutoff>0.05</pointCloudCutoff>
+            <pointCloudCutoffMax>4.5</pointCloudCutoffMax>
+            <robotNamespace>/</robotNamespace>
+          </plugin>
+        </sensor>
+        <sensor name='photoneo_center_camera' type='camera'>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <camera>
+            <pose>0.035 -0.275 0.0168 0 -0 0.164934</pose>
+            <horizontal_fov>1.46782</horizontal_fov>
+            <image>
+              <format>L8</format>
+              <width>752</width>
+              <height>480</height>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>4.5</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.005</stddev>
+            </noise>
+          </camera>
+          <plugin name='photoneo_center_camera_controller' filename='libgazebo_ros_camera.so'>
+            <cameraName>photoneo_center/camera</cameraName>
+            <alwaysOn>1</alwaysOn>
+            <updateRate>30</updateRate>
+            <imageTopicName>image_color</imageTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <frameName>photoneo_center_camera_frame</frameName>
+            <baseline>0.1</baseline>
+            <distortion_k1>-0.11862627596824302</distortion_k1>
+            <distortion_k2>0.1330449495758574</distortion_k2>
+            <distortion_k3>0.0</distortion_k3>
+            <distortion_t1>0.0012978747886444077</distortion_t1>
+            <distortion_t2>-0.002273816413316873</distortion_t2>
+            <focalLength>2293.3324879074394</focalLength>
+            <hackBaseline>0.07</hackBaseline>
+            <Cx>1041.4935095434566</Cx>
+            <Cy>857.6330096952366</Cy>
+            <pointCloudCutoff>0.05</pointCloudCutoff>
+            <pointCloudCutoffMax>4.5</pointCloudCutoffMax>
+            <robotNamespace>/</robotNamespace>
+          </plugin>
+        </sensor>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>0 0 0 0 -0 0</pose>
+    </model>
+    <model name='object_box'>
+      <pose>0.095928 -0.143882 0 0 -0 0</pose>
+      <static>1</static>
+      <link name='object_box'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://object_box/meshed/object_box_kai.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://object_box/meshed/object_box_kai.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7'>
+      <pose>-0.549796 -0.548152 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_0'>
+      <pose>-0.712357 -0.481288 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_1'>
+      <pose>-0.561896 -0.46543 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_2'>
+      <pose>-0.472936 -0.499385 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_3'>
+      <pose>-0.365903 -0.497508 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_4'>
+      <pose>-0.209618 -0.602872 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_5'>
+      <pose>-0.53878 -0.63125 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_6'>
+      <pose>-0.641367 -0.612404 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_7'>
+      <pose>-0.618037 -0.342168 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_8'>
+      <pose>-0.754052 -0.353403 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_9'>
+      <pose>-0.994222 -0.47633 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_10'>
+      <pose>-0.855732 -0.645963 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_11'>
+      <pose>-0.769279 -0.800458 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_12'>
+      <pose>-0.530724 -0.839584 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_13'>
+      <pose>-0.404332 -0.708122 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_14'>
+      <pose>-1.00577 -0.626396 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_15'>
+      <pose>-0.862263 -0.326686 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_16'>
+      <pose>-0.832366 -0.457485 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_17'>
+      <pose>-0.73796 -0.90652 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_18'>
+      <pose>-0.876389 -0.777192 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_19'>
+      <pose>-0.46754 -1.00237 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_20'>
+      <pose>-0.341537 -0.829673 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_21'>
+      <pose>-0.176166 -0.940227 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_22'>
+      <pose>-0.154308 -0.669099 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_23'>
+      <pose>-0.113153 -0.742321 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV7_24'>
+      <pose>-0.31143 -0.615841 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV7'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV7/meshes/HV7_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+  </world>
+</sdf>

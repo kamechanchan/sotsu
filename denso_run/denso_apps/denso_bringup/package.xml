@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package format="2">
+
+  <name>denso_bringup</name>
+  <version>3.0.2</version>
+  <description>The denso robot bringup package includes launch files for starting denso robot nodes.</description>
+  <maintainer email="denso_robot_soft@denso-wave.co.jp">DENSO WAVE INCORPORATED</maintainer>
+  <license>MIT</license>
+  <url type="website">http://ros.org/wiki/denso_robot_bringup</url>
+  <author email="denso_robot_soft@denso-wave.co.jp">DENSO WAVE INCORPORATED</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <exec_depend>denso_descriptions</exec_depend>
+  <exec_depend>denso_gazebo</exec_depend>
+  <exec_depend>sensor_frame_broadcaster</exec_depend>
+  <exec_depend>vs087_moveit_config</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+  <test_depend>roslaunch</test_depend>
+
+</package>

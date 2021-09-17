@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="cubemarker_size" default="0.03" />
+  <arg name="reserve_area" default="0.015" />
+  <arg name="source_frame" default="/photoneo_center_optical_frame" />
+  <arg name="target_frame" default="/base_link" />
+
+  <node pkg="oneshot_calibration_system" type="handmarker_pointcloud_extractor" name="handmaker_pointcloud_extractor" output="screen">
+    <param name="cubemarker_size" value="$(arg cubemarker_size)" />
+    <param name="reserve_area" value="$(arg reserve_area)" />
+    <param name="target_frame" value="$(arg target_frame)" />
+    <param name="source_frame" value="$(arg source_frame)" />
+
+    <remap from="input_pointcloud" to="/photoneo_center/pointcloud" />
+    <remap from="output_pointcloud" to="/handmarker_extracted_pointcloud" />
+
+  </node>
+</launch>

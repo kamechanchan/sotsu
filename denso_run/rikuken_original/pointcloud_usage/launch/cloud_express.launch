@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node name="cloud_express" pkg="pointcloud_usage" type="cloud_express"  output="screen" respawn="false" respawn_delay="0">
+        <param name="load_file_name" value="/home/ericlab/ah.pcd"/>
+        <param name="output_topic_name" value="shinya_2"/>
+        <param name="parent_link" value="world"/>
+    </node>
+
+</launch>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<launch>
+    
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <!--node name="setup_commands" pkg="timed_roslaunch" type="timed_roslaunch.sh" args="3 gen_dataset setup_commands.launch" output="screen" /-->
+    <arg name="use_sensor_type" default="phoxi_camera"/>
+    <arg name="gui" default="true"/>
+    <param name="use_gui" value="$(arg gui)"/>
+    <arg name="sensor_model" value="$(find denso_gazebo)/urdf/sensors/$(arg use_sensor_type).urdf.gazebo.xacro"/>
+    <arg name="sensor_parent_frame" default="world" />
+    <arg name="sensor_tag" default="phoxi_camera" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tf_publish)/rviz/denso.rviz" required="true" />
+   
+    <param name="robot_description" type="str" command="$(find xacro)/xacro --inorder $(arg sensor_model) sensor_parent_frame:=$(arg sensor_parent_frame) " />
+    <node name="spawn_sensor_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model $(arg sensor_tag) " />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" />
+    <!--include file="$(find gen_dataset)/launch/gen_multi_photoneo.launch" >
+        <param name="use_sensor_type" default="$(arg use_sensor_type)" />
+    </include-->
+    <!-- 
+    <arg name="object_name" default="HV8" />
+    <arg name="object_up" default="HV8_up" />
+    <arg name="init_pose_up" default="-x 0 -y 0 -z 0 -R 0.0 -Y -0.0" />
+    <arg name="init_x" default="1" />
+    <include file="$(find gen_dataset)/launch/gen_object.launch" >
+      <arg name="object_name" value="$(arg object_name)" />
+      <arg name="object_up" value="$(arg object_up)" />
+      <arg name="init_pose_up" value="$(arg init_pose_up)" />
+    </include>
+    <arg name="src_frame_name" default="world"/>
+    <arg name="model_name" default="HV8"/>
+    <node pkg="denso_gazebo" type="model_tf_broadcaster" name="model_tf_broadcaster">
+        <param name="src_frame_name" value="$(arg src_frame_name)"/>
+        <param name="model_name" value="$(arg model_name)"/>
+    </node>
+    -->
+
+</launch>

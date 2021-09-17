@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+
+  <arg name="target_frame_name" default="photoneo_center_optical_frame"/>
+  <arg name="source_frame_name" default="/world"/>
+  <arg name="upper_color_filter_mode" default="true"/>
+  <arg name="lower_color_filter_mode" default="false"/>
+  <arg name="upper_filter_mode_val" default="220"/>
+  <arg name="lower_filter_mode_val" default="30"/>
+
+  <arg name="image_topic"             default="/photoneo_center/sensor/image_color"/>
+  <arg name="camera_info_topic"       default="/photoneo_center/sensor/camera_info"/>
+  <arg name="input_pointcloud_topic"  default="/cloud_without_segmented"/>
+  <arg name="output_pointcloud_topic" default="/photoneo_center/colored_pointcloud"/>
+
+  <node pkg="colored_pointcloud" type="colored_pointcloud" name="colored_pointcloud" output="screen">
+    <param name="init_target" value="$(arg target_frame_name)"/>
+    <param name="init_source" value="$(arg source_frame_name)"/>
+    <param name="upper_filter_mode" value="$(arg upper_color_filter_mode)"/>
+    <param name="lower_filter_mode" value="$(arg lower_color_filter_mode)"/>
+    <param name="upper_filter_val" value="$(arg upper_filter_mode_val)"/>
+    <param name="lower_filter_val" value="$(arg lower_filter_mode_val)"/>
+
+    <remap from="/image"              to="$(arg image_topic)"/>
+    <remap from="/camera_info"        to="$(arg camera_info_topic)"/>
+    <remap from="/input_pointcloud"   to="$(arg input_pointcloud_topic)"/>
+    <remap from="/output_pointcloud"  to="$(arg output_pointcloud_topic)"/>
+  </node>
+</launch>

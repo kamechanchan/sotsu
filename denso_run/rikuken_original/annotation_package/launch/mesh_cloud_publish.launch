@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="sample_points" default="30000"/>
+    <arg name="LEAF_SIZE" default="0.0001"/>
+    <arg name="RETRY_COUNT_LIMIT" default="100"/>
+    <arg name="DURATION_TIME" default="1"/>
+    <arg name="OBJECT_QUANTITY" default="1"/>
+    <arg name="mesh_path" default="$(find annotation_package)/mesh/HV8.stl"/>
+    <arg name="object_name" default="world"/>
+    <arg name="mesh_topic_name" default="mesh_cloud_publisher"/>
+    
+    <node name="mesh_cloud" pkg="annotation_package" type="mesh_cloud_publisher"  output="screen">
+        <param name="sample_points" value="$(arg sample_points)"/>
+        <param name="LEAF_SIZE" value="$(arg LEAF_SIZE)"/>
+        <param name="RETRY_COUNT_LIMIT" value="$(arg RETRY_COUNT_LIMIT)"/>
+        <param name="DURATION_TIME" value="$(arg DURATION_TIME)"/>
+        <param name="OBJECT_QUANTITY" value="$(arg OBJECT_QUANTITY)"/>
+        <param name="mesh_path" value="$(arg mesh_path)"/>
+        <param name="object_name" value="$(arg object_name)"/>
+        <param name="mesh_topic_name" value="$(arg mesh_topic_name)"/>
+        
+    </node>
+
+</launch>
