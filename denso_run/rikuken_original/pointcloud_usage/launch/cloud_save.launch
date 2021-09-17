@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+
+    <node name="cloud_save" pkg="pointcloud_usage" type="cloud_save"  output="screen" respawn="false" respawn_delay="0">
+        <param name="topic_name" value="/extract_1"/>
+        <!--param name="topic_name" value="/cloud_without_segmented"/-->
+        <param name="save_name" value="/home/ericlab/ah.pcd"/>
+        <param name="pub_topic_name" value="/shonya_3"/>
+    </node>
+
+</launch>

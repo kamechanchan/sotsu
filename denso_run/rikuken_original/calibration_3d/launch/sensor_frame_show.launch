@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="topic_name" default="/photoneo_center/pointcloud"/>
+    <node pkg="calibration_3d" type="sensor_frame_show" name="sensor_frame_show" output="screen">
+        <param name="topic_name" value="$(arg topic_name)"/>
+    </node>
+</launch>

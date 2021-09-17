@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot name="HV7_v0" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="HV7">
+    <visual>
+      <geometry>
+        <mesh filename="package://denso_descriptions/object_description/meshes/DAE/HV7.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://denso_descriptions/object_description/meshes/STL/HV7.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.05" />
+      <inertia ixx="0.002" ixy="0.0" ixz="0.0"
+              iyy="0.002" iyz="0.0"
+              izz="0.0" />
+    </inertial>
+  </link>
+</robot>
