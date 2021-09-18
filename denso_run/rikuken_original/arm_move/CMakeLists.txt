@@ -12,12 +12,16 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   actionlib
 )
+include_directories(
+  include
+  ${catkin_INCLUDE_DIRS}
+)
 
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES arm_move
-#  CATKIN_DEPENDS roscpp
-#  DEPENDS system_lib
+ INCLUDE_DIRS include
+  LIBRARIES arm_move
+ CATKIN_DEPENDS roscpp
+ DEPENDS system_lib
 )
 
 ###########
@@ -26,10 +30,7 @@ catkin_package(
 
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
-include_directories(
-  include
-  ${catkin_INCLUDE_DIRS}
-)
+
 
 add_executable(trajectory_move src/trajctory_move.cpp)
 target_link_libraries(trajectory_move
@@ -41,15 +42,15 @@ target_link_libraries(trajectory_goal_move
   ${catkin_LIBRARIES}
 )
 
-add_library(${PROJECT_NAME} src/arm_move.cpp)
-target_link_libraries(${PROJECT_NAME}
+add_library(arm_move src/arm_move.cpp)
+target_link_libraries(arm_move
   ${catkin_LIBRARIES}
 )
 
 add_executable(arm_move_main_1 src/arm_move_main_1.cpp)
 target_link_libraries(arm_move_main_1
   ${catkin_LIBRARIES}
-  ${PROJECT_NAME}
+  arm_move
 )
 # file(MAKE_DIRECTORY /opt/ros/noetic/include/arm_move)
 # file(MAKE_DIRECTORY /opt/ros/noetic/lib/arm_move)

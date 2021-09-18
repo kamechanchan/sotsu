@@ -7,6 +7,7 @@
 #include <moveit_msgs/DisplayRobotState.h>
 #include <moveit_msgs/DisplayTrajectory.h>
 #include <tf2_ros/transform_listener.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/buffer.h>
 
 class Arm_Move
@@ -21,10 +22,19 @@ public:
     void hand_close();
     void set_close_range(double);
     void tf_get(std::string, std::string, geometry_msgs::TransformStamped&);
+    void show_tf_value(std::string, std::string);
+    void move_end_effector(double, double, double, double);
+    geometry_msgs::Point get_pose_tf(std::string, std::string);
+    geometry_msgs::Point transform_to_target_point(geometry_msgs::TransformStamped);
 private:
     moveit::planning_interface::MoveGroupInterface *arm_group_;
     moveit::planning_interface::MoveGroupInterface *hand_group_;
     ros::AsyncSpinner spinner;
+    tf2_ros::TransformListener tfListener_;
+    tf2_ros::Buffer tfBuffer_;
+    geometry_msgs::TransformStamped transform_;
+    geometry_msgs::Point point_;
+    double dulation_;
     double close_range_;
     template <typename T>
     void show_value(std::vector<T> value){
