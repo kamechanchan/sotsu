@@ -45,7 +45,7 @@ class BaseOptions:
         self.parser.add_argument('--delta_v', type=float, default=0.5)
         self.parser.add_argument('--instance_number', type=int, default=8)
         # self.parser.add_argument('--checkpoints_process_swich',type=str,default='raugh_recognition')
-        self.parser.add_argument('--semantic_number',type=int,default=2)
+        self.parser.add_argument('--semantic_number',type=int,default=3)
 
         self.initialized = True
 

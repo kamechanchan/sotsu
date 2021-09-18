@@ -240,6 +240,6 @@ class PoseEstNode():
 
 if __name__ == "__main__":
     try:
-        node = PoseEstNode("/cloud_without_segmented")
+        node = PoseEstNode("output")
         rospy.spin()
     except rospy.ROSInterruptException: pass
