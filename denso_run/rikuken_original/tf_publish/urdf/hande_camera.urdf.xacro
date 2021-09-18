@@ -88,7 +88,7 @@
                         izx = "0.000000" izy = "0.000000" izz = "0.000006" />
             </inertial>
             <visual>
-                <material>
+                <material name="green">
                     <color rgba="0.0 1 0.1 1.0"/>
                 </material>
                 <geometry>
@@ -102,7 +102,7 @@
             </collision>
         </link>
          <gazebo reference="camera_link">
-            <material>Gazebo/Red</material>
+            <material>Gazebo/Green</material>
             <sensor type="camera" name="camera1">
             <update_rate>30.0</update_rate>
             <camera name="head">
