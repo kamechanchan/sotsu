@@ -26,8 +26,14 @@ int main(int argc, char** argv)
     
     // arm_hand.move_end_effector(pon.x, 0, 0, 0.001);
     // arm_hand.move_end_effector(0, pon.y, 0, 0.001);
+    ros::Rate loop(2);
+    int count = 0;
     arm_hand.move_end_effector(pon.x, pon.y, pon.z + 0.08, 0.0005);
     arm_hand.hand_close();
+    while (count <= 4) {
+        count++;
+        loop.sleep();
+    }
     arm_hand.move_end_effector(0, 0, 0.1, 0.001);
     arm_hand.move_end_effector(0.0, -0.2, 0, 0.001);
     arm_hand.move_end_effector(0, 0, -0.1, 0.001);
