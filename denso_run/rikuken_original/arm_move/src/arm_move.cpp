@@ -13,7 +13,7 @@ void Arm_Move::arm_register(std::string arm_group)
 {
     arm_group_ = new moveit::planning_interface::MoveGroupInterface(arm_group);
     show_value<std::string>(arm_group_->getJointNames());
-    arm_group_->setMaxVelocityScalingFactor(1.99);
+    arm_group_->setMaxVelocityScalingFactor(1.0);
     
 }
 

@@ -30,7 +30,7 @@ int main(int argc, char** argv)
     int count = 0;
     arm_hand.move_end_effector(pon.x, pon.y, pon.z + 0.08, 0.0005);
     arm_hand.hand_close();
-    while (count <= 4) {
+    while (count <= 2) {
         count++;
         loop.sleep();
     }
