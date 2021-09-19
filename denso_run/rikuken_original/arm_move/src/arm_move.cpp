@@ -13,11 +13,14 @@ void Arm_Move::arm_register(std::string arm_group)
 {
     arm_group_ = new moveit::planning_interface::MoveGroupInterface(arm_group);
     show_value<std::string>(arm_group_->getJointNames());
+    arm_group_->setMaxVelocityScalingFactor(1.99);
+    
 }
 
 void Arm_Move::hand_register(std::string hand_group)
 {
     hand_group_ = new moveit::planning_interface::MoveGroupInterface(hand_group);
+    moveit_msgs::MotionPlanRequest res;
     show_value<std::string>(hand_group_->getJointNames());
 }
 
@@ -105,9 +108,18 @@ void Arm_Move::move_end_effector(double x1, double y1, double z1, double eef_ste
     wpose.position.y += y1;
     wpose.position.z += z1;
     waypoints.push_back(wpose);
+
     moveit_msgs::RobotTrajectory trajectory;
     const double jump_thresh = 0.0;
     double fraction = arm_group_->computeCartesianPath(waypoints, eef_step
                                 , jump_thresh, trajectory);
     arm_group_->execute(trajectory);
+    
+}
+
+void Arm_Move::return_home()
+{
+    std::vector<double> joint_value = {0.220046, -1.6059, 1.24065, -1.14717, -1.5684, -1.57072};
+    arm_group_->setJointValueTarget(joint_value);
+    arm_group_->move();
 }

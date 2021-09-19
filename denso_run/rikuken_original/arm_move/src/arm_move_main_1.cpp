@@ -13,7 +13,7 @@ int main(int argc, char** argv)
     // arm_hand.hand_open();
     // arm_hand.move_end_effector(0, 0, 0.1, 0.001);
     
-    
+    // arm_hand.return_home();
     
     geometry_msgs::Point pon1, pon2, pon;
     pon1 = arm_hand.get_pose_tf("body_link", "world");
@@ -32,6 +32,7 @@ int main(int argc, char** argv)
     arm_hand.move_end_effector(0.0, -0.2, 0, 0.001);
     arm_hand.move_end_effector(0, 0, -0.1, 0.001);
     arm_hand.hand_open();
+    arm_hand.return_home();
 
 
     return 0;
