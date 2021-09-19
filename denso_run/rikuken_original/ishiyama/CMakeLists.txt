@@ -8,67 +8,29 @@ project(ishiyama)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
   color_cloud_bridge
   cv_bridge
   image_geometry
   image_transport
   pcl_ros
-  roscpp
-  rospy
   sensor_msgs
   std_msgs
   tf
   tf2
   tf2_geometry_msgs
   tf2_ros
+  message_generation
 )
 
-## System dependencies are found with CMake's conventions
-# find_package(Boost REQUIRED COMPONENTS system)
 
-
-## Uncomment this if the package has a setup.py. This macro ensures
-## modules and global scripts declared therein get installed
-## See http://ros.org/doc/api/catkin/html/user_guide/setup_dot_py.html
-# catkin_python_setup()
-
-################################################
-## Declare ROS messages, services and actions ##
-################################################
-
-## To declare and build messages, services or actions from within this
-## package, follow these steps:
-## * Let MSG_DEP_SET be the set of packages whose message types you use in
-##   your messages/services/actions (e.g. std_msgs, actionlib_msgs, ...).
-## * In the file package.xml:
-##   * add a build_depend tag for "message_generation"
-##   * add a build_depend and a exec_depend tag for each package in MSG_DEP_SET
-##   * If MSG_DEP_SET isn't empty the following dependency has been pulled in
-##     but can be declared for certainty nonetheless:
-##     * add a exec_depend tag for "message_runtime"
-## * In this file (CMakeLists.txt):
-##   * add "message_generation" and every package in MSG_DEP_SET to
-##     find_package(catkin REQUIRED COMPONENTS ...)
-##   * add "message_runtime" and every package in MSG_DEP_SET to
-##     catkin_package(CATKIN_DEPENDS ...)
-##   * uncomment the add_*_files sections below as needed
-##     and list every .msg/.srv/.action file to be processed
-##   * uncomment the generate_messages entry below
-##   * add every package in MSG_DEP_SET to generate_messages(DEPENDENCIES ...)
-
-## Generate messages in the 'msg' folder
-# add_message_files(
-#   FILES
-#   Message1.msg
-#   Message2.msg
-# )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+add_service_files(
+  FILES
+  input_data.srv
+)
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -78,10 +40,13 @@ find_package(catkin REQUIRED COMPONENTS
 # )
 
 ## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   sensor_msgs#   std_msgs#   tf2_geometry_msgs
-# )
+generate_messages(
+  DEPENDENCIES
+  sensor_msgs
+  # std_msgs
+  # cv::Mat
+  #   tf2_geometry_msgs
+)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -96,7 +61,6 @@ find_package(catkin REQUIRED COMPONENTS
 ##     find_package(catkin REQUIRED COMPONENTS ...)
 ##   * uncomment the "generate_dynamic_reconfigure_options" section below
 ##     and list every .cfg file to be processed
-
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 # generate_dynamic_reconfigure_options(
 #   cfg/DynReconf1.cfg
@@ -115,7 +79,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES ishiyama
-  CATKIN_DEPENDS color_cloud_bridge cv_bridge image_geometry image_transport pcl_ros roscpp rospy sensor_msgs std_msgs tf tf2 tf2_geometry_msgs tf2_ros
+  CATKIN_DEPENDS message_runtime roscpp
 #  DEPENDS system_lib
 )
 
@@ -146,7 +110,12 @@ include_directories(
 add_executable(visu_img src/visu_img.cpp)
 target_link_libraries(visu_img
   ${catkin_LIBRARIES}
-  ${OpenCV_LIBRARIES}
+  # ${OpenCV_LIBRARIES}
+)
+add_executable(server_2D src/server_2D.cpp)
+target_link_libraries(server_2D
+  ${catkin_LIBRARIES}
+  # ${OpenCV_LIBRARIES}
 )
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
