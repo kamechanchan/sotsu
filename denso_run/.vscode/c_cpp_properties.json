@@ -25,8 +25,8 @@
                 "${workspaceFolder}/rikuken_original/annotation_package/include",
                 "${workspaceFolder}/rikuken_original/tf_publish/include/tf_publish",
                 "${workspaceFolder}/../../devel/include",
-                "${workspaceFolder}/rikuken_original/w2d_to_3d_ros/include"
-
+                "${workspaceFolder}/rikuken_original/w2d_to_3d_ros/include",
+                "${workspaceFolder}/rikuken_original/arm_move/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",

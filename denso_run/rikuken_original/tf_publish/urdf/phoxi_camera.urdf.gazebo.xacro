@@ -14,7 +14,7 @@
   <xacro:arg name="pitch" default="+${M_PI/6}" />
   <xacro:arg name="yaw" default="+${M_PI}" />
 
-  <link name="$(arg sensor_parent_frame)"/>
+  <!-- <link name="$(arg sensor_parent_frame)"/> -->
 
   <xacro:phoxi_camera_v0 size="$(arg sensor_size)" sensor_parent_link_name="$(arg sensor_parent_frame)" sensor_link_name="$(arg sensor_frame)">
     <origin xyz="$(arg x) $(arg y) $(arg z)" rpy="$(arg roll) $(arg pitch) $(arg yaw)" />
