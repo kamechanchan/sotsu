@@ -2,6 +2,8 @@
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/Image.h>
 #include <opencv4/opencv2/opencv.hpp>
+#include <iostream>
+#include <iomanip>
 
 // template <typename T>
 // void get_one_message(T &img, std::string topic_name, int timeout)
@@ -19,7 +21,9 @@ int main(int argc, char** argv)
 {
     ros::init(argc, argv, "tsuchida_");
     ros::NodeHandle pnh("~");
-    
+    time_t t = time(nullptr);
+    const tm* localTime = localtime(&t);
+
     std::string image_topic;
     int timeout;
     std::string save_image_file;
