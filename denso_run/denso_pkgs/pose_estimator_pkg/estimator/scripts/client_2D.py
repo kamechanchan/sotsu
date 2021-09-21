@@ -8,6 +8,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer/options'))
 sys.path.append(os.path.join(os.path.dirname(__file__), './function/__init__.py'))
 sys.path.append(os.path.join(os.path.dirname(__file__), './function/'))
+from models.networks import YOLOv3
 from options.test_options import TestOptions
 from models import create_model
 from dnn_test import estimation
@@ -24,33 +25,52 @@ import cv2
 from torchvision import ops as ops
 from PIL import ImageDraw, ImageFont
 from matplotlib import pyplot as plt
+import yaml
 
+
+# def postprocess(outputs, conf_threshold, iou_threshold, pad_infos):
+#     # decoded = []
+#     # print("nandeya")
+#     # print(outputs.shape)
+#     # print(np.array(pad_infos).shape)
+#     # print(type(outputs[0,:,:]))
+#     # print(type(pad_infos[0]))
+#     # for output in outputs:
+#         # 矩形の形式を変換する。 (YOLO format -> Pascal VOC format)
+#         # print("akfjskdafj;kla")
+#         # print(output.shape)
+#     outputs[0, :, :4] = yolo_to_pascalvoc(outputs[0, :, :4])
+
+#     # フィルタリングする。
+#     outputs[0, :, :] = filter_boxes(outputs[0, :, :], conf_threshold, iou_threshold)
+
+#     # letterbox 処理を行う前の座標に変換する。
+#     if len(outputs):
+#         outputs[0, :, :4] = decode_bboxes(outputs[0, :, :4], pad_infos)
+
+#     # デコードする。
+#     # decoded.append(outputs)
+
+#     # return decoded
+#     return outputs
 
 def postprocess(outputs, conf_threshold, iou_threshold, pad_infos):
-    # decoded = []
-    # print("nandeya")
-    # print(outputs.shape)
-    # print(np.array(pad_infos).shape)
-    # print(type(outputs[0,:,:]))
-    # print(type(pad_infos[0]))
-    # for output in outputs:
+    decoded = []
+    for output, *pad_info in zip(outputs, *pad_infos):
         # 矩形の形式を変換する。 (YOLO format -> Pascal VOC format)
-        # print("akfjskdafj;kla")
-        # print(output.shape)
-    outputs[0, :, :4] = yolo_to_pascalvoc(outputs[0, :, :4])
+        output[:, :4] = yolo_to_pascalvoc(output[:, :4])
 
-    # フィルタリングする。
-    outputs[0, :, :] = filter_boxes(outputs[0, :, :], conf_threshold, iou_threshold)
+        # フィルタリングする。
+        output = filter_boxes(output, conf_threshold, iou_threshold)
 
-    # letterbox 処理を行う前の座標に変換する。
-    if len(outputs):
-        outputs[0, :, :4] = decode_bboxes(outputs[0, :, :4], pad_infos)
+        # letterbox 処理を行う前の座標に変換する。
+        if len(output):
+            output[:, :4] = decode_bboxes(output[:, :4], pad_info)
 
-    # デコードする。
-    # decoded.append(outputs)
+        # デコードする。
+        decoded.append(output)
 
-    # return decoded
-    return outputs
+    return decoded
 
 def yolo_to_pascalvoc(bboxes):
     cx, cy, w, h = torch.chunk(bboxes, 4, dim=1)
@@ -120,15 +140,6 @@ def get_text_color(color):
 
 class Get_data:
     def __init__(self):
-        self.img_size = 416
-        self.gpu_id = 0
-        self.opt = TestOptions().parse()
-        self.conf_threshold = 0.5
-        self.nms_threshold = 0.45
-        self.class_names = "HV8"
-        self.img_path = "/home/ericlab/Desktop/ishiyama/zatsumuyou/ishi.jpg"
-        self.font_path = "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/scripts/font/ipag.ttc"
-        self.save_path = "/home/ericlab/Desktop/ishiyama/zatsumuyou/output.jpg"
         rospy.init_node("client", anonymous=True)
         rospy.Subscriber("/photoneo_center/sensor/image_color", Image, self.callback)
         # self.pub = rospy.Publisher("ishiyama_pub_data", Image, queue_size=10)
@@ -140,7 +151,7 @@ class Get_data:
             tem_data = rospy.ServiceProxy("ishiyama_input_data", input_data)
             out_data = tem_data(data)
             self.input = self.data_transformation(out_data.out_img)
-            self.to_yolo()
+            To_Yolo()
             # self.pub.publish(out_data.out_img)
             # print(out_data.out_img)
         except rospy.ServiceException:
@@ -157,7 +168,25 @@ class Get_data:
             print(e)
             return e
 
-    def to_yolo(self):
+
+class To_Yolo:
+    def __init__(self):
+        self.img_size = 416
+        self.gpu_id = 0
+        # self.opt = TestOptions().parse()
+        self.conf_threshold = 0.5
+        self.nms_threshold = 0.45
+        # self.class_names = "HV8"
+        self.img_path = "/home/ericlab/Desktop/ishiyama/zatsumuyou/ishi.jpg"
+        self.font_path = "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/scripts/font/ipag.ttc"
+        self.save_path = "/home/ericlab/Desktop/ishiyama/zatsumuyou/output.jpg"
+        self.config_path = "/home/ericlab/Desktop/ishiyama/Yolo_saikou/config/yolov3_denso.yaml"
+        self.load_path = "/home/ericlab/Desktop/ishiyama/Yolo_saikou/weights/yolo_simulator.pth"
+        self.arch = "YOLO"
+        with open(self.config_path) as f:
+            self.config = yaml.safe_load(f)
+        with open(self.config["model"["class_names"]]) as f:
+            self.class_names = [x.strip() for x in f.read().splitlines()]
         self.device_set()
         self.data_for_yolo()
         self.est_net()
@@ -193,16 +222,20 @@ class Get_data:
         pad_img = np.full((self.img_size, self.img_size, 3), 127, dtype=np.uint8)
         pad_img[dy : dy + new_h, dx : dx + new_w, :] = img
         pad_img = transforms.ToTensor()(pad_img)
-        self.pad_img = pad_img.unsqueeze(0)
-        self.pad_img = self.pad_img.to(self.device)
+        pad_img = pad_img.unsqueeze(0)
+        self.pad_img = pad_img.to(self.device)
 
         scale_x = np.float32(new_w / org_w)
         scale_y = np.float32(new_h / org_h)
         pad_info = (scale_x, scale_y, dx, dy)
-        pad_info = np.array(pad_info)
-        pad_info = torch.from_numpy(pad_info.astype(np.float32))
+        pad_infos = []
+        for x in pad_info:
+            y = torch.from_numpy(np.array([x], dtype=np.float32))
+            pad_infos.append(y)
+        # pad_info = np.array(pad_info)
+        # pad_info = torch.from_numpy(pad_info.astype(np.float32))
         # pad_info = [torch.from_numpy(x.astype(np.float32)) for x in np.array(pad_info)]
-        self.pad_info = [x.to(self.device) for x in pad_info]
+        self.pad_info = [x.to(self.device) for x in pad_infos]
 
     def device_set(self):
         if self.gpu_id >=0 and torch.cuda.is_available():
@@ -211,92 +244,142 @@ class Get_data:
             self.device = torch.device("cpu")
 
     def est_net(self):
-        model = create_model(self.opt)
-        self.model = model.net.to(self.device).eval()
+        self.create_model()
+        # self.model = model.net.to(self.device).eval()
         print(self.pad_img.shape)
         with torch.no_grad():
             outputs = self.model(self.pad_img)
-            outputs = postprocess(outputs, self.conf_threshold, self.nms_threshold, self.pad_info)
-            self.detections = self.output_to_dict(outputs, self.class_names) 
+            self.outputs = postprocess(outputs, self.conf_threshold, self.nms_threshold, self.pad_info)
+            # self.detections = self.output_to_dict(outputs, self.class_names) 
 
-    def output_to_dict(self, output, class_names):
-        detection = []
-        for x1, y1, x2, y2, obj_conf, class_conf, label in output:
-            bbox = {
-                "confidence": float(obj_conf * class_conf),
-                "class_id": int(label),
-                "class_name": class_names[int(label)],
-                "x1": float(x1),
-                "y1": float(y1),
-                "x2": float(x2),
-                "y2": float(y2),
-            }
-            detection.append(bbox)
+    def create_model(self):
+        if self.arch =="YOLO":
+            self.model = YOLOv3(self.config["model"])
+            state = torch.load(self.load_path)
+            self.model.load_state_dict(state["model_state_dict"])
+            print(f"state_dict format weights file loaded. {self.load_path}")
+            self.model = self.model.to(self.device).eval()
 
-        return detection
+    # def output_to_dict(self, output, class_names):
+    #     detection = []
+    #     for x1, y1, x2, y2, obj_conf, class_conf, label in output:
+    #         bbox = {
+    #             "confidence": float(obj_conf * class_conf),
+    #             "class_id": int(label),
+    #             "class_name": class_names[int(label)],
+    #             "x1": float(x1),
+    #             "y1": float(y1),
+    #             "x2": float(x2),
+    #             "y2": float(y2),
+    #         }
+    #         detection.append(bbox)
+
+    #     return detection
 
     def result(self):
-        for box in self.detection:
-            print(
-                f"{box['class_name']} {box['confidence']:.0%} "
-                f"({box['x1']:.0f}, {box['y1']:.0f}, {box['x2']:.0f}, {box['y2']:.0f})"
-            )
-        # 検出結果を画像に描画して、保存する。
+        # self.detections = self.output_to_dict(self.outputs, self.class_names) 
         img = Image.open(self.img_path)
-        self.draw_boxes(img, self.detection)
-        img.save(self.save_path)
+        # detection = []
+        for x in self.outputs:
+            for x1, y1, x2, y2, obj_conf, class_conf, label in x:
+                box = {
+                    "confidence": float(obj_conf * class_conf),
+                    "class_id": int(label),
+                    "class_name": self.class_names[int(label)],
+                    "x1": float(x1),
+                    "y1": float(y1),
+                    "x2": float(x2),
+                    "y2": float(y2),
+                }
+
+                x1 = int(np.clip(box["x1"], 0, img.size[0] - 1))
+                y1 = int(np.clip(box["y1"], 0, img.size[1] - 1))
+                x2 = int(np.clip(box["x2"], 0, img.size[0] - 1))
+                y2 = int(np.clip(box["y2"], 0, img.size[1] - 1))
+                caption = box["class_name"]
+
+                draw = ImageDraw.Draw(img, mode="RGBA")
+                # 色を作成する。
+                cmap = plt.cm.get_cmap("hsv", len(self.class_names))
+                # フォントを作成する。
+                fontsize = max(3, int(0.01 * min(img.size)))
+                font = ImageFont.truetype(self.font_path, size=fontsize)
+
+                color = tuple(cmap(box["class_id"], bytes=True))
+                # 矩形を描画する。
+                draw.rectangle((x1, y1, x2, y2), outline=color, width=3)
+                # ラベルを描画する。
+                text_size = draw.textsize(caption, font=font)
+                text_origin = np.array([x1, y1])
+                text_color = get_text_color(color)
+
+                draw.rectangle(
+                    [tuple(text_origin), tuple(text_origin + text_size - 1)], fill=color
+                )
+                draw.text(text_origin, caption, fill=text_color, font=font)
+
+                # detection.append(bbox)
+            # for box in self.detection:
+        #     print(
+        #         f"{box['class_name']} {box['confidence']:.0%} "
+        #         f"({box['x1']:.0f}, {box['y1']:.0f}, {box['x2']:.0f}, {box['y2']:.0f})"
+        #     )
+        # 検出結果を画像に描画して、保存する。
+        
+        # self.draw_boxes(img, self.detection)
+        # img.save(self.save_path)
     
-    def draw_boxes(self, img ,detection):
-        self.draw_box(img, detection, n_classes=len(self.class_names))
+    # def draw_boxes(self, img ,detection):
+    #     self.draw_box(img, detection, n_classes=len(self.class_names))
     
-    def draw_box(self, img, boxes, n_classes):
-        draw_mae = img
-        draw = ImageDraw.Draw(img, mode="RGBA")
+    # def draw_box(self, img, boxes, n_classes):
+    #     draw_mae = img
+    #     draw = ImageDraw.Draw(img, mode="RGBA")
 
-        # 色を作成する。
-        cmap = plt.cm.get_cmap("hsv", n_classes)
+    #     # 色を作成する。
+    #     cmap = plt.cm.get_cmap("hsv", n_classes)
 
-        # フォントを作成する。
-        fontsize = max(3, int(0.01 * min(img.size)))
-        font = ImageFont.truetype(self.font_path, size=fontsize)
+    #     # フォントを作成する。
+    #     fontsize = max(3, int(0.01 * min(img.size)))
+    #     font = ImageFont.truetype(self.font_path, size=fontsize)
 
-        for box in boxes:
-            # 矩形を画像の範囲内にクリップする。
-            x1 = int(np.clip(box["x1"], 0, img.size[0] - 1))
-            y1 = int(np.clip(box["y1"], 0, img.size[1] - 1))
-            x2 = int(np.clip(box["x2"], 0, img.size[0] - 1))
-            y2 = int(np.clip(box["y2"], 0, img.size[1] - 1))
+    #     for box in boxes:
+    #         # 矩形を画像の範囲内にクリップする。
+    #         x1 = int(np.clip(box["x1"], 0, img.size[0] - 1))
+    #         y1 = int(np.clip(box["y1"], 0, img.size[1] - 1))
+    #         x2 = int(np.clip(box["x2"], 0, img.size[0] - 1))
+    #         y2 = int(np.clip(box["y2"], 0, img.size[1] - 1))
 
-            caption = box["class_name"]
-            if caption == 'traffic light':
-                print("traffic light")
-                img_2 = np.asarray(draw_mae)
-                img_2 = cv2.cvtColor(img_2, cv2.COLOR_RGB2BGR)
-                cv2.imshow("img_2", img_2)
-                img_crop = draw_mae.crop((x1-10, y1-10, x2+10, y2+10))
-                img_3 = np.asarray(img_crop)
-                img_3 = cv2.cvtColor(img_3, cv2.COLOR_RGB2BGR)
-                cv2.imshow("img_3", img_3)
-                cv2.waitKey(1)
+    #         caption = box["class_name"]
+    #         # if caption == 'traffic light':
+    #         #     print("traffic light")
+    #         #     img_2 = np.asarray(draw_mae)
+    #         #     img_2 = cv2.cvtColor(img_2, cv2.COLOR_RGB2BGR)
+    #         #     cv2.imshow("img_2", img_2)
+    #         #     img_crop = draw_mae.crop((x1-10, y1-10, x2+10, y2+10))
+    #         #     img_3 = np.asarray(img_crop)
+    #         #     img_3 = cv2.cvtColor(img_3, cv2.COLOR_RGB2BGR)
+    #         #     cv2.imshow("img_3", img_3)
+    #         #     cv2.waitKey(1)
                 
-            if "confidence" in box:
-                caption += f" {box['confidence']:.0%}"
+    #         if "confidence" in box:
+    #             caption += f" {box['confidence']:.0%}"
 
-            # 色を選択する。
-            color = tuple(cmap(box["class_id"], bytes=True))
+    #         # 色を選択する。
+    #         color = tuple(cmap(box["class_id"], bytes=True))
 
-            # 矩形を描画する。
-            draw.rectangle((x1, y1, x2, y2), outline=color, width=3)
+    #         # 矩形を描画する。
+    #         draw.rectangle((x1, y1, x2, y2), outline=color, width=3)
 
-            # ラベルを描画する。
-            text_size = draw.textsize(caption, font=font)
-            text_origin = np.array([x1, y1])
-            text_color = get_text_color(color)
+    #         # ラベルを描画する。
+    #         text_size = draw.textsize(caption, font=font)
+    #         text_origin = np.array([x1, y1])
+    #         text_color = get_text_color(color)
 
-            draw.rectangle(
-                [tuple(text_origin), tuple(text_origin + text_size - 1)], fill=color
-            )
-            draw.text(text_origin, caption, fill=text_color, font=font)
+    #         draw.rectangle(
+    #             [tuple(text_origin), tuple(text_origin + text_size - 1)], fill=color
+    #         )
+    #         draw.text(text_origin, caption, fill=text_color, font=font)
 
 if __name__ == "__main__":
     Get_data()
