@@ -7,15 +7,27 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   color_cloud_bridge
+  message_generation
 )
 find_package(VTK REQUIRED)
 find_package(PCL REQUIRED)
 
+add_service_files(
+  FILES
+  input_data.srv
+)
+
+generate_messages(
+  DEPENDENCIES
+  sensor_msgs
+  # std_msgs
+  # cv::Mat
+  #   tf2_geometry_msgs
+)
 
 catkin_package(
   INCLUDE_DIRS include
-  CATKIN_DEPENDS
-  roscpp
+  CATKIN_DEPENDS roscpp message_runtime
 )
 
 ###########
@@ -35,6 +47,11 @@ target_link_libraries(color_pointcloud
 
 )
 
+add_executable(server_2D src/server_2D.cpp)
+target_link_libraries(server_2D
+  ${catkin_LIBRARIES}
+  # ${OpenCV_LIBRARIES}
+)
 ###########
 # Install #
 ###########
