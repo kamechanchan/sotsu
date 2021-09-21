@@ -26,6 +26,7 @@ from torchvision import ops as ops
 from PIL import ImageDraw, ImageFont
 from matplotlib import pyplot as plt
 import yaml
+import PIL
 
 
 # def postprocess(outputs, conf_threshold, iou_threshold, pad_infos):
@@ -140,6 +141,7 @@ def get_text_color(color):
 
 class Get_data:
     def __init__(self):
+        self.img_path = "/home/ericlab/Desktop/ishiyama/zatsumuyou/ishi.jpg"
         rospy.init_node("client", anonymous=True)
         rospy.Subscriber("/photoneo_center/sensor/image_color", Image, self.callback)
         # self.pub = rospy.Publisher("ishiyama_pub_data", Image, queue_size=10)
@@ -151,7 +153,7 @@ class Get_data:
             tem_data = rospy.ServiceProxy("ishiyama_input_data", input_data)
             out_data = tem_data(data)
             self.input = self.data_transformation(out_data.out_img)
-            To_Yolo()
+            To_Yolo(self.input, self.img_path)
             # self.pub.publish(out_data.out_img)
             # print(out_data.out_img)
         except rospy.ServiceException:
@@ -170,29 +172,41 @@ class Get_data:
 
 
 class To_Yolo:
-    def __init__(self):
+    def __init__(self, input, img_path):
+        self.in_pub = rospy.Publisher("ishiyama_input", Image, queue_size=10)
+        self.out_pub = rospy.Publisher("ishiyama_YOLO", Image, queue_size=10)
         self.img_size = 416
         self.gpu_id = 0
         # self.opt = TestOptions().parse()
         self.conf_threshold = 0.5
         self.nms_threshold = 0.45
         # self.class_names = "HV8"
-        self.img_path = "/home/ericlab/Desktop/ishiyama/zatsumuyou/ishi.jpg"
-        self.font_path = "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/scripts/font/ipag.ttc"
+        self.img_path = img_path
+        self.font_path = "/home/ericlab/Desktop/Yolo_saikou/yolov3/utils/font/ipag.ttc"
         self.save_path = "/home/ericlab/Desktop/ishiyama/zatsumuyou/output.jpg"
-        self.config_path = "/home/ericlab/Desktop/ishiyama/Yolo_saikou/config/yolov3_denso.yaml"
-        self.load_path = "/home/ericlab/Desktop/ishiyama/Yolo_saikou/weights/yolo_simulator.pth"
+        self.config_path = "/home/ericlab/Desktop/Yolo_saikou/config/yolov3_denso.yaml"
+        self.load_path = "/home/ericlab/Desktop/Yolo_saikou/weights/yolo_simulator.pth"
+        self.con_path = "/home/ericlab/Desktop/Yolo_saikou/config/"
         self.arch = "YOLO"
+        self.input = input
         with open(self.config_path) as f:
             self.config = yaml.safe_load(f)
-        with open(self.config["model"["class_names"]]) as f:
+        # print(self.config["model"]["class_names"])
+        class_path = os.path.join(self.con_path, self.config["model"]["class_names"])
+        with open(class_path) as f:
+            
             self.class_names = [x.strip() for x in f.read().splitlines()]
+        
         self.device_set()
         self.data_for_yolo()
         self.est_net()
         self.result()
     
     def data_for_yolo(self, jitter=0, random_placing=False):
+        bridge = CvBridge()
+        in_img = bridge.cv2_to_imgmsg(self.input)
+        self.in_pub.publish(in_img)
+        
         org_h, org_w, _ = self.input.shape
 
         if jitter:
@@ -246,7 +260,7 @@ class To_Yolo:
     def est_net(self):
         self.create_model()
         # self.model = model.net.to(self.device).eval()
-        print(self.pad_img.shape)
+        # print(self.pad_img.shape)
         with torch.no_grad():
             outputs = self.model(self.pad_img)
             self.outputs = postprocess(outputs, self.conf_threshold, self.nms_threshold, self.pad_info)
@@ -278,7 +292,11 @@ class To_Yolo:
 
     def result(self):
         # self.detections = self.output_to_dict(self.outputs, self.class_names) 
-        img = Image.open(self.img_path)
+        # img = PIL.Image.open(self.img_path)
+
+        img = cv2.cvtColor(self.input, cv2.COLOR_BGR2RGB)
+        img = PIL.Image.fromarray(img)
+
         # detection = []
         for x in self.outputs:
             for x1, y1, x2, y2, obj_conf, class_conf, label in x:
@@ -317,6 +335,17 @@ class To_Yolo:
                     [tuple(text_origin), tuple(text_origin + text_size - 1)], fill=color
                 )
                 draw.text(text_origin, caption, fill=text_color, font=font)
+
+                img_3 = np.array(img)
+                # print(type(img_3))
+                img_3 = cv2.cvtColor(img_3, cv2.COLOR_RGB2BGR)
+                # cv2.imshow("img_3", img_3)
+                # if cv2.waitKey(1) & 0xff == ord("q"):
+                #     break
+
+                bridge = CvBridge()
+                img_pub = bridge.cv2_to_imgmsg(img_3)
+                self.out_pub.publish(img_pub)
 
                 # detection.append(bbox)
             # for box in self.detection:
