@@ -54,6 +54,7 @@ add_message_files(
    sensor_and_index.msg
    out_segmentation.msg
    object_kiriwake.msg
+   yolo_bridge.msg
    #Message2.msg
  )
 
@@ -124,7 +125,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 # include
-# ${catkin_INCLUDE_DIRS}
+${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
