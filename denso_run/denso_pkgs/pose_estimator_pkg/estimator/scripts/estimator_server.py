@@ -128,8 +128,8 @@ class DnnNode():
         res.stamp = est_time
         call_finish = time.time()
         
-        self.loop = self.loop + 1
-        self.time_file.write(str(self.loop) + "ループ目の処理時間は    　                : " + str(call_finish - self.start_callback) + '秒\n\n\n')
+        # self.loop = self.loop + 1
+        # self.time_file.write(str(self.loop) + "ループ目の処理時間は    　                : " + str(call_finish - self.start_callback) + '秒\n\n\n')
 
         return res
 

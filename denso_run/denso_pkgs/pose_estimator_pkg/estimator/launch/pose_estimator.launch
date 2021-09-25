@@ -5,7 +5,7 @@
   <arg name="arch" default="PointNet_Pose" />
   <arg name="process_swich" default="raugh_recognition" />
   <arg name="resolution" default="50" />
-  <arg name="load_path" default="/home/ericlab/DENSO_results/raugh_recognition/checkpoint/iranai/PointNet/HV8_size_80000_range_pi_1.hdf5/latest_net.pth"/>
+  <arg name="load_path" default="/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/ishiyama/0406/PointNet/dataset_20000.hdf5/200_net.pth"/>
   <node name="random_move" pkg="gen_dataset" type="random_move_euler.py">
     <param name="object_name" value="$(arg object_name)" />
   </node>

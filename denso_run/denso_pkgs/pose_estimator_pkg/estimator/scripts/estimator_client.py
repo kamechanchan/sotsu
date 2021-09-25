@@ -93,6 +93,9 @@ class PoseEstNode():
         self.stl_est = copy.deepcopy(self.object_name_stl)
         self.stl_ref = copy.deepcopy(self.object_name_stl)
 
+        print("***********ishiyam+++++++++++++++++")
+        print(sub_topic_name)
+
     def callback(self, data):
         self.start_callback = time.time()
         #self.time_file.write("インスタンスからコールバックまでかかった時間は: " + str(self.start_callback - self.model_road) + '\n')
@@ -184,6 +187,8 @@ class PoseEstNode():
         t.child_frame_id = child_frame_id
         t.transform.translation = res.trans.transform.translation
         t.transform.rotation = res.trans.transform.rotation
+        print("****************")
+        print(child_frame_id)
 
         if child_frame_id == "estimated_tf":
             t.header.frame_id = "photoneo_center_optical_frame"
@@ -240,6 +245,6 @@ class PoseEstNode():
 
 if __name__ == "__main__":
     try:
-        node = PoseEstNode("output")
+        node = PoseEstNode("/cloud_without_segmented")
         rospy.spin()
     except rospy.ROSInterruptException: pass
