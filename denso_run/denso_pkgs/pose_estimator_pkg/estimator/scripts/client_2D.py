@@ -8,10 +8,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../utils'))
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../trainer/options'))
 sys.path.append(os.path.join(os.path.dirname(__file__), './function/__init__.py'))
 sys.path.append(os.path.join(os.path.dirname(__file__), './function/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../rikuken_original/'))
 from models.networks import YOLOv3
-from options.test_options import TestOptions
-from models import create_model
-from dnn_test import estimation
+# from options.test_options import TestOptions
+# from models import create_model
+# from dnn_test import estimation
 from cv2 import BRISK
 from numpy.core.fromnumeric import trace
 import torch
@@ -27,33 +28,9 @@ from PIL import ImageDraw, ImageFont
 from matplotlib import pyplot as plt
 import yaml
 import PIL
+from color_cloud_bridge.msg import yolo_bridge
+from std_msgs.msg import Int64MultiArray
 
-
-# def postprocess(outputs, conf_threshold, iou_threshold, pad_infos):
-#     # decoded = []
-#     # print("nandeya")
-#     # print(outputs.shape)
-#     # print(np.array(pad_infos).shape)
-#     # print(type(outputs[0,:,:]))
-#     # print(type(pad_infos[0]))
-#     # for output in outputs:
-#         # 矩形の形式を変換する。 (YOLO format -> Pascal VOC format)
-#         # print("akfjskdafj;kla")
-#         # print(output.shape)
-#     outputs[0, :, :4] = yolo_to_pascalvoc(outputs[0, :, :4])
-
-#     # フィルタリングする。
-#     outputs[0, :, :] = filter_boxes(outputs[0, :, :], conf_threshold, iou_threshold)
-
-#     # letterbox 処理を行う前の座標に変換する。
-#     if len(outputs):
-#         outputs[0, :, :4] = decode_bboxes(outputs[0, :, :4], pad_infos)
-
-#     # デコードする。
-#     # decoded.append(outputs)
-
-#     # return decoded
-#     return outputs
 
 def postprocess(outputs, conf_threshold, iou_threshold, pad_infos):
     decoded = []
@@ -173,8 +150,8 @@ class Get_data:
 
 class To_Yolo:
     def __init__(self, input, img_path):
-        self.in_pub = rospy.Publisher("ishiyama_input", Image, queue_size=10)
-        self.out_pub = rospy.Publisher("ishiyama_YOLO", Image, queue_size=10)
+        # self.in_pub = rospy.Publisher("ishiyama_input", Image, queue_size=10)
+        self.out_pub = rospy.Publisher("ishiyama_YOLO", yolo_bridge, queue_size=10)
         self.img_size = 416
         self.gpu_id = 0
         # self.opt = TestOptions().parse()
@@ -203,9 +180,9 @@ class To_Yolo:
         self.result()
     
     def data_for_yolo(self, jitter=0, random_placing=False):
-        bridge = CvBridge()
-        in_img = bridge.cv2_to_imgmsg(self.input)
-        self.in_pub.publish(in_img)
+        # bridge = CvBridge()
+        # in_img = bridge.cv2_to_imgmsg(self.input)
+        # self.in_pub.publish(in_img)
         
         org_h, org_w, _ = self.input.shape
 
@@ -274,32 +251,18 @@ class To_Yolo:
             print(f"state_dict format weights file loaded. {self.load_path}")
             self.model = self.model.to(self.device).eval()
 
-    # def output_to_dict(self, output, class_names):
-    #     detection = []
-    #     for x1, y1, x2, y2, obj_conf, class_conf, label in output:
-    #         bbox = {
-    #             "confidence": float(obj_conf * class_conf),
-    #             "class_id": int(label),
-    #             "class_name": class_names[int(label)],
-    #             "x1": float(x1),
-    #             "y1": float(y1),
-    #             "x2": float(x2),
-    #             "y2": float(y2),
-    #         }
-    #         detection.append(bbox)
-
-    #     return detection
-
     def result(self):
         # self.detections = self.output_to_dict(self.outputs, self.class_names) 
         # img = PIL.Image.open(self.img_path)
 
         img = cv2.cvtColor(self.input, cv2.COLOR_BGR2RGB)
         img = PIL.Image.fromarray(img)
-
+        
         # detection = []
         for x in self.outputs:
-            for x1, y1, x2, y2, obj_conf, class_conf, label in x:
+            # box_final_coor = np.zeros((x.shape[0], 4), dtype=np.float64)
+            box_final_coor = []
+            for i, (x1, y1, x2, y2, obj_conf, class_conf, label) in enumerate(x):
                 box = {
                     "confidence": float(obj_conf * class_conf),
                     "class_id": int(label),
@@ -342,10 +305,20 @@ class To_Yolo:
                 # cv2.imshow("img_3", img_3)
                 # if cv2.waitKey(1) & 0xff == ord("q"):
                 #     break
-
-                bridge = CvBridge()
-                img_pub = bridge.cv2_to_imgmsg(img_3)
-                self.out_pub.publish(img_pub)
+                box_coor = [x1, y1, x2, y2]
+                box_final_coor.append(box_coor)
+                # print(box_final_coor)
+                
+                # for j, name in enumerate(box_coor):
+                #     box_final_coor[i][j] = name
+                
+                # box_final_coor[0].append(x1)
+                # print("ifajjf;")
+                # print(x1)
+                # print(i)
+                # box_final_coor[i][0] = x1
+                # box_final_coor[i][1] = y1
+                # box_final_coor[i][2] 
 
                 # detection.append(bbox)
             # for box in self.detection:
@@ -357,58 +330,19 @@ class To_Yolo:
         
         # self.draw_boxes(img, self.detection)
         # img.save(self.save_path)
-    
-    # def draw_boxes(self, img ,detection):
-    #     self.draw_box(img, detection, n_classes=len(self.class_names))
-    
-    # def draw_box(self, img, boxes, n_classes):
-    #     draw_mae = img
-    #     draw = ImageDraw.Draw(img, mode="RGBA")
-
-    #     # 色を作成する。
-    #     cmap = plt.cm.get_cmap("hsv", n_classes)
-
-    #     # フォントを作成する。
-    #     fontsize = max(3, int(0.01 * min(img.size)))
-    #     font = ImageFont.truetype(self.font_path, size=fontsize)
-
-    #     for box in boxes:
-    #         # 矩形を画像の範囲内にクリップする。
-    #         x1 = int(np.clip(box["x1"], 0, img.size[0] - 1))
-    #         y1 = int(np.clip(box["y1"], 0, img.size[1] - 1))
-    #         x2 = int(np.clip(box["x2"], 0, img.size[0] - 1))
-    #         y2 = int(np.clip(box["y2"], 0, img.size[1] - 1))
-
-    #         caption = box["class_name"]
-    #         # if caption == 'traffic light':
-    #         #     print("traffic light")
-    #         #     img_2 = np.asarray(draw_mae)
-    #         #     img_2 = cv2.cvtColor(img_2, cv2.COLOR_RGB2BGR)
-    #         #     cv2.imshow("img_2", img_2)
-    #         #     img_crop = draw_mae.crop((x1-10, y1-10, x2+10, y2+10))
-    #         #     img_3 = np.asarray(img_crop)
-    #         #     img_3 = cv2.cvtColor(img_3, cv2.COLOR_RGB2BGR)
-    #         #     cv2.imshow("img_3", img_3)
-    #         #     cv2.waitKey(1)
-                
-    #         if "confidence" in box:
-    #             caption += f" {box['confidence']:.0%}"
-
-    #         # 色を選択する。
-    #         color = tuple(cmap(box["class_id"], bytes=True))
-
-    #         # 矩形を描画する。
-    #         draw.rectangle((x1, y1, x2, y2), outline=color, width=3)
-
-    #         # ラベルを描画する。
-    #         text_size = draw.textsize(caption, font=font)
-    #         text_origin = np.array([x1, y1])
-    #         text_color = get_text_color(color)
-
-    #         draw.rectangle(
-    #             [tuple(text_origin), tuple(text_origin + text_size - 1)], fill=color
-    #         )
-    #         draw.text(text_origin, caption, fill=text_color, font=font)
+        # print(box_final_coor)
+        msg_data = yolo_bridge()
+        bridge = CvBridge()
+        msg_data.input_img = bridge.cv2_to_imgmsg(self.input)
+        msg_data.output_img = bridge.cv2_to_imgmsg(img_3)
+        # box = box_final_coor.tolist()
+        print(type(box_final_coor))
+        print(np.array(box_final_coor).shape)
+        # print(box)
+        msg_data.out_data = Int64MultiArray(data=box_final_coor)
+        # print(msg_data)
+        self.out_pub.publish(msg_data)
+        # print("ishiy")
 
 if __name__ == "__main__":
     Get_data()
