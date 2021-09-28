@@ -6,7 +6,7 @@
 #include <cv_bridge/cv_bridge.h>
 #include <opencv4/opencv2/opencv.hpp>
 #include <geometry_msgs/TransformStamped.h>
-#include <ishiyama/input_data.h>
+// #include <ishiyama/input_data.h>
 
 class GetDataNode{
     private:
@@ -22,5 +22,5 @@ class GetDataNode{
         GetDataNode();
         // void callback(const sensor_msgs::Image& in_img);
         // void send_data_server();
-        bool inputData(ishiyama::input_data::Request &req, ishiyama::input_data::Response &res);
+        // bool inputData(ishiyama::input_data::Request &req, ishiyama::input_data::Response &res);
 };

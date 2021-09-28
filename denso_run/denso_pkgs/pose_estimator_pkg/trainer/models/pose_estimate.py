@@ -192,6 +192,7 @@ class EstimatorModel:
 
     def test_step(self):
         if self.process_swich == "raugh_recognition":
+            # print(self.x_data.shape)
             pred = self.net(self.x_data)
             # print("p")
             # print(pred.shape)

@@ -1,4 +1,4 @@
-#include <2D_to_3D.hpp>
+#include <2D_to_3D_insnum.hpp>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <mutex>
 #include <iostream>
@@ -12,24 +12,24 @@ YoloBridge::YoloBridge(ros::NodeHandle &nh) :
     lister_(buffer_)
 {
     parameter_set();
+    major();
 }
 
-void YoloBridge::callback(sensor_msgs::CameraInfoConstPtr cam_msgs)
+void YoloBridge::major()
 {
-    cinfo_ = *cam_msgs;
+    boost::shared_ptr<const sensor_msgs::CameraInfo> share;
+    share = ros::topic::waitForMessage<sensor_msgs::CameraInfo>(camera_topic_name_, nh_, ros::Duration(timespan_));
+    cinfo_ = *share;
+
     get_one_message(cloud_msgs_, inputcloud_topic_name_, nh_, timespan_);
     
     ROS_INFO_STREAM("start" << "kuruze");
-    ROS_INFO_STREAM(cinfo_);
-    ROS_INFO_STREAM("kokoka");
     get_one_message<color_cloud_bridge::yolo_bridge>(msg_data_, YOLO_topic_name_, nh_, timespan_);
-    ROS_INFO_STREAM("iijanai");
     pcl::fromROSMsg(cloud_msgs_, trans_cloud_);
     // ROS_INFO_STREAM(msg_data_.out_data[1]);
     // ROS_INFO_STREAM("koreka: " << size(msg_data_.output_img));
     cv_bridge::CvImageConstPtr cv_img_ptr;
     cv_img_ptr = cv_bridge::toCvCopy(msg_data_.output_img, sensor_msgs::image_encodings::TYPE_8UC3);
-    ROS_INFO_STREAM("kitaka");
     for (int i = 0; i < cv_img_ptr->image.rows; i++) {
         std::vector<int> iim;
         for (int j = 0; j < cv_img_ptr->image.cols; j++) {
@@ -37,13 +37,12 @@ void YoloBridge::callback(sensor_msgs::CameraInfoConstPtr cam_msgs)
         }
         image_instance_.push_back(iim);
     }
-    ROS_INFO_STREAM("majimaji");
     cv::Mat draw_img_(cv_img_ptr->image.rows, cv_img_ptr->image.cols, cv_img_ptr->image.type());
     draw_img_ = cv_img_ptr->image;
-    ROS_INFO_STREAM("douda");
     // float a;
     cv::Point2d points_1;
     cv::Point2d points_2;
+    std::vector<std::vector<cv::Point2d>> uv_points_;
     for (int i=0; i<msg_data_.out_data.size(); i++){
         std::vector<cv::Point2d> init_1;
         points_1.x = msg_data_.out_data[i].data[0];
@@ -53,7 +52,9 @@ void YoloBridge::callback(sensor_msgs::CameraInfoConstPtr cam_msgs)
         init_1.push_back(points_1);
         init_1.push_back(points_2);
         uv_points_.push_back(init_1);
+        // ROS_INFO_STREAM("tanomuze: " << i);
     }
+    ROS_INFO_STREAM("bounding_box_num" << uv_points_.size());
 
     // for (int i=0; i<msg_data_.out_data.size(); i++){
     //     ROS_INFO_STREAM("iissune" << msg_data_.out_data[i].data[0]);
@@ -69,9 +70,7 @@ void YoloBridge::callback(sensor_msgs::CameraInfoConstPtr cam_msgs)
     //     // a = msg_data_.out_data[i].data[3];
     // }
 
-    ROS_INFO_STREAM("warukuhawa");
     image_instance_ = write_instance(uv_points_, draw_img_);
-    ROS_INFO_STREAM("majikmajhfijadfjafjk;dafj");
     hurui(trans_cloud_, image_instance_, msg_data_.input_img, cinfo_, color_cloud);
     pcl::toROSMsg(color_cloud, output_cloud_msgs_);
     // pcl::PointCloud<pcl::PointXYZ> ishiyama;
@@ -114,7 +113,6 @@ void YoloBridge::parameter_set()
     pnh_.getParam("output_topic_name", output_topic_name_);
     pnh_.getParam("timespan", timespan_);
     output_pub_ = nh_.advertise<sensor_msgs::PointCloud2>(output_topic_name_, 10);
-    sub_ = nh_.subscribe(camera_topic_name_, 10, &YoloBridge::callback, this);
     // get_one_message(cinfo_, camera_topic_name_, nh_, timespan_);
     // get_one_message(cloud_msgs_, inputcloud_topic_name_, nh_, timespan_);
 }
@@ -203,6 +201,7 @@ std::vector<std::vector<int>> YoloBridge::write_instance(std::vector<std::vector
         int x2 = static_cast<int>(point_2d[i][1].x);
         int y1 = static_cast<int>(point_2d[i][0].y);
         int y2 = static_cast<int>(point_2d[i][1].y);
+        // ROS_INFO_STREAM("naruhodo" << i);
         if (x1 > x2) {
             swap(x1, x2);
         }
@@ -213,7 +212,7 @@ std::vector<std::vector<int>> YoloBridge::write_instance(std::vector<std::vector
         for (int k = y1; k <= y2; k++) 
         {
             for (int l = x1; l <= x2; l++) {
-                instance_img_sasyo[k][l] = 1;
+                instance_img_sasyo[k][l] = i;
             }
         }
 
@@ -263,7 +262,7 @@ void YoloBridge::hurui(pcl::PointCloud<pcl::PointXYZ> input_pcl_cloud, std::vect
             int x = static_cast<int>(uv.x);
             int y = static_cast<int>(uv.y);
 
-            if (instance[y][x] == 1) {
+            if (instance[y][x] == 2) { //ここの数がどのバウンディングボックスをパブリッシュするか決定
                 cv::Vec3d rgb = rgb_image.at<cv::Vec3b>(y, x);
                 // ROS_INFO_STREAM("x: " << x << "   y: " << y);
                 // ROS_INFO_STREAM("r: " << rgb[0] << "  g: " << rgb[1] << "  b: " << rgb[2]);

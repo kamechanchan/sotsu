@@ -19,6 +19,7 @@ find_package(PCL REQUIRED)
 add_service_files(
   FILES
   input_data.srv
+  bounding.srv
 )
 
 # add_message_files(
@@ -60,7 +61,13 @@ target_link_libraries(color_pointcloud
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
   ${VTK_LIBRARIES}
+)
 
+add_executable(pcl_pub src/pcl_pub.cpp)
+target_link_libraries(pcl_pub
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+  ${VTK_LIBRARIES}
 )
 
 add_executable(server_2D src/server_2D.cpp)
@@ -77,6 +84,13 @@ target_link_libraries(2D_to_3D
   # ${OpenCV_LIBRARIES}
 )
 
+add_executable(2D_to_3D_insnum src/2D_to_3D_insnum.cpp)
+add_dependencies(2D_to_3D_insnum ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+target_link_libraries(2D_to_3D_insnum
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+  # ${OpenCV_LIBRARIES}
+)
 ###########
 # Install #
 ###########

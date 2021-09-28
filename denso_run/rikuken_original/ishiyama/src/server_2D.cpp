@@ -23,16 +23,16 @@ GetDataNode::GetDataNode()
 
 // }
 
-bool GetDataNode::inputData(ishiyama::input_data::Request &req, ishiyama::input_data::Response &res){
-    // cv_img_ = cv_bridge::toCvCopy(req.in_img, sensor_msgs::image_encodings::BGR8);
-    // res.img_to_box = cv_img_->image;
-    // ROS_INFO_STREAM("img_size:" << res.img_to_box.size());
-    // cv::imwrite(save_img_path_, out_img_);
-    // return true;
+// bool GetDataNode::inputData(ishiyama::input_data::Request &req, ishiyama::input_data::Response &res){
+//     // cv_img_ = cv_bridge::toCvCopy(req.in_img, sensor_msgs::image_encodings::BGR8);
+//     // res.img_to_box = cv_img_->image;
+//     // ROS_INFO_STREAM("img_size:" << res.img_to_box.size());
+//     // cv::imwrite(save_img_path_, out_img_);
+//     // return true;
 
-    res.out_img = req.in_img;
-    return true;
-}
+//     res.out_img = req.in_img;
+//     return true;
+// }
 
 int main(int argc, char** argv){
     ros::init(argc, argv, "ishinyam_1");

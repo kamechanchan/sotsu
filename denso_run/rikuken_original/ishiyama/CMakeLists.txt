@@ -112,11 +112,11 @@ target_link_libraries(visu_img
   ${catkin_LIBRARIES}
   # ${OpenCV_LIBRARIES}
 )
-add_executable(server_2D src/server_2D.cpp)
-target_link_libraries(server_2D
-  ${catkin_LIBRARIES}
-  # ${OpenCV_LIBRARIES}
-)
+# add_executable(server_2D src/server_2D.cpp)
+# target_link_libraries(server_2D
+#   ${catkin_LIBRARIES}
+#   # ${OpenCV_LIBRARIES}
+# )
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

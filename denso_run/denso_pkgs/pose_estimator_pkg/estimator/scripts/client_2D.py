@@ -29,7 +29,7 @@ from matplotlib import pyplot as plt
 import yaml
 import PIL
 from color_cloud_bridge.msg import yolo_bridge
-from std_msgs.msg import Int64MultiArray
+from std_msgs.msg import Float32MultiArray
 
 
 def postprocess(outputs, conf_threshold, iou_threshold, pad_infos):
@@ -152,6 +152,7 @@ class To_Yolo:
     def __init__(self, input, img_path):
         # self.in_pub = rospy.Publisher("ishiyama_input", Image, queue_size=10)
         self.out_pub = rospy.Publisher("ishiyama_YOLO", yolo_bridge, queue_size=10)
+        self.yolo_out_pub = rospy.Publisher("YOLO_output", Image, queue_size=10)
         self.img_size = 416
         self.gpu_id = 0
         # self.opt = TestOptions().parse()
@@ -159,11 +160,11 @@ class To_Yolo:
         self.nms_threshold = 0.45
         # self.class_names = "HV8"
         self.img_path = img_path
-        self.font_path = "/home/ericlab/Desktop/Yolo_saikou/yolov3/utils/font/ipag.ttc"
+        self.font_path = "/home/ericlab/Desktop/ishiyama/Yolo_saikou/yolov3/utils/font/ipag.ttc"
         self.save_path = "/home/ericlab/Desktop/ishiyama/zatsumuyou/output.jpg"
-        self.config_path = "/home/ericlab/Desktop/Yolo_saikou/config/yolov3_denso.yaml"
-        self.load_path = "/home/ericlab/Desktop/Yolo_saikou/weights/yolo_simulator.pth"
-        self.con_path = "/home/ericlab/Desktop/Yolo_saikou/config/"
+        self.config_path = "/home/ericlab/Desktop/ishiyama/Yolo_saikou/config/yolov3_denso.yaml"
+        self.load_path = "/home/ericlab/Desktop/ishiyama/Yolo_saikou/weights/yolo_simulator.pth"
+        self.con_path = "/home/ericlab/Desktop/ishiyama/Yolo_saikou/config/"
         self.arch = "YOLO"
         self.input = input
         with open(self.config_path) as f:
@@ -257,11 +258,13 @@ class To_Yolo:
 
         img = cv2.cvtColor(self.input, cv2.COLOR_BGR2RGB)
         img = PIL.Image.fromarray(img)
-        
+        msg_data = yolo_bridge()
         # detection = []
         for x in self.outputs:
-            # box_final_coor = np.zeros((x.shape[0], 4), dtype=np.float64)
-            box_final_coor = []
+            cluster_num = x.shape[0]
+            # box_coor = np.zeros((cluster_num, 4), dtype=np.Float32)
+            # box_coor = []
+            # box_final_coor = []
             for i, (x1, y1, x2, y2, obj_conf, class_conf, label) in enumerate(x):
                 box = {
                     "confidence": float(obj_conf * class_conf),
@@ -305,8 +308,21 @@ class To_Yolo:
                 # cv2.imshow("img_3", img_3)
                 # if cv2.waitKey(1) & 0xff == ord("q"):
                 #     break
-                box_coor = [x1, y1, x2, y2]
-                box_final_coor.append(box_coor)
+                # box_coor = [x1, y1, x2, y2]
+                
+                # np.append(box_coor,x1)
+                # np.append(box_coor,y1)
+                # np.append(box_coor,x2)
+                # np.append(box_coor,y2)
+                
+                box_coor = []
+                box_coor.append(x1)
+                box_coor.append(y1)
+                box_coor.append(x2)
+                box_coor.append(y2)
+                
+                box_final = Float32MultiArray(data=box_coor)
+                msg_data.out_data += [box_final]
                 # print(box_final_coor)
                 
                 # for j, name in enumerate(box_coor):
@@ -331,17 +347,26 @@ class To_Yolo:
         # self.draw_boxes(img, self.detection)
         # img.save(self.save_path)
         # print(box_final_coor)
-        msg_data = yolo_bridge()
         bridge = CvBridge()
         msg_data.input_img = bridge.cv2_to_imgmsg(self.input)
         msg_data.output_img = bridge.cv2_to_imgmsg(img_3)
-        # box = box_final_coor.tolist()
-        print(type(box_final_coor))
-        print(np.array(box_final_coor).shape)
+        # print(len(box_coor))
+        # box_coor = np.array(box_coor).reshape(cluster_num, 4)
+        # box_final_coor = box_coor.tolist()
+        # print(type(box_final_coor))
+        # print(np.array(box_final_coor).shape)
         # print(box)
-        msg_data.out_data = Int64MultiArray(data=box_final_coor)
+        # for i in range(cluster_num):
+        #     tem_data = Float32MultiArray(data=box_final_coor(i))
+        #     msg_data.out_data += [tem_data]
+        # msg_data.out_data = Float32MultiArray(data=box_final_coor)
         # print(msg_data)
+        print(np.array(msg_data.out_data).shape)
         self.out_pub.publish(msg_data)
+
+        self.yolo_out_pub.publish(msg_data.output_img)
+
+
         # print("ishiy")
 
 if __name__ == "__main__":

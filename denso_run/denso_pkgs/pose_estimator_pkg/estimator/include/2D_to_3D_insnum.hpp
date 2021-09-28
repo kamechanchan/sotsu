@@ -92,7 +92,6 @@ private:
     int timespan_;
     sensor_msgs::CameraInfo cinfo_;
     // cv::Mat draw_img_;
-    std::vector<std::vector<cv::Point2d>> uv_points_;
     pcl::PointCloud<pcl::PointXYZ> color_cloud;
     color_cloud_bridge::yolo_bridge msg_data_;
     pcl::PointCloud<pcl::PointXYZ> trans_cloud_;

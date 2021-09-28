@@ -70,7 +70,7 @@ class PoseEstNode():
         self.sub = rospy.Subscriber(self.sub_topic_name, PointCloud2, self.callback)
         self.pub_est = rospy.Publisher("estimated_cloud", PointCloud2, queue_size=1)
         self.pub_refine = rospy.Publisher("refine_cloud", PointCloud2, queue_size=1)
-        self.df_time_log = TimeLog(self.package_path + "/result/" + self.object_name)
+        # self.df_time_log = TimeLog(self.package_path + "/result/" + self.object_name)
         self.o3d_data = None
         self.est_cloud = None
         self.ref_cloud = None
@@ -99,37 +99,12 @@ class PoseEstNode():
     def callback(self, data):
         self.start_callback = time.time()
         #self.time_file.write("インスタンスからコールバックまでかかった時間は: " + str(self.start_callback - self.model_road) + '\n')
-        print("ishiyama")
-        print(type(data))
+
         self.o3d_data = convertCloudFromRosToOpen3d(data)
         self.open3d_time = time.time()
         self.time_file.write("点群が入力されてopen3dへ変換するまでの時間は : " + str(self.open3d_time - self.start_callback) + '秒\n')
 
-        if self.arch == "PointNet_Pose":
-            normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, self.resolution)
-            norma = time.time()
-            self.time_file.write("getNormalizedPcdの処理時間は  　　　    　: " + str(norma - self.open3d_time) + '秒\n')
-            self.input_data.input_cloud = Float32MultiArray(data=np.array(normalized_pcd).flatten())
-
-        elif self.arch == "3DCNN":
-            start_time = time.time()
-            np_cloud = np.asarray(self.o3d_data.points)
-            pose = Pose()
-            min_p, max_p, diff_max = doMinMax_inference(np_cloud)
-            # min_p, max_p, diff_max = doMinMax(np_cloud)
-            pose.position.x = min_p[0]
-            pose.position.y = min_p[1]
-            pose.position.z = min_p[2]
-            pose.orientation.x = diff_max
-            self.input_data.input_voxel.pose = pose
-
-            voxel = np.zeros((self.resolution, self.resolution, self.resolution), dtype="float32")
-            binary_data = runMakeVoxelBinary(np_cloud, self.resolution)
-            voxel = binary_data.reshape(self.resolution, self.resolution, self.resolution)
-            voxel = voxel[np.newaxis, :]
-            preprocess_time = time.time() - start_time
-            self.input_data.input_voxel.voxel_array = Int32MultiArray(data=np.asarray(voxel).flatten())
-        elif self.arch == "JSIS3D":
+        if self.arch == "JSIS3D":
             normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, self.resolution)
             #norma = time.time()
             #self.time_file.write("getNormalizedPcdの処理時間は  　　　    　: " + str(norma - self.open3d_time) + '秒\n')
@@ -158,7 +133,7 @@ class PoseEstNode():
         res = self.getPoseData()
         pose_finish = time.time()
         self.time_file.write("ネットワークから姿勢データを得るまでの時間は　 : " + str(pose_finish - pose_start) + '秒\n')
-        est_time = res.stamp
+        # est_time = res.stamp
         if self.arch == "PointNet_Pose":
             res_denormalized = self.deNormalize(res)
             deno = time.time()
@@ -174,10 +149,10 @@ class PoseEstNode():
         if self.icp_flag:
             res_refine = PoseEstimateResponse()
             res_refine.trans, ref_cloud, refine_time = self.icpRefine(est_cloud, res)
-            time_log =  1000 * np.array([preprocess_time, est_time, refine_time], dtype="float32")
-            self.df_time_log.set_log(time_log, self.index)
+            # time_log =  1000 * np.array([preprocess_time, est_time, refine_time], dtype="float32")
+            # self.df_time_log.set_log(time_log, self.index)
             self.index += 1
-            self.df_time_log.save_log()
+            # self.df_time_log.save_log()
             self.tfPublisher(res_refine, ref_cloud,  "icpRefine")
 
     def tfPublisher(self, res, cloud, child_frame_id):
@@ -246,6 +221,6 @@ class PoseEstNode():
 
 if __name__ == "__main__":
     try:
-        node = PoseEstNode("/cloud_without_segmented")
+        node = PoseEstNode("bounding_box")
         rospy.spin()
     except rospy.ROSInterruptException: pass

@@ -15,6 +15,7 @@ from models import create_model
 import function as f
 from data import *
 from dnn_test import estimation_acc
+import pcl
 
 
 import numpy as np
@@ -87,6 +88,11 @@ class DnnNode():
         for j, data in enumerate(self.input_data):
             x_data = data["x_data"]
             y_data = data["y_data"]
+            print("fajf;af")
+            print(np.array(x_data).shape)
+            pcl_visu = pcl.PointCloud(x_data[0])
+            pcd_dir = "/home/ericlab/data"
+            pcl.save(pcl_visu, pcd_dir+"/result"+".pcd")
             segme, est_time, pred = estimation_acc(self.model, data, self.opt.resolution, self.opt.dataset_mode, self.instance_number)
             est_time_all += est_time
             print(str(j) + ":" + str(est_time))

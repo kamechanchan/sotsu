@@ -17,23 +17,32 @@ def pose_prediction(opt, data, resolution):
     n_data = len(data)
     row = 3
     col = n_data // row
-    print("majika**********")
-    print(np.array(data).shape)
+    # print("majika**********")
+    # print(np.array(data).shape)
     x = data[np.newaxis, :, :]
-    print(np.array(x).shape)
+    # print(np.array(x).shape)
     # x = np.reshape(np.array(data), (col, row))[np.newaxis, :, :]
-    print("shpae" + str(x.shape[0]))
+    # print("shpae" + str(x.shape[0]))
     y_pre = estimation(opt, x)
-    print("y_data")
-    print(y_pre[0].shape)
+    # print("y_data")
+    # print(y_pre[0].shape)
     y = np.squeeze(y_pre[0])
-    print(y.shape)
+    # print("tanomuze")
+    # print(y)
+    # print(y.shape)
     est_time = y_pre[1]
     msg_out = out_segmentation()
+    raugh_data = []
     for i in range(resolution):
         msg_out.x.append(x[0][i][0])
         msg_out.y.append(x[0][i][1])
         msg_out.z.append(x[0][i][2])
         msg_out.instance.append(y[i])
+        # print(y[i])
+        if y[i] == 0:
+            raugh_data.append(x[0, i, :])
+            # print("*************")
+    raugh_data = np.array(raugh_data)
+    # raugh_data = raugh_data[np.newaxis, : , :]
 
-    return (msg_out, est_time)
+    return (msg_out, est_time, raugh_data)
