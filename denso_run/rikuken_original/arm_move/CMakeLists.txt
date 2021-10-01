@@ -52,6 +52,12 @@ target_link_libraries(arm_move_main_1
   ${catkin_LIBRARIES}
   arm_move
 )
+
+add_executable(arm_move_main_2 src/arm_move_main_2.cpp)
+target_link_libraries(arm_move_main_2
+  ${catkin_LIBRARIES}
+  arm_move
+)
 # file(MAKE_DIRECTORY /opt/ros/noetic/include/arm_move)
 # file(MAKE_DIRECTORY /opt/ros/noetic/lib/arm_move)
 
