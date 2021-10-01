@@ -117,6 +117,27 @@ void Arm_Move::move_end_effector(double x1, double y1, double z1, double eef_ste
     
 }
 
+void Arm_Move::move_end_effector_set_tf(double x1, double y1, double z1, double roll, double pitch, double yaw, double eef_step)
+{
+    std::vector<geometry_msgs::Pose> waypoints;
+    geometry_msgs::Pose wpose = arm_group_->getCurrentPose().pose;
+    wpose.position.x = x1;
+    wpose.position.y = y1;
+    wpose.position.z = z1;
+    tf2::Quaternion quat;
+    quat.setRPY(roll, pitch, yaw);
+    tf2::convert(quat, wpose.orientation);
+    waypoints.push_back(wpose);
+
+    moveit_msgs::RobotTrajectory trajectory;
+    const double jump_thresh = 0.0;
+    double fraction = arm_group_->computeCartesianPath(waypoints, eef_step,
+                                            jump_thresh, trajectory);
+    arm_group_->execute(trajectory);                                                                                        
+
+    
+}
+
 void Arm_Move::return_home()
 {
     std::vector<double> joint_value = {0.220046, -1.6059, 1.24065, -1.14717, -1.5684, -1.57072};

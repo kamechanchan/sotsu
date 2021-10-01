@@ -10,6 +10,7 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <tf2_ros/buffer.h>
 
+
 class Arm_Move
 {
 public:
@@ -24,6 +25,7 @@ public:
     void tf_get(std::string, std::string, geometry_msgs::TransformStamped&);
     void show_tf_value(std::string, std::string);
     void move_end_effector(double, double, double, double);
+    void move_end_effector_set_tf(double, double, double, double, double, double, double);
     void return_home();
     geometry_msgs::Point get_pose_tf(std::string, std::string);
     geometry_msgs::Point transform_to_target_point(geometry_msgs::TransformStamped);
