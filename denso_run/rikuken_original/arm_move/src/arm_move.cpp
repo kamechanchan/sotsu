@@ -98,6 +98,8 @@ geometry_msgs::TransformStamped Arm_Move::get_pose_tf(std::string source, std::s
     tf2::Quaternion trans_ato, rotate_at;
     trans_ato = q_moto * q_zero * q_moto.inverse();
     rotate_at = q_convert * q_moto;
+    q_convert.setRPY(0, 0, M_PI);
+    rotate_at = q_convert * rotate_at;
     geometry_msgs::TransformStamped final_pose;
     final_pose.transform.translation.x = trans_ato[0] + trans.translation.x;
     final_pose.transform.translation.y = trans_ato[1] + trans.translation.y;
@@ -215,10 +217,22 @@ void Arm_Move::move_end_effector_set_tf(geometry_msgs::TransformStamped trans, d
     wpose.position.x = trans.transform.translation.x;
     wpose.position.y = trans.transform.translation.y;
     wpose.position.z = trans.transform.translation.z;
-    wpose.orientation.x = trans.transform.rotation.x;
-    wpose.orientation.y = trans.transform.rotation.y;
-    wpose.orientation.z = trans.transform.rotation.z;
-    wpose.orientation.w = trans.transform.rotation.w;
+    tf2::Quaternion quat, q_moto, q_ato;
+    quat.setRPY(M_PI / 10, 0, 0);
+
+    tf2::convert(wpose.orientation, q_moto);
+
+    q_ato = quat * q_moto;
+    
+    wpose.orientation.x = q_ato[0];
+    wpose.orientation.y = q_ato[1];
+    wpose.orientation.z = q_ato[2];
+    wpose.orientation.w = q_ato[3];
+    // wpose.orientation.x = trans.transform.rotation.x;
+    // wpose.orientation.y = trans.transform.rotation.y;
+    // wpose.orientation.z = trans.transform.rotation.z;
+    // wpose.orientation.w = trans.transform.rotation.w;
+    waypoints.push_back(wpose);
     moveit_msgs::RobotTrajectory trajectory;
     const double jump_thresh = 0.0;
     double fraction = arm_group_->computeCartesianPath(waypoints, eef_step,
@@ -237,6 +251,7 @@ void Arm_Move::move_end_effector_set_tf(geometry_msgs::Transform trans, double e
     wpose.orientation.y = trans.rotation.y;
     wpose.orientation.z = trans.rotation.z;
     wpose.orientation.w = trans.rotation.w;
+    waypoints.push_back(wpose);
     moveit_msgs::RobotTrajectory trajectory;
     const double jump_thresh = 0.0;
     double fraction = arm_group_->computeCartesianPath(waypoints, eef_step,
