@@ -29,10 +29,12 @@ public:
     void move_end_effector_set_tf(double, double, double, double, double, double, double);
     void move_end_effector_set_tf(double, double, double, tf2::Quaternion, double);
     void move_end_effector_set_tf(geometry_msgs::TransformStamped, double);
+    void move_end_effector_set_tf(geometry_msgs::Transform, double);
     void return_home();
     geometry_msgs::Point get_pose_tf(std::string, std::string);
     geometry_msgs::TransformStamped get_pose_tf(std::string, std::string, double);
     geometry_msgs::Point transform_to_target_point(geometry_msgs::TransformStamped);
+    geometry_msgs::Transform transform_to_target_point(geometry_msgs::Transform);
     
 private:
     moveit::planning_interface::MoveGroupInterface *arm_group_;

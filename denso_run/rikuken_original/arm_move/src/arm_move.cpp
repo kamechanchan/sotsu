@@ -128,6 +128,27 @@ geometry_msgs::Point Arm_Move::transform_to_target_point(geometry_msgs::Transfor
     return point;
 }
 
+
+geometry_msgs::Transform Arm_Move::transform_to_target_point(geometry_msgs::Transform transform)
+{
+    tf2::Quaternion q_moto(transform.translation.x, transform.translation.y, transform.translation.z, 0);
+    tf2::Quaternion q_rot;
+    tf2::convert(transform.rotation, q_rot);
+    tf2::Quaternion q_after = q_rot.inverse() * q_moto * q_rot;
+    tf2::Quaternion q_convert, q_final;
+    q_convert.setRPY(0, M_PI, 0);
+    q_final = q_convert * q_rot;
+    geometry_msgs::Transform point;
+    point.translation.x = q_after.x();
+    point.translation.y = q_after.y();
+    point.translation.z = q_after.z();
+    point.rotation.x = q_final.x();
+    point.rotation.y = q_final.y();
+    point.rotation.z = q_final.z();
+    point.rotation.w = q_final.w();
+    return point;
+}
+
 void Arm_Move::move_end_effector(double x1, double y1, double z1, double eef_step)
 {
     std::vector<geometry_msgs::Pose> waypoints;
@@ -198,6 +219,24 @@ void Arm_Move::move_end_effector_set_tf(geometry_msgs::TransformStamped trans, d
     wpose.orientation.y = trans.transform.rotation.y;
     wpose.orientation.z = trans.transform.rotation.z;
     wpose.orientation.w = trans.transform.rotation.w;
+    moveit_msgs::RobotTrajectory trajectory;
+    const double jump_thresh = 0.0;
+    double fraction = arm_group_->computeCartesianPath(waypoints, eef_step,
+                                            jump_thresh, trajectory);
+    arm_group_->execute(trajectory);
+}
+
+void Arm_Move::move_end_effector_set_tf(geometry_msgs::Transform trans, double eef_step)
+{
+    std::vector<geometry_msgs::Pose> waypoints;
+    geometry_msgs::Pose wpose = arm_group_->getCurrentPose().pose;
+    wpose.position.x += trans.translation.x;
+    wpose.position.y += trans.translation.y;
+    wpose.position.z += trans.translation.z;
+    wpose.orientation.x = trans.rotation.x;
+    wpose.orientation.y = trans.rotation.y;
+    wpose.orientation.z = trans.rotation.z;
+    wpose.orientation.w = trans.rotation.w;
     moveit_msgs::RobotTrajectory trajectory;
     const double jump_thresh = 0.0;
     double fraction = arm_group_->computeCartesianPath(waypoints, eef_step,

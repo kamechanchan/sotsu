@@ -21,6 +21,8 @@ int main(int argc, char** argv)
     // pon2 = arm_hand.get_pose_tf()
     geometry_msgs::TransformStamped final_tf;
     final_tf = arm_hand.get_pose_tf("HV8_0", "world", 0.08);
+    geometry_msgs::Transform final_yes;
+    final_yes = arm_hand.transform_to_target_point(final_tf.transform);
     tf2_ros::TransformBroadcaster br;
     
     
@@ -35,7 +37,7 @@ int main(int argc, char** argv)
     //     br.sendTransform(final_tf);
     // }
     // arm_hand.move_end_effector(pon.x, pon.y, pon.z + 0.08, 0.0005);
-    arm_hand.move_end_effector_set_tf(final_tf, 0.001);
+    arm_hand.move_end_effector_set_tf(final_yes, 0.001);
     arm_hand.hand_close();
     while (count <= 2) {
         count++;
