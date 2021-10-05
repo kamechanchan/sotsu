@@ -93,10 +93,14 @@ class PoseEstNode():
         self.stl_est = copy.deepcopy(self.object_name_stl)
         self.stl_ref = copy.deepcopy(self.object_name_stl)
 
+        print("***********ishiyam+++++++++++++++++")
+        print(sub_topic_name)
+
     def callback(self, data):
         self.start_callback = time.time()
         #self.time_file.write("インスタンスからコールバックまでかかった時間は: " + str(self.start_callback - self.model_road) + '\n')
-
+        print("ishiyama")
+        print(type(data))
         self.o3d_data = convertCloudFromRosToOpen3d(data)
         self.open3d_time = time.time()
         self.time_file.write("点群が入力されてopen3dへ変換するまでの時間は : " + str(self.open3d_time - self.start_callback) + '秒\n')
@@ -134,10 +138,10 @@ class PoseEstNode():
             print("**********************")
             print(normalized_pcd.dtype)
             normalized_pcd = normalized_pcd.astype(np.float32)
-            pcl_visu = pcl.PointCloud(normalized_pcd)
-            pcd_dir = "/home/ericlab/data"
-            pcl.save(pcl_visu, pcd_dir+"/result"+".pcd")
-            #np_cloud = np.asarray(self.o3d_data.points)
+            # pcl_visu = pcl.PointCloud(normalized_pcd)
+            # pcd_dir = "/home/ericlab/data"
+            # pcl.save(pcl_visu, pcd_dir+"/result"+".pcd")
+            # np_cloud = np.asarray(self.o3d_data.points)
             #self.input_data.input_cloud = Float32MultiArray(data=np.array(np_cloud).flatten())
         elif self.arch == "PointNet_Segmentation":
             normalized_pcd, self.offset_data = getNormalizedPcd(self.o3d_data.points, self.resolution)
@@ -184,6 +188,8 @@ class PoseEstNode():
         t.child_frame_id = child_frame_id
         t.transform.translation = res.trans.transform.translation
         t.transform.rotation = res.trans.transform.rotation
+        print("****************")
+        print(child_frame_id)
 
         if child_frame_id == "estimated_tf":
             t.header.frame_id = "photoneo_center_optical_frame"

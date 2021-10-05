@@ -5,11 +5,15 @@ import torch.nn as nn
 import torch.optim as optim
 from .layer.PointNet import *
 import torch.nn.functional as F
+from .layer.YOLO import *
+from collections import defaultdict
+import yaml
 
 
 def init_net(net, gpu_ids):
     if len(gpu_ids) > 0:
         assert(torch.cuda.is_available())
+        # print(net)
         net.cuda()
         net = torch.nn.DataParallel(net)
     return net
@@ -29,6 +33,15 @@ def define_network(opt):
             net = JSIS3D(opt.embedded_size)
         elif arch == "PointNet_Segmentation":
             net = PointNet_Semantic_Segmentation(opt.semantic_number)
+        elif arch == "YOLO":
+            path = "/home/ericlab/Desktop/ishiyama/Yolo_saikou/config/yolov3_denso.yaml"
+            with open(path) as f:
+                config = yaml.safe_load(f)
+                # print(config)
+            # ishiyama_tanomuze = "{'name': 'yolov3', 'n_classes': 1, 'class_names': 'custom_denso_classes.txt', 'ignore_threshold': 0.7, 'anchors': [[10, 13], [16, 30], [33, 23], [30, 61], [62, 45], [59, 119], [116, 90], [156, 198], [373, 326]], 'anchor_mask': [[6, 7, 8], [3, 4, 5], [0, 1, 2]]}"
+            net = YOLOv3(config["model"])
+    print(process_swich)
+    print(arch)
 
     return init_net(net, gpu_ids)
 
@@ -160,3 +173,45 @@ class JSIS3D(nn.Module):
         # print("143")
         x = x.transpose(2,1).contiguous() #memory clean for view
         return x
+
+
+class YOLOv3(nn.Module):
+    def __init__(self, config_model):
+        super().__init__()
+        self.module_list = create_yolov3_modules(config_model)
+
+    def forward(self, x, labels=None):
+        train = labels is not None
+        self.loss_dict = defaultdict(float)
+
+        output = []
+        layers = []
+        for i, module in enumerate(self.module_list):
+
+            if i == 18:
+                x = layers[i - 3]
+            if i == 20:
+                x = torch.cat((layers[i - 1], layers[8]), dim=1)
+            if i == 27:
+                x = layers[i - 3]
+            if i == 29:
+                x = torch.cat((layers[i - 1], layers[6]), dim=1)
+
+            if isinstance(module, YOLOLayer):
+                if train:
+                    x, *losses = module(x, labels)
+                    for name, loss in zip(["xy", "wh", "obj", "cls"], losses):
+                        self.loss_dict[name] += loss
+                else:
+                    x = module(x)
+
+                output.append(x)
+            else:
+                x = module(x)
+
+            layers.append(x)
+
+        if train:
+            return sum(output)
+        else:
+            return torch.cat(output, dim=1)

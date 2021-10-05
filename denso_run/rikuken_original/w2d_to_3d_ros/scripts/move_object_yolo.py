@@ -141,13 +141,12 @@ class annotation_environment(object):
                 pose_list.append(pose_data)
         while com < 2:
             com = com + 1
-            
-            
+
             for i in range(25):
                 self.model_state_pub.publish(pose_list[i])
                 loop.sleep()
             #loop.sleep()
-    
+
     def execute(self):
         loop = rospy.Rate(10)
         naibu_loop = rospy.Rate(3)
@@ -160,7 +159,7 @@ class annotation_environment(object):
             hantei = rospy.get_param("move_is_ok", True)
             if hantei:
                 self.object_move(self.model_name)
-                
+
                 count = 0
                 while count <= 2: 
                     count = count + 1

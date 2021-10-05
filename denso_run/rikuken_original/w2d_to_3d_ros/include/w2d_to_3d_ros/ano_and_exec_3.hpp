@@ -51,6 +51,7 @@ public:
     }
 
     void hurui(pcl::PointCloud<pcl::PointXYZ>, std::vector<std::vector<int>>, sensor_msgs::Image, sensor_msgs::CameraInfo, pcl::PointCloud<pcl::PointXYZRGB>&);
+    void hurui(pcl::PointCloud<pcl::PointXYZ>, std::vector<std::vector<int>>, sensor_msgs::Image, sensor_msgs::CameraInfo, pcl::PointCloud<pcl::PointXYZ>&);
 
 private:
     message_filters::Synchronizer<Sync_Sub_type> *sensor_sync_;
