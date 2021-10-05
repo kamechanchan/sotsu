@@ -98,6 +98,8 @@ geometry_msgs::TransformStamped Arm_Move::get_pose_tf(std::string source, std::s
     tf2::Quaternion trans_ato, rotate_at;
     trans_ato = q_moto * q_zero * q_moto.inverse();
     rotate_at = q_convert * q_moto;
+    q_convert.setRPY(0, 0, M_PI);
+    rotate_at = q_convert * rotate_at;
     geometry_msgs::TransformStamped final_pose;
     final_pose.transform.translation.x = trans_ato[0] + trans.translation.x;
     final_pose.transform.translation.y = trans_ato[1] + trans.translation.y;
@@ -125,6 +127,27 @@ geometry_msgs::Point Arm_Move::transform_to_target_point(geometry_msgs::Transfor
     point.x = q_after.x();
     point.y = q_after.y();
     point.z = q_after.z();
+    return point;
+}
+
+
+geometry_msgs::Transform Arm_Move::transform_to_target_point(geometry_msgs::Transform transform)
+{
+    tf2::Quaternion q_moto(transform.translation.x, transform.translation.y, transform.translation.z, 0);
+    tf2::Quaternion q_rot;
+    tf2::convert(transform.rotation, q_rot);
+    tf2::Quaternion q_after = q_rot.inverse() * q_moto * q_rot;
+    tf2::Quaternion q_convert, q_final;
+    q_convert.setRPY(0, M_PI, 0);
+    q_final = q_convert * q_rot;
+    geometry_msgs::Transform point;
+    point.translation.x = q_after.x();
+    point.translation.y = q_after.y();
+    point.translation.z = q_after.z();
+    point.rotation.x = q_final.x();
+    point.rotation.y = q_final.y();
+    point.rotation.z = q_final.z();
+    point.rotation.w = q_final.w();
     return point;
 }
 
@@ -194,10 +217,41 @@ void Arm_Move::move_end_effector_set_tf(geometry_msgs::TransformStamped trans, d
     wpose.position.x = trans.transform.translation.x;
     wpose.position.y = trans.transform.translation.y;
     wpose.position.z = trans.transform.translation.z;
-    wpose.orientation.x = trans.transform.rotation.x;
-    wpose.orientation.y = trans.transform.rotation.y;
-    wpose.orientation.z = trans.transform.rotation.z;
-    wpose.orientation.w = trans.transform.rotation.w;
+    tf2::Quaternion quat, q_moto, q_ato;
+    quat.setRPY(M_PI / 10, 0, 0);
+
+    tf2::convert(wpose.orientation, q_moto);
+
+    q_ato = quat * q_moto;
+    
+    wpose.orientation.x = q_ato[0];
+    wpose.orientation.y = q_ato[1];
+    wpose.orientation.z = q_ato[2];
+    wpose.orientation.w = q_ato[3];
+    // wpose.orientation.x = trans.transform.rotation.x;
+    // wpose.orientation.y = trans.transform.rotation.y;
+    // wpose.orientation.z = trans.transform.rotation.z;
+    // wpose.orientation.w = trans.transform.rotation.w;
+    waypoints.push_back(wpose);
+    moveit_msgs::RobotTrajectory trajectory;
+    const double jump_thresh = 0.0;
+    double fraction = arm_group_->computeCartesianPath(waypoints, eef_step,
+                                            jump_thresh, trajectory);
+    arm_group_->execute(trajectory);
+}
+
+void Arm_Move::move_end_effector_set_tf(geometry_msgs::Transform trans, double eef_step)
+{
+    std::vector<geometry_msgs::Pose> waypoints;
+    geometry_msgs::Pose wpose = arm_group_->getCurrentPose().pose;
+    wpose.position.x += trans.translation.x;
+    wpose.position.y += trans.translation.y;
+    wpose.position.z += trans.translation.z;
+    wpose.orientation.x = trans.rotation.x;
+    wpose.orientation.y = trans.rotation.y;
+    wpose.orientation.z = trans.rotation.z;
+    wpose.orientation.w = trans.rotation.w;
+    waypoints.push_back(wpose);
     moveit_msgs::RobotTrajectory trajectory;
     const double jump_thresh = 0.0;
     double fraction = arm_group_->computeCartesianPath(waypoints, eef_step,

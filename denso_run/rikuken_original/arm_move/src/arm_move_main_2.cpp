@@ -15,14 +15,24 @@ int main(int argc, char** argv)
     
     // arm_hand.return_home();
     
-    // geometry_msgs::Point pon1, pon2, pon;
-    // pon1 = arm_hand.get_pose_tf("body_link", "world");
-    // pon2 = arm_hand.get_pose_tf("HV8_0", "world");
+    geometry_msgs::Point pon1, pon2, pon;
+    pon1 = arm_hand.get_pose_tf("body_link", "world");
+    pon2 = arm_hand.get_pose_tf("HV8_0", "world");
+    pon.x = pon1.x - pon2.x;
+    pon.y = pon1.y - pon2.y;
+    pon.z = pon1.z - pon2.z;
+
     // pon2 = arm_hand.get_pose_tf()
     geometry_msgs::TransformStamped final_tf;
-    final_tf = arm_hand.get_pose_tf("HV8_0", "world", 0.08);
+    final_tf = arm_hand.get_pose_tf("HV8_0", "world", 0.172);
+    geometry_msgs::Transform final_yes, final_yes_moto;
+    // final_yes = arm_hand.transform_to_target_point(final_tf.transform);
     tf2_ros::TransformBroadcaster br;
-    
+    final_yes = final_tf.transform;
+    final_yes.translation.x = pon.x;
+    final_yes.translation.y = pon.y;
+    final_yes.translation.z = pon.z;
+
     
     ros::Rate loop(2), loop_tf(10);
     int count = 0;
