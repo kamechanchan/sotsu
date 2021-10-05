@@ -5,7 +5,7 @@
   <arg name="arch" default="PointNet_Segmentation" />
   <arg name="process_swich" default="object_segment" />
   <arg name="resolution" default="8192" />
-  <arg name="load_path" default="/home/ericlab/DENSO_results/August/semantic_segmentation/ishiyama/PointNet_Segmentation/semantic_changed_occulution_kiriwake_9_14_1000_1.hdf5/200_net.pth"/>
+  <arg name="load_path" default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/load_model/semantic/semantic_demo.pth"/>
   <arg name="child_frame_id" default="estimated_tf" />
   <arg name="header_frame_id" default="photoneo_center_optical_frame" />
   <arg name="dataset_mode" default="semantic_segmentation" />
@@ -13,7 +13,7 @@
   <arg name="process_swicth2" default="raugh_recognition" />
   <arg name="dataset_mode2" default="pose_estimation" />
   <arg name="arch2" default="PointNet_Pose" />
-  <arg name="load_path2" default="/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth" />
+  <arg name="load_path2" default="/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/load_model/raugh_recognition/raugh_demo.pth" />
   <arg name="resolution2" default="1024" />
 
     <node name="estimator_server" pkg="estimator" type="semantic_server.py" output="screen" >
