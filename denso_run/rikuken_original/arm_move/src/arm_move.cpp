@@ -40,6 +40,7 @@ void Arm_Move::hand_close()
     joint_value = hand_group_->getCurrentJointValues();
     joint_value[0] = close_range_;
     hand_group_->setJointValueTarget(joint_value);
+    hand_group_->setMaxVelocityScalingFactor(0.01);
     hand_group_->move();
 }
 
@@ -210,6 +211,23 @@ void Arm_Move::return_home()
     arm_group_->move();
 }
 
+void seteuler(double &kakudo)
+{
+    if (kakudo >= M_PI / 2) {
+        kakudo = M_PI - kakudo;
+    }
+    else if (kakudo <= -M_PI / 2) {
+        kakudo = -M_PI - kakudo;
+    }
+    std::cout << "M_PI: " << M_PI << "   kakudo: " << kakudo << std::endl;
+    if (kakudo >= M_PI / 4) {
+        kakudo = kakudo - M_PI / 4;
+    }
+    else if (kakudo <= -M_PI / 4) {
+        kakudo = kakudo + M_PI / 4;
+    }
+}
+
 void Arm_Move::move_end_effector_set_tf(geometry_msgs::TransformStamped trans, double eef_step)
 {
     std::vector<geometry_msgs::Pose> waypoints;
@@ -217,8 +235,24 @@ void Arm_Move::move_end_effector_set_tf(geometry_msgs::TransformStamped trans, d
     wpose.position.x = trans.transform.translation.x;
     wpose.position.y = trans.transform.translation.y;
     wpose.position.z = trans.transform.translation.z;
-    tf2::Quaternion quat, q_moto, q_ato;
-    quat.setRPY(M_PI / 10, 0, 0);
+    tf2::Quaternion quat, q_moto, q_ato, q_object, q_zero, q_object_c;
+    q_zero.setRPY(0, 0, 0);
+    // quat.setRPY(-M_PI / 10, 0, 0);
+    tf2::convert(trans.transform.rotation, q_object);
+    q_object_c =  q_zero.inverse() * q_object;
+    double yaw, roll, pitch;
+    tf2::getEulerYPR(q_object, yaw, pitch, roll);
+    std::cout << "roll: " << roll << "   pitch: " << pitch << "  yaw: " << yaw << std::endl;
+    quat.setRPY(0, 0, yaw);
+    q_object = quat.inverse() * q_object * quat;
+    q_object_c =  q_zero.inverse() * q_object;
+    
+    tf2::getEulerYPR(q_object_c, yaw, pitch, roll);
+    std::cout << "roll: " << roll << "   pitch: " << pitch << "  yaw: " << yaw << std::endl;
+    seteuler(roll);
+    seteuler(pitch);
+    std::cout << "roll: " << roll << "   pitch: " << pitch << std::endl;
+    quat.setRPY(-roll, -pitch, 0);
 
     tf2::convert(wpose.orientation, q_moto);
 
