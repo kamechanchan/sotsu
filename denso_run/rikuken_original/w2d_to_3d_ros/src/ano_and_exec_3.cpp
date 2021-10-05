@@ -47,7 +47,8 @@ void Ano_and_Exec::InputCallback(sensor_msgs::CameraInfoConstPtr cam_msgs, senso
     sensor_msgs::CameraInfo cinfo = *cam_msgs;
     sensor_msgs::Image image1 = *image_msgs;
     pcl::PointCloud<pcl::PointXYZ> trans_cloud;
-    pcl::PointCloud<pcl::PointXYZRGB> color_cloud;
+    // pcl::PointCloud<pcl::PointXYZRGB> color_cloud;
+    pcl::PointCloud<pcl::PointXYZ> color_cloud;
     sensor_msgs::PointCloud2 cloud_msgs;
 
     geometry_msgs::TransformStamped trans_source;
@@ -369,6 +370,62 @@ void Ano_and_Exec::hurui(pcl::PointCloud<pcl::PointXYZ> input_pcl_cloud, std::ve
                 buffer_point.r = rgb[0];
                 buffer_point.g = rgb[1];
                 buffer_point.b = rgb[2];
+                outcloud_pcl_cloud.push_back(buffer_point);
+            }
+        }
+    }
+}
+
+
+void Ano_and_Exec::hurui(pcl::PointCloud<pcl::PointXYZ> input_pcl_cloud, std::vector<std::vector<int>> instance, sensor_msgs::Image image, sensor_msgs::CameraInfo cinfo, pcl::PointCloud<pcl::PointXYZ> &outcloud_pcl_cloud)
+{
+    cv_bridge::CvImageConstPtr cv_img_ptr;
+    try
+    {
+        cv_img_ptr = cv_bridge::toCvCopy(image, sensor_msgs::image_encodings::BGR8);
+    }
+    catch (cv_bridge::Exception& e)
+    {
+        ROS_ERROR("cv_bridge exeption %s", e.what());
+    }
+    cv::Mat cv_image(cv_img_ptr->image.rows, cv_img_ptr->image.cols, cv_img_ptr->image.type());
+    cv_image = cv_img_ptr->image;
+    cv::Mat rgb_image;
+    cv::cvtColor(cv_image, rgb_image, cv::COLOR_BGR2RGB);
+    int coun = 0;
+    for (pcl::PointCloud<pcl::PointXYZ>::iterator pt = input_pcl_cloud.points.begin(); pt != input_pcl_cloud.points.end(); ++pt)
+    {
+        if (pt->z < 0)
+        {
+            ROS_INFO_STREAM("pass point");
+            continue;
+        }
+        cv::Point3d pt_cv(pt->x, pt->y, pt->z);
+        cv::Point2d uv;
+        uv = project3d_to_pixel_origin(pt_cv, cinfo);
+       // cv::Mat rgb_image;
+        //cv::cvtColor(image, rgb_image, cv::COLOR_BGR2RGB);
+        // cv::cvtColor(image, image, cv::COLOR_BGR2RGB);
+        
+        double scale = 1;
+        if (uv.x > (-rgb_image.cols / scale) && uv.y < (rgb_image.cols / scale) && uv.y > (-rgb_image.rows / scale)
+            && uv.y < (rgb_image.rows / scale))
+        {
+            
+            pcl::PointXYZ buffer_point;
+            int x = static_cast<int>(uv.x);
+            int y = static_cast<int>(uv.y);
+
+            if (instance[y][x] == 1) {
+                cv::Vec3d rgb = rgb_image.at<cv::Vec3b>(y, x);
+                // ROS_INFO_STREAM("x: " << x << "   y: " << y);
+                // ROS_INFO_STREAM("r: " << rgb[0] << "  g: " << rgb[1] << "  b: " << rgb[2]);
+                buffer_point.x = pt->x;
+                buffer_point.y = pt->y;
+                buffer_point.z = pt->z;
+                // buffer_point.r = rgb[0];
+                // buffer_point.g = rgb[1];
+                // buffer_point.b = rgb[2];
                 outcloud_pcl_cloud.push_back(buffer_point);
             }
         }

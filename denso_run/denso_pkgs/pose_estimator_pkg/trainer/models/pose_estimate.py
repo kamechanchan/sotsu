@@ -192,6 +192,7 @@ class EstimatorModel:
 
     def test_step(self):
         if self.process_swich == "raugh_recognition":
+            # print(self.x_data.shape)
             pred = self.net(self.x_data)
             # print("p")
             # print(pred.shape)
@@ -268,6 +269,7 @@ class EstimatorModel:
         if hasattr(state_dict, "_metadata"):
             del state_dict._metadata
         net.load_state_dict(state_dict,strict=False)
+        # net.load_state_dict(state_dict["model_state_dict"])
 
     def save_network(self, which_epoch):
         save_filename= "%s_net.pth" % (which_epoch)

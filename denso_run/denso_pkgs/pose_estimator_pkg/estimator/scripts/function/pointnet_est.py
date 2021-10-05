@@ -17,8 +17,9 @@ def pose_prediction(opt, data, arg):
         row = 3
         col = n_data // row
         x = np.reshape(np.array(data), (col, row))[np.newaxis, :, :]
-    elif arg == "integ_PointNet":
-        x = getNormalizedPcd(data, 1024)
+    elif arg == "integ_final_PointNet":
+        # x = getNormalizedPcd(data, 1024)
+        x = data[np.newaxis, :, :]
 
     y_pre = estimation(opt, x)
     y = np.squeeze(y_pre[0])
