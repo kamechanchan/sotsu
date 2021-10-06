@@ -6,7 +6,7 @@ int main(int argc, char** argv)
     Arm_Move arm_hand;
     arm_hand.arm_register("manipulator");
     arm_hand.hand_register("hand");
-    arm_hand.set_close_range(0.0197);
+    arm_hand.set_close_range(0.01953);
     arm_hand.show_arm_joint();
     arm_hand.show_hand_joint();
     // arm_hand.hand_close();
@@ -24,7 +24,7 @@ int main(int argc, char** argv)
 
     // pon2 = arm_hand.get_pose_tf()
     geometry_msgs::TransformStamped final_tf;
-    final_tf = arm_hand.get_pose_tf("HV8", "world", 0.167);
+    final_tf = arm_hand.get_pose_tf("HV8", "world", 0.168);
     geometry_msgs::Transform final_yes, final_yes_moto;
     // final_yes = arm_hand.transform_to_target_point(final_tf.transform);
     tf2_ros::TransformBroadcaster br;
