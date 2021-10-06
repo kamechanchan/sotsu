@@ -38,10 +38,20 @@ void Arm_Move::hand_close()
 {
     std::vector<double> joint_value;
     joint_value = hand_group_->getCurrentJointValues();
-    joint_value[0] = close_range_;
-    hand_group_->setJointValueTarget(joint_value);
-    hand_group_->setMaxVelocityScalingFactor(0.01);
-    hand_group_->move();
+    double move_range = close_range_ - joint_value[0];
+    double sampling_range = move_range / 20;
+    ros::Rate loop(20);
+    for (int i = 0; i < 20; i++) {
+        joint_value[0] += sampling_range;
+        hand_group_->setJointValueTarget(joint_value);
+        hand_group_->move();
+        loop.sleep();
+    }
+    // joint_value[0] = close_range_;
+    
+    // hand_group_->setJointValueTarget(joint_value);
+    // hand_group_->setMaxVelocityScalingFactor(0.01);
+    // hand_group_->move();
 }
 
 void Arm_Move::set_close_range(double range)

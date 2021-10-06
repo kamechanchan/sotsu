@@ -4,7 +4,7 @@
     <arg name="object_name" default="HV8"/>
     <group if="$(eval object_name=='HV8')">
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/real_HV8_3.world"/>
+            <!-- <arg name="world_name" value="$(find tf_publish)/world/real_HV8_3.world"/> -->
             <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
             
         </include>
