@@ -13,7 +13,7 @@ import numpy as np
 class move_environment(object):
     def __init__(self):
         self.kaisuu = 0
-        self.z_coordinamte = 1
+        self.z_coordinamte = 0
         self.first_function()
         
 

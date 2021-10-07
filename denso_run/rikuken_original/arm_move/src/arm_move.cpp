@@ -39,9 +39,9 @@ void Arm_Move::hand_close()
     std::vector<double> joint_value;
     joint_value = hand_group_->getCurrentJointValues();
     double move_range = close_range_ - joint_value[0];
-    double sampling_range = move_range / 20;
+    double sampling_range = move_range / 10;
     ros::Rate loop(20);
-    for (int i = 0; i < 20; i++) {
+    for (int i = 0; i < 10; i++) {
         joint_value[0] += sampling_range;
         hand_group_->setJointValueTarget(joint_value);
         hand_group_->move();
@@ -113,7 +113,7 @@ geometry_msgs::TransformStamped Arm_Move::get_pose_tf(std::string source, std::s
     rotate_at = q_convert * rotate_at;
     geometry_msgs::TransformStamped final_pose;
     final_pose.transform.translation.x = trans_ato[0] + trans.translation.x;
-    final_pose.transform.translation.y = trans_ato[1] + trans.translation.y;
+    final_pose.transform.translation.y = trans_ato[1] + 0.01 + trans.translation.y;
     final_pose.transform.translation.z = trans_ato[2] + trans.translation.z;
     // final_pose.transform.translation.x = trans_ato[0];
     // final_pose.transform.translation.y = trans_ato[1];

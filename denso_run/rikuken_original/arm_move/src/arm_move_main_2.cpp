@@ -55,7 +55,7 @@ int main(int argc, char** argv)
         loop.sleep();
     }
     arm_hand.move_end_effector(0, 0, 0.1, 0.001);
-    arm_hand.move_end_effector(0.0, -0.2, 0, 0.001);
+    // arm_hand.move_end_effector(0.0, -0.2, 0, 0.001);
     arm_hand.move_end_effector(0, 0, -0.1, 0.001);
     arm_hand.hand_open();
     arm_hand.return_home();
