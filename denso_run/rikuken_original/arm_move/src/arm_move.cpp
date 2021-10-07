@@ -113,7 +113,7 @@ geometry_msgs::TransformStamped Arm_Move::get_pose_tf(std::string source, std::s
     rotate_at = q_convert * rotate_at;
     geometry_msgs::TransformStamped final_pose;
     final_pose.transform.translation.x = trans_ato[0] + trans.translation.x;
-    final_pose.transform.translation.y = trans_ato[1] + 0.01 + trans.translation.y;
+    final_pose.transform.translation.y = trans_ato[1] + trans.translation.y;
     final_pose.transform.translation.z = trans_ato[2] + trans.translation.z;
     // final_pose.transform.translation.x = trans_ato[0];
     // final_pose.transform.translation.y = trans_ato[1];
