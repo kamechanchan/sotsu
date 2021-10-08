@@ -13,7 +13,6 @@ sys.path.append(os.path.join(os.path.dirname(__file__), './function/__init__.py'
 sys.path.append(os.path.join(os.path.dirname(__file__), './function/'))
 from options.test_options import TestOptions
 from models import create_model
-from dnn_test import estimation
 import function as f
 from cloud_util import *
 from std_msgs.msg import Header
