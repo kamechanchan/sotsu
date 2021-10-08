@@ -10,7 +10,7 @@
 
   <!-- ur3e -->
   <xacro:include filename="$(find tf_publish)/urdf/ur3e.urdf.xacro" />
-  <xacro:arg name="ur_x" default="0"/>
+  <xacro:arg name="ur_x" default="-0.4"/>
   <xacro:arg name="ur_y" default="0"/>
   <xacro:arg name="ur_z" default="0"/>
   <xacro:arg name="ur_yaw" default="1.5"/>

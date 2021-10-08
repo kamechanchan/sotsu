@@ -12,6 +12,7 @@
 #include <tf2_ros/transform_broadcaster.h>
 #include <tf2/convert.h>
 #include <tf2/utils.h>
+#include <math.h>
 
 
 class Arm_Move
@@ -31,6 +32,7 @@ public:
     void move_end_effector_set_tf(double, double, double, double, double, double, double);
     void move_end_effector_set_tf(double, double, double, tf2::Quaternion, double);
     void move_end_effector_set_tf(geometry_msgs::TransformStamped, double);
+    void move_end_effector_set_tf(geometry_msgs::TransformStamped, double, double, double);
     void move_end_effector_set_tf(geometry_msgs::Transform, double);
     void return_home();
     geometry_msgs::Point get_pose_tf(std::string, std::string);
