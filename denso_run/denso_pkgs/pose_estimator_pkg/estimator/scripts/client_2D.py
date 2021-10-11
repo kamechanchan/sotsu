@@ -240,6 +240,7 @@ class To_Yolo:
         # self.model = model.net.to(self.device).eval()
         # print(self.pad_img.shape)
         with torch.no_grad():
+            print(self.pad_img)
             outputs = self.model(self.pad_img)
             self.outputs = postprocess(outputs, self.conf_threshold, self.nms_threshold, self.pad_info)
             # self.detections = self.output_to_dict(outputs, self.class_names) 
@@ -247,7 +248,7 @@ class To_Yolo:
     def create_model(self):
         if self.arch =="YOLO":
             self.model = YOLOv3(self.config["model"])
-            state = torch.load(self.load_path)
+            state = torch.load(self.load_path, self.device)
             self.model.load_state_dict(state["model_state_dict"])
             print(f"state_dict format weights file loaded. {self.load_path}")
             self.model = self.model.to(self.device).eval()
