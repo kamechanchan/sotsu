@@ -138,7 +138,7 @@ void Exec_yolo::tf_get(std::string source_frame, std::string target_frame, geome
     try
     {
         trans = buffer_.lookupTransform(target_frame, source_frame, ros::Time(0));
-        ROS_INFO_ONCE("I got a transfomr");
+        ROS_INFO_ONCE("I got a transform");
     }
     catch (tf2::TransformException &e)
     {
