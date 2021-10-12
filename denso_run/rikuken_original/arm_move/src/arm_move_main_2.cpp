@@ -6,7 +6,9 @@ int main(int argc, char** argv)
     Arm_Move arm_hand;
     ros::NodeHandle pnh("~");
     std::string target_frame;
+    double  z_br;
     pnh.getParam("target_frame", target_frame);
+    pnh.getParam("tf_z", z_br);
     ros::NodeHandle nh;
     ros::Publisher pub = nh.advertise<geometry_msgs::TransformStamped>("tsuchida_tf_pub", 10);
     arm_hand.arm_register("manipulator");
@@ -20,15 +22,16 @@ int main(int argc, char** argv)
     
     // arm_hand.return_home();
     
-    // geometry_msgs::Point pon1, pon2, pon;
-    // pon1 = arm_hand.get_pose_tf("body_link", "world");
-    // pon2 = arm_hand.get_pose_tf(target_frame, "world");
-    // pon.x = pon1.x - pon2.x;
-    // pon.y = pon1.y - pon2.y;
+    geometry_msgs::Point pon1, pon2, pon;
+    pon1 = arm_hand.get_pose_tf("body_link", "world");
+    pon2 = arm_hand.get_pose_tf(target_frame, "world");
+
+    pon.x = pon1.x - pon2.x;
+    pon.y = pon1.y - pon2.y;
     // pon.z = pon1.z - pon2.z;
 
     geometry_msgs::TransformStamped final_tf;
-    final_tf = arm_hand.get_pose_tf(target_frame, "world", 0.167);
+    final_tf = arm_hand.get_pose_tf(target_frame, "world", z_br);
     final_tf.header.frame_id = "world";
     final_tf.child_frame_id = "tsuchida_Tf";
     final_tf.header.stamp = ros::Time::now();
@@ -63,9 +66,9 @@ int main(int argc, char** argv)
         count++;
         loop.sleep();
     }
-    arm_hand.move_end_effector(0, 0, 0.1, 0.001);
+    arm_hand.move_end_effector(0, 0, 0.2, 0.001);
     // arm_hand.move_end_effector(0.0, -0.2, 0, 0.001);
-    arm_hand.move_end_effector(0, 0, -0.1, 0.001);
+    // arm_hand.move_end_effector(0, 0, -0.1, 0.001);
     arm_hand.hand_open();
     arm_hand.return_home();
 

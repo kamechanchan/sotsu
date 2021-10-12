@@ -353,8 +353,8 @@ void Arm_Move::move_end_effector_set_tf(geometry_msgs::TransformStamped trans, d
     tf2::Vector3 z_axis(z_ato[0], z_ato[1], z_ato[2]);
     quat.setRotation(z_axis, kaiten_yaw);
     // q_ato = quat * q_moto;
-    q_ato = quat * q_shinka;
-    // q_ato = q_shinka;
+    // q_ato = quat * q_shinka;
+    q_ato = q_shinka;
     // quat.setRPY(-roll, -pitch, 0);
     // q_ato = quat * q_ato;
 
