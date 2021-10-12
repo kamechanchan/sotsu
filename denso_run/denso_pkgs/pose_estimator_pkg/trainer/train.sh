@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/annotation_package/dataset \
 --dataset_model tsuchida_1000.hdf5 \
