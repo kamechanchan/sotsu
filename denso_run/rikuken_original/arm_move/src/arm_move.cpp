@@ -60,18 +60,22 @@ void Arm_Move::hand_open()
 
 void Arm_Move::tf_get(std::string source_frame, std::string target_frame, geometry_msgs::TransformStamped &transform)
 {
-    try
-    {
-        transform = tfBuffer_.lookupTransform(source_frame, target_frame, ros::Time(0));
-        ROS_INFO_ONCE("I got a transform");
-    }  
-    catch (tf2::TransformException &e)
-    {
-        ROS_WARN_STREAM(e.what());
-        tfBuffer_.clear();
-        ros::Duration(dulation_).sleep();
-        return;
+    while (1) {
+        try
+        {
+            transform = tfBuffer_.lookupTransform(source_frame, target_frame, ros::Time(0));
+            ROS_INFO_ONCE("I got a transform");
+            break;
+        }  
+        catch (tf2::TransformException &e)
+        {
+            ROS_WARN_STREAM(e.what());
+            tfBuffer_.clear();
+            ros::Duration(dulation_).sleep();
+            continue;
+        }
     }
+    
 }
 
 void Arm_Move::show_tf_value(std::string source_frame, std::string target_frame)
