@@ -19,7 +19,8 @@ def talker():
 
     msg.joint_names = [ "shoulder_pan_joint", "shoulder_lift_joint", "elbow_joint", "wrist_1_joint", "wrist_2_joint", "wrist_3_joint" ]
     msg.points = [JointTrajectoryPoint() for i in range(1)]
-    msg.points[0].positions = [0.220046, -1.6059, 1.24065, -1.14717, -1.5684, -1.57072];
+    # msg.points[0].positions = [0.220046, -1.6059, 1.24065, -1.14717, -1.5684, -1.57072];
+    msg.points[0].positions = [-1.47478, -1.60573, 1.2406, -1.28741, -1.56852, -1.57065]
     msg.points[0].time_from_start = rospy.Time(0.5)
     #tes.data = [math.pi/2, -math.pi/6.0, -math.pi/2, -math.pi/3, -math.pi/2, 0.0]
     #tes.data = [-math.pi/2, -2.8 * math.pi/6, -math.pi/3, -1*math.pi/1.5, math.pi/2, -math.pi/2];

@@ -71,7 +71,7 @@
     <physics type='ode'>
       <max_step_size>0.001</max_step_size>
       <real_time_factor>1</real_time_factor>
-      <real_time_update_rate>1000</real_time_update_rate>
+      <real_time_update_rate>2000</real_time_update_rate>
     </physics>
     <scene>
       <ambient>0.4 0.4 0.4 1</ambient>
@@ -135,18 +135,18 @@
       </link>
     </model>
     <state world_name='default'>
-      <sim_time>676 521000000</sim_time>
-      <real_time>40 147326804</real_time>
-      <wall_time>1632112844 125508435</wall_time>
-      <iterations>34577</iterations>
+      <sim_time>542 16000000</sim_time>
+      <real_time>58 539506153</real_time>
+      <wall_time>1633093500 524134918</wall_time>
+      <iterations>52761</iterations>
       <model name='HV8_0'>
-        <pose>0.62315 0.552433 -3e-06 -4e-06 5.8e-05 2.04701</pose>
+        <pose>0.707089 0.114661 -2e-06 -0.000125 6e-05 1.73149</pose>
         <scale>1 1 1</scale>
         <link name='HV8'>
-          <pose>0.62315 0.552433 -3e-06 -4e-06 5.8e-05 2.04701</pose>
-          <velocity>-0 0 -0.000638 -0.107461 -0.048575 -1e-06</velocity>
-          <acceleration>-0.000184 0.000352 1.32065 -1.51897 -0.003268 -0.001932</acceleration>
-          <wrench>-3.7e-05 7e-05 0.264129 0 -0 0</wrench>
+          <pose>0.707089 0.114661 -2e-06 -0.000125 6e-05 1.73149</pose>
+          <velocity>0 0 0.00091 0.017183 -0.119368 6e-06</velocity>
+          <acceleration>2e-05 -0.000317 1.54773 2.46525 0.276878 0.006516</acceleration>
+          <wrench>4e-06 -6.3e-05 0.309546 0 -0 0</wrench>
         </link>
       </model>
       <model name='ground_plane'>
@@ -159,73 +159,16 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
       </model>
-      <model name='object_box'>
-        <pose>1.05636 -0.034898 0 0 -0 0</pose>
-        <scale>1 1 1</scale>
-        <link name='object_box'>
-          <pose>1.05636 -0.034898 0 0 -0 0</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-      </model>
       <light name='sun'>
         <pose>0 0 10 0 -0 0</pose>
       </light>
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>2.24898 1.31116 1.58026 0 0.489798 -2.41502</pose>
+        <pose>2.43065 1.59397 1.96525 0 0.541797 -2.56302</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
     </gui>
-    <model name='object_box'>
-      <pose>0.555694 0.08291 0 0 -0 0</pose>
-      <static>1</static>
-      <link name='object_box'>
-        <inertial>
-          <mass>0.2</mass>
-          <inertia>
-            <ixx>0.0005</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.0005</iyy>
-            <iyz>0</iyz>
-            <izz>0.0005</izz>
-          </inertia>
-        </inertial>
-        <collision name='collision'>
-          <geometry>
-            <mesh>
-              <uri>model://object_box/meshed/object_box_kai.dae</uri>
-            </mesh>
-          </geometry>
-          <max_contacts>10</max_contacts>
-          <surface>
-            <contact>
-              <ode/>
-            </contact>
-            <bounce/>
-            <friction>
-              <torsional>
-                <ode/>
-              </torsional>
-              <ode/>
-            </friction>
-          </surface>
-        </collision>
-        <visual name='visual'>
-          <geometry>
-            <mesh>
-              <uri>model://object_box/meshed/object_box_kai.dae</uri>
-            </mesh>
-          </geometry>
-        </visual>
-        <self_collide>0</self_collide>
-        <enable_wind>0</enable_wind>
-        <kinematic>0</kinematic>
-      </link>
-    </model>
   </world>
 </sdf>

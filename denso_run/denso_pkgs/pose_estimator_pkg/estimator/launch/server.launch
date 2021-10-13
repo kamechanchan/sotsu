@@ -7,7 +7,7 @@
   <arg name="process_swich" default="object_segment" />
   <arg name="process_num" default="single" />
   <arg name="resolution" default="8192" />
-  <arg name="load_path" default="/home/ericlab/DENSO_results/August/instance_segmentation/ishiyama/JSIS3D/instance_changed_8_7_1526.hdf5+instance_changed_instance_tsuchida_8_12_500_1.hdf5+instance_changedinstance_tsuchida_8_11_1000_1.hdf5+instance_changed_instance_tsuchida_8_25_5000_1.hdf5+instance_changed_instance_tsuchida_9_2_2000_1.hdf5/latest_net.pth"/>
+  <arg name="load_path" default="/home/ericlab/DENSO_results/August/instance_segmentation/ishiyama/JSIS3D/dataset_number:10000_epoch200/latest_net.pth"/>
   <arg name="load_path_second" default="/home/ericlab/DENSO_results/raugh_recognition/checkpoint/tsuchida/PointNet/HV8_size_20000_range_pi_3.hdf5/latest_net.pth"/>
     <node name="estimator_server" pkg="estimator" type="estimator_server.py" output="screen" >
         <param name="object_name" value="$(arg object_name)" />

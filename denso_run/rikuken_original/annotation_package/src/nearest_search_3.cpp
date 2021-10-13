@@ -128,6 +128,31 @@ namespace nearest_point_extractor
 
     void NearestPointExtractor::publish(void)
     {
+        
+    }
+
+    void NearestPointExtractor::InputCallback(const sensor_msgs::PointCloud2ConstPtr &sensor_pc_msgs)
+    {   
+
+        while (true)
+        {
+            try
+            {
+                listener_.lookupTransform("world", sensor_pc_msgs->header.frame_id, ros::Time(0), transform_);
+                ROS_INFO_ONCE("I got a transfomr");
+                break;
+            }
+            catch (tf::TransformException ex)
+            {
+                ROS_ERROR("%s", ex.what());
+                ros::Duration(0.1).sleep();
+            }
+        }
+        sensor_msgs::PointCloud2 msg_transformed;
+        print_parameter(sensor_pc_msgs->header.frame_id);
+        pcl_ros::transformPointCloud("world", transform_, *sensor_pc_msgs, msg_transformed);
+        pcl::fromROSMsg(msg_transformed, *sensor_cloud_);
+        flag_ = true;
         print_parameter(flag_);
         if (!flag_)
             return;
@@ -141,29 +166,6 @@ namespace nearest_point_extractor
         frame_id_ = output_cloud_->header.frame_id;
         pcl::toROSMsg(*output_cloud_, cloud_msg);
         cloud_pub_.publish(cloud_msg);
-    }
-
-    void NearestPointExtractor::InputCallback(const sensor_msgs::PointCloud2ConstPtr &sensor_pc_msgs)
-    {   
-        while (true)
-        {
-            try
-            {
-                listener_.lookupTransform("world", sensor_pc_msgs->header.frame_id, ros::Time(0), transform_);
-                ROS_INFO_ONCE("I got a transfomr");
-                break;
-            }
-            catch (tf::TransformException ex)
-            {
-                ROS_ERROR("%s", ex.what());
-                ros::Duration(1.0).sleep();
-            }
-        }
-        sensor_msgs::PointCloud2 msg_transformed;
-        print_parameter(sensor_pc_msgs->header.frame_id);
-        pcl_ros::transformPointCloud("world", transform_, *sensor_pc_msgs, msg_transformed);
-        pcl::fromROSMsg(msg_transformed, *sensor_cloud_);
-        flag_ = true;
     }
 
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr NearestPointExtractor::extract_cloud()
@@ -185,6 +187,7 @@ namespace nearest_point_extractor
         std::vector<float> squaredDistances;
         double c2c_distance = 0.0;
         int point_size = 0;
+        ROS_INFO_STREAM("toturru");
         
         for (int i = 0; i < the_number_of_object_; i++) {
             for (auto mesh : mesh_clouds_[i]->points)
@@ -196,7 +199,7 @@ namespace nearest_point_extractor
                         out_cloud->points[pointIndices[j]].r = color[i][0];
                         out_cloud->points[pointIndices[j]].g = color[i][1];
                         out_cloud->points[pointIndices[j]].b = color[i][2];
-                        list_pointIndices.push_back(pointIndices[j]);
+                        // list_pointIndices.push_back(pointIndices[j]);
                     }
 
                 }
@@ -204,6 +207,7 @@ namespace nearest_point_extractor
                 squaredDistances.clear();
             }
         }
+        ROS_INFO_STREAM("shinka");
         // std::list<int>::iterator itr;
         // for (itr = all_index.begin(); itr != all_index.end(); itr++) {
         //     pcl::PointXYZRGB part_of_extract;
@@ -217,9 +221,9 @@ namespace nearest_point_extractor
         // }
             
         
-        ROS_INFO_STREAM("sensor all size: " << sensor_cloud_->points.size());
-        ROS_INFO_STREAM("color point size: " << list_pointIndices.size());
-        list_pointIndices.clear();
+        // ROS_INFO_STREAM("sensor all size: " << sensor_cloud_->points.size());
+        // ROS_INFO_STREAM("color point size: " << list_pointIndices.size());
+        // list_pointIndices.clear();
             
         return out_cloud;
     }
@@ -227,6 +231,7 @@ namespace nearest_point_extractor
 
     void NearestPointExtractor::mesh_callback(const sensor_msgs::PointCloud2ConstPtr &msg, int object_num)
     {
+        std::cout << "mesh: " << object_num << std::endl;
         pcl::fromROSMsg(*msg, *mesh_clouds_[object_num]);
     }
 }

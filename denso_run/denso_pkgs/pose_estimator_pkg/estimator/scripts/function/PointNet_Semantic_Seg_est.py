@@ -19,7 +19,9 @@ def pose_prediction(opt, data, resolution):
     col = n_data // row
     print("majika**********")
     print(np.array(data).shape)
-    x = np.reshape(np.array(data), (col, row))[np.newaxis, :, :]
+    x = data[np.newaxis, :, :]
+    print(np.array(x).shape)
+    # x = np.reshape(np.array(data), (col, row))[np.newaxis, :, :]
     print("shpae" + str(x.shape[0]))
     y_pre = estimation(opt, x)
     print("y_data")
