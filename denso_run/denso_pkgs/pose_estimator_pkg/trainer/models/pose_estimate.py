@@ -193,10 +193,27 @@ class EstimatorModel:
     def test_step(self):
         if self.process_swich == "raugh_recognition":
             # print(self.x_data.shape)
+            for i in range(4):
+                print(str(self.x_data[0][0][i]) +  " " + str(self.x_data[0][1][i]) +  " " + str(self.x_data[0][2][i]))
+                print("")
             pred = self.net(self.x_data)
             # print("p")
             # print(pred.shape)
             pred = pred.to('cpu').detach().numpy().copy()
+            print("****")
+            print(type(pred))
+            print(pred.shape)
+            for i in range(4):
+                print(str(pred[0][0]) +  " " + str(pred[0][1]) +  " " + str(pred[0][2]) +  " " + str(pred[0][3]) +  " " + str(pred[0][5]))
+                print(str(pred[0][6]) +  " " + str(pred[0][7]) +  " " + str(pred[0][8]) +  " " + str(pred[0][9]) +  " " + str(pred[0][10]) +  " " + str(pred[0][11]))
+                print("")
+             # print("****")
+            # print(type(pred))
+            # print(pred.shape)
+            # for i in range(4):
+            #     print(str(pred[0][0]) +  " " + str(pred[0][1]) +  " " + str(pred[0][3]) +  " " + str(pred[0][4]) +  " " + str(pred[0][5]))
+            #     print(str(pred[0][6]) +  " " + str(pred[0][7]) +  " " + str(pred[0][8]) +  " " + str(pred[0][9]) +  " " + str(pred[0][10]) +  " " + str(pred[0][11]))
+            #     print("")
             # print("pred")
             # print(pred.shape)
         elif self.process_swich == "object_segment":

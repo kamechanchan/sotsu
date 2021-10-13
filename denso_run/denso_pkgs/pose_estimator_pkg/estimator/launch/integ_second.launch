@@ -13,7 +13,7 @@
   <arg name="process_swicth2" default="raugh_recognition" />
   <arg name="dataset_mode2" default="pose_estimation" />
   <arg name="arch2" default="PointNet_Pose" />
-  <arg name="load_path2" default="/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/onoyama/0423/PointNet/dataset_20000.hdf5/latest_net.pth" />
+  <arg name="load_path2" default="/home/ericlab/OneDrive/DENSO/raugh_recognition/checkpoint/ishiyama/0406/PointNet/dataset_20000.hdf5/200_net.pth" />
   <arg name="resolution2" default="1024" />
 
     <node name="estimator_server" pkg="estimator" type="semantic_server.py" output="screen" >
