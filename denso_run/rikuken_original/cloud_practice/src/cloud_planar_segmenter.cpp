@@ -47,6 +47,7 @@ private:
         segmentation.setInputCloud(cloud_input_pcl_.makeShared());
         segmentation.segment(*inliers, coefficients_pcl);
         
+        
     }
 
     void extract(pcl::PointIndices::Ptr inliers)

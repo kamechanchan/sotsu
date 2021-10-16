@@ -27,7 +27,7 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
         color.y = msg->y[i];
         color.z = msg->z[i];
         color.r = 0;
-        color.g = 0;
+        color.g = 255;
         color.b = 0;
         color_0++;
         cloud.push_back(color);
