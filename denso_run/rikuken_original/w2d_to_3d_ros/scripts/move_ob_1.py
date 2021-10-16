@@ -30,7 +30,7 @@ class move_environment(object):
         pose_list = []
         pose_data.model_name =  "HV8_0"
         loop = rospy.Rate(10)
-        x = random.uniform(a_4, a_1)
+        x = random.uniform(a_4, a_1) + 0.5
         y = random.uniform(a_4, a_1)
         z = self.z_coordinamte + 0.1
         roll = 0
@@ -61,10 +61,10 @@ class move_environment(object):
         # self.object_move("HV8")
     def box_move(self):
         pose_list = []
-        loop = rospy.Rate(10)
+        loop = rospy.Rate(2)
         pose_data = ModelState()
         pose_data.model_name = "object_box"
-        pose_data.pose.position.x = 0
+        pose_data.pose.position.x = 0.5
         pose_data.pose.position.y = 0
         pose_data.pose.position.z = self.z_coordinamte
         roll = 0
