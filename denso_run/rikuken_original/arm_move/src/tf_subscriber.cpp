@@ -11,9 +11,11 @@ tf2_ros::TransformBroadcaster *br;
 void callback(const geometry_msgs::TransformStampedConstPtr msg)
 {
     ros::Rate lop(10);
-    while (ros::ok()) {
+    int count = 0;
+    while (count <= 10) {
         br->sendTransform(*msg);
         lop.sleep();
+        count++;
     }
 }
     
