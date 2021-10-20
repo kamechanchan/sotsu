@@ -145,3 +145,14 @@ roslaunch estimator integ_first.launch
 roslaunch estimator integ_second.launch
 roslaunch estimator color_get.launch
 roslaunch estimator pcl_pub.launch 
+
+### アノテーションの切り分け
+```
+roslaunch tf_publish semantic_annotation_world.launch
+roslaunch annotation_package mesh_cloud_bara_publish.launch the_number_of_object:=31
+rosrun w2d_to_3d_ros move_saikyou_object.py
+roslaunch w2d_to_3d_ros ano_and_exec_3.launch
+roslaunch annotation_package nearest_search_yolo_1.launch
+roslaunch annotation_package dummy_2_semantic.launch
+roslaunch annotation_package segmentation_kiriwake_dataset.launch num_dataset:=5000
+```
