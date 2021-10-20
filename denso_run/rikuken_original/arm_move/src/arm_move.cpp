@@ -122,17 +122,17 @@ geometry_msgs::TransformStamped Arm_Move::get_pose_tf(std::string source, std::s
 
 
 
-    geometry_msgs::TransformStamped goal_tf, object_tf;
-    tf2::Quaternion q_zero(0, 0, 0.01, 0), q_convert, q_pose_convert, q_trans_ato, q_pose_ato;
-    tf2::convert(object_tf.transform.rotation, q_convert);
-    q_trans_ato = q_convert * q_zero * q_convert.inverse();
-    goal_tf.transform.translation.x = q_trans_ato[0] + object_tf.transform.translation.x;
-    goal_tf.transform.translation.y = q_trans_ato[1] + object_tf.transform.translation.y;
-    goal_tf.transform.translation.z = q_trans_ato[2] + object_tf.transform.translation.z;
+    // // geometry_msgs::TransformStamped goal_tf, object_tf;
+    // tf2::Quaternion q_zero(0, 0, 0.01, 0), q_convert, q_pose_convert, q_trans_ato, q_pose_ato;
+    // tf2::convert(object_tf.transform.rotation, q_convert);
+    // q_trans_ato = q_convert * q_zero * q_convert.inverse();
+    // goal_tf.transform.translation.x = q_trans_ato[0] + object_tf.transform.translation.x;
+    // goal_tf.transform.translation.y = q_trans_ato[1] + object_tf.transform.translation.y;
+    // goal_tf.transform.translation.z = q_trans_ato[2] + object_tf.transform.translation.z;
             
-    q_pose_convert.setRPY(0, M_PI, 0);
-    q_pose_ato = q_pose_convert * q_convert;
-    tf2::convert(q_pose_ato, goal_tf.transform.rotation);
+    // q_pose_convert.setRPY(0, M_PI, 0);
+    // q_pose_ato = q_pose_convert * q_convert;
+    // tf2::convert(q_pose_ato, goal_tf.transform.rotation);
 
 
 

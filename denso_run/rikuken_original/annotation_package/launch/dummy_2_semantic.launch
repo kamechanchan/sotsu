@@ -3,8 +3,8 @@
 
     <arg name="receive_topic_name" default="all_cloud"/>
     <arg name="output_topic_name" default="tsuchida_cloud"/>
-    <!-- <arg name="frame_id" default="photoneo_center_optical_frame"/> -->
-    <arg name="frame_id" default="world"/>
+    <arg name="frame_id" default="photoneo_center_optical_frame"/>
+    <!-- <arg name="frame_id" default="world"/> -->
     
     
     

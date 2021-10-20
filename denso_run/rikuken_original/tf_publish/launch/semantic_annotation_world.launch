@@ -35,7 +35,7 @@
     </group>
     <group if="$(eval object_name=='sekai_1')">
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/sekai_1.world"/>
+            <arg name="world_name" value="$(find tf_publish)/world/tsuchida_1.world"/>
         </include>
     </group>
     <group if="$(eval object_name=='sekai_small_box_and_50')">
@@ -76,5 +76,13 @@
         <param name="object_name" value="$(arg object_name_1)"/>
         <param name="object_count" value="$(arg object_count)"/>
         
+    </node>
+
+    <arg name="input_pc_topic" default="/photoneo_center/sensor/points"/>
+    <arg name="distance_threshold" default="0.001"/>
+    
+    <node pkg="cloud_practice" type="cloud_planar_segmenter" name="cloud_planar_segmenter" output="screen" >
+        <param name="input_pc_topic" value="$(arg input_pc_topic)"/>
+        <param name="distance_threshold" value="$(arg distance_threshold)"/>
     </node>
 </launch>

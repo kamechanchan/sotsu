@@ -81,7 +81,7 @@ class record_file(object):
         # print("tsuchida_1")
         if self.ugokasu:
             self.ugokasu_count = self.ugokasu_count + 1
-            if self.ugokasu_count >= 4:
+            if self.ugokasu_count >= 1:
                 rospy.set_param("/move_is_ok", True)
                 rospy.set_param("/record_is_ok", False)
                 self.ugokasu_count = 0
@@ -101,7 +101,7 @@ class record_file(object):
         if record_ok:
             self.matu += 1
             # print(self.matu)
-        if self.matu >= 21:
+        if self.matu >= 12:
             
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()

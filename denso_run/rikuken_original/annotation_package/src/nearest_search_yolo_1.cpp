@@ -122,6 +122,74 @@ namespace nearest_point_extractor
     //     dummy_pub_.publish(output);
     // }
 
+   void NearestPointExtractor::extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, color_cloud_bridge::object_kiriwake kiri, double radisu_arg, pcl::PointCloud<pcl::PointXYZ> before_cloud,  color_cloud_bridge::out_segmentation &out_ext)
+    {
+        color_cloud_bridge::out_segmentation out_cloud;
+        for (int i = 0; i < sensor_cloud.size(); i++) {
+            out_cloud.x.push_back(before_cloud.points[i].x);
+            out_cloud.y.push_back(before_cloud.points[i].y);
+            out_cloud.z.push_back(before_cloud.points[i].z);
+            out_cloud.instance.push_back(background_instance_);
+        }
+        std::cout << "input kdtree: " << sensor_cloud.size();
+        pcl::search::KdTree<pcl::PointXYZ> kdtree;
+        if (sensor_cloud.points.size() == 0) {
+            return;
+        }
+        kdtree.setInputCloud(sensor_cloud.makeShared());
+
+        std::vector<int> pointIndices, list_pointIndices;
+        std::vector<float> squaredDistances;
+        double c2c_distance = 0.0;
+        int point_size = 0;
+        ros::WallTime start = ros::WallTime::now();
+        for (int i = 0; i < kiri.occuludy_instance_number.size(); i++) {
+            for (auto mesh : mesh_clouds_[kiri.occuludy_instance_number[i]]->points)
+            {
+                if (kdtree.nearestKSearch(mesh, num_of_nearest_points_, pointIndices, squaredDistances) > 0) {
+                    c2c_distance += squaredDistances[0];
+                    for (int j = 0; j < pointIndices.size(); j++) {
+                        ros::WallTime end = ros::WallTime::now();
+                        ros::WallDuration shori = end - start;
+                        if (shori.toSec() >= 2) {
+                            ROS_WARN_STREAM("fail");
+                            return;
+                        }
+                        out_cloud.instance[pointIndices[j]] = kiri.occuludy_instance_number[i] + 50;
+                    }
+                }
+            }
+        }
+        
+        for (int i = 0; i < kiri.instance_numbers.size(); i++) {
+            std::cout << kiri.instance_numbers[i] << ": kazuha : ";
+            int count = 0;
+            for (auto mesh : mesh_clouds_[kiri.instance_numbers[i]]->points)
+            {
+                if (kdtree.nearestKSearch(mesh, num_of_nearest_points_, pointIndices, squaredDistances) > 0) {
+                    c2c_distance += squaredDistances[0];
+                    point_size++;
+                    for (int j = 0; j < pointIndices.size(); j++) {
+                        out_cloud.instance[pointIndices[j]] = kiri.instance_numbers[i];
+                    }
+
+                }
+                pointIndices.clear();
+                squaredDistances.clear();
+                count++;
+            }
+            
+            std::cout << count << std::endl;
+        }
+        
+        // ("sensor all size: " << senROS_INFO_STREAMsor_cloud_->points.size());
+        ROS_INFO_STREAM("color point size: " << list_pointIndices.size());
+        list_pointIndices.clear();
+        out_ext = out_cloud;
+    }
+
+
+
     color_cloud_bridge::out_segmentation NearestPointExtractor::extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, color_cloud_bridge::object_kiriwake kiri, double radisu_arg, pcl::PointCloud<pcl::PointXYZ> before_cloud)
     {
         color_cloud_bridge::out_segmentation out_cloud;
@@ -142,12 +210,15 @@ namespace nearest_point_extractor
         std::vector<float> squaredDistances;
         double c2c_distance = 0.0;
         int point_size = 0;
+        ros::WallTime start = ros::WallTime::now();
         for (int i = 0; i < kiri.occuludy_instance_number.size(); i++) {
             for (auto mesh : mesh_clouds_[kiri.occuludy_instance_number[i]]->points)
             {
                 if (kdtree.nearestKSearch(mesh, num_of_nearest_points_, pointIndices, squaredDistances) > 0) {
                     c2c_distance += squaredDistances[0];
                     for (int j = 0; j < pointIndices.size(); j++) {
+                        ros::WallTime end = ros::WallTime::now();
+                        ros::WallDuration shori = end - start;
                         out_cloud.instance[pointIndices[j]] = kiri.occuludy_instance_number[i] + 50;
                     }
                 }

@@ -28,6 +28,7 @@ namespace nearest_point_extractor
         void exect();
         void mesh_callback(const sensor_msgs::PointCloud2ConstPtr&, int);
         color_cloud_bridge::out_segmentation extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, color_cloud_bridge::object_kiriwake mes, double radius, pcl::PointCloud<pcl::PointXYZ> before_cloud);
+        void extract_cloud(pcl::PointCloud<pcl::PointXYZ> sensor_cloud, color_cloud_bridge::object_kiriwake mes, double radius, pcl::PointCloud<pcl::PointXYZ> before_cloud, color_cloud_bridge::out_segmentation &ext_out);
         template <typename T>
         void print_parameter(T para)
         {

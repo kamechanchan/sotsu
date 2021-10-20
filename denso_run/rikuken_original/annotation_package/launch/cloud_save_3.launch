@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="pcd_dir_name" default="/home/ericlab/tsuchida_cloud"/>
+    <arg name="pcd_dir_name" default="/home/ericlab/hdf5_visualize"/>
     <arg name="pcd_file_name" default="pcd_save.pcd"/>
     <arg name="topic_name" default="otameshi_topic"/>
     
