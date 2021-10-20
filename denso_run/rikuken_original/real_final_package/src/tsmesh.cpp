@@ -28,6 +28,15 @@ void get_extension()
     std::string exname = filepath.substr(ext_i, filepath.size() - ext_i);
     std::cout << pathname << std::endl;
     std::cout << exname << std::endl;
+    std::string hante = "/home/ericlab/fdf";
+    int ext = hante.find_last_of(".");
+    std::cout << ext << "   :   " << hante.size() << std::endl;
+    if (ext == std::string::npos) {
+        std::cout << '.' << "は見つかりませんでした。n";
+    }else {
+        std::cout << '.' << "は" << ext << "番目にあります。n";
+    }
+
 }
 
 int main(int argc, char** argv)

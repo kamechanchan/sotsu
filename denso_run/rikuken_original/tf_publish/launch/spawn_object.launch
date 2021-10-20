@@ -35,7 +35,7 @@
     </group>
     <group if="$(eval object_name=='sekai_1')">
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
-            <arg name="world_name" value="$(find tf_publish)/world/sekai_1.world"/>
+            <arg name="world_name" value="$(find tf_publish)/world/tsuchida_1.world"/>
         </include>
     </group>
     <group if="$(eval object_name=='sekai_small_box_and_50')">

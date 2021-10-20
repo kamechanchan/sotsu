@@ -58,6 +58,11 @@ target_link_libraries(arm_move_main_2
   ${catkin_LIBRARIES}
   arm_move
 )
+
+add_executable(tf_subscriber src/tf_subscriber.cpp)
+target_link_libraries(tf_subscriber
+  ${catkin_LIBRARIES}
+)
 # file(MAKE_DIRECTORY /opt/ros/noetic/include/arm_move)
 # file(MAKE_DIRECTORY /opt/ros/noetic/lib/arm_move)
 

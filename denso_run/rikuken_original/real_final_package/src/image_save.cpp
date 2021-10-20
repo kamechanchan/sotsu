@@ -43,8 +43,14 @@ int main(int argc, char** argv)
     cv::Mat img;
     img = input_bridge->image;
     cv::imshow("mask_show", img);
-    cv::waitKey(3000);
-    cv::imwrite(save_image_file, img);
+    cv::waitKey(1000);
+    int ext_i = save_image_file.find_last_of(".");
+    std::string pathname = save_image_file.substr(0, ext_i);
+    pathname = pathname + "_" + std::to_string(localTime->tm_mon + 1) 
+                + "_" + std::to_string(localTime->tm_mday) + "_" + std::to_string(localTime->tm_hour)
+                + "_" + std::to_string(localTime->tm_min) + "_" + std::to_string(localTime->tm_sec) + ".jpg";
+    std::cout << pathname << std::endl;
+    cv::imwrite(pathname, img);
     cv::destroyAllWindows();
     share.reset();
     return 0;

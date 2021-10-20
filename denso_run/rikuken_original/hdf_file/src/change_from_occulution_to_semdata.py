@@ -29,10 +29,10 @@ resolution = 40000
 resolution_second = 10000
 dataset_name_in = "occulution_kiriwake_9_14_1000_1.hdf5"
 
-data_root = "/home/ericlab/hdf5_data/"
-data_switch_in = "original_bounding/"
+data_root = "/home/ericlab/Downloads/"
+data_switch_in = "/"
 data_path_in = data_root + data_switch_in + dataset_name_in
-data_switch_out = "semantic_occlusion/"
+data_switch_out = "/"
 dataset_name_out = "semantic_changed_" + dataset_name_in
 data_path_out = data_root + data_switch_out + dataset_name_out
 

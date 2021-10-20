@@ -94,6 +94,13 @@ target_link_libraries(nearest_search_bara_3
   ${PCL_LIBRARIES}
 )
 
+
+add_executable(nearest_search_bara_4 src/nearest_search_4.cpp src/nearest_search_4_bara_node.cpp)
+target_link_libraries(nearest_search_bara_4
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
 add_executable(nearest_search_bara_yolo src/nearest_search_yolo.cpp src/nearest_search_bara_yolo_node.cpp)
 target_link_libraries(nearest_search_bara_yolo
   ${catkin_LIBRARIES}

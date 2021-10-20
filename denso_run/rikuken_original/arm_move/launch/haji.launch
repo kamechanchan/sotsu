@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="target_frame" default="estimated_tf"/>
+    <arg name="tf_z" default="0.08"/>
+    
+    <node pkg="arm_move" type="arm_move_main_2" name="arm_move_main_2" output="screen">
+        <param name="target_frame" value="$(arg target_frame)"/>
+        <param name="tf_z" value="$(arg tf_z)"/>
+    </node>
+    <node pkg="arm_move" type="tf_subscriber" name="tf_subscriber" />
+</launch>
