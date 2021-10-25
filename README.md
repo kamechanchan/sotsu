@@ -160,5 +160,6 @@ roslaunch annotation_package segmentation_kiriwake_dataset.launch num_dataset:=5
 ### 左のパソコンのcatkin build
 ```
 catkin build -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m
+catkin config --cmake-args -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m
 
 ```
