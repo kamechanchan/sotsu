@@ -157,3 +157,8 @@ roslaunch annotation_package nearest_search_yolo_1.launch
 roslaunch annotation_package dummy_2_semantic.launch
 roslaunch annotation_package segmentation_kiriwake_dataset.launch num_dataset:=5000
 ```
+### 左のパソコンのcatkin build
+```
+catkin build -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m
+
+```
