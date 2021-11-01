@@ -18,6 +18,9 @@ class GetDataNode{
         // cv::Mat out_img_;
         // cv_bridge::CvImagePtr cv_img_;
         // ishiyama::input_data srv_;
+        ros::Subscriber photoneo_img_sub_;
+        sensor_msgs::Image data_;
+        void callback_(const sensor_msgs::Image& msg);
     public:
         GetDataNode();
         // void callback(const sensor_msgs::Image& in_img);

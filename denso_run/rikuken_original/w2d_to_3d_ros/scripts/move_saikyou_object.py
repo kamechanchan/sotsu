@@ -34,6 +34,7 @@ class annotation_environment(object):
         cont = 0
         
         self.kaisuu = 0
+        rospy.set_param("move_is_ok", True)
         self.model_name = model_name
         self.z_coordinamte = 0
         self.occulution_object = object_kiriwake()

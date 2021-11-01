@@ -101,7 +101,7 @@ class record_file(object):
         if record_ok:
             self.matu += 1
             # print(self.matu)
-        if self.matu >= 12:
+        if self.matu >= 13:
             
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()

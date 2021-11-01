@@ -122,19 +122,35 @@ class Get_data:
         rospy.init_node("client", anonymous=True)
         rospy.Subscriber("/photoneo_center/sensor/image_color", Image, self.callback)
         # self.pub = rospy.Publisher("ishiyama_pub_data", Image, queue_size=10)
-        rospy.spin()
-
-    def callback(self, data):
+        self.data = None
         rospy.wait_for_service("ishiyama_input_data")
         try:
             tem_data = rospy.ServiceProxy("ishiyama_input_data", input_data)
-            out_data = tem_data(data)
+            out_data = tem_data(self.data)
             self.input = self.data_transformation(out_data.out_img)
-            To_Yolo(self.input, self.img_path)
+            # To_Yolo(self.input, self.img_path)
             # self.pub.publish(out_data.out_img)
             # print(out_data.out_img)
         except rospy.ServiceException:
             print("service call failed")
+
+
+        rospy.spin()
+
+    def callback(self, data):
+        # rospy.wait_for_service("ishiyama_input_data")
+        # try:
+        #     tem_data = rospy.ServiceProxy("ishiyama_input_data", input_data)
+        #     self.data = None
+        #     out_data = tem_data(self.data)
+        #     self.input = self.data_transformation(out_data.out_img)
+        To_Yolo(self.input, self.img_path)
+            # self.pub.publish(out_data.out_img)
+            # print(out_data.out_img)
+        # except rospy.ServiceException:
+        #     print("service call failed")
+        # self.data = data
+        print("data_sub")
     
     def data_transformation(self, data):
         try:
@@ -179,6 +195,8 @@ class To_Yolo:
         self.data_for_yolo()
         self.est_net()
         self.result()
+
+        # rospy.spin()
     
     def data_for_yolo(self, jitter=0, random_placing=False):
         # bridge = CvBridge()
@@ -240,7 +258,7 @@ class To_Yolo:
         # self.model = model.net.to(self.device).eval()
         # print(self.pad_img.shape)
         with torch.no_grad():
-            print(self.pad_img)
+            # print(self.pad_img)
             outputs = self.model(self.pad_img)
             self.outputs = postprocess(outputs, self.conf_threshold, self.nms_threshold, self.pad_info)
             # self.detections = self.output_to_dict(outputs, self.class_names) 
@@ -363,12 +381,16 @@ class To_Yolo:
         # msg_data.out_data = Float32MultiArray(data=box_final_coor)
         # print(msg_data)
         print(np.array(msg_data.out_data).shape)
+        print(type(msg_data.out_data))
+        print(msg_data.out_data)
         self.out_pub.publish(msg_data)
 
         self.yolo_out_pub.publish(msg_data.output_img)
 
+        # rospy.spin()
 
         # print("ishiy")
 
 if __name__ == "__main__":
     Get_data()
+    # rospy.spin()

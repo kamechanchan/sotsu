@@ -5,6 +5,7 @@ GetDataNode::GetDataNode()
 {
     ROS_INFO_STREAM("start");
     save_img_path_ = "/home/ericlab/ros_package/denso_ws/src/denso_run/rikuken_original/ishiyama/result/ishiyama.jpg";
+    photoneo_img_sub_ = nh_.subscribe("/photoneo_center/sensor/image_color", 1000, &GetDataNode::callback_, this);
     server_ = nh_.advertiseService("ishiyama_input_data", &GetDataNode::inputData, this);
 }
 
@@ -23,14 +24,20 @@ GetDataNode::GetDataNode()
 
 // }
 
+void GetDataNode::callback_(const sensor_msgs::Image& msg){
+    data_ = msg;
+    ROS_INFO_STREAM("get_photoneo_image");
+}
+
 bool GetDataNode::inputData(estimator::input_data::Request &req, estimator::input_data::Response &res){
     // cv_img_ = cv_bridge::toCvCopy(req.in_img, sensor_msgs::image_encodings::BGR8);
     // res.img_to_box = cv_img_->image;
     // ROS_INFO_STREAM("img_size:" << res.img_to_box.size());
     // cv::imwrite(save_img_path_, out_img_);
     // return true;
-
-    res.out_img = req.in_img;
+    // photoneo_img_sub_ = nh_.subscribe("/photoneo_center/sensor/image_color", 1000, GetDataNode::callback_);
+    res.out_img = data_;
+    ROS_INFO_STREAM("success!!!!!");
     return true;
 }
 
