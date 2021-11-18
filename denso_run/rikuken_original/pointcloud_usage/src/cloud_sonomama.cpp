@@ -11,6 +11,7 @@ void callback(const sensor_msgs::PointCloud2ConstPtr msg)
     pcl::fromROSMsg(*msg, cloud);
     sensor_msgs::PointCloud2 ros_msg;
     cloud.header.frame_id = msg->header.frame_id;
+    ROS_INFO_STREAM(cloud.header.frame_id);
     pcl::toROSMsg(cloud, ros_msg);
     ros_pub.publish(ros_msg);  
 }

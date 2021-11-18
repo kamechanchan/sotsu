@@ -37,6 +37,7 @@ public:
         if (message != NULL) {
             final_message = *message;
         }
+        message.reset();
     }
     cv::Point2d project3d_to_pixel(cv::Point3d, sensor_msgs::CameraInfo);
 private:
@@ -58,6 +59,4 @@ private:
     std::string paramter_output_file_path;
     double f_scale_, cx_scale_, cy_scale_;
     double fx, fy, tx, ty, cx, cy;
-
-
 };

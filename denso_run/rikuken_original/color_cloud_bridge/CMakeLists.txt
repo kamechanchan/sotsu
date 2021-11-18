@@ -10,6 +10,8 @@ project(color_cloud_bridge)
 find_package(catkin REQUIRED
     message_generation
     sensor_msgs
+    geometry_msgs
+    std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -51,6 +53,8 @@ add_message_files(
    dummy_pcl.msg
    sensor_and_index.msg
    out_segmentation.msg
+   object_kiriwake.msg
+   yolo_bridge.msg
    #Message2.msg
  )
 
@@ -72,6 +76,8 @@ add_message_files(
 generate_messages(
    DEPENDENCIES
    sensor_msgs
+   geometry_msgs
+   std_msgs
      # Or other packages containing msgs
 )
 
@@ -119,7 +125,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 # include
-# ${catkin_INCLUDE_DIRS}
+${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library

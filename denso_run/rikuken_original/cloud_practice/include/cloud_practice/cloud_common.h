@@ -7,6 +7,7 @@
 #include <fstream>
 
 
+
 class CloudLoader
 {
 public:
@@ -71,20 +72,19 @@ public:
         cloud_sub_(nh.subscribe(sub_topic_name, 10, &CloudOperationHandler::operateCB, this)),
         count(0)
     {
-        out_file = new std::ofstream("/home/ericlab/planar.txt");
+        // out_file = new std::ofstream("/home/ericlab/planar.txt");
     }
-
-    void operateCB(const sensor_msgs::PointCloud2& cloud_input_ros)
+void operateCB(const sensor_msgs::PointCloud2& cloud_input_ros)
     {
         ros::WallTime start = ros::WallTime::now();
         cloud_operator_->setInputCloud(cloud_input_ros);
         cloud_operator_->operate();
-        std::cout << "ukerta" << std::to_string(count++) << std::endl;
+        // std::cout << "ukerta" << std::to_string(count++) << std::endl;
         cloud_operator_->publish();
         ros::WallTime end = ros::WallTime::now();
         ros::WallDuration take_time = end - start;
         double measure_time = take_time.toSec();
-        *out_file << count << "ループ目の前処理の時間は" << measure_time << "秒" << std::endl;
+        // *out_file << count << "ループ目の前処理の時間は" << measure_time << "秒" << std::endl;
     }
 
        

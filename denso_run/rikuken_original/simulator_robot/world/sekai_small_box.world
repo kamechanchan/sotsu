@@ -1,0 +1,1847 @@
+<sdf version='1.7'>
+  <world name='default'>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+      <spot>
+        <inner_angle>0</inner_angle>
+        <outer_angle>0</outer_angle>
+        <falloff>0</falloff>
+      </spot>
+    </light>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='HV8'>
+      <pose>0.045343 -0.781769 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_0'>
+      <pose>-0.413812 -0.554865 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_1'>
+      <pose>0.071452 -0.657801 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_2'>
+      <pose>0.319118 -0.548989 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_3'>
+      <pose>-0.015547 -0.500374 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_4'>
+      <pose>0.519952 -0.317096 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_5'>
+      <pose>-0.183862 -0.733529 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_6'>
+      <pose>0.619992 -0.089826 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <state world_name='default'>
+      <sim_time>273 997000000</sim_time>
+      <real_time>1471 761189501</real_time>
+      <wall_time>1628281252 255481395</wall_time>
+      <iterations>94446</iterations>
+      <model name='HV8'>
+        <pose>2.54539 4.22937 -1e-06 -2.4e-05 1.8e-05 0.000233</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>2.54539 4.22937 -1e-06 -2.4e-05 1.8e-05 0.000233</pose>
+          <velocity>-0 0 0.001713 -0.127293 0.019044 7e-06</velocity>
+          <acceleration>-0.000649 0.000871 9.04149 -1.97829 -1.22109 -0.000422</acceleration>
+          <wrench>-0.00013 0.000174 1.8083 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_0'>
+        <pose>0.155648 0.142546 0.051792 -2.79768 -0.145122 -0.120663</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.155648 0.142546 0.051792 -2.79768 -0.145122 -0.120663</pose>
+          <velocity>-0.003893 0.00286 0.003253 -0.106733 -0.145311 -0.00013</velocity>
+          <acceleration>-0.122509 -0.297516 -3.57675 1.76088 1.30754 -3.1341</acceleration>
+          <wrench>-0.024502 -0.059503 -0.71535 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_1'>
+        <pose>0.10861 0.077688 0.053516 0.462029 0.51549 -0.010242</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.10861 0.077688 0.053516 0.462029 0.51549 -0.010242</pose>
+          <velocity>-0.006507 0.007699 -0.007369 0.155984 -0.275449 0.025152</velocity>
+          <acceleration>-0.055776 12.1884 -19.2347 2.19521 1.4062 -0.840624</acceleration>
+          <wrench>-0.011155 2.43769 -3.84694 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_10'>
+        <pose>-0.009498 0.121636 0.065753 -0.779284 -0.897728 -0.430491</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.009498 0.121636 0.065753 -0.779284 -0.897728 -0.430491</pose>
+          <velocity>0.003783 -0.001628 -0.000715 0.039302 0.096427 -0.007347</velocity>
+          <acceleration>0.340121 -1.88383 -0.123555 -0.897521 1.07789 -3.14143</acceleration>
+          <wrench>0.068024 -0.376766 -0.024711 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_11'>
+        <pose>-0.005666 0.079281 0.055698 0.574762 -0.358883 0.792504</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.005666 0.079281 0.055698 0.574762 -0.358883 0.792504</pose>
+          <velocity>5.9e-05 0.002207 -0.01267 -0.191495 -0.094846 -0.06</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -1.96 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_12'>
+        <pose>0.021871 0.009801 0.043802 0.131472 0.321265 0.269318</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.021871 0.009801 0.043802 0.131472 0.321265 0.269318</pose>
+          <velocity>0.002473 0.006023 0.012436 -0.402938 1.42742 0.189755</velocity>
+          <acceleration>0 0 -9.8 0 -0 0</acceleration>
+          <wrench>0 0 -1.96 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_13'>
+        <pose>0.042896 -0.077135 0.02503 0.000609 -7.3e-05 -0.584527</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.042896 -0.077135 0.02503 0.000609 -7.3e-05 -0.584527</pose>
+          <velocity>-0.000237 0.000151 0.0064 0.014679 0.173725 0.006304</velocity>
+          <acceleration>-0.206957 -0.308271 -0.317118 1.06897 0.1243 2.90011</acceleration>
+          <wrench>-0.041391 -0.061654 -0.063424 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_14'>
+        <pose>0.007611 -0.16504 0.024996 0.00044 -0.000416 -0.168052</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.007611 -0.16504 0.024996 0.00044 -0.000416 -0.168052</pose>
+          <velocity>-3.4e-05 0.000266 -0.000507 0.104594 -0.31766 -0.020919</velocity>
+          <acceleration>-0.087551 -0.306882 0.911232 -0.848618 -0.23127 1.49923</acceleration>
+          <wrench>-0.01751 -0.061376 0.182246 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_15'>
+        <pose>-0.093988 0.13521 0.04463 -0.22322 -0.27991 -2.04149</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.093988 0.13521 0.04463 -0.22322 -0.27991 -2.04149</pose>
+          <velocity>-0.0078 -0.004771 0.013337 -0.08967 -0.242115 -0.085916</velocity>
+          <acceleration>-1.14923 -1.63756 6.98055 -2.93858 1.26853 -0.776042</acceleration>
+          <wrench>-0.229846 -0.327513 1.39611 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_16'>
+        <pose>-0.165468 0.151978 0.057392 0.237482 -0.432877 2.61705</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.165468 0.151978 0.057392 0.237482 -0.432877 2.61705</pose>
+          <velocity>0.009982 0.00108 3.6e-05 0.093942 0.000722 -0.023207</velocity>
+          <acceleration>33.8646 -0.979836 17.2142 -0.407536 0.230439 -1.54087</acceleration>
+          <wrench>6.77291 -0.195967 3.44284 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_17'>
+        <pose>-0.07351 0.031796 0.029805 -0.085245 0.062792 -0.544474</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.07351 0.031796 0.029805 -0.085245 0.062792 -0.544474</pose>
+          <velocity>0.003466 -0.002291 -0.010085 0.073432 -0.023019 0.069914</velocity>
+          <acceleration>2.56461 2.54708 -8.1853 -2.29426 -0.740269 -2.44043</acceleration>
+          <wrench>0.512922 0.509416 -1.63706 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_18'>
+        <pose>-0.038188 -0.052771 0.037918 -0.139895 0.058466 0.193593</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.038188 -0.052771 0.037918 -0.139895 0.058466 0.193593</pose>
+          <velocity>0.010149 -0.010396 -0.018199 0.132439 0.062902 0.011155</velocity>
+          <acceleration>5.35061 -14.273 -7.79287 0.339491 0.606295 -2.83278</acceleration>
+          <wrench>1.07012 -2.8546 -1.55857 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_19'>
+        <pose>-0.039911 -0.133043 0.033698 -0.169304 -0.089383 0.404189</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.039911 -0.133043 0.033698 -0.169304 -0.089383 0.404189</pose>
+          <velocity>-0.001895 0.001071 -0.011632 -0.271554 -0.017677 -0.175814</velocity>
+          <acceleration>-1.12455 0.215024 -5.24165 0.684646 -0.287005 -2.02853</acceleration>
+          <wrench>-0.22491 0.043005 -1.04833 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_2'>
+        <pose>0.100745 0.043262 0.060703 0.530751 -0.233834 0.755989</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.100745 0.043262 0.060703 0.530751 -0.233834 0.755989</pose>
+          <velocity>-0.00628 -0.000786 -0.005282 -0.194803 -0.348231 0.003752</velocity>
+          <acceleration>0.123305 -2.38277 22.9004 -0.19121 0.786545 -0.196226</acceleration>
+          <wrench>0.024661 -0.476555 4.58009 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_20'>
+        <pose>-0.107191 0.116294 0.025007 0.002331 -0.000423 -0.141751</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.107191 0.116294 0.025007 0.002331 -0.000423 -0.141751</pose>
+          <velocity>-0.000256 -0.000351 0.00564 0.276406 0.083319 -0.009641</velocity>
+          <acceleration>-0.44902 -2.70775 1.21993 2.08754 0.83938 3.13884</acceleration>
+          <wrench>-0.089804 -0.54155 0.243986 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_21'>
+        <pose>-0.158942 0.061479 0.053034 -2.99089 -0.00396 1.38834</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.158942 0.061479 0.053034 -2.99089 -0.00396 1.38834</pose>
+          <velocity>-0.013293 0.012722 -0.013917 -0.358339 -0.764547 -0.074814</velocity>
+          <acceleration>-8.05458 11.6122 6.10556 1.42861 -0.417032 2.10036</acceleration>
+          <wrench>-1.61092 2.32244 1.22111 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_22'>
+        <pose>-0.16007 0.004824 0.025005 0.000533 8.9e-05 -0.353314</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.16007 0.004824 0.025005 0.000533 8.9e-05 -0.353314</pose>
+          <velocity>0.002355 0.008266 0.004506 0.290818 -0.211913 -0.194205</velocity>
+          <acceleration>8.12591 3.28919 9.2763 -2.41845 0.880137 -1.73988</acceleration>
+          <wrench>1.62518 0.657838 1.85526 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_23'>
+        <pose>-0.105709 -0.068211 0.02502 0.000152 0.000339 0.399194</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.105709 -0.068211 0.02502 0.000152 0.000339 0.399194</pose>
+          <velocity>-3e-05 0.000851 0.002528 -0.184958 0.040345 -0.01926</velocity>
+          <acceleration>-1.11685 0.350813 -2.74394 -1.8058 1.401 0.603588</acceleration>
+          <wrench>-0.223369 0.070163 -0.548788 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_24'>
+        <pose>-0.159595 -0.141445 0.025012 8.1e-05 -0.000176 -0.856949</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>-0.159595 -0.141445 0.025012 8.1e-05 -0.000176 -0.856949</pose>
+          <velocity>-0.0002 -0.000313 0.004417 -0.053498 0.116449 -0.008204</velocity>
+          <acceleration>-0.912138 0.001473 0.023559 2.25149 -0.365549 2.65443</acceleration>
+          <wrench>-0.182428 0.000295 0.004712 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_3'>
+        <pose>0.156946 0.0034 0.025004 0.000311 -0.000449 0.518994</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.156946 0.0034 0.025004 0.000311 -0.000449 0.518994</pose>
+          <velocity>0.001711 0.003275 -0.000948 0.38419 -0.015748 0.08154</velocity>
+          <acceleration>1.53676 3.21262 -4.59591 2.07033 -1.32239 2.21243</acceleration>
+          <wrench>0.307352 0.642525 -0.919181 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_4'>
+        <pose>0.141991 -0.160809 0.024995 0.000186 -1.1e-05 -0.477889</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.141991 -0.160809 0.024995 0.000186 -1.1e-05 -0.477889</pose>
+          <velocity>-0.000945 0.001219 -0.001703 0.295168 -0.096958 -0.033934</velocity>
+          <acceleration>0.344417 7.05603 24.6406 0.150837 0.803157 -2.83544</acceleration>
+          <wrench>0.068883 1.41121 4.92811 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_5'>
+        <pose>0.060232 0.100847 0.025001 0.0005 2e-06 -0.906933</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.060232 0.100847 0.025001 0.0005 2e-06 -0.906933</pose>
+          <velocity>-2e-06 4e-06 0.001859 0.185493 -0.002429 0.000791</velocity>
+          <acceleration>0.526872 0.781866 -5.05621 0.349787 0.854529 -0.889721</acceleration>
+          <wrench>0.105374 0.156373 -1.01124 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_6'>
+        <pose>0.081732 0.094601 0.044366 0.217163 0.338688 0.270084</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.081732 0.094601 0.044366 0.217163 0.338688 0.270084</pose>
+          <velocity>0.004738 -0.005406 0.012893 0.277313 -0.204625 -0.078337</velocity>
+          <acceleration>8.41052 -8.08414 12.5638 -0.100841 0.191171 -2.44384</acceleration>
+          <wrench>1.6821 -1.61683 2.51275 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_7'>
+        <pose>0.155992 -0.089334 0.063927 2.86463 0.417336 -0.849256</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.155992 -0.089334 0.063927 2.86463 0.417336 -0.849256</pose>
+          <velocity>0.002968 -0.014683 -0.018057 -0.008875 -0.011268 -0.152188</velocity>
+          <acceleration>3.25029 -8.52216 -8.88235 1.90919 -0.14805 1.24389</acceleration>
+          <wrench>0.650058 -1.70443 -1.77647 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_8'>
+        <pose>0.134312 -0.06909 0.031887 0.069204 -0.135655 1.11354</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.134312 -0.06909 0.031887 0.069204 -0.135655 1.11354</pose>
+          <velocity>0.004124 -0.008765 -0.014847 0.081922 0.214225 -0.021385</velocity>
+          <acceleration>3.943 -9.7659 -8.7532 0.319009 1.50574 0.958578</acceleration>
+          <wrench>0.7886 -1.95318 -1.75064 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='HV8_9'>
+        <pose>0.104987 -0.162376 0.040108 -0.177507 -0.289828 0.420089</pose>
+        <scale>1 1 1</scale>
+        <link name='HV8'>
+          <pose>0.104987 -0.162376 0.040108 -0.177507 -0.289828 0.420089</pose>
+          <velocity>0.005584 -0.001756 -0.008288 0.240389 0.351335 0.044275</velocity>
+          <acceleration>-2.79514 -0.136782 4.77327 -2.76913 0.488747 2.8978</acceleration>
+          <wrench>-0.559029 -0.027356 0.954653 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='ground_plane'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='object_box'>
+        <pose>-0.002278 -0.008248 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='object_box'>
+          <pose>-0.002278 -0.008248 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='phoxi_camera'>
+        <pose>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='photoneo_center'>
+          <pose>0 0 1 3.14159 1.57079 3.14159</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose>0.16223 0.053559 0.867464 0 1.3898 3.1162</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <model name='HV8_7'>
+      <pose>0.399815 -0.896554 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_8'>
+      <pose>0.465455 -1.12784 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_9'>
+      <pose>0.250305 -1.25312 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_10'>
+      <pose>0.300799 -1.4083 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_11'>
+      <pose>0.454277 -1.1588 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_12'>
+      <pose>0.01339 -1.20914 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_13'>
+      <pose>-0.062686 -0.993074 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_14'>
+      <pose>0.124995 -0.932238 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_15'>
+      <pose>0.186718 -1.00561 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_16'>
+      <pose>0.390446 -0.928247 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_17'>
+      <pose>0.326322 -1.05685 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_18'>
+      <pose>-0.20041 -1.1087 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_19'>
+      <pose>0.426547 -0.769712 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='object_box'>
+      <pose>-0.002278 0.64637 0 0 -0 0</pose>
+      <static>1</static>
+      <link name='object_box'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+        </inertial>
+        <collision name='collision'>
+          <geometry>
+            <mesh>
+              <uri>model://object_box/meshed/object_box_kai.dae</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://object_box/meshed/object_box_kai.dae</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='phoxi_camera'>
+      <joint name='photoneo_center_joint' type='fixed'>
+        <pose relative_to='__model__'>0 0 1 3.14159 1.57079 3.14159</pose>
+        <parent>world</parent>
+        <child>photoneo_center</child>
+      </joint>
+      <link name='photoneo_center'>
+        <pose relative_to='photoneo_center_joint'>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose>0 0 0 0 -0 0</pose>
+          <mass>1.1</mass>
+          <inertia>
+            <ixx>1</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>1</iyy>
+            <iyz>0</iyz>
+            <izz>1</izz>
+          </inertia>
+        </inertial>
+        <collision name='photoneo_center_collision'>
+          <pose>0 0 0 1.5708 -0 -3.14159</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_common/denso_descriptions/phoxi_camera_description/meshes/collision/PhoXi_L.c.STL</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='photoneo_center_visual'>
+          <pose>0 0 0 1.5708 -0 -3.14159</pose>
+          <geometry>
+            <mesh>
+              <scale>0.001 0.001 0.001</scale>
+              <uri>/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/denso_common/denso_descriptions/phoxi_camera_description/meshes/visual/PhoXi_L.f.STL</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Black</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <sensor name='photoneo_center_sensor' type='depth'>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <camera>
+            <horizontal_fov>1.46782</horizontal_fov>
+            <image>
+              <format>L8</format>
+              <width>2064</width>
+              <height>1544</height>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>4.5</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.005</stddev>
+            </noise>
+          </camera>
+          <plugin name='photoneo_center_sensor_controller' filename='libgazebo_ros_openni_kinect.so'>
+            <cameraName>photoneo_center/sensor</cameraName>
+            <alwaysOn>1</alwaysOn>
+            <updateRate>30</updateRate>
+            <imageTopicName>image_color</imageTopicName>
+            <depthImageTopicName>image_depth</depthImageTopicName>
+            <pointCloudTopicName>points</pointCloudTopicName>
+            <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+            <depthImageCameraInfoTopicName>camera_info</depthImageCameraInfoTopicName>
+            <frameName>photoneo_center_optical_frame</frameName>
+            <baseline>0.1</baseline>
+            <distortion_k1>-0.11862627596824302</distortion_k1>
+            <distortion_k2>0.1330449495758574</distortion_k2>
+            <distortion_k3>0.0</distortion_k3>
+            <distortion_t1>0.0012978747886444077</distortion_t1>
+            <distortion_t2>-0.002273816413316873</distortion_t2>
+            <focalLength>2293.3324879074394</focalLength>
+            <hackBaseline>0.0</hackBaseline>
+            <Cx>1041.4935095434566</Cx>
+            <Cy>857.6330096952366</Cy>
+            <pointCloudCutoff>0.05</pointCloudCutoff>
+            <pointCloudCutoffMax>4.5</pointCloudCutoffMax>
+            <robotNamespace>/</robotNamespace>
+          </plugin>
+        </sensor>
+        <sensor name='photoneo_center_camera' type='camera'>
+          <always_on>1</always_on>
+          <update_rate>30</update_rate>
+          <camera>
+            <pose>0.035 -0.275 0.0168 0 -0 0.164934</pose>
+            <horizontal_fov>1.46782</horizontal_fov>
+            <image>
+              <format>L8</format>
+              <width>752</width>
+              <height>480</height>
+            </image>
+            <clip>
+              <near>0.05</near>
+              <far>4.5</far>
+            </clip>
+            <noise>
+              <type>gaussian</type>
+              <mean>0</mean>
+              <stddev>0.005</stddev>
+            </noise>
+          </camera>
+          <plugin name='photoneo_center_camera_controller' filename='libgazebo_ros_camera.so'>
+            <cameraName>photoneo_center/camera</cameraName>
+            <alwaysOn>1</alwaysOn>
+            <updateRate>30</updateRate>
+            <imageTopicName>image_color</imageTopicName>
+            <frameName>photoneo_center_camera_frame</frameName>
+            <baseline>0.1</baseline>
+            <distortion_k1>-0.11862627596824302</distortion_k1>
+            <distortion_k2>0.1330449495758574</distortion_k2>
+            <distortion_k3>0.0</distortion_k3>
+            <distortion_t1>0.0012978747886444077</distortion_t1>
+            <distortion_t2>-0.002273816413316873</distortion_t2>
+            <focalLength>2293.3324879074394</focalLength>
+            <hackBaseline>0.0</hackBaseline>
+            <Cx>1041.4935095434566</Cx>
+            <Cy>857.6330096952366</Cy>
+            <pointCloudCutoff>0.05</pointCloudCutoff>
+            <pointCloudCutoffMax>4.5</pointCloudCutoffMax>
+            <robotNamespace>/</robotNamespace>
+          </plugin>
+        </sensor>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <pose>0 0 0 0 -0 0</pose>
+    </model>
+    <model name='HV8_20'>
+      <pose>0.20558 -0.484091 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_21'>
+      <pose>0.027815 -0.476984 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_22'>
+      <pose>-0.294535 -0.490459 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_23'>
+      <pose>-0.120289 -0.50842 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <model name='HV8_24'>
+      <pose>0.095429 -0.597012 0 0 -0 0</pose>
+      <static>0</static>
+      <link name='HV8'>
+        <inertial>
+          <mass>0.2</mass>
+          <inertia>
+            <ixx>0.0005</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.0005</iyy>
+            <iyz>0</iyz>
+            <izz>0.0005</izz>
+          </inertia>
+          <pose>0 0 0 0 -0 0</pose>
+        </inertial>
+        <collision name='collishin'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <bounce/>
+            <friction>
+              <torsional>
+                <ode/>
+              </torsional>
+              <ode/>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <mesh>
+              <uri>model://HV8/meshes/HV8_1.stl</uri>
+            </mesh>
+          </geometry>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+  </world>
+</sdf>

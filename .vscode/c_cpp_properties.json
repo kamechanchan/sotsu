@@ -7,7 +7,11 @@
                 "/opt/ros/noetic/include",
                 "/usr/include/pcl-1.10",
                 "/usr/include/eigen3",
-                "/usr/include/opencv4"
+                "/usr/include/opencv4",
+                "${workspaceFolder}/../devel/include",
+                "${workspaceFolder}/denso_run/rikuken_original/w2d_to_3d_ros/include/w2d_to_3d_ros",
+                "/home/ericlab/ros_package/denso_ws/devel/include",
+                "/home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/estimator/include/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/g++",

@@ -32,6 +32,10 @@ public:
   void colorConvert(const sensor_msgs::Image::ConstPtr image, const sensor_msgs::CameraInfo::ConstPtr cinfo,
                     const sensor_msgs::PointCloud2::ConstPtr points);
   void publish(void);
+  typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, sensor_msgs::CameraInfo,
+                                                          sensor_msgs::PointCloud2>
+      sensor_sync_subs_;
+  message_filters::Synchronizer<sensor_sync_subs_> sensor_sync_;
 
 public:
   pcl::PointCloud<pcl::PointXYZRGB> colored_points_;
@@ -41,12 +45,10 @@ private:
   ros::NodeHandle nh_;
   image_transport::SubscriberFilter img_tran_sub_;
 
-  typedef message_filters::sync_policies::ApproximateTime<sensor_msgs::Image, sensor_msgs::CameraInfo,
-                                                          sensor_msgs::PointCloud2>
-      sensor_sync_subs_;
+ 
   message_filters::Subscriber<sensor_msgs::CameraInfo> caminfo_sub_;
   message_filters::Subscriber<sensor_msgs::PointCloud2> pc_sub_;
-  message_filters::Synchronizer<sensor_sync_subs_> sensor_sync_;
+  
   ros::Publisher pub_;
   tf::TransformListener tf_listener_;
   tf::StampedTransform transform_;

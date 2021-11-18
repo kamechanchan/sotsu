@@ -1,15 +1,25 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="camera_topic_name" default="/photoneo_center/sensor/camera_info"/>
-    <arg name="image_topic_name" default="/photoneo_center/sensor/image_color"/>
-    <arg name="input_cloud_topic_name" default="/cloud_without_segmented"/>
+    <!-- <arg name="camera_topic_name" default="/photoneo_center/sensor/camera_info"/> -->
+    <arg name="camera_topic_name" default="/photoneo_center/camera_info"/>
+    
+    <!-- <arg name="image_topic_name" default="/photoneo_center/sensor/image_color"/> -->
+    <arg name="image_topic_name" default="/photoneo_center/rgb_texture"/>
+    
+    <!-- <arg name="input_cloud_topic_name" default="/cloud_without_segmented"/> -->
+    <arg name="input_cloud_topic_name" default="/photoneo_center/pointcloud"/>
+    
     <arg name="output_cloud_topic_name" default="/output"/>
     <arg name="target_frame" default=""/>
     <arg name="source_frame" default=""/>
     <arg name="paramter_output_file_path" default="/home/ericlab/dummy_cloud/paramter.txt"/>
-    <arg name="f_scale" default="0.5"/>
-    <arg name="cx_scale" default="0.99"/>
+    <!-- <arg name="f_scale" default="0.5"/> -->
+    <!-- <arg name="cx_scale" default="0.99"/>
+    <arg name="cy_scale" default="0.9"/> -->
+    <arg name="f_scale" default="0.968"/>
+    <arg name="cx_scale" default="1.01"/>
     <arg name="cy_scale" default="0.9"/>
+    
     
     
     

@@ -75,7 +75,7 @@ if __name__=='__main__':
                         euler_error_min[i] = abs(euler_error[i])
                     euler_error_sum[i] = euler_error_sum[i] + abs(euler_error[i])
             euler_error_average.clear()
-            #print(count)
+            print(count)
             count = count + 1
             rate.sleep()    
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):

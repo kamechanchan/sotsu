@@ -109,6 +109,18 @@ server.launch arch:=PointNet_Segmentation (semantic)
 server.launch arch:=JSIS3D (instance)
 ```
 
+### セグメンテーションの推論(精度算出フォーマット)
+```
+roslaunch tf_publish spawn_object.launch object_name:=1
+
+roslaunch estimator color_get.launch
+```
+##### semantic and instance switch_launch_file
+```
+roslaunch estimator Acc_SemSeg.launch (semantic)
+roslaunch estimator Acc_InsSeg.launch (instance)
+```
+
 ### データセットの中身を見る
 ```
 roslaunch annotation_package pcd_save_from_hdf5.launch path:=(hdf5ファイルのパス) index:=(データセットのインデックス)
@@ -118,7 +130,36 @@ roslaunch annotation_package cloud_save_2.launch
 ~/ros_package/denso_ws/src/denso_run/denso_2020/pc_segmentation/build/colored_cloud_view /home/ericlab/dummy_cloud/pcd_save.pcd
 ```
 
-
-
+```
 echo "export GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH:${HOME}/ros_package/denso_ws/src/denso_run/rikuken_original/tf_publish/models" >> ~/.bashrc
+```
+
+### integration_run
+```
+roslaunch tf_publish spawn_object.launch object_name:=sekai_small_box_and_50
+rosrun w2d_to_3d_ros move_saikyou_object.py 
+rosrun estimator client_2D.py
+rosrun estimator server_2D
+roslaunch cloud_practice planar_segmentation.launch
+roslaunch estimator integ_first.launch
+roslaunch estimator integ_second.launch
+roslaunch estimator color_get.launch
+roslaunch estimator pcl_pub.launch 
+```
+
+### アノテーションの切り分け
+```
+roslaunch tf_publish semantic_annotation_world.launch
+roslaunch annotation_package mesh_cloud_bara_publish.launch the_number_of_object:=31
+rosrun w2d_to_3d_ros move_saikyou_object.py
+roslaunch w2d_to_3d_ros ano_and_exec_3.launch
+roslaunch annotation_package nearest_search_yolo_1.launch
+roslaunch annotation_package dummy_2_semantic.launch
+roslaunch annotation_package segmentation_kiriwake_dataset.launch num_dataset:=5000
+```
+### 左のパソコンのcatkin build
+```
+catkin build -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m
+catkin config --cmake-args -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m
+
 ```

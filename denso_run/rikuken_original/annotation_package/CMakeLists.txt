@@ -94,8 +94,46 @@ target_link_libraries(nearest_search_bara_3
   ${PCL_LIBRARIES}
 )
 
+
+add_executable(nearest_search_bara_4 src/nearest_search_4.cpp src/nearest_search_4_bara_node.cpp)
+target_link_libraries(nearest_search_bara_4
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(nearest_search_bara_yolo src/nearest_search_yolo.cpp src/nearest_search_bara_yolo_node.cpp)
+target_link_libraries(nearest_search_bara_yolo
+  ${catkin_LIBRARIES}
+  
+)
+
 add_executable(pcl_2_ba src/pcl_2_ba.cpp)
 target_link_libraries(pcl_2_ba
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(dummy_2_color_cloud src/dummy_2_color_cloud.cpp)
+target_link_libraries(dummy_2_color_cloud
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(dummy_2_semantic src/dummy_2_semantic.cpp)
+target_link_libraries(dummy_2_semantic
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+
+add_executable(nearest_search_yolo_1 src/nearest_search_yolo_1.cpp src/nearest_search_yolo_1_node.cpp)
+target_link_libraries(nearest_search_yolo_1
+  ${catkin_LIBRARIES}
+  
+)
+
+add_executable(cloud_save_3 src/cloud_save_3.cpp)
+target_link_libraries(cloud_save_3
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )

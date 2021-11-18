@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="object_name" default="HV8" />
+  <arg name="icpRefine" default="False" />
+  <arg name="arch" default="JSIS3D" />
+  <arg name="arch_second" default="PointNet_Pose" />
+  <arg name="process_swich" default="object_segment" />
+  <arg name="process_num" default="single" />
+  <arg name="resolution" default="8192" />
+  <arg name="load_path" default="/home/ericlab/DENSO_results/August/instance_segmentation/ishiyama/JSIS3D/instance_changed_8_7_1526.hdf5+instance_changed_instance_tsuchida_8_12_500_1.hdf5+instance_changedinstance_tsuchida_8_11_1000_1.hdf5+instance_changed_instance_tsuchida_8_25_5000_1.hdf5+instance_changed_instance_tsuchida_9_2_2000_1.hdf5/latest_net.pth"/>
+  <arg name="load_path_second" default="/home/ericlab/DENSO_results/raugh_recognition/checkpoint/tsuchida/PointNet/HV8_size_20000_range_pi_3.hdf5/latest_net.pth"/>
+  <arg name="dataroot" default="/home/ericlab/hdf5_data/"/>
+  <arg name="dataset_model" default="HV8_Bulknumber25_datanumber722.hdf5"/>
+  <arg name="dataroot_swich" default="instance_testdata"/>
+  <arg name="dataset_mode" default="instance_segmentation"/>
+  <arg name="max_dataset_size" default="1"/>
+  <arg name="instance_number" default="25"/>
+  <arg name="batch_size" default="1"/>
+    <node name="segment_acc" pkg="estimator" type="Acc_InsSeg.py" output="screen" >
+        <param name="object_name" value="$(arg object_name)" />
+        <param name="process_swich" value="$(arg process_swich)" />
+        <param name="arch" value="$(arg arch)" />
+        <param name="resolution" value="$(arg resolution)" />
+        <param name="load_path" value="$(arg load_path)"/>
+        <param name="dataroot" value="$(arg dataroot)"/>
+        <param name="dataset_model" value="$(arg dataset_model)"/>
+        <param name="dataroot_swich" value="$(arg dataroot_swich)"/>
+        <param name="dataset_mode" value="$(arg dataset_mode)"/>
+        <param name="max_dataset_size" value="$(arg max_dataset_size)"/>
+        <param name="instance_number" value="$(arg instance_number)"/>
+        <param name="batch_size" value="$(arg batch_size)"/>
+
+    </node>
+</launch>

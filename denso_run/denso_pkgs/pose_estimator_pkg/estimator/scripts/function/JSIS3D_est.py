@@ -20,7 +20,8 @@ def pose_prediction(opt, data, resolution, arg):
     n_data = len(data)
     row = 3
     col = n_data // row
-    cluster_number = 8
+    cluster_number = 25
+    print("shape******************: " + str(np.array(data).shape))
     x = np.reshape(np.array(data), (col, row))[np.newaxis, :, :]
     print("shpae" + str(x.shape))
     y_pre = estimation(opt, x)

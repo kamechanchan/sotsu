@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="object_name" default="sekai_1"/>
+    <group if="$(eval object_name=='HV8')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV8.world"/> -->
+            <!--arg name="world_name" default="$(find denso_gazebo)/worlds/denso_room_mini.world"/-->
+            
+        </include>
+    </group>
+    <group if="$(eval object_name=='HV7')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV7.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='HV6')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV6.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='t_pipe')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/t_pipe.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='HV8_barazumi')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV8_barazumi.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='sekai')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/sekai.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='sekai_1')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/tsuchida_1.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='sekai_small_box_and_50')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/sekai_small_box_kai.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='HV7_barazumi')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV7_barazumi.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='HV7_sekai')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/HV7_sekai.world"/>
+        </include>
+    </group>
+    
+    <!--node name="setup_commands" pkg="timed_roslaunch" type="timed_roslaunch.sh" args="3 gen_dataset setup_commands.launch" output="screen" /-->
+    <arg name="use_sensor_type" default="phoxi_camera"/>
+    <arg name="gui" default="true"/>
+    <param name="use_gui" value="$(arg gui)"/>
+    <arg name="sensor_model" value="$(find denso_gazebo)/urdf/sensors/$(arg use_sensor_type).urdf.gazebo.xacro"/>
+    <arg name="sensor_parent_frame" default="world" />
+    <arg name="sensor_tag" default="phoxi_camera" />
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tf_publish)/rviz/denso.rviz" required="true" />
+   
+    <param name="robot_description" type="str" command="$(find xacro)/xacro --inorder $(arg sensor_model) sensor_parent_frame:=$(arg sensor_parent_frame)" />
+    <node name="spawn_sensor_urdf" pkg="gazebo_ros" type="spawn_model" args="-param robot_description -urdf -model $(arg sensor_tag) " />
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" respawn="false" output="screen" />
+    
+    <arg name="src_frame_name" default="world"/>
+    <arg name="object_name_1" default="HV8"/>
+    <arg name="object_count" default="31"/>
+    
+    <node name="model_bara" pkg="tf_publish" type="model_tf_publisher_bara"  output="screen">
+        <param name="src_frame_name" value="$(arg src_frame_name)"/>
+        <param name="object_name" value="$(arg object_name_1)"/>
+        <param name="object_count" value="$(arg object_count)"/>
+        
+    </node>
+
+    <arg name="input_pc_topic" default="/photoneo_center/sensor/points"/>
+    <arg name="distance_threshold" default="0.001"/>
+    
+    <node pkg="cloud_practice" type="cloud_planar_segmenter" name="cloud_planar_segmenter" output="screen" >
+        <param name="input_pc_topic" value="$(arg input_pc_topic)"/>
+        <param name="distance_threshold" value="$(arg distance_threshold)"/>
+    </node>
+</launch>

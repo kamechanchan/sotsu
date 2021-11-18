@@ -9,6 +9,7 @@ from . import networks
 from os.path import join
 from utils.util import print_network
 from utils import util
+import h5py
 
 
 class EstimatorModel:
@@ -90,6 +91,19 @@ class EstimatorModel:
 
             self.x_data = x_data.to(self.device)
 
+    def set_input_acc(self, data):
+        x_data = torch.from_numpy(data["x_data"].astype(np.float32)) 
+        if self.dataset_mode == "pose_estimation":
+            y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+            x_data = x_data.transpose(2, 1)
+        elif self.dataset_mode == "instance_segmentation":
+            y_data = torch.from_numpy(data["y_data"].astype(np.float32))
+            x_data = x_data.transpose(2, 1)
+        elif self.dataset_mode == "semantic_segmentation":
+            y_data = torch.from_numpy(data["y_data"].astype(np.int64))
+            x_data = x_data.transpose(2, 1)
+
+        self.x_data, self.y_data = x_data.to(self.device), y_data.to(self.device)
 
     def set_input_segmentation(self, data):
         x_data = data["x_data"]
@@ -154,7 +168,8 @@ class EstimatorModel:
                 self.loss = self.criterion(pred, self.y_data, trans_feat)
         self.loss.backward()
         self.optimizer.step()
-        return self.loss.item() * self.x_data.size(0)
+        # return self.loss.item() * self.x_data.size(0)
+        return self.loss.item()
 
 
     def val_step(self):
@@ -171,10 +186,54 @@ class EstimatorModel:
                 # print("test")
                 # print(type(pred))
                 self.loss = self.criterion(pred, self.y_data, trans_feat)
-        return self.loss.item() * self.x_data.size(0)
+        # return self.loss.item() * self.x_data.size(0)
+        return self.loss.item()
 
 
     def test_step(self):
+        if self.process_swich == "raugh_recognition":
+            # print(self.x_data.shape)
+            for i in range(4):
+                print(str(self.x_data[0][0][i]) +  " " + str(self.x_data[0][1][i]) +  " " + str(self.x_data[0][2][i]))
+                print("")
+            pred = self.net(self.x_data)
+            # print("p")
+            # print(pred.shape)
+            pred = pred.to('cpu').detach().numpy().copy()
+            print("****")
+            print(type(pred))
+            print(pred.shape)
+            for i in range(4):
+                print(str(pred[0][0]) +  " " + str(pred[0][1]) +  " " + str(pred[0][2]) +  " " + str(pred[0][3]) +  " " + str(pred[0][5]))
+                print(str(pred[0][6]) +  " " + str(pred[0][7]) +  " " + str(pred[0][8]) +  " " + str(pred[0][9]) +  " " + str(pred[0][10]) +  " " + str(pred[0][11]))
+                print("")
+             # print("****")
+            # print(type(pred))
+            # print(pred.shape)
+            # for i in range(4):
+            #     print(str(pred[0][0]) +  " " + str(pred[0][1]) +  " " + str(pred[0][3]) +  " " + str(pred[0][4]) +  " " + str(pred[0][5]))
+            #     print(str(pred[0][6]) +  " " + str(pred[0][7]) +  " " + str(pred[0][8]) +  " " + str(pred[0][9]) +  " " + str(pred[0][10]) +  " " + str(pred[0][11]))
+            #     print("")
+            # print("pred")
+            # print(pred.shape)
+        elif self.process_swich == "object_segment":
+            if self.arch == "JSIS3D":
+                pred = self.net(self.x_data)
+                pred = pred.to('cpu').detach().numpy().copy()
+            if self.arch == "PointNet_Segmentation":
+                pred, trans = self.net(self.x_data)
+                # print("output")
+                # print(pred.shape)
+                # for i in pred:
+                #     ppi = i
+                # pred = ppi.to('cpu').detach().numpy().copy()
+                pred = pred.contiguous().cpu().data.max(2)[1].numpy()
+                # print(pred.shape)
+                # pred = pred.to('cpu').detach().numpy().copy()
+        return pred
+
+
+    def acc_step(self):
         if self.process_swich == "raugh_recognition":
             pred = self.net(self.x_data)
             # print("p")
@@ -227,6 +286,7 @@ class EstimatorModel:
         if hasattr(state_dict, "_metadata"):
             del state_dict._metadata
         net.load_state_dict(state_dict,strict=False)
+        # net.load_state_dict(state_dict["model_state_dict"])
 
     def save_network(self, which_epoch):
         save_filename= "%s_net.pth" % (which_epoch)
@@ -255,16 +315,24 @@ class EstimatorModel:
                 pred = pred.contiguous().cpu().data.max(2)[1].numpy()
 
         self.concat_dataset_model = '+'.join(opt.dataset_model)
-        pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/progress_output/"+opt.dataset_mode+"/"+self.concat_dataset_model+"/"+str(epoch)
+        pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/progress_output/"+opt.dataset_mode+"/"+self.concat_dataset_model +"/"+str(epoch)
         util.mkdir(pcd_dir)
-        f = open(pcd_dir+"/result"+str(index)+".txt", 'a')
-        print("pred")
-        print(pred.shape)
-        print(pred)
-        f.write(str(pred))
+        result_h5 = h5py.File(pcd_dir + "/result" + str(epoch) + ".hdf5", "a")
+        data = result_h5.create_group("data_" + str(index))
+        data.create_dataset("Points", data=self.x_data, compression="lzf")
+        data.create_dataset("est", data=pred, compression="lzf")
+        data.create_dataset("ground_truth", data=self.y_data, compression="lzf")
+        result_h5.flush()
+       
+        # f = open(pcd_dir+"/result"+str(index)+".txt", 'a')
+        # print("pred")
+        # print(pred.shape)
+        # print(pred)
+        # f.write(str(pred))
         # print("output")
         # print(pred.shape)
         # print(type(pred))
+        
         # for i in pred:
         #     ppi = i
         # pred = ppi.to('cpu').detach().numpy().copy()
