@@ -163,3 +163,25 @@ catkin build -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/incl
 catkin config --cmake-args -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m
 
 ```
+
+### 左のパソコンのcatkin build
+```
+catkin build -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m
+catkin config --cmake-args -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m
+
+```
+### オクルーダ、オクルーディのアノテーション
+```
+roslaunch tf_publish spawn_object.launch object_name:=sekai_small_box_and_50
+roslaunch tf_publish bara_model_tf.launch object_count:=25
+roslaunch cloud_practice planar_segmentation.launch
+rosrun w2d_to_3d_ros move_saikyou_object.py 
+roslaunch annotation_package mesh_cloud_bara_publish.launch
+roslaunch annotation_package nearest_search_yolo_1.launch
+roslaunch w2d_to_3d_ros ano_and_exec_3.launch
+roslaunch annotation_package dummy_cloud_pub_semantic.launch
+roslaunch annotation_package segmentation_kiriwake_dataset.launch
+
+可視化
+roslaunch annotation_package dummy_2_semantic.launch
+```
