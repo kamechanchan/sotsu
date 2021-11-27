@@ -225,26 +225,26 @@ namespace nearest_point_extractor
             }
         }
         
-        // for (int i = 0; i < kiri.instance_numbers.size(); i++) {
-        //     std::cout << kiri.instance_numbers[i] << ": kazuha : ";
-        //     int count = 0;
-        //     for (auto mesh : mesh_clouds_[kiri.instance_numbers[i]]->points)
-        //     {
-        //         if (kdtree.nearestKSearch(mesh, num_of_nearest_points_, pointIndices, squaredDistances) > 0) {
-        //             c2c_distance += squaredDistances[0];
-        //             point_size++;
-        //             for (int j = 0; j < pointIndices.size(); j++) {
-        //                 out_cloud.instance[pointIndices[j]] = kiri.instance_numbers[i];
-        //             }
+        for (int i = 0; i < kiri.instance_numbers.size(); i++) {
+            std::cout << kiri.instance_numbers[i] << ": kazuha : ";
+            int count = 0;
+            for (auto mesh : mesh_clouds_[kiri.instance_numbers[i]]->points)
+            {
+                if (kdtree.nearestKSearch(mesh, num_of_nearest_points_, pointIndices, squaredDistances) > 0) {
+                    c2c_distance += squaredDistances[0];
+                    point_size++;
+                    for (int j = 0; j < pointIndices.size(); j++) {
+                        out_cloud.instance[pointIndices[j]] = kiri.instance_numbers[i];
+                    }
 
-        //         }
-        //         pointIndices.clear();
-        //         squaredDistances.clear();
-        //         count++;
-        //     }
+                }
+                pointIndices.clear();
+                squaredDistances.clear();
+                count++;
+            }
             
-        //     std::cout << count << std::endl;
-        // }
+            std::cout << count << std::endl;
+        }
         
         // ("sensor all size: " << senROS_INFO_STREAMsor_cloud_->points.size());
         ROS_INFO_STREAM("color point size: " << list_pointIndices.size());

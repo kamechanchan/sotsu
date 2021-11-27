@@ -7,7 +7,7 @@ import numpy as np
 
 cnt = 0
 c = 1
-with h5py.File('/home/ericlab/Downloads/occulution_kiriwake_9_14_1000_1.hdf5', mode="r") as f:
+with h5py.File('/home/ericlab/hdf5_data/temmat/HV8_size_20000_range_pi_2.hdf5', mode="r") as f:
     for i in f["data_1"].values():
         # cnt +=1
         # c += 1

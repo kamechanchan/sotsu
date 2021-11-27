@@ -65,8 +65,10 @@ class annotation_environment(object):
         loop = rospy.Rate(100)
         com = 0
         pose_list = []
-        a_1 = 0.155
-        a_4 = -0.155
+        # a_1 = 0.155
+        # a_4 = -0.155
+        a_1 = 0.05
+        a_4 = -0.05
         limit_distance = 0.09
         a1 = np.arange(a_4, a_1, 0.099)
         a2 = np.arange(a_4, a_1, 0.099)
@@ -104,8 +106,8 @@ class annotation_environment(object):
         for i in range(len(self.occulution_object.occuludy)):
             pose_data = ModelState()
             pose_data.model_name = self.occulution_object.occuludy[i]
-            hanni = 0.03
-            # hanni = 0.05
+            # hanni = 0.03
+            hanni = 0.05
             if i == 0:
                 x_zure = random.uniform(-hanni, hanni)
                 y_zure = random.uniform(-hanni, hanni)
@@ -321,18 +323,18 @@ class annotation_environment(object):
         array_ocudy_2 = self.occuludy_array
         random.shuffle(array_ocudy_2)
 
-        for i in range(random.randint(3, len(self.occuluder_array) - 1)):
-        # i = random.randint(3, len(self.occuluder_array) - 1)
-            self.occulution_object.occuluder_object.append(str(self.model_name) + "_" + str(array_ocu_1[i]))
+        # for i in range(random.randint(3, len(self.occuluder_array) - 1)):
+        i = random.randint(3, len(self.occuluder_array) - 1)
+        self.occulution_object.occuluder_object.append(str(self.model_name) + "_" + str(array_ocu_1[i]))
         # self.occulution_object.occuluder_object.append("ffe")
-            self.occulution_object.occuluder_mesh_topic_name.append("meshcloud_" + str(array_ocu_1[i]))
-            self.occulution_object.instance_numbers.append(array_ocu_1[i])
+        self.occulution_object.occuluder_mesh_topic_name.append("meshcloud_" + str(array_ocu_1[i]))
+        self.occulution_object.instance_numbers.append(array_ocu_1[i])
             
 
-        for i in range(random.randint(0, len(self.occulution_object.occuluder_object) - 1)):
-        # i = random.randint(0, len(self.occulution_object.occuluder_object) - 1)
-            self.occulution_object.occuludy.append(str(self.model_name) + "_" + str(array_ocudy_2[i]))
-            self.occulution_object.occuludy_instance_number.append(array_ocudy_2[i])
+        # for i in range(random.randint(0, len(self.occulution_object.occuluder_object) - 1)):
+        i = random.randint(0, len(self.occulution_object.occuluder_object) - 1)
+        self.occulution_object.occuludy.append(str(self.model_name) + "_" + str(array_ocudy_2[i]))
+        self.occulution_object.occuludy_instance_number.append(array_ocudy_2[i])
 
 
 if __name__=='__main__':
