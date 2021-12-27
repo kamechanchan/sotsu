@@ -149,7 +149,7 @@ roslaunch estimator pcl_pub.launch
 
 ### アノテーションの切り分け
 ```
-roslaunch tf_publish semantic_annotation_world.launch
+roslaunch tf_publish semantic_annotation_world.launch object_name:=sekai_small_box_and_50(object_name wo korenisento error)
 roslaunch annotation_package mesh_cloud_bara_publish.launch the_number_of_object:=31
 rosrun w2d_to_3d_ros move_saikyou_object.py
 roslaunch w2d_to_3d_ros ano_and_exec_3.launch

@@ -1,6 +1,0 @@
-<?xml version="1.0"?>
-<launch>
-    <node pkg="cloud_practice" type="cloud_loader" name="cloud_loader" />
-    <node pkg="cloud_practice" type="cloud_filter" name="cloud_filter" />   
-    <node pkg="rviz" type="rviz" name="rviz" args="-d $(find cloud_practice)/rviz/"/>
-</launch>

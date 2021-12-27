@@ -1,0 +1,7 @@
+denso_run/denso_pkgs/denso_recognition/template_matching
+/home/ericlab/ros_package/denso_branch/devel/.private/template_matching/cmake.lock /home/ericlab/ros_package/denso_branch/devel/./cmake.lock
+/home/ericlab/ros_package/denso_branch/devel/.private/template_matching/share/template_matching/cmake/template_matchingConfig.cmake /home/ericlab/ros_package/denso_branch/devel/share/template_matching/cmake/template_matchingConfig.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/template_matching/share/template_matching/cmake/template_matchingConfig-version.cmake /home/ericlab/ros_package/denso_branch/devel/share/template_matching/cmake/template_matchingConfig-version.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/template_matching/lib/template_matching/template_matching.py /home/ericlab/ros_package/denso_branch/devel/lib/template_matching/template_matching.py
+/home/ericlab/ros_package/denso_branch/devel/.private/template_matching/lib/template_matching/cmake.lock /home/ericlab/ros_package/denso_branch/devel/lib/template_matching/cmake.lock
+/home/ericlab/ros_package/denso_branch/devel/.private/template_matching/lib/pkgconfig/template_matching.pc /home/ericlab/ros_package/denso_branch/devel/lib/pkgconfig/template_matching.pc

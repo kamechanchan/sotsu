@@ -1,0 +1,9 @@
+denso_run/denso_pkgs/denso_robot/bcap_core
+/home/ericlab/ros_package/denso_branch/devel/.private/bcap_core/cmake.lock /home/ericlab/ros_package/denso_branch/devel/./cmake.lock
+/home/ericlab/ros_package/denso_branch/devel/.private/bcap_core/share/bcap_core/cmake/bcap_coreConfig.cmake /home/ericlab/ros_package/denso_branch/devel/share/bcap_core/cmake/bcap_coreConfig.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/bcap_core/share/bcap_core/cmake/bcap_coreConfig-version.cmake /home/ericlab/ros_package/denso_branch/devel/share/bcap_core/cmake/bcap_coreConfig-version.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/bcap_core/lib/libbcap_server.so /home/ericlab/ros_package/denso_branch/devel/lib/libbcap_server.so
+/home/ericlab/ros_package/denso_branch/devel/.private/bcap_core/lib/librac_string.so /home/ericlab/ros_package/denso_branch/devel/lib/librac_string.so
+/home/ericlab/ros_package/denso_branch/devel/.private/bcap_core/lib/libbcap_client.so /home/ericlab/ros_package/denso_branch/devel/lib/libbcap_client.so
+/home/ericlab/ros_package/denso_branch/devel/.private/bcap_core/lib/libtpcomm.so /home/ericlab/ros_package/denso_branch/devel/lib/libtpcomm.so
+/home/ericlab/ros_package/denso_branch/devel/.private/bcap_core/lib/pkgconfig/bcap_core.pc /home/ericlab/ros_package/denso_branch/devel/lib/pkgconfig/bcap_core.pc

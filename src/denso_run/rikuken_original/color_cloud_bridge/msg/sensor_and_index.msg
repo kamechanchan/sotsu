@@ -1,2 +1,0 @@
-sensor_msgs/PointCloud2 tenngunn
-int32 instance

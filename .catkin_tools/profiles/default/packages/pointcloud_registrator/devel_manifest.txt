@@ -1,0 +1,6 @@
+denso_run/denso_pkgs/denso_recognition/pointcloud_registrator
+/home/ericlab/ros_package/denso_branch/devel/.private/pointcloud_registrator/cmake.lock /home/ericlab/ros_package/denso_branch/devel/./cmake.lock
+/home/ericlab/ros_package/denso_branch/devel/.private/pointcloud_registrator/share/pointcloud_registrator/cmake/pointcloud_registratorConfig.cmake /home/ericlab/ros_package/denso_branch/devel/share/pointcloud_registrator/cmake/pointcloud_registratorConfig.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/pointcloud_registrator/share/pointcloud_registrator/cmake/pointcloud_registratorConfig-version.cmake /home/ericlab/ros_package/denso_branch/devel/share/pointcloud_registrator/cmake/pointcloud_registratorConfig-version.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/pointcloud_registrator/lib/pointcloud_registrator/pointcloud_registrator /home/ericlab/ros_package/denso_branch/devel/lib/pointcloud_registrator/pointcloud_registrator
+/home/ericlab/ros_package/denso_branch/devel/.private/pointcloud_registrator/lib/pkgconfig/pointcloud_registrator.pc /home/ericlab/ros_package/denso_branch/devel/lib/pkgconfig/pointcloud_registrator.pc

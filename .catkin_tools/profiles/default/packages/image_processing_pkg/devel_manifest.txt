@@ -1,0 +1,12 @@
+denso_run/denso_pkgs/denso_recognition/image_processing_pkg
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/cmake.lock /home/ericlab/ros_package/denso_branch/devel/./cmake.lock
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/share/image_processing_pkg/cmake/image_processing_pkgConfig.cmake /home/ericlab/ros_package/denso_branch/devel/share/image_processing_pkg/cmake/image_processing_pkgConfig.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/share/image_processing_pkg/cmake/image_processing_pkgConfig-version.cmake /home/ericlab/ros_package/denso_branch/devel/share/image_processing_pkg/cmake/image_processing_pkgConfig-version.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/lib/image_processing_pkg/contrast_test /home/ericlab/ros_package/denso_branch/devel/lib/image_processing_pkg/contrast_test
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/lib/image_processing_pkg/gamma_test /home/ericlab/ros_package/denso_branch/devel/lib/image_processing_pkg/gamma_test
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/lib/image_processing_pkg/histogram_flattening /home/ericlab/ros_package/denso_branch/devel/lib/image_processing_pkg/histogram_flattening
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/lib/image_processing_pkg/gamma_modifier /home/ericlab/ros_package/denso_branch/devel/lib/image_processing_pkg/gamma_modifier
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/lib/image_processing_pkg/image_processing_server /home/ericlab/ros_package/denso_branch/devel/lib/image_processing_pkg/image_processing_server
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/lib/image_processing_pkg/histogram_test /home/ericlab/ros_package/denso_branch/devel/lib/image_processing_pkg/histogram_test
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/lib/image_processing_pkg/contrast_modifier /home/ericlab/ros_package/denso_branch/devel/lib/image_processing_pkg/contrast_modifier
+/home/ericlab/ros_package/denso_branch/devel/.private/image_processing_pkg/lib/pkgconfig/image_processing_pkg.pc /home/ericlab/ros_package/denso_branch/devel/lib/pkgconfig/image_processing_pkg.pc
