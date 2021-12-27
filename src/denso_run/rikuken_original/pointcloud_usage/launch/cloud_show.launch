@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="pcd_file_name" default="/home/tsuchida/yes_1.pcd"/>
+    
+    <node name="pcd_show" pkg="pointcloud_usage" type="cloud_show.py"  >
+        <param name="pcd_file_name" value="$(arg pcd_file_name)"/>
+    </node>
+
+</launch>

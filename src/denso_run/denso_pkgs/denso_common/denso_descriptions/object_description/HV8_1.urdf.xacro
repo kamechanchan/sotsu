@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot name="HV8_v0" xmlns:xacro="http://ros.org/wiki/xacro">
+  <link name="HV8">
+    <visual>
+      <geometry>
+        <mesh filename="package://denso_descriptions/object_description/meshes/DAE/HV8.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin xyz="0.0 0.0 -0.05"/>
+      <geometry>
+        <mesh filename="package://denso_descriptions/object_description/meshes/STL/HV8.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin xyz="0 0 0"/>
+      <mass value="0.05" />
+      <inertia ixx="0.02" ixy="0.0" ixz="0.0"
+              iyy="0.002" iyz="0.0"
+              izz="0.0" />
+    </inertial>
+  </link>
+</robot>

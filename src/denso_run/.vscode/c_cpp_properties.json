@@ -1,0 +1,39 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/**",
+                "/usr/include/pcl-1.10",
+                "/usr/include/eigen3",
+                "${workspaceFolder}/denso_pkgs/pose_estimator_pkg/pose_estimator_measure/include",
+                "/opt/ros/noetic/include",
+                "/usr/include/vtk-7.1",
+                "/usr/include/opencv4",
+                "/usr/include/gazebo-11",
+                "/opt/ros/noetic/include/xmlrpcpp",
+                "/usr/include/ignition/math6",
+                "/usr/include/ignition/transport8",
+                "/usr/include/ignition/msgs5",
+                "/usr/include/ignition/common3",
+                "/usr/include/ignition/fuel_tools4",
+                "${workspaceFolder}/rikuken_original/pointcloud_usage/include",
+                "${workspaceFolder}/rikuken_original/tf_publish/include",
+                "${workspaceFolder}/denso_2020/pc_segmentation/include",
+                "${workspaceFolder}/denso_2020/bayes_pose/include",
+                "${workspaceFolder}/denso_2020/meshcloud_pblisher_pkg/include",
+                "${workspaceFolder}/rikuken_original/annotation_package/include",
+                "${workspaceFolder}/rikuken_original/tf_publish/include/tf_publish",
+                "${workspaceFolder}/../../devel/include",
+                "${workspaceFolder}/rikuken_original/w2d_to_3d_ros/include",
+                "${workspaceFolder}/rikuken_original/arm_move/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "c17",
+            "cppStandard": "c++20",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="num_of_object" default="7"/>
+    <arg name="sensor_topic_name" default="output"/>
+    <arg name="mesh_base_topic_name" default="meshcloud"/>
+    <arg name="output_topic_name" default="all_cloud"/>
+    <arg name="radius" default="10000"/>
+    <arg name="num_of_nearest_points" default="8"/>
+    <arg name="background_instance" default="300"/>
+    <arg name="message_timeout" default="15"/>
+    <arg name="dulation" default="0.1"/>
+    <arg name="oculuder_kiriwake_topic_name" default="tsuchida_object_occuluder"/>
+    
+    
+    
+    
+    
+    <node name="nearest_search_bara3" pkg="annotation_package" type="nearest_search_yolo_1"  output="screen" respawn="false" respawn_delay="0">
+        <param name="num_of_object" value="$(arg num_of_object)"/>
+        <param name="sensor_topic_name" value="$(arg sensor_topic_name)"/>
+        <param name="mesh_base_topic_name" value="$(arg mesh_base_topic_name)"/>
+        <param name="output_topic_name" value="$(arg output_topic_name)"/>
+        <param name="radius" value="$(arg radius)"/>
+        <param name="num_of_nearest_points" value="$(arg num_of_nearest_points)"/>
+        <param name="message_timeout" value="$(arg message_timeout)"/>
+        <param name="background_instance" value="$(arg background_instance)"/>
+        <param name="dulation" value="$(arg dulation)"/>
+        <param name="oculuder_kiriwake_topic_name" value="$(arg oculuder_kiriwake_topic_name)"/>
+    </node>
+
+</launch>

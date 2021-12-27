@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="instance_topic_name" default="raugh_GT"/>
+    <arg name="dummy_topic_name" default="Ground_Truth_cloud"/>
+    <arg name="frame_id" default="photoneo_center_optical_frame"/>
+    <!-- <arg name="frame_id" default="world"/> -->
+    
+    <node pkg="estimator" type="pcl_pub" name="pcl_pub" output="screen">
+        <param name="instance_topic_name" value="$(arg instance_topic_name)"/>
+        <param name="dummy_topic_name" value="$(arg dummy_topic_name)"/>
+        <param name="frame_id" value="$(arg frame_id)"/>
+    </node>
+</launch>

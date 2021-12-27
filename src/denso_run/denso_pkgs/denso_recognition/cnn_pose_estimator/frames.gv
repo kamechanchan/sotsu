@@ -1,0 +1,12 @@
+digraph G {
+"photoneo_test_optical_frame" -> "estimated_tf"[label="Broadcaster: /pose_estimate_14915_1569141949236\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1569160835.848 sec old)\nBuffer length: 0.000 sec\n"];
+"world" -> "photoneo_test_optical_frame"[label="Broadcaster: /from_world_to_photoneo_test_optical_frame_static_tf\nAverage rate: 30.384 Hz\nMost recent transform: 1569160835.746 ( 0.102 sec old)\nBuffer length: 2.106 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1569160835.848"[ shape=plaintext ] ;
+ }->"world";
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1569160835.848"[ shape=plaintext ] ;
+ }->"photoneo_test";
+}

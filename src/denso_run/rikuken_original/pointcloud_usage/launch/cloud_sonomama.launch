@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="input_topic_name" default="/photoneo_center/sensor/points"/>
+    <arg name="output_topic_name" default="sonomama_clouds"/>
+    
+    <node pkg="pointcloud_usage" type="cloud_sonomama" name="cloud_sonomama" output="screen">
+        <param name="input_topic_name" value="$(arg input_topic_name)"/>
+        <param name="output_topic_name" value="$(arg output_topic_name)"/>
+    </node>
+</launch>
