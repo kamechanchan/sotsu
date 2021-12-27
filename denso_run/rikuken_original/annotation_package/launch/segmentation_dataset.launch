@@ -8,6 +8,7 @@
     <arg name="directorypath" default="/home/ericlab/hdf5_file/"/>
     <arg name="data_number" default="1"/>
     <arg name="move_object_switch" default="box"/>
+    <arg name="img_switch" default="False"/>
     <group if="$(eval move_object_switch=='box')">
         <node pkg="annotation_package" type="move_object.py" name="move_object" output="screen">
         </node>
@@ -18,6 +19,7 @@
     </group>
 
     <node pkg="annotation_package" type="record_hdf5.py" name="record_hdf5" output="screen">
+        <param name="img_switch" value="$(arg img_switch"/>
         <param name="filepath" value="$(arg filepath)"/>
         <param name="num_dataset" value="$(arg num_dataset)"/>
         <param name="directorypath" value="$(arg directorypath)"/>

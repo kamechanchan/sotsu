@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import os, sys
+from cv2 import correctMatches
 
 from numpy.core.arrayprint import dtype_is_implied
+from numpy.core.fromnumeric import compress
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from util_rikuken import util_rikuken
 import h5py
@@ -14,6 +16,9 @@ import numpy as np
 import pcl
 from color_cloud_bridge.msg import dummy_pcl
 import datetime
+
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
 
 
 
@@ -32,6 +37,7 @@ class record_file(object):
         cloud_sub = rospy.Subscriber(self.sub_topic_name, dummy_pcl, self.callback)
         rospy.set_param("/is_move/ok", True)
         rospy.set_param("/is_record/ok", False)
+        self.img_switch = rospy.get_param("~img_switch", False)
         self.init_file()
         self.num_ = 1
         self.matu = 0
@@ -88,6 +94,7 @@ class record_file(object):
 
         record_ok = rospy.get_param("/is_record/ok", False)    
         move_rate = rospy.Rate(1)
+        # print("callback:OK")
         # if self.first:
         #     if self.first_count <= 2:
         #         pass
@@ -125,8 +132,12 @@ class record_file(object):
             np_points[:, 2] = np.resize(msg.z, msg_size)
             np_points[:, 3] = np.resize(msg.rgb, msg_size)
             '''
-            self.savePCD(np_points, np_masks)
-            self.ugokasu = True
+            if self.img_switch:
+                img = rospy.Subscriber("/photoneo_center/sensor/image_color", Image, self.saveIMG)
+                self.savePCD(np_points, np_masks, img)
+            else:
+                self.savePCD(np_points, np_masks, 0)
+                self.ugokasu = True
             # matu_loop = rospy.Rate(2)
             # count = 0
             # while count <= 0:
@@ -139,7 +150,7 @@ class record_file(object):
 
             
 
-    def savePCD(self, cloud, masks):
+    def savePCD(self, cloud, masks, img):
         if self.num_ >  self.num_dataset:
             rospy.signal_shutdown('finish')
             os._exit(10)
@@ -148,8 +159,12 @@ class record_file(object):
             data_g = self.hdf5_file.create_group("data_" + str(self.num_))
             data_g.create_dataset("Points", data=cloud, compression="lzf")
             data_g.create_dataset("masks", data=masks, compression="lzf")
+            if img != 0:
+                print("img")
+                print(img.shape)
+                print(img.dtype)
+                data_g.create_dataset("img", data=img, compression="lzf")
             self.hdf5_file.flush()
-            
             self.num_ += 1
             self.bar.update(1)
             if self.num_ > self.num_dataset:
@@ -157,6 +172,11 @@ class record_file(object):
                 print("save on" + self.all_file_path)
                 self.hdf5_file.flush()
                 self.hdf5_file.close()
+
+    def saveIMG(self, img):
+        bridge = CvBridge()
+        out_img = bridge.imgmsg_to_cv2(img, "bgr8")
+        return out_img
         
 
 if __name__=='__main__':

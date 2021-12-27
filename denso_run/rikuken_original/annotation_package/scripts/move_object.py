@@ -213,9 +213,11 @@ class annotation_environment(object):
         #count = 0
         while not rospy.is_shutdown():
             
-            hantei = rospy.get_param("/move_is_ok", True)
+            # hantei = rospy.get_param("/move_is_ok", True)
+            hantei = rospy.get_param("/is_move/ok", True)
             if hantei:
-                rospy.set_param("/record_is_ok", False)
+                rospy.set_param("/is_record/ok", False)
+                # rospy.set_param("/record_is_ok", False)
                 self.object_move("HV8")
                 
                 # count = 0
@@ -223,9 +225,11 @@ class annotation_environment(object):
                 #     count = count + 1
                 #     print("move_count" + str(count))
                 #     naibu_loop.sleep()
-                rospy.set_param("/record_is_ok", True)
-                rospy.set_param("/move_is_ok", False)
-                rospy.set_param("/record_first", True)
+                # rospy.set_param("/record_is_ok", True)
+                # rospy.set_param("/move_is_ok", False)
+                # rospy.set_param("/record_first", True)
+                rospy.set_param("/is_record/ok", True)
+                rospy.set_param("/is_move/ok", False)
                 count = 0
             loop.sleep()    
             

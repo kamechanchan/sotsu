@@ -321,7 +321,7 @@ class annotation_environment(object):
             self.occulution_object.occuluder_object.append(str(self.model_name) + "_" + str(array_ocu_1[i]))
             # self.occulution_object.occuluder_object.append("ffe")
             self.occulution_object.occuluder_mesh_topic_name.append("meshcloud_" + str(array_ocu_1[i]))
-            self.occulution_object.instance_numbers.append(array_ocu_1[i]);
+            self.occulution_object.instance_numbers.append(array_ocu_1[i])
             
 
         for i in range(random.randint(0, len(self.occulution_object.occuluder_object) - 1)):
