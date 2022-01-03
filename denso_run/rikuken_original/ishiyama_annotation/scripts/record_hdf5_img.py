@@ -128,19 +128,21 @@ class record_file():
         # print(len(req.x))
         # print(len(req.instance))
         
-        np_points = np.zeros((req_size, 3), dtype=np.float32)
-        np_masks = np.zeros((req_size, 1), dtype=np.float32)
-        x_max = 0
-        x_min = 0
-        y_max = 0
-        y_min = 0
-        z_max = 0
-        z_min = 0
+        np_points = np.zeros((req_size, 4), dtype=np.float32)
+        # np_points = np.zeros((req_size, 3), dtype=np.float32)
+        # np_masks = np.zeros((req_size, 1), dtype=np.float32)
+        # x_max = 0
+        # x_min = 0
+        # y_max = 0
+        # y_min = 0
+        # z_max = 0
+        # z_min = 0
         for i in range(req_size):
             np_points[i, 0] = req.x[i]
             np_points[i, 1] = req.y[i]
             np_points[i, 2] = req.z[i]
-            np_masks[i, 0] = req.instance[i]
+            np_points[i, 3] = req.instance[i]
+            # np_masks[i, 0] = req.instance[i]
             # if x_max > req.x[i]:
             #     x_max = req.x[i]
             # if y_max > req.y[i]:
@@ -153,26 +155,26 @@ class record_file():
             #     y_min = req.y[i]
             # if z_min < req.z[i]:
             #     z_min = req.z[i]
-            if x_max > np_points[i,0]:
-                x_max = np_points[i,0]
-            if y_max > np_points[i,1]:
-                y_max = np_points[i,1]
-            if z_max > np_points[i,2]:
-                z_max = np_points[i,2]
-            if x_min < np_points[i,0]:
-                x_min = np_points[i,0]
-            if y_min < np_points[i,1]:
-                y_min = np_points[i,1]
-            if z_min < np_points[i,2]:
-                z_min = np_points[i,2]
-        print("hajimaruze")
-        print(req_size)
-        print(x_max)
-        print(x_min)
-        print(y_max)
-        print(y_min)
-        print(z_max)
-        print(z_min)
+        #     if x_max > np_points[i,0]:
+        #         x_max = np_points[i,0]
+        #     if y_max > np_points[i,1]:
+        #         y_max = np_points[i,1]
+        #     if z_max > np_points[i,2]:
+        #         z_max = np_points[i,2]
+        #     if x_min < np_points[i,0]:
+        #         x_min = np_points[i,0]
+        #     if y_min < np_points[i,1]:
+        #         y_min = np_points[i,1]
+        #     if z_min < np_points[i,2]:
+        #         z_min = np_points[i,2]
+        # print("hajimaruze")
+        # print(req_size)
+        # print(x_max)
+        # print(x_min)
+        # print(y_max)
+        # print(y_min)
+        # print(z_max)
+        # print(z_min)
         # print("OKOKOKOK")
         # rospy.wait_for_service("input_img")
         # print("kokoda")
@@ -195,7 +197,8 @@ class record_file():
         # print(self.pose.shape)
 
         # print(img)
-        self.savePCD(np_points, np_masks, img, req.i)
+        # self.savePCD(np_points, np_masks, img, req.i)
+        self.savePCD(np_points, img, req.i)
         res = five_inputResponse()
         res.no = True
         return res
@@ -221,7 +224,8 @@ class record_file():
 
             
 
-    def savePCD(self, cloud, masks, img, index):
+    # def savePCD(self, cloud, masks, img, index):
+    def savePCD(self, cloud, img, index):
         # if self.num_ >  self.num_dataset:
         #     rospy.signal_shutdown('finish')
         #     os._exit(10)
@@ -229,7 +233,7 @@ class record_file():
             # print("data_" + str(self.num_))
         data_g = self.hdf5_file.create_group("data_" + str(index))
         data_g.create_dataset("Points", data=cloud, compression="lzf")
-        data_g.create_dataset("masks", data=masks, compression="lzf")
+        # data_g.create_dataset("masks", data=masks, compression="lzf")
         # print("img")
         # print(img)
         # print(img.shape)

@@ -163,3 +163,15 @@ catkin build -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/incl
 catkin config --cmake-args -DPYTHON_EXECUTABLE=/usr/bin/python3 -DPYTHON_INCLUDE_DIR=/usr/include/python3.7m
 
 ```
+### ishiyama annotation
+```
+roslaunch tf_publish spawn_object.launch object_name:=sekai_small_box_and_50
+roslaunch tf_publish bara_model_tf.launch object_count:=25
+roslaunch cloud_practice ishiyama_PlaSeg.launch
+roslaunch ishiyama_annotation mesh_cloud_bara_publish.launch
+roslaunch ishiyama_annotation nearest_search_ishiyama.launch
+roslaunch ishiyama_annotation dummy_cloud_pub_instance.launch
+roslaunch ishiyama_annotation move_object.launch
+roslaunch ishiyama_annotation record_hdf5.launch
+roslaunch ishiyama_annotation Ano_main.launch
+```
