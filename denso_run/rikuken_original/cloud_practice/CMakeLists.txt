@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   roscpp 
   rospy
+  estimator
 )
 
 find_package(PCL REQUIRED)
@@ -65,6 +66,18 @@ target_link_libraries(cloud_planar_segmenter
 
 add_executable(cloud_clusterer src/cloud_clusterer.cpp)
 target_link_libraries(cloud_clusterer
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+# add_executable(cloud_planar_segmenter_ishiyama src/cloud_planar_segmenter_ishiyama.cpp src/img_cloud_common.cpp)
+# target_link_libraries(cloud_planar_segmenter_ishiyama
+#   ${catkin_LIBRARIES}
+#   ${PCL_LIBRARIES}
+# )
+
+add_executable(cloud_planar_segmenter_ishiyama2 src/cloud_planar_segmenter_ishiyama2.cpp src/img_cloud_common.cpp)
+target_link_libraries(cloud_planar_segmenter_ishiyama2
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )

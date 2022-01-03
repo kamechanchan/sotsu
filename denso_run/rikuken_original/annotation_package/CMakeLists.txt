@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf_conversions
   message_filters
   color_cloud_bridge
+  estimator
 )
 
 find_package(VTK REQUIRED)
@@ -134,6 +135,18 @@ target_link_libraries(nearest_search_yolo_1
 
 add_executable(cloud_save_3 src/cloud_save_3.cpp)
 target_link_libraries(cloud_save_3
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)
+
+add_executable(ishiyama_img src/ishiyama_img.cpp)
+target_link_libraries(ishiyama_img
+  ${catkin_LIBRARIES}
+  
+)
+
+add_executable(nearest_search_ishiyama src/nearest_search_ishiyama_img.cpp src/nearest_search_ishiyma_node.cpp)
+target_link_libraries(nearest_search_ishiyama
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )

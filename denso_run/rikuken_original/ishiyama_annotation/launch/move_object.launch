@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="service_name" default="six_input"/>
+    <arg name="object_name" default="HV8"/>
+
+    <node pkg="ishiyama_annotation" type="move_object_nobox.py" name="move_object" output="screen">
+        <param name="service_name" value="$(arg service_name)"/>
+        <param name="object_name" value="$(arg object_name)"/>
+    </node>
+</launch>

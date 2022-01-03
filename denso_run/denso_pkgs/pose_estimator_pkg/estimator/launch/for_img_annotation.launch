@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="image_topic" default="/photoneo_center/sensor/image_color"/>
+    
+    <node pkg="estimator" type="ishiyama_img_naze" name="ishiyama_img_naze" output="screen">
+        <param name="image_topic" value="$(arg image_topic)"/>
+    </node>
+</launch>

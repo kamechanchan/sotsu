@@ -19,6 +19,7 @@ import datetime
 
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
+from estimator.srv import input_data
 
 
 
@@ -94,6 +95,7 @@ class record_file(object):
 
         record_ok = rospy.get_param("/is_record/ok", False)    
         move_rate = rospy.Rate(1)
+        # img = rospy.Subscriber("/photoneo_center/sensor/image_color", Image, self.saveIMG)
         # print("callback:OK")
         # if self.first:
         #     if self.first_count <= 2:
@@ -106,8 +108,7 @@ class record_file(object):
         if record_ok:
             self.matu += 1
             # print(self.matu)
-        if self.matu >= 10:
-            
+        if self.matu >= 7:
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()
             msg_size = len(msg.x)
@@ -123,7 +124,22 @@ class record_file(object):
                 np_points[i, 1] = msg.y[i]
                 np_points[i, 2] = msg.z[i]
                 np_masks[i, 0] = msg.instance[i]
-            
+            print("OKOKOKOK")
+            rospy.wait_for_service("input_img")
+            print("kokoda")
+            try:
+                data = None
+                start = rospy.ServiceProxy("input_img", input_data)
+                res = start(data)
+                img = res.out_img
+                bridge = CvBridge()
+                img = bridge.imgmsg_to_cv2(img, "bgr8")
+                print(img)
+                self.savePCD(np_points, np_masks, img)
+                self.ugokasu = True
+                self.matu = 0
+            except rospy.ServiceException:
+                print("service call failed input_data")
             #for i in range(10):
                 #print(str(msg.r[i]) + " " + str(msg.g[i]) + " " + str(msg.b[i]) + " " + str(msg.instance[i]))
             '''
@@ -132,8 +148,9 @@ class record_file(object):
             np_points[:, 2] = np.resize(msg.z, msg_size)
             np_points[:, 3] = np.resize(msg.rgb, msg_size)
             '''
-            self.savePCD(np_points, np_masks)
-            self.ugokasu = True
+            # print(img)
+            # self.savePCD(np_points, np_masks, img)
+            # self.ugokasu = True
             # matu_loop = rospy.Rate(2)
             # count = 0
             # while count <= 0:
@@ -142,11 +159,11 @@ class record_file(object):
 
             
             
-            self.matu = 0
+            # self.matu = 0
 
             
 
-    def savePCD(self, cloud, masks):
+    def savePCD(self, cloud, masks, img):
         if self.num_ >  self.num_dataset:
             rospy.signal_shutdown('finish')
             os._exit(10)
@@ -155,6 +172,11 @@ class record_file(object):
             data_g = self.hdf5_file.create_group("data_" + str(self.num_))
             data_g.create_dataset("Points", data=cloud, compression="lzf")
             data_g.create_dataset("masks", data=masks, compression="lzf")
+            print("img")
+            print(img)
+            print(img.shape)
+            print(img.dtype)
+            data_g.create_dataset("img", data=img, compression="lzf")
             self.hdf5_file.flush()
             self.num_ += 1
             self.bar.update(1)
@@ -164,6 +186,10 @@ class record_file(object):
                 self.hdf5_file.flush()
                 self.hdf5_file.close()
 
+    # def saveIMG(self, img):
+    #     bridge = CvBridge()
+    #     out_img = bridge.imgmsg_to_cv2(img, "bgr8")
+    #     return out_img
         
 
 if __name__=='__main__':

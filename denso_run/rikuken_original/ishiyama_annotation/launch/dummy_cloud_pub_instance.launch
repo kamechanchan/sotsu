@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="service_name" default="fourth_input"/>
+    <arg name="publish_topic_name" default="dummy_cloud"/>
+    <arg name="the_number_of_object" default="25"/>
+    
+    
+    <node pkg="ishiyama_annotation" type="pcl_baikai" name="pcl_baikai" output="screen">
+        <param name="service_name" value="$(arg service_name)"/>
+        <param name="publish_topic_name" value="$(arg publish_topic_name)"/>
+        <param name="the_number_of_object" value="$(arg the_number_of_object)"/>
+    </node>
+</launch>

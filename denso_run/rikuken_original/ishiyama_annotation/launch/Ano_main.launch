@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="first_service_name" default="first_input"/>
+    <arg name="object_name" default="HV8"/>
+    <arg name="the_number_of_object" default="25"/>
+    <arg name="third_service_name" default="third_input"/>
+    <arg name="fourth_service_name" default="fourth_input"/>
+    <arg name="fifth_service_name" default="fifth_input"/>
+    <arg name="num_dataset" default="1000"/>
+    <arg name="six_service_name" default="six_input"/>
+    <arg name="frame_id" default="world"/>
+    <arg name="tf_ser_name" default="quaternion"/>
+    
+    <node pkg="ishiyama_annotation" type="Ano_main.py" name="Ano_main" output="screen">
+        <param name="first_service_name" value="$(arg first_service_name)"/>
+        <param name="object_name" value="$(arg object_name)"/>
+        <param name="the_number_of_object" value="$(arg the_number_of_object)"/>
+        <param name="third_service_name" value="$(arg third_service_name)"/>
+        <param name="fourth_service_name" value="$(arg fourth_service_name)"/>
+        <param name="fifth_service_name" value="$(arg fifth_service_name)"/>
+        <param name="num_dataset" value="$(arg num_dataset)"/>
+        <param name="six_service_name" value="$(arg six_service_name)"/>
+        <param name="frame_id" value="$(arg frame_id)"/>
+        <param name="tf_ser_name" value="$(arg tf_ser_name)"/>
+    </node>
+</launch>
