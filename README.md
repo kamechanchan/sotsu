@@ -30,7 +30,7 @@ rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-### ⑥ウ
+### Estimation Test 
 ```
 roslaunch tf_publish spawn_object.launch 
 
@@ -43,7 +43,7 @@ roslaunch estimator pose_estimator.launch
 roslaunch tf_publish error_calculate.launch
 ```
 
-### ⑥ア
+### Getting dataset
 ```
 roslaunch tf_publish spawn_object.launch 
 

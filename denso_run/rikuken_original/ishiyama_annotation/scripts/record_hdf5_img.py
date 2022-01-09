@@ -42,6 +42,7 @@ class record_file():
         self.num_dataset = rospy.get_param("~num_dataset", 5)
         self.object_count = rospy.get_param("~object_count", 25)
         self.resolution = rospy.get_param("~resolution", 20000)
+        self.getnormalized_swicth = rospy.get_param("~getnormalized_swicth", False)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         # print(type(five_input))
@@ -171,8 +172,9 @@ class record_file():
         #     if z_min < np_points[i,2]:
         #         z_min = np_points[i,2]
 
-        # pcl, offset = getNormalizedPcd_seg(np_points, self.resolution)
-        # pcl[:,:3] += offset
+        if self.getnormalized_swicth == True:
+            np_points, offset = getNormalizedPcd_seg(np_points, self.resolution)
+            np_points[:,:3] += offset
 
         # print("hajimaruze")
         # print(req_size)
