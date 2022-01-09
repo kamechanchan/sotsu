@@ -7,14 +7,14 @@ import numpy as np
 
 cnt = 0
 c = 1
-with h5py.File('/home/ericlab/hdf5_data/temmat/HV8_size_20000_range_pi_2.hdf5', mode="r") as f:
+with h5py.File('/home/ericlab/hdf5_file/Acc_accuracy/instance_tsuchida_12_31_3_1_sample2.hdf5', mode="r") as f:
     for i in f["data_1"].values():
         # cnt +=1
         # c += 1
         # if cnt == 5000:
         print(i)
         for j in range(10):
-            print(i[j])
+            print(type(i[j]))
             # cnt =0
     # x_data = f["data_3"]["Points"][()]
     # y_data = np.array(x_data)

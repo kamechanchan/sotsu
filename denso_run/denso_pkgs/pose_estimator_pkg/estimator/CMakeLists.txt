@@ -20,6 +20,14 @@ add_service_files(
   FILES
   input_data.srv
   bounding.srv
+  first_input.srv
+  second_input.srv
+  nearest_mesh.srv
+  third_input.srv
+  fourth_input.srv
+  five_input.srv
+  six_input.srv
+  tf_quat.srv
 )
 
 # add_message_files(
@@ -42,7 +50,7 @@ generate_messages(
 )
 
 catkin_package(
-  INCLUDE_DIRS include
+  # INCLUDE_DIRS include
   CATKIN_DEPENDS roscpp message_runtime
 )
 
@@ -72,6 +80,12 @@ target_link_libraries(pcl_pub
 
 add_executable(server_2D src/server_2D.cpp)
 target_link_libraries(server_2D
+  ${catkin_LIBRARIES}
+  # ${OpenCV_LIBRARIES}
+)
+
+add_executable(ishiyama_img_naze src/ishiyama_img_naze.cpp)
+target_link_libraries(ishiyama_img_naze
   ${catkin_LIBRARIES}
   # ${OpenCV_LIBRARIES}
 )

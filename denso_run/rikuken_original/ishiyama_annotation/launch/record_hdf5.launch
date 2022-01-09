@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="filepath" default="instance_tsuchida"/>
+    <arg name="service_name" default="fifth_input"/>
+    
+    <arg name="num_dataset" default="1000"/>
+    <arg name="directorypath" default="/home/ericlab/hdf5_file/"/>
+    <arg name="data_number" default="1"/>
+    <arg name="object_count" default="25"/>
+
+    <node pkg="ishiyama_annotation" type="record_hdf5_img.py" name="record_hdf5_img" output="screen">
+        <param name="filepath" value="$(arg filepath)"/>
+        <param name="num_dataset" value="$(arg num_dataset)"/>
+        <param name="directorypath" value="$(arg directorypath)"/>
+        <param name="service_name" value="$(arg service_name)"/>
+        <param name="data_number" value="$(arg data_number)"/>
+        <param name="object_count" value="$(arg object_count)"/>
+    </node>
+</launch>

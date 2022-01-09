@@ -1,0 +1,6 @@
+denso_run/denso_pkgs/denso_recognition/colored_pointcloud
+/home/ericlab/ros_package/denso_branch/devel/.private/colored_pointcloud/cmake.lock /home/ericlab/ros_package/denso_branch/devel/./cmake.lock
+/home/ericlab/ros_package/denso_branch/devel/.private/colored_pointcloud/share/colored_pointcloud/cmake/colored_pointcloudConfig.cmake /home/ericlab/ros_package/denso_branch/devel/share/colored_pointcloud/cmake/colored_pointcloudConfig.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/colored_pointcloud/share/colored_pointcloud/cmake/colored_pointcloudConfig-version.cmake /home/ericlab/ros_package/denso_branch/devel/share/colored_pointcloud/cmake/colored_pointcloudConfig-version.cmake
+/home/ericlab/ros_package/denso_branch/devel/.private/colored_pointcloud/lib/colored_pointcloud/colored_pointcloud /home/ericlab/ros_package/denso_branch/devel/lib/colored_pointcloud/colored_pointcloud
+/home/ericlab/ros_package/denso_branch/devel/.private/colored_pointcloud/lib/pkgconfig/colored_pointcloud.pc /home/ericlab/ros_package/denso_branch/devel/lib/pkgconfig/colored_pointcloud.pc

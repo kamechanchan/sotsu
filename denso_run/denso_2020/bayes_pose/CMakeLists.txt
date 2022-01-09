@@ -57,14 +57,14 @@ target_link_libraries(icp_registrator
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES})
 
-add_executable(bayes_registrator
-  src/bayes_registrator.cpp
-  src/bayes_registrator_node.cpp)
-target_link_libraries(bayes_registrator
-  ${catkin_LIBRARIES}
-  ${PCL_LIBRARIES}
-  bayesopt
-  nlopt)
+# add_executable(bayes_registrator
+#   src/bayes_registrator.cpp
+#   src/bayes_registrator_node.cpp)
+# target_link_libraries(bayes_registrator
+#   ${catkin_LIBRARIES}
+#   ${PCL_LIBRARIES}
+#   bayesopt
+#   nlopt)
 
 add_executable(sim_odom_tf_converter
   src/sim_odom_tf_converter.cpp)
@@ -80,7 +80,7 @@ set(EXEC_FILES
   sim_odom_tf_converter
   c2c_distance
   icp_registrator
-  bayes_registrator
+  # bayes_registrator
 )
 
 # Install executables

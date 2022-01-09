@@ -1,0 +1,4 @@
+sensor_msgs/PointCloud2 in_cloud
+---
+float64[] GT_translation
+float64[] GT_rotation

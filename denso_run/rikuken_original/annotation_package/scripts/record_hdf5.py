@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import os, sys
+from cv2 import correctMatches
 
 from numpy.core.arrayprint import dtype_is_implied
+from numpy.core.fromnumeric import compress
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from util_rikuken import util_rikuken
 import h5py
@@ -14,6 +16,9 @@ import numpy as np
 import pcl
 from color_cloud_bridge.msg import dummy_pcl
 import datetime
+
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
 
 
 
@@ -32,6 +37,7 @@ class record_file(object):
         cloud_sub = rospy.Subscriber(self.sub_topic_name, dummy_pcl, self.callback)
         rospy.set_param("/is_move/ok", True)
         rospy.set_param("/is_record/ok", False)
+        # self.img_switch = rospy.get_param("~img_switch", False)
         self.init_file()
         self.num_ = 1
         self.matu = 0
@@ -88,6 +94,7 @@ class record_file(object):
 
         record_ok = rospy.get_param("/is_record/ok", False)    
         move_rate = rospy.Rate(1)
+        # print("callback:OK")
         # if self.first:
         #     if self.first_count <= 2:
         #         pass
@@ -99,7 +106,7 @@ class record_file(object):
         if record_ok:
             self.matu += 1
             # print(self.matu)
-        if self.matu >= 7:
+        if self.matu >= 10:
             
             rospy.set_param("/is_record_kekkyoku/ok", True)
             #msg = dummy_pcl()
@@ -149,7 +156,6 @@ class record_file(object):
             data_g.create_dataset("Points", data=cloud, compression="lzf")
             data_g.create_dataset("masks", data=masks, compression="lzf")
             self.hdf5_file.flush()
-            
             self.num_ += 1
             self.bar.update(1)
             if self.num_ > self.num_dataset:
@@ -157,6 +163,7 @@ class record_file(object):
                 print("save on" + self.all_file_path)
                 self.hdf5_file.flush()
                 self.hdf5_file.close()
+
         
 
 if __name__=='__main__':
