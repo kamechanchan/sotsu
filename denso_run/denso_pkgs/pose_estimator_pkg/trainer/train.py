@@ -79,18 +79,18 @@ if __name__ == '__main__':
 
             iter_data_time = time.time()
 
-        if epoch == opt.save_epoch_freq / 9:
+        if epoch == opt.save_epoch_freq / 9 and opt.progress_swicth == True:
             print("saving the first progress result epoch %d, iter %d" % (epoch, total_steps))
             run_progress_savetest(opt, val_dataset, epoch)
 
         # break
-        if epoch % opt.save_epoch_freq == 0:
-            print("saving the model at the end of epoch %d, iter %d" % (epoch, total_steps))
-            model.save_network("latest")
-            model.save_network(epoch)
+        if epoch % opt.save_epoch_freq == 0 and opt.progress_swicth == True:
             run_progress_savetest(opt, val_dataset, epoch)
 
         if epoch % opt.run_test_freq == 0:
+            print("saving the model at the end of epoch %d, iter %d" % (epoch, total_steps))
+            model.save_network("latest")
+            model.save_network(epoch)
             val_loss = run_test(opt_v, val_dataset)
             writer.print_current_losses("val", epoch, epoch_iter, t_loss, t, t_data)
 

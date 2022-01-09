@@ -75,3 +75,9 @@ target_link_libraries(quaternion
   ${catkin_LIBRARIES}
   ${PCL_LIBRARIES}
 )
+
+add_executable(pcl_baikai_debug src/pcl_baikai_debug.cpp)
+target_link_libraries(pcl_baikai_debug
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+)

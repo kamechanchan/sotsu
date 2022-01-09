@@ -1,4 +1,9 @@
+# 各処理の実行方法
 
+全体像
+![全体像](overview.png)
+
+### 環境構築で使えるリスト
 ```
 sudo apt install ros-noetic-ros-numpy
 
@@ -25,7 +30,7 @@ rosdep update
 rosdep install --from-paths src --ignore-src -r -y
 ```
 
-### Estimation Test 
+### ⑥ウ
 ```
 roslaunch tf_publish spawn_object.launch 
 
@@ -38,7 +43,7 @@ roslaunch estimator pose_estimator.launch
 roslaunch tf_publish error_calculate.launch
 ```
 
-### Getting dataset
+### ⑥ア
 ```
 roslaunch tf_publish spawn_object.launch 
 

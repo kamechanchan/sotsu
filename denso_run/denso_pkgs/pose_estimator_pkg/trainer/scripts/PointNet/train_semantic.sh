@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
---dataroot /home/ericlab/hdf5_data/ \
---dataset_model semantic_changed_occulution_kiriwake_9_14_1000_1.hdf5 \
+python3 /home/ericlab/ros_package/denso_branch/src/denso_branch/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
+--dataroot /home/ericlab/hdf5_oculution/ \
+--dataset_model occulution_kiriwake_12_27_10_1.hdf5 \
 --dataset_mode semantic_segmentation \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/August \
 --resolution 8192 \
@@ -29,4 +29,5 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
 --tensorboardX_results_directory_switch ishiyama/0915_semantic \
 --instance_number 2 \
---semantic_number 3
+--semantic_number 3 \
+--progress_save_swicth False

@@ -246,6 +246,8 @@ namespace nearest_point_extractor_ishiyama
         // ROS_INFO_STREAM("toturru");
         
         for (int i = 0; i < the_number_of_object_; i++) {
+        // for (int i = 1; i < 2; i++) {
+            // i++;
             for (auto mesh : mesh_clouds_[i]->points)
             {
                 if (kdtree.nearestKSearch(mesh, num_of_nearest_points_, pointIndices, squaredDistances) > 0) {

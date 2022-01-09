@@ -7,6 +7,7 @@
     <arg name="object_name" default="HV8"/>
     <arg name="the_number_of_object" default="25"/>
     <arg name="mesh_path" default="$(find annotation_package)/mesh/HV8.stl"/>
+    <arg name="frame_id" default="photoneo_center_optical_frame"/>
     
     <node name="mesh_bara_publisher" pkg="ishiyama_annotation" type="mesh_cloud_bara_publisher"  output="screen">
         <param name="the_number_of_object" value="$(arg the_number_of_object)"/>
@@ -16,6 +17,7 @@
         <param name="RETRY_COUNT_LIMIT" value="$(arg RETRY_COUNT_LIMIT)"/>
         <param name="DURATION_TIME" value="$(arg DURATION_TIME)"/>
         <param name="mesh_path" value="$(arg mesh_path)"/>
+        <param name="frame_id" value="$(arg frame_id)"/>
         
     </node>
 

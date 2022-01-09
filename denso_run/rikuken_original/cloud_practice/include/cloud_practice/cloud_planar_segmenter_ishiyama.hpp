@@ -3,6 +3,7 @@
 #include <pcl_conversions/pcl_conversions.h>
 #include <estimator/first_input.h>
 #include <ros/ros.h>
+#include <pcl/filters/voxel_grid.h>
 
 
 
@@ -33,6 +34,7 @@ public:
     void extract(pcl::PointIndices::Ptr);
     void cloud_callback(const sensor_msgs::PointCloud2&);
     void img_callback(const sensor_msgs::Image&);
+    void downSample();
     
     float distance_threshold_;
     sensor_msgs::PointCloud2 cloud_input_ros_;
@@ -60,5 +62,7 @@ protected:
     std::vector<float> x_;
     std::vector<float> y_;
     std::vector<float> z_;
+    float LEAF_SIZE_;
+    bool VoxelGrid_swicth_;
 };
 

@@ -78,6 +78,13 @@ target_link_libraries(pcl_pub
   ${VTK_LIBRARIES}
 )
 
+add_executable(IoU_pub src/IoU_pub.cpp)
+target_link_libraries(IoU_pub
+  ${catkin_LIBRARIES}
+  ${PCL_LIBRARIES}
+  ${VTK_LIBRARIES}
+)
+
 add_executable(server_2D src/server_2D.cpp)
 target_link_libraries(server_2D
   ${catkin_LIBRARIES}

@@ -5,6 +5,8 @@ import os, sys
 # from numpy.core.arrayprint import dtype_is_implied
 # from numpy.core.fromnumeric import compress
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../denso_pkgs/pose_estimator_pkg/utils/'))
+from cloud_util import getNormalizedPcd_seg
 from util_rikuken import util_rikuken
 import h5py
 from tqdm import tqdm
@@ -39,6 +41,7 @@ class record_file():
         self.data_number = rospy.get_param("~data_number", 3)
         self.num_dataset = rospy.get_param("~num_dataset", 5)
         self.object_count = rospy.get_param("~object_count", 25)
+        self.resolution = rospy.get_param("~resolution", 20000)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
         # print(type(five_input))
@@ -167,6 +170,10 @@ class record_file():
         #         y_min = np_points[i,1]
         #     if z_min < np_points[i,2]:
         #         z_min = np_points[i,2]
+
+        # pcl, offset = getNormalizedPcd_seg(np_points, self.resolution)
+        # pcl[:,:3] += offset
+
         # print("hajimaruze")
         # print(req_size)
         # print(x_max)
@@ -199,6 +206,7 @@ class record_file():
         # print(img)
         # self.savePCD(np_points, np_masks, img, req.i)
         self.savePCD(np_points, img, req.i)
+        # self.savePCD(pcl, img, req.i)
         res = five_inputResponse()
         res.no = True
         return res
@@ -241,6 +249,9 @@ class record_file():
         # print("rotation")
         # print(type(self.rotation))
         # print(type(self.rotation[0]))
+        # print("gatika")
+        # print(self.rotation)
+        # print(self.translation)
         data_g.create_dataset("img", data=img, compression="lzf")
         data_g.create_dataset("translation", data=self.translation, compression="lzf")
         data_g.create_dataset("rotation", data=self.rotation, compression="lzf")

@@ -313,7 +313,9 @@ class EstimatorModel:
                 print(pred.shape)
                 print(pred)
                 pred = pred.contiguous().cpu().data.max(2)[1].numpy()
-
+        
+        self.x_data = self.x_data.to('cpu').detach().numpy().copy()
+        self.y_data = self.y_data.to('cpu').detach().numpy().copy()
         self.concat_dataset_model = '+'.join(opt.dataset_model)
         pcd_dir = "/home/ericlab/DENSO_results/August/pcl_visu/progress_output/"+opt.dataset_mode+"/"+self.concat_dataset_model +"/"+str(epoch)
         util.mkdir(pcd_dir)

@@ -7,7 +7,7 @@ from open3d import *
 import numpy as np
 from ctypes import *
 import pcl
-from open3d.visualization import 
+# from open3d.visualization import 
 
 import rospy, rospkg, geometry_msgs, tf
 from std_msgs.msg import Header
