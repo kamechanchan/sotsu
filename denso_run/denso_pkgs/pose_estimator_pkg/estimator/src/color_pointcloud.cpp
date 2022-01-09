@@ -25,8 +25,8 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
     int color_0 = 0;
     int color_1 = 0;
     for (int i = 0; i < msg->x.size(); i++) {
+        // pcl::PointXYZRGB color;
         pcl::PointXYZRGB color;
-        // pcl::PointXYZ color;
         
 
         color.x = msg->x[i];

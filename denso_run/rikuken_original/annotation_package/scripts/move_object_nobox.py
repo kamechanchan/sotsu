@@ -294,9 +294,11 @@ class annotation_environment(object):
                 #     count = count + 1
                 #     print("move_count" + str(count))
                 #     naibu_loop.sleep()
+                rospy.sleep(0.5)
                 rospy.set_param("/is_record/ok", True)
                 rospy.set_param("/is_move/ok", False)
                 count = 0    
+                
             
         # self.object_move("HV8")
             

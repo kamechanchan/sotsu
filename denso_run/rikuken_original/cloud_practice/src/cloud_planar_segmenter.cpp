@@ -35,6 +35,7 @@ public:
         cloud_without_segmented_pub_.publish(cloud_without_segmented_ros_);
         indices_pub_.publish(indices_ros_);
         coefficients_pub_.publish(coefficients_ros_);
+        ROS_INFO_STREAM("OK");
     }
     float distance_threshold;
 
