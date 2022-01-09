@@ -12,7 +12,7 @@ def PrintAllObjects(name):
 
 cnt = 0
 c = 1
-with h5py.File('/home/ericlab/Downloads/occulution_kiriwake_9_14_1000_1.hdf5', mode="r") as f:
+with h5py.File('/home/ericlab/hdf5_data/temmat/for_temmat_occlution_changed_occulution_kiriwake_11_18_5000_1.hdf5', mode="r") as f:
     # for i in f["data_1"].values():
     #     # cnt +=1
     #     # c += 1
