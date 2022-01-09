@@ -60,6 +60,7 @@ if __name__=='__main__':
             euler_error.append(groud_truth_trans.y - esti_trans.y)
             euler_error.append(groud_truth_trans.z - esti_trans.z)
             euler = tf.transformations.euler_from_matrix(error_matrix)
+            # tf.transformations.
             for i in range(3):
                 euler_error.append(euler[i])
             if count == 1:
