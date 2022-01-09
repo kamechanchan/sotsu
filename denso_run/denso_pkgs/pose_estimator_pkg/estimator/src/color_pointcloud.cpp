@@ -21,6 +21,7 @@ void callback(color_cloud_bridge::out_segmentationConstPtr msg)
     // pcl::PointCloud<pcl::PointXYZ> cloud;
     ROS_INFO_STREAM("get msg");
     ROS_INFO_STREAM("cloud size is " << msg->x.size());
+    ROS_INFO_STREAM("are");
     int color_0 = 0;
     int color_1 = 0;
     for (int i = 0; i < msg->x.size(); i++) {

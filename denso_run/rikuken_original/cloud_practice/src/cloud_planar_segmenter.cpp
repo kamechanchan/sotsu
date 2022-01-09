@@ -1,6 +1,7 @@
 #include <cloud_practice/cloud_common.h>
 #include <pcl/segmentation/sac_segmentation.h>
 #include <pcl/filters/extract_indices.h>
+#include <pcl/filters/voxel_grid.h>
 
 class CloudPlanarSegmenter : public CloudOperator
 {
@@ -13,10 +14,16 @@ public:
     {
         pnh_ = new ros::NodeHandle("~");
         pnh_->getParam("distance_threshold", distance_threshold);
+        pnh_->getParam("LEAF_SIZE", LEAF_SIZE_);
+        pnh_->getParam("VoxelGrid_swicth", VoxelGrid_swicth_);
     }
 
     void operate()
     {
+        pcl::fromROSMsg(cloud_input_ros_, cloud_input_pcl_);
+        if (VoxelGrid_swicth_ == true){
+            downSample();
+        }
         pcl::PointIndices::Ptr inliers(new pcl::PointIndices());
         segment(inliers);
         extract(inliers);
@@ -35,7 +42,7 @@ public:
 private:
     void segment(pcl::PointIndices::Ptr inliers)
     {
-        pcl::fromROSMsg(cloud_input_ros_, cloud_input_pcl_);
+        // pcl::fromROSMsg(cloud_input_ros_, cloud_input_pcl_);
 
         pcl::ModelCoefficients coefficients_pcl;
         pcl::SACSegmentation<pcl::PointXYZ> segmentation;
@@ -68,6 +75,17 @@ private:
 
         pcl::toROSMsg(cloud_segmented_pcl, cloud_segmented_ros_);
         pcl::toROSMsg(cloud_without_segmented_pcl, cloud_without_segmented_ros_);
+
+        std::cout << "------------------------------------" << std::endl;
+        std::cout << "DownSampled cloud point size : " << cloud_without_segmented_pcl.points.size() << std::endl;
+    }
+
+    void downSample()
+    {
+    pcl::VoxelGrid<pcl::PointXYZ> sor;
+    sor.setInputCloud(cloud_input_pcl_.makeShared());
+    sor.setLeafSize(LEAF_SIZE_, LEAF_SIZE_, LEAF_SIZE_);
+    sor.filter(cloud_input_pcl_);
     }
 
 protected:
@@ -81,7 +99,9 @@ protected:
     pcl_msgs::ModelCoefficients coefficients_ros_;
     pcl::PointCloud<pcl::PointXYZ> cloud_input_pcl_;
     ros::NodeHandle *pnh_;
-    
+
+    float LEAF_SIZE_;
+    bool VoxelGrid_swicth_;
 };
 
 int main(int argc, char ** argv)
@@ -90,6 +110,7 @@ int main(int argc, char ** argv)
     ros::NodeHandle nh;
     ros::NodeHandle pnh("~");
     std::string pc_topic_name;
+
     pnh.getParam("input_pc_topic", pc_topic_name);
     CloudOperationHandler handler(nh, new CloudPlanarSegmenter(nh), pc_topic_name);
     ros::spin();

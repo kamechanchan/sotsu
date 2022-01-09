@@ -61,6 +61,7 @@ namespace mesh_cloud
         std::string link_;
         std::string mesh_path_;
         std::string mesh_topic_name_;
+        std::string frame_id_;
         float LEAF_SIZE;
         int sample_points;
         int RETRY_COUNT_LIMIT;

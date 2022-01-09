@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
+python3 /home/ericlab/ros_package/denso_branch/src/denso_branch/denso_run/denso_pkgs/pose_estimator_pkg/trainer/train.py \
 --dataroot /home/ericlab/OneDrive/DENSO/raugh_recognition/datasets/ \
 --dataset_model dataset_20000.hdf5 \
 --checkpoints_dir /home/ericlab/OneDrive/DENSO/August \
@@ -28,4 +28,5 @@ python3 /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimat
 --local_checkpoints_dir /home/ericlab/DENSO_results/August \
 --tensorboardX_results_directory /home/ericlab/ros_package/denso_ws/src/denso_run/denso_pkgs/pose_estimator_pkg/trainer/tensorboardX/ \
 --tensorboardX_results_directory_switch tsuchida/0725_raugh \
---instance_number 8
+--instance_number 8 \
+--progress_save_swicth False

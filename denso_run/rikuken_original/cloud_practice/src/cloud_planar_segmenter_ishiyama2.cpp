@@ -14,6 +14,8 @@ CloudPlanarSegmenter::CloudPlanarSegmenter(ros::NodeHandle &nh) :
     pnh_.getParam("input_pc_topic", cloud_topic_name_);
     pnh_.getParam("input_img_topic", img_topic_name_);
     pnh_.getParam("timespan", timespan_);
+    pnh_.getParam("VoxelGrid_switch", VoxelGrid_swicth_);
+    pnh_.getParam("LEAF_SIZE", LEAF_SIZE_);
     ser_ = nh_.advertiseService(service_name_, &CloudPlanarSegmenter::callback, this);
     cloud_sub_ = nh_.subscribe(cloud_topic_name_, 1000, &CloudPlanarSegmenter::cloud_callback, this);
     img_sub_ = nh_.subscribe(img_topic_name_, 1000, &CloudPlanarSegmenter::img_callback, this);
@@ -23,7 +25,13 @@ CloudPlanarSegmenter::CloudPlanarSegmenter(ros::NodeHandle &nh) :
 
 void CloudPlanarSegmenter::operate()
 {
+    pcl::fromROSMsg(cloud_input_ros_, cloud_input_pcl_);
     pcl::PointIndices::Ptr inliers(new pcl::PointIndices());
+    ROS_INFO_STREAM("naaruhodo");
+    ROS_INFO_STREAM(VoxelGrid_swicth_);
+    if (VoxelGrid_swicth_ == true){
+        downSample();
+    }
     segment(inliers);
     extract(inliers);
     // publish();
@@ -59,7 +67,7 @@ bool CloudPlanarSegmenter::callback(estimator::first_input::Request &req, estima
 
 void CloudPlanarSegmenter::segment(pcl::PointIndices::Ptr inliers)
 {
-    pcl::fromROSMsg(cloud_input_ros_, cloud_input_pcl_);
+    // pcl::fromROSMsg(cloud_input_ros_, cloud_input_pcl_);
 
     pcl::ModelCoefficients coefficients_pcl;
     pcl::SACSegmentation<pcl::PointXYZ> segmentation;
@@ -93,12 +101,12 @@ void CloudPlanarSegmenter::extract(pcl::PointIndices::Ptr inliers)
     pcl::toROSMsg(cloud_segmented_pcl, cloud_segmented_ros_);
     pcl::toROSMsg(cloud_without_segmented_pcl, cloud_without_segmented_ros_);
 
-    float x_min = 0;
-    float x_max = 0;
-    float y_min = 0;
-    float y_max = 0;
-    float z_min = 0;
-    float z_max = 0;
+    // float x_min = 0;
+    // float x_max = 0;
+    // float y_min = 0;
+    // float y_max = 0;
+    // float z_min = 0;
+    // float z_max = 0;
     x_.clear();
     y_.clear();
     z_.clear();
@@ -109,26 +117,28 @@ void CloudPlanarSegmenter::extract(pcl::PointIndices::Ptr inliers)
         y_.push_back(cloud_without_segmented_pcl.points[i].y);
         z_.push_back(cloud_without_segmented_pcl.points[i].z);
         
-        if (cloud_without_segmented_pcl.points[i].x > x_max){
-            x_max = cloud_without_segmented_pcl.points[i].x;
-        } 
-        if (cloud_without_segmented_pcl.points[i].x < x_min){
-            x_min = cloud_without_segmented_pcl.points[i].x;
-        }
-        if (cloud_without_segmented_pcl.points[i].y > y_max){
-            y_max = cloud_without_segmented_pcl.points[i].y;
-        } 
-        if (cloud_without_segmented_pcl.points[i].y < y_min){
-            y_min = cloud_without_segmented_pcl.points[i].y;
-        }
-        if (cloud_without_segmented_pcl.points[i].z > z_max){
-            z_max = cloud_without_segmented_pcl.points[i].z;
-        } 
-        if (cloud_without_segmented_pcl.points[i].z < z_min){
-            z_min = cloud_without_segmented_pcl.points[i].z;
-        }
+        // if (cloud_without_segmented_pcl.points[i].x > x_max){
+        //     x_max = cloud_without_segmented_pcl.points[i].x;
+        // } 
+        // if (cloud_without_segmented_pcl.points[i].x < x_min){
+        //     x_min = cloud_without_segmented_pcl.points[i].x;
+        // }
+        // if (cloud_without_segmented_pcl.points[i].y > y_max){
+        //     y_max = cloud_without_segmented_pcl.points[i].y;
+        // } 
+        // if (cloud_without_segmented_pcl.points[i].y < y_min){
+        //     y_min = cloud_without_segmented_pcl.points[i].y;
+        // }
+        // if (cloud_without_segmented_pcl.points[i].z > z_max){
+        //     z_max = cloud_without_segmented_pcl.points[i].z;
+        // } 
+        // if (cloud_without_segmented_pcl.points[i].z < z_min){
+        //     z_min = cloud_without_segmented_pcl.points[i].z;
+        // }
     }
-    ROS_INFO_STREAM("x_max;" << x_max << " x_min;" << x_min << " y_max;" << y_max << " y_min;" << y_min << " z_max;" << z_max << " z_min;" << z_min);
+    // ROS_INFO_STREAM("x_max;" << x_max << " x_min;" << x_min << " y_max;" << y_max << " y_min;" << y_min << " z_max;" << z_max << " z_min;" << z_min);
+    std::cout << "------------------------------------" << std::endl;
+    std::cout << "DownSampled cloud point size : " << cloud_without_segmented_pcl.points.size() << std::endl;
 }
 
 void CloudPlanarSegmenter::cloud_callback(const sensor_msgs::PointCloud2& cloud)
@@ -141,6 +151,15 @@ void CloudPlanarSegmenter::img_callback(const sensor_msgs::Image& img)
 {
     img_input_ros_ = img;
     // ROS_INFO_STREAM("img_frame_id" << img_input_ros_.header.frame_id);
+}
+
+void CloudPlanarSegmenter::downSample()
+{
+    pcl::VoxelGrid<pcl::PointXYZ> sor;
+    sor.setInputCloud(cloud_input_pcl_.makeShared());
+    sor.setLeafSize(LEAF_SIZE_, LEAF_SIZE_, LEAF_SIZE_);
+    sor.filter(cloud_input_pcl_);
+    ROS_INFO_STREAM("down_sample");
 }
 
 

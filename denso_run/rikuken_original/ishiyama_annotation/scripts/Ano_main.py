@@ -114,9 +114,9 @@ class Client():
             try:
                 start = rospy.ServiceProxy(self.object_name + "_" + str(i), second_input)
                 res = start(data)
-                print("tf_shape")
-                print(np.array(res.GT_translation).shape)
-                print(np.array(res.GT_rotation).shape)
+                # print("tf_shape")
+                # print(np.array(res.GT_translation).shape)
+                # print(np.array(res.GT_rotation).shape)
                 self.GT_translation.append(res.GT_translation)
                 self.GT_rotation.append(res.GT_rotation)
                 tran = Float64MultiArray(data=res.GT_translation)
@@ -205,6 +205,12 @@ class Client():
             GT_pose.transform.rotation.y = self.GT_rotation[i][1]
             GT_pose.transform.rotation.z = self.GT_rotation[i][2]
             GT_pose.transform.rotation.w = self.GT_rotation[i][3]
+
+            print("GT_tf_misasero")
+            print(self.GT_rotation[i])
+            print(self.rot_list[i].data)
+            print(self.GT_translation[i])
+            print(self.trans_list[i].data)
 
             # quat_send = tf_quatRequest()
             # quat_send.input_tf = GT_pose.transform

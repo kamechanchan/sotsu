@@ -3,11 +3,12 @@
     <arg name="service_name" default="fourth_input"/>
     <arg name="publish_topic_name" default="dummy_cloud"/>
     <arg name="the_number_of_object" default="25"/>
+    <arg name="photoneo_frame_id" default="world"/>
     
-    
-    <node pkg="ishiyama_annotation" type="pcl_baikai" name="pcl_baikai" output="screen">
+    <node pkg="ishiyama_annotation" type="pcl_baikai_debug" name="pcl_baikai" output="screen">
         <param name="service_name" value="$(arg service_name)"/>
         <param name="publish_topic_name" value="$(arg publish_topic_name)"/>
         <param name="the_number_of_object" value="$(arg the_number_of_object)"/>
+        <param name="frame_id" value="$(arg photoneo_frame_id)"/>
     </node>
 </launch>

@@ -18,6 +18,7 @@ MeshCloud::MeshCloud(ros::NodeHandle &nh, std::string object_name, std::string m
     pnh_->getParam("RETRY_COUNT_LIMIT", RETRY_COUNT_LIMIT);
     pnh_->getParam("DURATION_TIME", DURATION_TIME);
     pnh_->getParam("OBJECT_QUANTITY", OBJECT_QUANTITY);
+    pnh_->getParam("frame_id", frame_id_);
     //pnh_->getParam("object_name", object_name);
     //pnh_->getParam("mesh_topic_name", mesh_topic_name_);
     mesh_topic_name_ = mesh_topic_name;
@@ -99,6 +100,9 @@ void MeshCloud::get_tf()
                 // tf_.lookupTransform("world", frame_names_[0], ros::Time(0), transform_);
                 // tf_save_ = buf_.lookupTransform("world", frame_names_[0], past);
                 tf_save_ = buf_.lookupTransform("world", frame_names_[0], ros::Time(0));
+                ROS_INFO_STREAM("mitaiyone" << frame_names_[0]);
+                // ROS_INFO_STREAM(frame_names_);
+                // tf_save_ = buf_.lookupTransform(frame_id_, frame_names_[0], ros::Time(0));
                 //ROS_INFO_STREAM("Get transform : " << frame_names_[0]);
                 break;
             }
