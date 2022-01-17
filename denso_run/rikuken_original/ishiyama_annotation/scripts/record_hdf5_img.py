@@ -175,7 +175,8 @@ class record_file():
         if self.getnormalized_swicth == True:
             np_points, offset = getNormalizedPcd_seg(np_points, self.resolution)
             np_points[:,:3] += offset
-
+        print("save_points.shape")
+        print(np_points.shape)
         # print("hajimaruze")
         # print(req_size)
         # print(x_max)
