@@ -43,6 +43,26 @@
             <arg name="world_name" value="$(find tf_publish)/world/sekai_small_box_kai.world"/>
         </include>
     </group>
+    <group if="$(eval object_name=='sekai_HV8_20')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/sekai_HV8_20.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='sekai_HV8_15')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/sekai_HV8_15.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='sekai_HV8_10')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/sekai_HV8_10.world"/>
+        </include>
+    </group>
+    <group if="$(eval object_name=='sekai_HV8_5')">
+        <include file="$(find gazebo_ros)/launch/empty_world.launch">
+            <arg name="world_name" value="$(find tf_publish)/world/sekai_HV8_5.world"/>
+        </include>
+    </group>   
     <group if="$(eval object_name=='HV7_barazumi')">
         <include file="$(find gazebo_ros)/launch/empty_world.launch">
             <arg name="world_name" value="$(find tf_publish)/world/HV7_barazumi.world"/>

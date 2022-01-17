@@ -9,6 +9,7 @@
     <arg name="data_number" default="1"/>
     <arg name="object_count" default="25"/>
     <arg name="getnormalized_swicth" default="False"/>
+    <arg name="resolution" default="60000"/>
 
     <node pkg="ishiyama_annotation" type="record_hdf5_img.py" name="record_hdf5_img" output="screen">
         <param name="filepath" value="$(arg filepath)"/>
@@ -18,5 +19,6 @@
         <param name="data_number" value="$(arg data_number)"/>
         <param name="object_count" value="$(arg object_count)"/>
         <param name="getnormalized_swicth" value="$(arg getnormalized_swicth)"/>
+        <param name="resolution" value="$(arg resolution)"/>
     </node>
 </launch>
