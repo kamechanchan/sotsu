@@ -41,7 +41,7 @@ class record_file():
         self.data_number = rospy.get_param("~data_number", 3)
         self.num_dataset = rospy.get_param("~num_dataset", 5)
         self.object_count = rospy.get_param("~object_count", 25)
-        self.resolution = rospy.get_param("~resolution", 20000)
+        self.resolution = rospy.get_param("~resolution", 60000)
         self.getnormalized_swicth = rospy.get_param("~getnormalized_swicth", False)
         self.bar = tqdm(total=self.num_dataset)
         self.bar.set_description("Progress rate")
@@ -68,7 +68,7 @@ class record_file():
         util_rikuken.mkdir(self.directorypath)
         dt_now = datetime.datetime.now()
         self.all_file_path = self.directorypath + self.filepath + "_"
-        time_str = str(dt_now.month) + "_" + str(dt_now.day) + "_" +  str(self.num_dataset) + "_" + str(self.data_number)
+        time_str = str(dt_now.month) + "_" + str(dt_now.day) + "_" +  str(self.num_dataset) + "_" + str(self.data_number) +"_object_cnt_" + str(self.object_count)
         self.all_file_path = self.all_file_path + time_str + ".hdf5"
         self.hdf5_file = h5py.File(self.all_file_path, "w")
     '''
